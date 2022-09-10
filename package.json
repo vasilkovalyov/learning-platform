@@ -10,7 +10,8 @@
     "server": "nodemon server/app.ts",
     "build:server": "tsc --project tsconfig.server.json",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "npm run build:client && npm run build:server"
+    "build": "npm run build:client && npm run build:server",
+    "export": "next export"
   },
   "dependencies": {
     "antd": "^4.23.1",
