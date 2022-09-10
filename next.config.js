@@ -8,4 +8,10 @@ module.exports = {
   }),
   swcMinify: true,
   reactStrictMode: false,
+  images: {
+    loader: 'akamai',
+    path: '',
+  },
+  basePath: '/learning-platform',
+  assetPrefix: '/learning-platform',
 }
