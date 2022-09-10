@@ -6,6 +6,6 @@ module.exports = {
   ...withLess({
     lessLoaderOptions: {},
   }),
-  reactStrictMode: true,
   swcMinify: true,
+  reactStrictMode: false,
 }
