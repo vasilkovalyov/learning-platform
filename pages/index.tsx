@@ -22,7 +22,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <h1>Welcome to LearnLangPlatform</h1>
+        <h1>Welcome to LearnLangPlatform Update</h1>
         <button onClick={(e) => loadData()}>Click</button>
         {JSON.stringify(data)}
       </main>
