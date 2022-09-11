@@ -1,6 +1,7 @@
 import express, { Request, Response, Express, NextFunction } from 'express'
 import next from 'next'
-const cors = require('cors')
+const cors = require('cors');
+const router = express.Router();
 
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
@@ -22,7 +23,7 @@ const port = process.env.PORT || 3000;
       return handle(req, res);
     });
 
-    server.get('/api', function (req, res) {
+    server.use('/api', function (req, res) {
       res.json({ data: 1 });
     });
 
