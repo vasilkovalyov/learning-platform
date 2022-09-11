@@ -35,4 +35,3 @@ jobs:
         branch: gh-pages
         folder: .next
         clean: true
-    - run: npm run start
