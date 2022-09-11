@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import axios from 'axios'
 
 const Home: NextPage = () => {
   const [data, setData] = useState<string>('')
+  const router = useRouter()
 
   useEffect(() => {
     function loadData() {
-      axios.get('http://localhost:3000/api').then((res) => {
+      console.log(document.location.origin)
+      axios.get(`${document.location.origin}/api`).then((res) => {
         setData(res.data)
       })
     }
