@@ -1,22 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import React, { useState } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import axios from 'axios'
 
 const Home: NextPage = () => {
   const [data, setData] = useState<string>('')
-  const router = useRouter()
 
-  useEffect(() => {
-    function loadData() {
-      console.log(document.location.origin)
-      axios.get(`${document.location.origin}/api`).then((res) => {
-        setData(res.data)
-      })
-    }
-    loadData()
-  }, [])
+  function loadData() {
+    console.log(document.location.origin)
+    axios.get(`${document.location.origin}/api`).then((res) => {
+      setData(res.data)
+    })
+  }
+
   return (
     <div>
       <Head>
@@ -27,6 +23,7 @@ const Home: NextPage = () => {
 
       <main>
         <h1>Welcome to LearnLangPlatform</h1>
+        <button onClick={(e) => loadData()}>Click</button>
         {JSON.stringify(data)}
       </main>
     </div>
