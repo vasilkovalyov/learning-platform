@@ -31,7 +31,7 @@ const port = process.env.PORT || 3000;
         console.log('throw')
         throw err
       };
-      console.log(`> Ready on localhost:${port} - env ${process.env.NODE_ENV}`);
+      console.log(`> Ready on ${port} - env ${process.env.NODE_ENV}`);
     });
   } catch (e) {
     console.error('e.message', e.message);
