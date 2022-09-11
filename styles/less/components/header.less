@@ -1,0 +1,35 @@
+.header {
+  color: @black-1;
+  background: @white;
+  box-shadow: 0px 4px 50px rgba(@blue-light, 0.08);
+
+  &__logo {
+    font-weight: 600;
+    font-size: 18px;
+    background: linear-gradient(90deg, @red 0%, #FA6655 100%);
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+
+  &__auth-list {
+    .listreset;
+
+    display: flex;
+    align-items: center;
+    justify-items: center;
+  }
+
+  &__auth-item {
+    display: flex;
+    align-items: center;
+  }
+
+  &__auth-icon {
+    margin-right: 10px;
+  }
+
+  &__auth-link {
+    color: inherit;
+    font-weight: 600;
+  }
+}

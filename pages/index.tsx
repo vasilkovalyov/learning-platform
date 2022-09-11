@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import axios from 'axios'
+import PublicLayout from 'components/layouts/PublicLayout'
 
 const Home: NextPage = () => {
   const [data, setData] = useState<string>('')
@@ -21,11 +22,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1>Welcome to LearnLangPlatform Update</h1>
-        <button onClick={(e) => loadData()}>Click</button>
-        {JSON.stringify(data)}
-      </main>
+      <PublicLayout>
+        <h1>Public Layout</h1>
+      </PublicLayout>
     </div>
   )
 }
