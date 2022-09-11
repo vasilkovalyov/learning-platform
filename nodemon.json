@@ -1,6 +1,7 @@
 {
-    "watch": ["server"],
-    "ext": ".ts,.js",
-    "ignore": [],
+    "verbose": true,
+    "watch": ["server/**/*", "app.ts"],
+    "ext": "ts js json",
+    "ignore": ["node_modules", ".next"],
     "exec": "ts-node --files ./server/app.ts"
 }

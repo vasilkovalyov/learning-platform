@@ -1,23 +1,40 @@
-import { Request, Response, Express } from 'express'
-const express = require('express');
-const dotenv = require('dotenv');
-const path = require('path');
+import express, { Request, Response, Express, NextFunction } from 'express'
+import next from 'next'
 const cors = require('cors')
 
-dotenv.config()
+const dev = process.env.NODE_ENV !== "production";
+const app = next({ dev });
+const handle = app.getRequestHandler();
+const port = process.env.PORT || 3000;
 
-const BuildClientPath = path.join(__dirname, '/client/build')
+(async () => {
+  try {
+    await app.prepare();
+    const server: Express = express();
+    server.use(cors())
+    server.use(express.json())
+    server.use(express.urlencoded({ extended: true }))
 
-const app: Express = express()
-app.use(cors())
-const port = process.env.PORT || 9000
+    server.all("*", (req: Request, res: Response, next: NextFunction) => {
+      if (req.url.startsWith('/api')) {
+        return next();
+      }
+      return handle(req, res);
+    });
 
-app.use(express.static(BuildClientPath))
+    server.get('/api', function (req, res) {
+      res.json({ data: 1 });
+    });
 
-app.get('/api', (req:Request, res:Response) => {
-  res.send('Express + TypeScript Server12')
-})
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`)
-})
+    server.listen(port, (err?: any) => {
+      if (err) {
+        console.log('throw')
+        throw err
+      };
+      console.log(`> Ready on localhost:${port} - env ${process.env.NODE_ENV}`);
+    });
+  } catch (e) {
+    console.error('e.message', e.message);
+    process.exit(1);
+  }
+})();

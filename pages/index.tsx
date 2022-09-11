@@ -8,7 +8,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     function loadData() {
-      axios.get('http://localhost:9000/api').then((res) => {
+      axios.get('http://localhost:3000/api').then((res) => {
         setData(res.data)
       })
     }
@@ -24,7 +24,7 @@ const Home: NextPage = () => {
 
       <main>
         <h1>Welcome to LearnLangPlatform</h1>
-        {data}
+        {JSON.stringify(data)}
       </main>
     </div>
   )
