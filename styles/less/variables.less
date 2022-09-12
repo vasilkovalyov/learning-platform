@@ -13,6 +13,7 @@
 // [CSS-VARIABLE-REPLACE-END: html-variables]
 
 @light: #E5E5E5;
+@light-2: #F2F5FA;
 @orange: #F14A73;
 @green: #28DA9A;
 @blue: #55ABFA;
@@ -21,6 +22,8 @@
 @black-2: #292C32;
 @red: #F04973;
 @grey: #C6CED3;
+@grey-2: #8B919E;
+
 
 // -------- Colors -----------
 // >>> Primary
@@ -60,7 +63,7 @@
 @error-color-deprecated-bg: color(~`colorPalette('@{error-color}', 1) `);
 @error-color-deprecated-border: color(~`colorPalette('@{error-color}', 3) `);
 
-@highlight-color: @red-5;
+@highlight-color: @primary-color;
 @normal-color: #d9d9d9;
 @white: #fff;
 @black: #000;
@@ -219,9 +222,9 @@
   0 9px 28px 8px rgba(0, 0, 0, 0.05);
 
 // Buttons
-@btn-font-weight: 400;
-@btn-border-radius-base: @border-radius-base;
-@btn-border-radius-sm: @border-radius-base;
+@btn-font-weight: 700;
+@btn-border-radius-base: 10px;
+@btn-border-radius-sm: @btn-border-radius-base;
 @btn-border-width: @border-width-base;
 @btn-border-style: @border-style-base;
 @btn-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
@@ -249,11 +252,11 @@
 
 @btn-font-size-lg: @font-size-lg;
 @btn-font-size-sm: @font-size-base;
-@btn-padding-horizontal-base: @padding-md - 1px;
+@btn-padding-horizontal-base: 40px;
 @btn-padding-horizontal-lg: @btn-padding-horizontal-base;
 @btn-padding-horizontal-sm: @padding-xs - 1px;
 
-@btn-height-base: @height-base;
+@btn-height-base: 40px;
 @btn-height-lg: @height-lg;
 @btn-height-sm: @height-sm;
 
@@ -422,32 +425,28 @@
 // Form
 // ---
 @label-required-color: @highlight-color;
-@label-color: @heading-color;
+@label-color: @grey-2;
 @form-warning-input-bg: @input-bg;
 @form-item-margin-bottom: 24px;
 @form-item-trailing-colon: true;
 @form-vertical-label-padding: 0 0 8px;
 @form-vertical-label-margin: 0;
-@form-item-label-font-size: @font-size-base;
-@form-item-label-height: @input-height-base;
+@form-item-label-font-size: 14px;
+@form-item-label-height: auto;
 @form-item-label-colon-margin-right: 8px;
 @form-item-label-colon-margin-left: 2px;
 @form-error-input-bg: @input-bg;
 
 // Input
 // ---
-@input-height-base: @height-base;
+@input-height-base: 36px;
 @input-height-lg: @height-lg;
 @input-height-sm: @height-sm;
-@input-padding-horizontal: @control-padding-horizontal - 1px;
+@input-padding-horizontal: 24px;
 @input-padding-horizontal-base: @input-padding-horizontal;
 @input-padding-horizontal-sm: @control-padding-horizontal-sm - 1px;
 @input-padding-horizontal-lg: @input-padding-horizontal;
-@input-padding-vertical-base: max(
-  (round(((@input-height-base - @font-size-base * @line-height-base) / 2) * 10) / 10) -
-    @border-width-base,
-  3px
-);
+@input-padding-vertical-base: 6px;
 @input-padding-vertical-sm: max(
   (round(((@input-height-sm - @font-size-base * @line-height-base) / 2) * 10) / 10) -
     @border-width-base,
@@ -456,18 +455,18 @@
 @input-padding-vertical-lg: (
     ceil(((@input-height-lg - @font-size-lg * @line-height-base) / 2) * 10) / 10
   ) - @border-width-base;
-@input-placeholder-color: hsv(0, 0, 75%);
-@input-color: @text-color;
+@input-placeholder-color: @black-1;
+@input-color: @black-1;
 @input-icon-color: @input-color;
-@input-border-color: @border-color-base;
-@input-bg: @component-background;
+@input-border-color: transparent;
+@input-bg: @light-2;
 @input-number-hover-border-color: @input-hover-border-color;
-@input-number-handler-active-bg: #f4f4f4;
-@input-number-handler-hover-bg: @primary-5;
+@input-number-handler-active-bg: @light-2;
+@input-number-handler-hover-bg: transparent;
 @input-number-handler-bg: @component-background;
-@input-number-handler-border-color: @border-color-base;
+@input-number-handler-border-color: 0;
 @input-addon-bg: @background-color-light;
-@input-hover-border-color: @primary-5;
+@input-hover-border-color: transparent;
 @input-disabled-bg: @disabled-bg;
 @input-outline-offset: 0 0;
 @input-icon-hover-color: fade(@black, 85%);
