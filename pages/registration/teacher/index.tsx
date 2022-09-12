@@ -6,6 +6,12 @@ import PublicLayout from 'components/layouts/PublicLayout'
 import Typography from 'antd/lib/typography'
 import Layout from 'antd/lib/layout/layout'
 import Breadcrumb from 'antd/lib/breadcrumb'
+import Row from 'antd/lib/row'
+import Col from 'antd/lib/col'
+
+import BaseFormStepFirst from 'components/forms/BaseFormStepFirst'
+import TeacherStepSecond from 'components/forms/TeacherStepSecond'
+import TeacherStepThird from 'components/forms/TeacherStepThird'
 
 const { Title } = Typography
 
@@ -33,6 +39,17 @@ const RegistrationTeacher: NextPage = () => {
             <Title level={2} className="section-registration__heading">
               Registration Teacher
             </Title>
+            <Row justify="center" gutter={[40, 40]}>
+              <Col span={24} md={14} lg={8} className="d-flex">
+                <BaseFormStepFirst />
+              </Col>
+              <Col span={24} md={14} lg={8} className="d-flex">
+                <TeacherStepSecond />
+              </Col>
+              <Col span={24} md={14} lg={8} className="d-flex">
+                <TeacherStepThird />
+              </Col>
+            </Row>
           </div>
         </Layout>
       </PublicLayout>

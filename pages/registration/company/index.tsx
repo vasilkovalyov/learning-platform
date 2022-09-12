@@ -6,14 +6,19 @@ import PublicLayout from 'components/layouts/PublicLayout'
 import Typography from 'antd/lib/typography'
 import Layout from 'antd/lib/layout/layout'
 import Breadcrumb from 'antd/lib/breadcrumb'
+import Row from 'antd/lib/row'
+import Col from 'antd/lib/col'
+
+import BaseFormStepFirst from 'components/forms/BaseFormStepFirst'
+import CompanyStepSecond from 'components/forms/CompanyStepSecond'
 
 const { Title } = Typography
 
-const RegistrationCompany: NextPage = () => {
+const Company: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>LearnLangPlatform - Registration company</title>
+        <title>LearnLangPlatform - Registration Company</title>
         <meta name="description" content="The platform for learning languages" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -33,6 +38,14 @@ const RegistrationCompany: NextPage = () => {
             <Title level={2} className="section-registration__heading">
               Registration Company
             </Title>
+            <Row justify="center" gutter={[40, 40]}>
+              <Col span={24} md={14} lg={10} className="d-flex">
+                <BaseFormStepFirst />
+              </Col>
+              <Col span={24} md={14} lg={10} className="d-flex">
+                <CompanyStepSecond />
+              </Col>
+            </Row>
           </div>
         </Layout>
       </PublicLayout>
@@ -40,4 +53,4 @@ const RegistrationCompany: NextPage = () => {
   )
 }
 
-export default RegistrationCompany
+export default Company

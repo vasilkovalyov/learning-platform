@@ -33,7 +33,7 @@ function AuthForm() {
         name="login"
         rules={[{ required: true, message: 'Please input your login!' }]}
       >
-        <Input className="form-auth__input" />
+        <Input id="login" name="login" className="form-auth__input" />
       </Form.Item>
       <Form.Item
         className="form-auth__input-field form-auth__input-field--password"
@@ -41,7 +41,7 @@ function AuthForm() {
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
-        <Password className="form-auth__input" />
+        <Password id="password" name="password" className="form-auth__input" />
       </Form.Item>
       <Form.Item
         className="form-auth__input-field form-auth__input-field--password form-auth__input-field--confirm-password"
@@ -72,7 +72,7 @@ function AuthForm() {
         label="Email"
         rules={[{ type: 'email' }]}
       >
-        <Input />
+        <Input id="email" name="email" />
       </Form.Item>
       <Form.Item wrapperCol={{ span: 24 }} className="form-auth__input-field form-auth__input-field--button">
         <Button type="primary">Sign up</Button>
