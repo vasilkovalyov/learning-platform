@@ -2,8 +2,21 @@
   "ts-node": {
     // these options are overrides used only by ts-node
     "compilerOptions": {
-      "module": "commonjs"
-    }
+      "module": "commonjs",
+      "outDir": "dist",
+      "noEmit": false,
+      "allowJs": true,
+      "skipLibCheck": true,
+      "strict": false,
+      "forceConsistentCasingInFileNames": true,
+      "esModuleInterop": true,
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "isolatedModules": false,
+      "downlevelIteration": true,
+      "strictNullChecks": true,
+      "incremental": true
+    },
   },
   "compilerOptions": {
     "target": "es5",
@@ -30,13 +43,13 @@
   },
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "server"
   ],
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.json",
     "**/*.tsx",
-    "server`"
   ]
 }

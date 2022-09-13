@@ -1,41 +1,41 @@
 import express, { Request, Response, Express, NextFunction } from 'express'
 import next from 'next'
 const cors = require('cors');
-const router = express.Router();
+const database = require('./database');
 
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
+
+// const authRoutes = require('./routes/auth');
 
 (async () => {
   try {
     await app.prepare();
     const server: Express = express();
-    server.use(cors())
+
+    server.use(cors({ credentials: true, origin : process.env.API_URL, }))
     server.use(express.json())
     server.use(express.urlencoded({ extended: true }))
 
     server.all("*", (req: Request, res: Response, next: NextFunction) => {
-      if (req.url.startsWith('/api')) {
-        return next();
-      }
+      if (req.url.startsWith('/api')) return next();
       return handle(req, res);
     });
 
-    server.use('/api', function (req, res) {
-      res.json({ data: 1 });
-    });
+    // server.use('/api', authRoutes);
 
-    server.listen(port, (err?: any) => {
-      if (err) {
-        console.log('throw')
-        throw err
-      };
-      console.log(`> Ready on ${port} - env ${process.env.NODE_ENV}`);
-    });
+    database().then(response => {
+      server.listen(PORT, () => {
+        console.log(`Example app listening on port ${PORT}`);
+      });
+    })
+    .catch(e => {
+      console.log(e)
+    })
+
   } catch (e) {
-    console.error('e.message', e.message);
     process.exit(1);
   }
 })();
