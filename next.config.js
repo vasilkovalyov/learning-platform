@@ -12,6 +12,6 @@ module.exports = {
     loader: 'akamai',
     path: '',
   },
-  // basePath: '/learning-platform',
+  // basePath: '/',
   // assetPrefix: '/learning-platform',
 }

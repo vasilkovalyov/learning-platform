@@ -20,14 +20,14 @@ function CompanyStepSecond() {
 
   return (
     <Form
-      name="basic"
+      name="sign-up-company"
       labelCol={{ span: 24 }}
       wrapperCol={{ span: 24 }}
       initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
-      className="form-auth form-auth--register"
+      className="form-auth form-auth--register form-auth--register-company form-auth--register-company-2"
     >
       <Form.Item
         className="form-auth__input-field form-auth__input-field--input"

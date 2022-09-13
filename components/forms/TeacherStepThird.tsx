@@ -14,14 +14,14 @@ function TeacherStepThird() {
 
   return (
     <Form
-      name="basic"
+      name="sign-up-teacher"
       labelCol={{ span: 24 }}
       wrapperCol={{ span: 24 }}
       initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
-      className="form-auth form-auth--register"
+      className="form-auth form-auth--register form-auth--register-teacher form-auth--register-teacher-3"
     >
       <Form.Item
         className="form-auth__input-field form-auth__input-field--input"
@@ -40,7 +40,9 @@ function TeacherStepThird() {
         <Input id="work-experience" name="work-experience" className="form-auth__input" />
       </Form.Item>
       <Form.Item wrapperCol={{ span: 24 }} className="form-auth__input-field form-auth__input-field--button">
-        <Button type="primary">Create account </Button>
+        <Button type="primary" htmlType="submit">
+          Create account{' '}
+        </Button>
       </Form.Item>
     </Form>
   )

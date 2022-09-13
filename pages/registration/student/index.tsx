@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Link from 'next/link'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
@@ -16,6 +17,7 @@ import Button from 'antd/lib/button'
 const { Title, Text } = Typography
 
 const RegistrationStudent: NextPage = () => {
+  const [isSuccessRegistration, setIsSuccessRegistration] = useState<boolean>(false)
   return (
     <div>
       <Head>
@@ -28,7 +30,9 @@ const RegistrationStudent: NextPage = () => {
           <div className="container">
             <Breadcrumb>
               <Breadcrumb.Item>
-                <a href="/">Home</a>
+                <Link href="/">
+                  <a>Home</a>
+                </Link>
               </Breadcrumb.Item>
               <Breadcrumb.Item>Student</Breadcrumb.Item>
             </Breadcrumb>
@@ -41,15 +45,20 @@ const RegistrationStudent: NextPage = () => {
             </Title>
             <Row justify="center">
               <Col span={24} md={14} lg={9}>
-                <StudentForm />
-                {/* <div className="ta-c">
-                  <Space size={[8, 16]} direction="vertical">
-                    <Typography>
-                      <Text>We sent message on your email address!</Text>
-                    </Typography>
-                    <Button type="primary">Ok</Button>
-                  </Space>
-                </div> */}
+                {!isSuccessRegistration ? (
+                  <StudentForm onSuccess={(value) => setIsSuccessRegistration(value)} />
+                ) : (
+                  <div className="ta-c">
+                    <Space size={[8, 16]} direction="vertical">
+                      <Typography>
+                        <Text>We sent message on your email address!</Text>
+                      </Typography>
+                      <Button type="primary" href="/">
+                        Ok
+                      </Button>
+                    </Space>
+                  </div>
+                )}
               </Col>
             </Row>
           </div>

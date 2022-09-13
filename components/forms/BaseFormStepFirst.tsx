@@ -18,7 +18,7 @@ function BaseFormStepFirst() {
 
   return (
     <Form
-      name="basic"
+      name="base-from-step"
       labelCol={{ span: 24 }}
       wrapperCol={{ span: 24 }}
       initialValues={{ remember: true }}
@@ -68,9 +68,9 @@ function BaseFormStepFirst() {
       </Form.Item>
       <Form.Item
         className="form-auth__input-field form-auth__input-field--input"
-        name={['user', 'email']}
+        name="email"
         label="Email"
-        rules={[{ type: 'email' }]}
+        rules={[{ required: true, type: 'email', message: 'Please input your email!' }]}
       >
         <Input id="email" name="email" />
       </Form.Item>
@@ -83,7 +83,9 @@ function BaseFormStepFirst() {
         <Input id="phone" name="phone" />
       </Form.Item>
       <Form.Item wrapperCol={{ span: 24 }} className="form-auth__input-field form-auth__input-field--button">
-        <Button type="primary">Next</Button>
+        <Button type="primary" htmlType="submit">
+          Next
+        </Button>
       </Form.Item>
     </Form>
   )

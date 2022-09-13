@@ -15,7 +15,7 @@ function AuthForm() {
 
   return (
     <Form
-      name="basic"
+      name="auth-user"
       labelCol={{ span: 24 }}
       wrapperCol={{ span: 24 }}
       initialValues={{ remember: true }}
@@ -41,7 +41,9 @@ function AuthForm() {
         <Password id="password" name="password" className="form-auth__input" />
       </Form.Item>
       <Form.Item wrapperCol={{ span: 24 }} className="form-auth__input-field form-auth__input-field--button">
-        <Button type="primary">Sign in</Button>
+        <Button type="primary" htmlType="submit">
+          Sign in
+        </Button>
       </Form.Item>
     </Form>
   )

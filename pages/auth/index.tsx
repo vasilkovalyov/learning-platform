@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
@@ -26,7 +27,9 @@ const Auth: NextPage = () => {
           <div className="container">
             <Breadcrumb>
               <Breadcrumb.Item>
-                <a href="/">Home</a>
+                <Link href="/">
+                  <a>Home</a>
+                </Link>
               </Breadcrumb.Item>
               <Breadcrumb.Item>Sign in</Breadcrumb.Item>
             </Breadcrumb>

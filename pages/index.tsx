@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import axios from 'axios'
 import PublicLayout from 'components/layouts/PublicLayout'
+// import $api from 'common/ajax-config'
+// import { PUBLIC_REQUESTS } from '../constants/api-requests'
 
 const Home: NextPage = () => {
   const [data, setData] = useState<string>('')
 
-  function loadData() {
-    console.log(document.location.origin)
-    axios.get(`${document.location.origin}/api`).then((res) => {
-      setData(res.data)
-    })
-  }
-
+  // async function loadData() {
+  //   console.log(document.location.origin)
+  //   const response = await $api.get(PUBLIC_REQUESTS.BASE)
+  //   console.log(response)
+  // }
+  // loadData()
   return (
     <div>
       <Head>
@@ -24,6 +24,7 @@ const Home: NextPage = () => {
 
       <PublicLayout>
         <h1>Public Layout</h1>
+        {/* {JSON.stringify(data)} */}
       </PublicLayout>
     </div>
   )

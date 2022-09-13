@@ -7,9 +7,18 @@ import { Button } from 'antd'
 
 const { Text } = Typography
 
-function AuthForm() {
-  const onFinish = (values: any) => {
+interface IStudentForm {
+  login: string
+  password: string
+  email: string
+}
+
+function AuthForm({ onSuccess }: { onSuccess?: (valid: boolean) => void }) {
+  const onFinish = (values: IStudentForm) => {
     console.log('Success:', values)
+    setTimeout(() => {
+      onSuccess && onSuccess(true)
+    }, 1000)
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -18,14 +27,14 @@ function AuthForm() {
 
   return (
     <Form
-      name="basic"
+      name="sign-up-student"
       labelCol={{ span: 24 }}
       wrapperCol={{ span: 24 }}
       initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
-      className="form-auth form-auth--register"
+      className="form-auth form-auth--register form-auth--register-student"
     >
       <Form.Item
         className="form-auth__input-field form-auth__input-field--input"
@@ -68,14 +77,16 @@ function AuthForm() {
       </Form.Item>
       <Form.Item
         className="form-auth__input-field form-auth__input-field--input"
-        name={['user', 'email']}
+        name="email"
         label="Email"
-        rules={[{ type: 'email' }]}
+        rules={[{ required: true, type: 'email', message: 'Please input your email!' }]}
       >
         <Input id="email" name="email" />
       </Form.Item>
       <Form.Item wrapperCol={{ span: 24 }} className="form-auth__input-field form-auth__input-field--button">
-        <Button type="primary">Sign up</Button>
+        <Button type="primary" htmlType="submit">
+          Sign up
+        </Button>
       </Form.Item>
       <Typography className="form-auth__message">
         <Text>You can sing up by usingh social network</Text>
