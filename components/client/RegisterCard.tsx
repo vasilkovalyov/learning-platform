@@ -1,15 +1,15 @@
 import React from 'react'
-import { RegisterType } from '../../types/common'
+import { RoleType } from '../../types/common'
 import Typography from 'antd/lib/typography'
 
 const { Title } = Typography
 
 interface IRegisterCard {
-  type: RegisterType
+  type: RoleType
   title: string
 }
 
-function getImageByRegisterType(type: RegisterType) {
+function getImageByRegisterType(type: RoleType) {
   if (type === 'student') {
     return <img src="./svg/working-1.svg" alt="student" />
   }

@@ -1,19 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import PublicLayout from 'components/layouts/PublicLayout'
-// import $api from 'common/ajax-config'
-// import { PUBLIC_REQUESTS } from '../constants/api-requests'
 
 const Home: NextPage = () => {
-  const [data, setData] = useState<string>('')
-
-  // async function loadData() {
-  //   console.log(document.location.origin)
-  //   const response = await $api.get(PUBLIC_REQUESTS.BASE)
-  //   console.log(response)
-  // }
-  // loadData()
   return (
     <div>
       <Head>
@@ -24,7 +14,6 @@ const Home: NextPage = () => {
 
       <PublicLayout>
         <h1>Public Layout</h1>
-        {/* {JSON.stringify(data)} */}
       </PublicLayout>
     </div>
   )

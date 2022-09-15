@@ -2,14 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
 const model = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  surname: {
-    type: String,
-    required: true
-  },
   login: {
     type: String,
     required: true
@@ -24,7 +16,7 @@ const model = new Schema({
     min: 6,
     max: 100
   },
-  userType: {
+  role: {
     type: String,
     required: true,
   },
@@ -34,4 +26,4 @@ const model = new Schema({
   },
 })
 
-module.exports = mongoose.model('User', model)
+export default mongoose.model('User', model)

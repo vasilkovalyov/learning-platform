@@ -1,1 +1,1 @@
-export type RegisterType = 'student' | 'teacher' | 'company'
+export type RoleType = 'student' | 'teacher' | 'company'

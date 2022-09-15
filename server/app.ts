@@ -1,20 +1,21 @@
 import express, { Request, Response, Express, NextFunction } from 'express'
 import next from 'next'
+import database from "./database";
 const cors = require('cors');
-const database = require('./database');
+const bodyParser = require('body-parser');
 
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const PORT = process.env.PORT || 3000;
 
-// const authRoutes = require('./routes/auth');
+const authRoute = require('./routes/auth.route');
 
 (async () => {
   try {
     await app.prepare();
     const server: Express = express();
-
+    server.use(bodyParser.json());
     server.use(cors({ credentials: true, origin : process.env.API_URL, }))
     server.use(express.json())
     server.use(express.urlencoded({ extended: true }))
@@ -24,16 +25,12 @@ const PORT = process.env.PORT || 3000;
       return handle(req, res);
     });
 
-    // server.use('/api', authRoutes);
+    server.use('/api', authRoute);
 
     database().then(response => {
-      server.listen(PORT, () => {
-        console.log(`Example app listening on port ${PORT}`);
-      });
+      server.listen(PORT, () => console.log(`Example app listening on port ${PORT}`));
     })
-    .catch(e => {
-      console.log(e)
-    })
+    .catch(e => console.log(e))
 
   } catch (e) {
     process.exit(1);

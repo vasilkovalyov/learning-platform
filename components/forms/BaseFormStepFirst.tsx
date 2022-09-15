@@ -29,11 +29,11 @@ function BaseFormStepFirst() {
     >
       <Form.Item
         className="form-auth__input-field form-auth__input-field--input"
-        label="Login"
-        name="login"
-        rules={[{ required: true, message: 'Please input your login!' }]}
+        name="email"
+        label="Email"
+        rules={[{ required: true, type: 'email', message: 'Please input your email!' }]}
       >
-        <Input id="login" name="login" className="form-auth__input" />
+        <Input id="email" name="email" />
       </Form.Item>
       <Form.Item
         className="form-auth__input-field form-auth__input-field--password"
@@ -64,15 +64,7 @@ function BaseFormStepFirst() {
           }),
         ]}
       >
-        <Password id="confirm-password" name="confirm-password" />
-      </Form.Item>
-      <Form.Item
-        className="form-auth__input-field form-auth__input-field--input"
-        name="email"
-        label="Email"
-        rules={[{ required: true, type: 'email', message: 'Please input your email!' }]}
-      >
-        <Input id="email" name="email" />
+        <Password id="confirm-password" name="confirm_password" />
       </Form.Item>
       <Form.Item
         className="form-auth__input-field form-auth__input-field--input"

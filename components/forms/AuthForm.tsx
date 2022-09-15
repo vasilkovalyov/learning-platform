@@ -1,12 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Form from 'antd/lib/form'
 import Input from 'antd/lib/input/Input'
 import Password from 'antd/lib/input/Password'
 import { Button } from 'antd'
+import $api from '../../common/ajax-config'
+import { PUBLIC_REQUESTS } from '../../constants/api-requests'
 
 function AuthForm() {
-  const onFinish = (values: any) => {
-    console.log('Success:', values)
+  const [dataResponse, setDataResponse] = useState<string>('')
+  const onFinish = async (values: any) => {
+    try {
+      const response = await $api.post(PUBLIC_REQUESTS.SIGN_IN, { params: values })
+      if (response.data.status === 201) {
+        setDataResponse(response.data.message)
+        return
+      }
+      setDataResponse(response.data.message)
+    } catch (e) {
+      console.log(e.message)
+    }
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -24,13 +36,16 @@ function AuthForm() {
       autoComplete="off"
       className="form-auth"
     >
+      <p>vasilkovalyov@gmail.com</p>
+      <p>vasilkovalyov1@gmail.com</p>
+      <p>12345678</p>
       <Form.Item
         className="form-auth__input-field form-auth__input-field--input"
-        label="Login"
-        name="login"
-        rules={[{ required: true, message: 'Please input your login!' }]}
+        name="email"
+        label="Email"
+        rules={[{ required: true, type: 'email', message: 'Please input your email!' }]}
       >
-        <Input id="login" name="login" className="form-auth__input" />
+        <Input id="email" name="email" />
       </Form.Item>
       <Form.Item
         className="form-auth__input-field form-auth__input-field--password"
@@ -40,6 +55,7 @@ function AuthForm() {
       >
         <Password id="password" name="password" className="form-auth__input" />
       </Form.Item>
+      {dataResponse !== '' && <p>{dataResponse}</p>}
       <Form.Item wrapperCol={{ span: 24 }} className="form-auth__input-field form-auth__input-field--button">
         <Button type="primary" htmlType="submit">
           Sign in

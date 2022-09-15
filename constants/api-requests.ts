@@ -1,7 +1,8 @@
-export enum PUBLIC_REQUESTS {
-  BASE = '',
+export const PUBLIC_REQUESTS = {
+  SIGN_IN: '/auth/signin',
+  SIGN_UP: '/auth/signup',
 }
 
-export enum PRIVATE_REQUESTS {
-  BASE = '',
+export const PRIVATE_REQUESTS = {
+  BASE: '',
 }

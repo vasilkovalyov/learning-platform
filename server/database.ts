@@ -1,4 +1,4 @@
-module.exports = () => {
+export default () => {
   const mongoose = require('mongoose');
 
   return new Promise((resolve, reject) => {

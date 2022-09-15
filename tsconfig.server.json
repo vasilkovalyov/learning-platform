@@ -4,9 +4,24 @@
         "module": "commonjs",
         "outDir": "dist",
         "noEmit": false,
-        "isolatedModules": false,
+        "isolatedModules": true,
+        "target": "ES6",
+        "declaration": true,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "noEmitOnError": true,
+        "noImplicitAny": false,
+        "noImplicitReturns": true,
+        "removeComments": true,
+        "sourceMap": true,
+        "lib": ["es6"],
+        "types": ["node"],
     },
     "include": [
         "server"
-    ]
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+    ],
 }

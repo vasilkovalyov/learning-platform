@@ -4,21 +4,32 @@ import Input from 'antd/lib/input/Input'
 import Password from 'antd/lib/input/Password'
 import Typography from 'antd/lib/typography'
 import { Button } from 'antd'
+import $api from '../../common/ajax-config'
+import { PUBLIC_REQUESTS } from '../../constants/api-requests'
 
 const { Text } = Typography
 
 interface IStudentForm {
-  login: string
-  password: string
   email: string
+  password: string
 }
 
 function AuthForm({ onSuccess }: { onSuccess?: (valid: boolean) => void }) {
-  const onFinish = (values: IStudentForm) => {
-    console.log('Success:', values)
-    setTimeout(() => {
-      onSuccess && onSuccess(true)
-    }, 1000)
+  const onFinish = async (values: IStudentForm) => {
+    try {
+      const data = await $api.post(PUBLIC_REQUESTS.SIGN_UP, {
+        params: {
+          ...values,
+          role: 'student',
+        },
+      })
+      if (data.status === 200) {
+        onSuccess && onSuccess(true)
+        alert(data.data.email)
+      }
+    } catch (e) {
+      console.log(e.message)
+    }
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -38,11 +49,19 @@ function AuthForm({ onSuccess }: { onSuccess?: (valid: boolean) => void }) {
     >
       <Form.Item
         className="form-auth__input-field form-auth__input-field--input"
-        label="Login"
         name="login"
+        label="Login"
         rules={[{ required: true, message: 'Please input your login!' }]}
       >
-        <Input id="login" name="login" className="form-auth__input" />
+        <Input id="login" name="login" />
+      </Form.Item>
+      <Form.Item
+        className="form-auth__input-field form-auth__input-field--input"
+        name="email"
+        label="Email"
+        rules={[{ required: true, type: 'email', message: 'Please input your email!' }]}
+      >
+        <Input id="email" name="email" />
       </Form.Item>
       <Form.Item
         className="form-auth__input-field form-auth__input-field--password"
@@ -53,7 +72,7 @@ function AuthForm({ onSuccess }: { onSuccess?: (valid: boolean) => void }) {
         <Password id="password" name="password" className="form-auth__input" />
       </Form.Item>
       <Form.Item
-        className="form-auth__input-field form-auth__input-field--password form-auth__input-field--confirm-password"
+        className="form-auth__input-field form-auth__input-field--password form-auth__input-field--confirm_password"
         name="confirm"
         label="Confirm Password"
         dependencies={['password']}
@@ -74,14 +93,6 @@ function AuthForm({ onSuccess }: { onSuccess?: (valid: boolean) => void }) {
         ]}
       >
         <Password />
-      </Form.Item>
-      <Form.Item
-        className="form-auth__input-field form-auth__input-field--input"
-        name="email"
-        label="Email"
-        rules={[{ required: true, type: 'email', message: 'Please input your email!' }]}
-      >
-        <Input id="email" name="email" />
       </Form.Item>
       <Form.Item wrapperCol={{ span: 24 }} className="form-auth__input-field form-auth__input-field--button">
         <Button type="primary" htmlType="submit">
