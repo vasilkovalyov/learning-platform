@@ -14,7 +14,7 @@ interface IStudentForm {
   password: string
 }
 
-function AuthForm({ onSuccess }: { onSuccess?: (valid: boolean) => void }) {
+function AuthForm({ onSuccess }: { onSuccess?: (valid: boolean, payload: any) => void }) {
   const onFinish = async (values: IStudentForm) => {
     try {
       const data = await $api.post(PUBLIC_REQUESTS.SIGN_UP, {
@@ -24,8 +24,10 @@ function AuthForm({ onSuccess }: { onSuccess?: (valid: boolean) => void }) {
         },
       })
       if (data.status === 200) {
-        onSuccess && onSuccess(true)
-        alert(data.data.email)
+        onSuccess &&
+          onSuccess(true, {
+            email: data.data.data.email,
+          })
       }
     } catch (e) {
       console.log(e.message)

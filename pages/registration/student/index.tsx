@@ -17,7 +17,14 @@ import Button from 'antd/lib/button'
 const { Title, Text } = Typography
 
 const RegistrationStudent: NextPage = () => {
+  const [formResponse, setFormResponse] = useState<any>(null)
   const [isSuccessRegistration, setIsSuccessRegistration] = useState<boolean>(false)
+
+  function successSignUpForm(success, payload) {
+    setIsSuccessRegistration(success)
+    setFormResponse(payload)
+  }
+
   return (
     <div>
       <Head>
@@ -46,12 +53,12 @@ const RegistrationStudent: NextPage = () => {
             <Row justify="center">
               <Col span={24} md={14} lg={9}>
                 {!isSuccessRegistration ? (
-                  <StudentForm onSuccess={(value) => setIsSuccessRegistration(value)} />
+                  <StudentForm onSuccess={successSignUpForm} />
                 ) : (
                   <div className="ta-c">
                     <Space size={[8, 16]} direction="vertical">
                       <Typography>
-                        <Text>We sent message on your email address!</Text>
+                        <Text>We sent message on your {formResponse.email} address!</Text>
                       </Typography>
                       <Button type="primary" href="/">
                         Ok

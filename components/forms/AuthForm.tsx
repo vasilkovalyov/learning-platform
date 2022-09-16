@@ -36,16 +36,13 @@ function AuthForm() {
       autoComplete="off"
       className="form-auth"
     >
-      <p>vasilkovalyov@gmail.com</p>
-      <p>vasilkovalyov1@gmail.com</p>
-      <p>12345678</p>
       <Form.Item
         className="form-auth__input-field form-auth__input-field--input"
         name="email"
         label="Email"
         rules={[{ required: true, type: 'email', message: 'Please input your email!' }]}
       >
-        <Input id="email" name="email" />
+        <Input id="email" name="email" type="email" />
       </Form.Item>
       <Form.Item
         className="form-auth__input-field form-auth__input-field--password"
