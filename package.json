@@ -10,7 +10,7 @@
     "build:server": "tsc --project tsconfig.server.json",
     "build:next": "next build",
     "build": "npm run build:next && npm run build:server",
-    "start": "NODE_ENV=production node dist/app.js"
+    "start": "NODE_ENV=production node dist/server/app.js"
   },
   "dependencies": {
     "antd": "^4.23.1",
