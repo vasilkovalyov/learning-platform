@@ -5,10 +5,14 @@
 
   &__logo {
     font-weight: 600;
-    font-size: 18px;
+    font-size: 16px;
     background: linear-gradient(90deg, @red 0%, #FA6655 100%);
     background-clip: text;
     text-fill-color: transparent;
+
+    @media (min-width: 768px) {
+      font-size: 18px;
+    }
   }
 
   &__auth-list {
@@ -16,7 +20,13 @@
 
     display: flex;
     align-items: center;
-    justify-items: center;
+    justify-content: flex-end;
+
+    .ant-divider {
+      @media (max-width: 768px) {
+        margin: 0 4px;
+      }
+    }
   }
 
   &__auth-item {
@@ -31,5 +41,9 @@
   &__auth-link {
     color: inherit;
     font-weight: 600;
+  }
+
+  &__navigation-col {
+    display: none;
   }
 }

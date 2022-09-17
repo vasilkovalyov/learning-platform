@@ -11,13 +11,13 @@ function Header() {
     <HeaderAnt className="header">
       <div className="container">
         <Row justify="space-between">
-          <Col span={3}>
+          <Col span={10} md={3} className="header__logo-col">
             <Link href="/">
               <a className="header__logo">LearnPlatform</a>
             </Link>
           </Col>
-          <Col span={14}></Col>
-          <Col span={6}>
+          <Col span={14} className="header__navigation-col"></Col>
+          <Col span={14} md={6} className="header__navigation-auth-buttons">
             <ul className="header__auth-list">
               <li className="header__auth-item">
                 <Icon icon="user" size={20} color="#FA6655" className="header__auth-icon" />
