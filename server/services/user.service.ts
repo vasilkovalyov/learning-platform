@@ -1,9 +1,9 @@
-import { IAuth } from './../../dist/server/interfaces/user.interface.d';
 import { IUser, IUserSignUp, ITeacherUser } from './../interfaces/user.interface';
 import UserModel from "../models/user.model"
 import TeacherModel from "../models/teacher.model"
+import CompanyModel from "../models/company.model"
 import RoleModel from "../models/role.model"
-import { signUpStudentValidation, signInValidation, signUpTeacherValidation } from "../validation/auth.validation"
+import { signUpStudentValidation, signInValidation, signUpTeacherValidation, signUpCompanyValidation } from "../validation/auth.validation"
 import TokenService from '../services/token.service'
 import ApiError from '../exeptions/api.exeptions';
 import status from '../constants/status'
@@ -18,19 +18,33 @@ interface IAuthUserResponse {
     token?: string
 }
 
-interface IUserTeacher {
-    address: string
+interface ICommonInfo {
     city: string
     country: string
+}
+
+interface IUserTeacher extends ICommonInfo, IUserSignUp {
     education: string[]
     phone: string
     work_experience: string[]
-    passport: string
     diploma: string
+    address: string
+}
+
+interface IUserCompany extends ICommonInfo, IUserSignUp {
+    company_name: string
+    inn_code: string
+    legal_address: string
+    mailing_address: string
+    phone: string
 }
 
 interface IAuthTeaserResponse extends IAuthUserResponse {
-    data: Partial<IUser & IUserTeacher> | null
+    data: Partial<IUserTeacher> | null
+}
+
+interface IAuthCompanyResponse extends IAuthUserResponse {
+    data: Partial<IUserCompany> | null
 }
 
 class AuthService {
@@ -96,6 +110,40 @@ class AuthService {
         }
     }
 
+    async signUpCompany(params: IUserCompany): Promise<IAuthCompanyResponse> {
+        const { error } = signUpCompanyValidation(params)
+        if (error) throw ApiError.BadRequest(error.details[0].message);
+
+        const { login, email, confirm_password, role, city, country, phone, company_name, inn_code, mailing_address, legal_address } = params
+        const userExist = await RoleModel.findOne({ email: email });
+
+        const hashedPassword = await bcrypt.hash(confirm_password, bcrypt.genSaltSync(10));
+        if (userExist) throw ApiError.BadRequest(`User with email - ${email} alreary exist!`);
+
+        const companyModel = new CompanyModel({
+            login,
+            email,
+            password: hashedPassword,
+            role,
+            city,
+            country,
+            phone,
+            company_name,
+            inn_code,
+            mailing_address,
+            legal_address,
+        });
+
+        const savedUser = await companyModel.save();
+        this.saveRole(savedUser._id, role, email)
+
+        return {
+            status: status.SUCCESS,
+            message: `Success user signup`,
+            data: savedUser
+        }
+    }
+
     async saveRole(_id: string, role: UserAccountType, email: string) {
         const roleModel = new RoleModel({_id, role, email})
         await roleModel.save();
@@ -117,8 +165,9 @@ class AuthService {
         if (findedRole.role as UserAccountType === "teacher") {
             user = await TeacherModel.findOne({ email: email });
         }
-        if (findedRole.role as UserAccountType === "company") {}
-
+        if (findedRole.role as UserAccountType === "company") {
+            user = await CompanyModel.findOne({ email: email });
+        }
 
         const validPass = await bcrypt.compare(password, user.password);
         if (!validPass) throw ApiError.BadRequest(`Wrong password!`);
