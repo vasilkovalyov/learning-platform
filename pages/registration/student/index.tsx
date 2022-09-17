@@ -17,12 +17,14 @@ import Button from 'antd/lib/button'
 const { Title, Text } = Typography
 
 const RegistrationStudent: NextPage = () => {
-  const [formResponse, setFormResponse] = useState<any>(null)
+  const [formEmailResponse, setFormEmailResponse] = useState<string>('')
   const [isSuccessRegistration, setIsSuccessRegistration] = useState<boolean>(false)
 
-  function successSignUpForm(success, payload) {
-    setIsSuccessRegistration(success)
-    setFormResponse(payload)
+  function successSignUpForm(isSuccess: boolean, email: string) {
+    if (isSuccess) {
+      setIsSuccessRegistration(true)
+      setFormEmailResponse(email)
+    }
   }
 
   return (
@@ -58,7 +60,7 @@ const RegistrationStudent: NextPage = () => {
                   <div className="ta-c">
                     <Space size={[8, 16]} direction="vertical">
                       <Typography>
-                        <Text>We sent message on your {formResponse.email} address!</Text>
+                        <Text>We sent message on your {formEmailResponse} address!</Text>
                       </Typography>
                       <Button type="primary" href="/">
                         Ok

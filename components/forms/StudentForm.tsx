@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Form from 'antd/lib/form'
 import Input from 'antd/lib/input/Input'
 import Password from 'antd/lib/input/Password'
@@ -6,36 +6,34 @@ import Typography from 'antd/lib/typography'
 import { Button } from 'antd'
 import $api from '../../common/ajax-config'
 import { PUBLIC_REQUESTS } from '../../constants/api-requests'
+import { IFormData } from '../../intefaces/auth'
+import status from 'constants/status'
 
 const { Text } = Typography
 
-interface IStudentForm {
-  email: string
-  password: string
-}
-
-function AuthForm({ onSuccess }: { onSuccess?: (valid: boolean, payload: any) => void }) {
-  const onFinish = async (values: IStudentForm) => {
+function StudentForm({ onSuccess }: { onSuccess?: (isSuccess: boolean, email: string) => void }) {
+  const [validationMessage, setValidationMessage] = useState<string>('')
+  const onFinish = async (values: Pick<IFormData, 'login' | 'email' | 'password' | 'confirm_password'>) => {
     try {
-      const data = await $api.post(PUBLIC_REQUESTS.SIGN_UP, {
+      const response = await $api.post(PUBLIC_REQUESTS.SIGN_UP, {
         params: {
           ...values,
           role: 'student',
         },
       })
-      if (data.status === 200) {
-        onSuccess &&
-          onSuccess(true, {
-            email: data.data.data.email,
-          })
+
+      if (response.data.status === status.SUCCESS) {
+        onSuccess && onSuccess(true, response.data.data.email)
+        return
+      }
+      if (response.data.status === status.BAD_REQUEST) {
+        setValidationMessage(response.data.message)
+        return
       }
     } catch (e) {
-      console.log(e.message)
+      console.log(e)
+      setValidationMessage(e.message)
     }
-  }
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo)
   }
 
   return (
@@ -45,7 +43,6 @@ function AuthForm({ onSuccess }: { onSuccess?: (valid: boolean, payload: any) =>
       wrapperCol={{ span: 24 }}
       initialValues={{ remember: true }}
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
       autoComplete="off"
       className="form-auth form-auth--register form-auth--register-student"
     >
@@ -69,13 +66,16 @@ function AuthForm({ onSuccess }: { onSuccess?: (valid: boolean, payload: any) =>
         className="form-auth__input-field form-auth__input-field--password"
         label="Password"
         name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
+        rules={[
+          { required: true, message: 'Please input your password!' },
+          { min: 6, message: 'Please must be minimum 6 characters!' },
+        ]}
       >
         <Password id="password" name="password" className="form-auth__input" />
       </Form.Item>
       <Form.Item
         className="form-auth__input-field form-auth__input-field--password form-auth__input-field--confirm_password"
-        name="confirm"
+        name="confirm_password"
         label="Confirm Password"
         dependencies={['password']}
         hasFeedback
@@ -83,6 +83,10 @@ function AuthForm({ onSuccess }: { onSuccess?: (valid: boolean, payload: any) =>
           {
             required: true,
             message: 'Please confirm your password!',
+          },
+          {
+            min: 6,
+            message: 'Please must be minimum 6 characters!',
           },
           ({ getFieldValue }) => ({
             validator(_, value) {
@@ -94,13 +98,14 @@ function AuthForm({ onSuccess }: { onSuccess?: (valid: boolean, payload: any) =>
           }),
         ]}
       >
-        <Password />
+        <Password id="confirm_password" name="confirm_password" className="form-auth__input" />
       </Form.Item>
       <Form.Item wrapperCol={{ span: 24 }} className="form-auth__input-field form-auth__input-field--button">
         <Button type="primary" htmlType="submit">
           Sign up
         </Button>
       </Form.Item>
+      {validationMessage && <p>{validationMessage}</p>}
       <Typography className="form-auth__message">
         <Text>You can sing up by usingh social network</Text>
       </Typography>
@@ -181,4 +186,4 @@ function AuthForm({ onSuccess }: { onSuccess?: (valid: boolean, payload: any) =>
   )
 }
 
-export default AuthForm
+export default StudentForm
