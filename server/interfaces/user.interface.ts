@@ -1,11 +1,17 @@
 import { RoleType } from '../../types/common';
 
 export interface IUser {
-  id: string
+  _id?: string
   login: string
   email: string
   password: string
   role: RoleType
+}
+
+export interface IUserSignIn extends Pick<IUser, 'email' | 'password'> {}
+
+export interface IUserSignUp extends IUser{
+  confirm_password: string
 }
 
 export interface ITeacherUser extends IUser {

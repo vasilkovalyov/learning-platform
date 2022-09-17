@@ -1,6 +1,7 @@
 const JoiValidation = require('joi');
+import { IUserSignIn, IUserSignUp, ICompanyUser, ITeacherUser } from "../interfaces/user.interface";
 
-export const signInValidation = (data) => {
+export const signInValidation = (data: IUserSignIn) => {
   const schema = JoiValidation.object({
     email: JoiValidation.string().required().email(),
     password: JoiValidation.string().min(6).required(),
@@ -9,19 +10,19 @@ export const signInValidation = (data) => {
   return schema.validate(data)
 }
 
-export const signUpStudentValidation = (data) => {
+export const signUpStudentValidation = (data: IUserSignUp) => {
   const schema = JoiValidation.object({
     login: JoiValidation.string().required(),
     email: JoiValidation.string().required().email(),
     password: JoiValidation.string().min(6).required(),
-    confirm_password: JoiValidation.any().equal(JoiValidation.ref('password')).required(),
+    confirm_password: JoiValidation.string().required().valid(JoiValidation.ref('password')),
     role: JoiValidation.string().valid('student')
   })
 
   return schema.validate(data)
 }
 
-export const signUpTeacherValidation = (data) => {
+export const signUpTeacherValidation = (data: IUserSignUp & ITeacherUser) => {
   const schema = JoiValidation.object({
     address: JoiValidation.string().required(),
     city: JoiValidation.string().required(),
@@ -37,7 +38,7 @@ export const signUpTeacherValidation = (data) => {
   return signUpStudentValidation(data) && schema.validate(data)
 }
 
-export const signUpCompanyValidation = (data) => {
+export const signUpCompanyValidation = (data: IUserSignUp & ICompanyUser) => {
   const schema = JoiValidation.object({
     phone: JoiValidation.string().required(),
     company_name: JoiValidation.string().required(),
@@ -52,7 +53,3 @@ export const signUpCompanyValidation = (data) => {
   return signUpStudentValidation(data) && schema.validate(data)
 }
 
-// module.exports.signUpStudentValidation = signInValidation
-// module.exports.signUpStudentValidation = signUpStudentValidation
-// module.exports.signUpTeacherValidation = signUpTeacherValidation
-// module.exports.signUpCompanyValidation = signUpCompanyValidation

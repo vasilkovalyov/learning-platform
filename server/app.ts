@@ -1,6 +1,7 @@
 import express, { Request, Response, Express, NextFunction } from 'express'
 import next from 'next'
 import database from "./database";
+import errorMiddleware from './middleware/error.middleware'
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
@@ -26,6 +27,7 @@ const authRoute = require('./routes/auth.route');
     });
 
     server.use('/api', authRoute);
+    server.use(errorMiddleware);
 
     database().then(response => {
       server.listen(PORT, () => console.log(`Example app listening on port ${PORT}`));
