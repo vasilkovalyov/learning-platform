@@ -24,6 +24,10 @@ export const signUpStudentValidation = (data: IUserSignUp) => {
 
 export const signUpTeacherValidation = (data: IUserSignUp & ITeacherUser) => {
   const schema = JoiValidation.object({
+    login: JoiValidation.string().required(),
+    email: JoiValidation.string().required().email(),
+    password: JoiValidation.string().min(6).required(),
+    confirm_password: JoiValidation.string().required().valid(JoiValidation.ref('password')),
     address: JoiValidation.string().required(),
     city: JoiValidation.string().required(),
     country: JoiValidation.string().required(),
@@ -35,11 +39,15 @@ export const signUpTeacherValidation = (data: IUserSignUp & ITeacherUser) => {
     role: JoiValidation.string().valid('teacher'),
   })
 
-  return signUpStudentValidation(data) && schema.validate(data)
+  return schema.validate(data)
 }
 
 export const signUpCompanyValidation = (data: IUserSignUp & ICompanyUser) => {
   const schema = JoiValidation.object({
+    login: JoiValidation.string().required(),
+    email: JoiValidation.string().required().email(),
+    password: JoiValidation.string().min(6).required(),
+    confirm_password: JoiValidation.string().required().valid(JoiValidation.ref('password')),
     phone: JoiValidation.string().required(),
     company_name: JoiValidation.string().required(),
     inn_code: JoiValidation.string().required(),
@@ -47,7 +55,7 @@ export const signUpCompanyValidation = (data: IUserSignUp & ICompanyUser) => {
     city: JoiValidation.string().required(),
     legal_address: JoiValidation.string().required(),
     mailing_address: JoiValidation.string().required(),
-    role: JoiValidation.string().valid('company')
+    role: JoiValidation.string().valid('company'),
   })
 
   return signUpStudentValidation(data) && schema.validate(data)

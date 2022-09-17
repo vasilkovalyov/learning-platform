@@ -10,11 +10,11 @@ export interface IUser {
 
 export interface IUserSignIn extends Pick<IUser, 'email' | 'password'> {}
 
-export interface IUserSignUp extends IUser{
+export interface IUserSignUp extends IUser {
   confirm_password: string
 }
 
-export interface ITeacherUser extends IUser {
+export interface ITeacherUser extends IUserSignUp {
   phone: string
   passport: string
   country: string

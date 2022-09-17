@@ -1,22 +1,16 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
-export const model = new Schema({
-  login: {
+const model = new Schema({
+  _id: {
     type: String,
     required: true
-  },
-  email: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true,
-    min: 6,
-    max: 100
   },
   role: {
+    type: String,
+    required: true,
+  },
+  email: {
     type: String,
     required: true,
   },
@@ -26,4 +20,4 @@ export const model = new Schema({
   },
 })
 
-export default mongoose.model('User', model)
+export default mongoose.model('Role', model)
