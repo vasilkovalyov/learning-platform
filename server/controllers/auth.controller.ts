@@ -31,7 +31,7 @@ class AuthController {
         // userData = await UserService.signUpCompany(req.query); // for postman
       }
       await sendConfirmationEmail({
-        userTo: userData.data.email,
+        email: userData.data.email,
         hash: userData.data._id
       })
       res.json(userData);

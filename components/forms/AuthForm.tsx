@@ -9,13 +9,17 @@ import { PUBLIC_REQUESTS } from '../../constants/api-requests'
 import { IFormData } from '../../intefaces/auth'
 
 function AuthForm() {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const router = useRouter()
   const [dataResponse, setDataResponse] = useState<string>('')
   const onFinish = async (values: Pick<IFormData, 'email' | 'password'>) => {
     try {
+      setIsLoading(true)
       await $api.post(PUBLIC_REQUESTS.SIGN_IN, { params: values })
+      setIsLoading(false)
       router.push('/admin')
     } catch (e) {
+      setIsLoading(false)
       setDataResponse(e.response.data.message || e.message)
     }
   }
@@ -48,7 +52,7 @@ function AuthForm() {
       </Form.Item>
       {dataResponse && <p>{dataResponse}</p>}
       <Form.Item wrapperCol={{ span: 24 }} className="form-auth__input-field form-auth__input-field--button">
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={isLoading}>
           Sign in
         </Button>
       </Form.Item>
