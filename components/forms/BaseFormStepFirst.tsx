@@ -2,10 +2,7 @@ import React from 'react'
 import Form from 'antd/lib/form'
 import Input from 'antd/lib/input/Input'
 import Password from 'antd/lib/input/Password'
-import Typography from 'antd/lib/typography'
 import { Button } from 'antd'
-
-const { Text } = Typography
 
 function BaseFormStepFirst() {
   const onFinish = (values: any) => {
