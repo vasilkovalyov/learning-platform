@@ -68,7 +68,6 @@ class AuthService {
         if (user.role as UserAccountType === 'company') {
 
         }
-        console.log('user remove')
         await user.remove();
 
         return {
@@ -184,8 +183,8 @@ class AuthService {
 
         const { email, password } = params
         const findedRole = await RoleModel.findOne({ email: email });
-        if (!findedRole) throw ApiError.BadRequest(`User with email - ${email} not exist!`);
-
+        const pendingRole = await PendingModel.findOne({ email: email });
+        if (pendingRole === null && findedRole === null) throw ApiError.BadRequest(`User with email - ${email} not exist!`);
         let user: IUser | any
 
         if (findedRole.role as UserAccountType === "student") {
