@@ -15,6 +15,7 @@ const authRoute = require('./routes/auth.route');
 (async () => {
   try {
     await app.prepare();
+
     const server: Express = express();
     server.use(bodyParser.json());
     server.use(cors({ credentials: true, origin : process.env.API_URL, }))

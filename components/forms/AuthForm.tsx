@@ -7,22 +7,16 @@ import { Button } from 'antd'
 import $api from '../../common/ajax-config'
 import { PUBLIC_REQUESTS } from '../../constants/api-requests'
 import { IFormData } from '../../intefaces/auth'
-import status from 'constants/status'
 
 function AuthForm() {
   const router = useRouter()
   const [dataResponse, setDataResponse] = useState<string>('')
   const onFinish = async (values: Pick<IFormData, 'email' | 'password'>) => {
     try {
-      const response = await $api.post(PUBLIC_REQUESTS.SIGN_IN, { params: values })
-      if (response.data.status === status.BAD_REQUEST) {
-        setDataResponse(response.data.message)
-        return
-      }
-      if (response.data.status === status.SUCCESS) router.push('/admin')
+      await $api.post(PUBLIC_REQUESTS.SIGN_IN, { params: values })
+      router.push('/admin')
     } catch (e) {
-      console.log(e)
-      setDataResponse(e.message)
+      setDataResponse(e.response.data.message || e.message)
     }
   }
 

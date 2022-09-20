@@ -7,7 +7,6 @@ import { Button } from 'antd'
 import $api from '../../common/ajax-config'
 import { PUBLIC_REQUESTS } from '../../constants/api-requests'
 import { IFormData } from '../../intefaces/auth'
-import status from 'constants/status'
 
 const { Text } = Typography
 
@@ -21,18 +20,9 @@ function StudentForm({ onSuccess }: { onSuccess?: (isSuccess: boolean, email: st
           role: 'student',
         },
       })
-
-      if (response.data.status === status.SUCCESS) {
-        onSuccess && onSuccess(true, response.data.data.email)
-        return
-      }
-      if (response.data.status === status.BAD_REQUEST) {
-        setValidationMessage(response.data.message)
-        return
-      }
+      onSuccess && onSuccess(true, response.data.data.email)
     } catch (e) {
-      console.log(e)
-      setValidationMessage(e.message)
+      setValidationMessage(e.response.data.message || e.message)
     }
   }
 
