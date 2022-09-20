@@ -33,7 +33,6 @@ export const signUpTeacherValidation = (data: IUserSignUp & ITeacherUser) => {
     country: JoiValidation.string().required(),
     diploma: JoiValidation.object(),
     phone: JoiValidation.string().required(),
-    passport: JoiValidation.string().required(),
     education: JoiValidation.array().items(JoiValidation.string()),
     work_experience: JoiValidation.array().items(JoiValidation.string()),
     role: JoiValidation.string().valid('teacher'),

@@ -28,14 +28,11 @@ export const model = new Schema({
   phone: {
     type: String,
   },
-  // education: {
-  //   type: [String],
-  // },
-  // work_experience: {
-  //   type: [String],
-  // },
-  passport: {
-    type: String,
+  education: {
+    type: [String],
+  },
+  work_experience: {
+    type: [String],
   },
   date: {
     type: Date,

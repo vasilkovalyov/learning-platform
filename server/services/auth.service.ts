@@ -68,7 +68,6 @@ class AuthService {
         if (user.role as UserAccountType === 'company') {
 
         }
-        console.log('user remove')
         await user.remove();
 
         return {
@@ -83,19 +82,30 @@ class AuthService {
 
         const { login, email, confirm_password, role } = params
         const userRoleExist = await RoleModel.findOne({ email: email });
-        const userPendingExist = await PendingModel.findOne({ email: email });
+        // const userPendingExist = await PendingModel.findOne({ email: email }); // temp. don`t remove!!!!
 
         const hashedPassword = await bcrypt.hash(confirm_password, bcrypt.genSaltSync(10));
-        if (userRoleExist && userPendingExist) throw ApiError.BadRequest(`User with email - ${email} alreary exist!`);
+        if (userRoleExist) throw ApiError.BadRequest(`User with email - ${email} alreary exist!`); // temp. should remove later!!!
+        // if (userRoleExist && userPendingExist) throw ApiError.BadRequest(`User with email - ${email} alreary exist!`); // temp. don`t remove!!!!
 
-        const StudentModel = new PendingModel({
+
+        const studentModel = new StudentModel({
             login,
             email,
             password: hashedPassword,
             role,
         } as IUser);
 
-        const savedUser = await StudentModel.save();
+        // temp. don`t remove!!!!
+        // const StudentModel = new PendingModel({
+        //     login,
+        //     email,
+        //     password: hashedPassword,
+        //     role,
+        // } as IUser);
+
+        const savedUser = await studentModel.save();
+        this.saveRole(savedUser._id, role, email)
 
         return {
             message: `You have been registered`,
@@ -110,7 +120,7 @@ class AuthService {
         const { error } = signUpTeacherValidation(params)
         if (error) throw ApiError.BadRequest(error.details[0].message);
 
-        const { login, email, confirm_password, role, address, city, country, education, phone, work_experience, passport, diploma } = params
+        const { login, email, confirm_password, role, address, city, country, education, phone, work_experience, diploma } = params
         const userExist = await RoleModel.findOne({ email: email });
 
         const hashedPassword = await bcrypt.hash(confirm_password, bcrypt.genSaltSync(10));
@@ -127,7 +137,6 @@ class AuthService {
             education,
             phone,
             work_experience,
-            passport,
             diploma,
         });
 
@@ -184,8 +193,8 @@ class AuthService {
 
         const { email, password } = params
         const findedRole = await RoleModel.findOne({ email: email });
-        if (!findedRole) throw ApiError.BadRequest(`User with email - ${email} not exist!`);
-
+        const pendingRole = await PendingModel.findOne({ email: email });
+        if (pendingRole === null && findedRole === null) throw ApiError.BadRequest(`User with email - ${email} not exist!`);
         let user: IUser | any
 
         if (findedRole.role as UserAccountType === "student") {

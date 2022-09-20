@@ -16,7 +16,6 @@ export interface IUserSignUp extends IUser {
 
 export interface ITeacherUser extends IUserSignUp {
   phone: string
-  passport: string
   country: string
   city: string
   address: string
