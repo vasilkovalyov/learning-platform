@@ -11,17 +11,22 @@ import { IFormData } from '../../intefaces/auth'
 const { Text } = Typography
 
 function StudentForm({ onSuccess }: { onSuccess?: (isSuccess: boolean, email: string) => void }) {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [validationMessage, setValidationMessage] = useState<string>('')
   const onFinish = async (values: Pick<IFormData, 'login' | 'email' | 'password' | 'confirm_password'>) => {
     try {
+      setIsLoading(true)
       const response = await $api.post(PUBLIC_REQUESTS.SIGN_UP, {
         params: {
           ...values,
           role: 'student',
         },
       })
+      setIsLoading(false)
       onSuccess && onSuccess(true, response.data.data.email)
     } catch (e) {
+      console.log(e)
+      setIsLoading(false)
       setValidationMessage(e.response.data.message || e.message)
     }
   }
@@ -91,7 +96,7 @@ function StudentForm({ onSuccess }: { onSuccess?: (isSuccess: boolean, email: st
         <Password id="confirm_password" name="confirm_password" className="form-auth__input" />
       </Form.Item>
       <Form.Item wrapperCol={{ span: 24 }} className="form-auth__input-field form-auth__input-field--button">
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={isLoading}>
           Sign up
         </Button>
       </Form.Item>
