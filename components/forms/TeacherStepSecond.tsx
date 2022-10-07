@@ -1,15 +1,16 @@
 import React from 'react'
 import Form from 'antd/lib/form'
 import Input from 'antd/lib/input/Input'
-import Password from 'antd/lib/input/Password'
-import Typography from 'antd/lib/typography'
 import { Button } from 'antd'
+import { IFormAddress } from '../../intefaces/auth'
 
-const { Text } = Typography
+export interface IBaseFormStepSecond extends IFormAddress {
+  address: string
+}
 
-function TeacherStepSecond() {
-  const onFinish = (values: any) => {
-    console.log('Success:', values)
+function TeacherStepSecond({ onSuccess }: { onSuccess?: (isSuccess: boolean, data: IBaseFormStepSecond) => void }) {
+  function onFinish(values: IBaseFormStepSecond) {
+    onSuccess && onSuccess(true, values)
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -27,14 +28,6 @@ function TeacherStepSecond() {
       autoComplete="off"
       className="form-auth form-auth--register form-auth--register-teacher form-auth--register-teacher-2"
     >
-      <Form.Item
-        className="form-auth__input-field form-auth__input-field--input"
-        label="Passport"
-        name="passport"
-        rules={[{ required: true, message: 'Please input your passport!' }]}
-      >
-        <Input id="passport" name="passport" className="form-auth__input" />
-      </Form.Item>
       <Form.Item
         className="form-auth__input-field form-auth__input-field--input"
         label="Country"

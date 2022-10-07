@@ -3,10 +3,15 @@ import Form from 'antd/lib/form'
 import Input from 'antd/lib/input/Input'
 import Password from 'antd/lib/input/Password'
 import { Button } from 'antd'
+import { IFormData } from '../../intefaces/auth'
 
-function BaseFormStepFirst() {
-  const onFinish = (values: any) => {
-    console.log('Success:', values)
+export interface IBaseFormStepFirst extends IFormData {
+  phone: string
+}
+
+function BaseFormStepFirst({ onSuccess }: { onSuccess?: (isSuccess: boolean, data: IBaseFormStepFirst) => void }) {
+  function onFinish(values: IBaseFormStepFirst) {
+    onSuccess && onSuccess(true, values)
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -26,6 +31,14 @@ function BaseFormStepFirst() {
     >
       <Form.Item
         className="form-auth__input-field form-auth__input-field--input"
+        name="login"
+        label="Login"
+        rules={[{ required: true, message: 'Please input your login!' }]}
+      >
+        <Input id="login" name="login" />
+      </Form.Item>
+      <Form.Item
+        className="form-auth__input-field form-auth__input-field--input"
         name="email"
         label="Email"
         rules={[{ required: true, type: 'email', message: 'Please input your email!' }]}
@@ -42,7 +55,7 @@ function BaseFormStepFirst() {
       </Form.Item>
       <Form.Item
         className="form-auth__input-field form-auth__input-field--password form-auth__input-field--confirm-password"
-        name="confirm"
+        name="confirm_password"
         label="Confirm Password"
         dependencies={['password']}
         hasFeedback

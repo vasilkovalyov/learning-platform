@@ -6,11 +6,16 @@ export function sendConfirmationEmail({email, hash}: {email: string, hash: strin
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
-      secure: false,
+      secure: true,
       service: 'gmail',
       auth: {
+        type: "OAUTH2",
         user: process.env.GMAIL_LOGIN,
-        pass: process.env.GMAIL_PASSWORD
+        pass: process.env.GMAIL_PASSWORD,
+        clientId: process.env.OAUTH_CLIENT_ID,
+        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+        refreshToken: process.env.JWT_ACCESS_SECRET,
+        accessToken: process.env.JWT_REFRESH_SECRET,
       }
     })
     const message = {
@@ -28,6 +33,7 @@ export function sendConfirmationEmail({email, hash}: {email: string, hash: strin
     }
     transporter.sendMail(message, function(err, info) {
       if (err) {
+        console.log('err', err)
         rej(err)
       } else {
         res(info)

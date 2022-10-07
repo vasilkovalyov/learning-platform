@@ -27,13 +27,15 @@ class AuthController {
         // userData = await UserService.signUpTeacher(req.query); // for postman
       }
       if (role as UserAccountType === 'company') {
-        userData = await UserService.signUpTeacher(req.body.params); // for prod
+        userData = await UserService.signUpCompany(req.body.params); // for prod
         // userData = await UserService.signUpCompany(req.query); // for postman
       }
-      await sendConfirmationEmail({
-        email: userData.data.email,
-        hash: userData.data._id
-      })
+
+      // temp don`t remove!!!
+      // await sendConfirmationEmail({
+      //   email: userData.data.email,
+      //   hash: userData.data._id
+      // })
       res.json(userData);
     } catch(e) {
       console.error(e)

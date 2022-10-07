@@ -1,34 +1,24 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Form from 'antd/lib/form'
 import Input from 'antd/lib/input/Input'
 import Password from 'antd/lib/input/Password'
 import Typography from 'antd/lib/typography'
 import { Button } from 'antd'
-import $api from '../../common/ajax-config'
-import { PUBLIC_REQUESTS } from '../../constants/api-requests'
 import { IFormData } from '../../intefaces/auth'
 
 const { Text } = Typography
 
-function StudentForm({ onSuccess }: { onSuccess?: (isSuccess: boolean, email: string) => void }) {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [validationMessage, setValidationMessage] = useState<string>('')
-  const onFinish = async (values: Pick<IFormData, 'login' | 'email' | 'password' | 'confirm_password'>) => {
-    try {
-      setIsLoading(true)
-      const response = await $api.post(PUBLIC_REQUESTS.SIGN_UP, {
-        params: {
-          ...values,
-          role: 'student',
-        },
-      })
-      setIsLoading(false)
-      onSuccess && onSuccess(true, response.data.data.email)
-    } catch (e) {
-      console.log(e)
-      setIsLoading(false)
-      setValidationMessage(e.response.data.message || e.message)
-    }
+function StudentForm({
+  onSuccess,
+  isLoading,
+  validationMessage,
+}: {
+  onSuccess?: (isSuccess: boolean, data: IFormData) => void
+  isLoading?: boolean
+  validationMessage?: string | null
+}) {
+  function onFinish(values: IFormData) {
+    onSuccess && onSuccess(true, values)
   }
 
   return (
