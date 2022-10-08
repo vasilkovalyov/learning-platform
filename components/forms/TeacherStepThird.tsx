@@ -11,10 +11,10 @@ export interface IBaseFormStepThird {
 }
 
 export interface IAdditionalFields {
-  education_rest: {
+  education_rest?: {
     education_rest: string
   }[]
-  work_experience_rest: {
+  work_experience_rest?: {
     work_experience_rest: string
   }[]
 }
@@ -29,11 +29,13 @@ function TeacherStepThird({
   validationMessage?: string | null
 }) {
   function onFinish(values: IBaseFormStepThird & IAdditionalFields) {
-    const updateValues = {
-      education: [values.education, ...values.education_rest.map((el) => el.education_rest)],
-      work_experience: [values.work_experience, ...values.work_experience_rest.map((el) => el.work_experience_rest)],
-    } as IBaseFormStepThird
+    const educationArr = values.education_rest ? values.education_rest.map((el) => el.education_rest) : []
+    const workArr = values.work_experience_rest ? values.work_experience_rest.map((el) => el.work_experience_rest) : []
 
+    const updateValues = {
+      education: [values.education, ...educationArr],
+      work_experience: [values.work_experience, ...workArr],
+    } as IBaseFormStepThird
     onSuccess && onSuccess(true, updateValues)
   }
 
@@ -76,13 +78,7 @@ function TeacherStepThird({
               </Space>
             ))}
             <Form.Item>
-              <Button
-                type="dashed"
-                onClick={() => add()}
-                icon={<PlusOutlined />}
-                className="form-auth__add-field-btn"
-                loading={isLoading}
-              >
+              <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />} className="form-auth__add-field-btn">
                 Add education
               </Button>
             </Form.Item>
@@ -121,7 +117,7 @@ function TeacherStepThird({
         )}
       </Form.List>
       <Form.Item wrapperCol={{ span: 24 }} className="form-auth__input-field form-auth__input-field--button">
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={isLoading}>
           Create account{' '}
         </Button>
       </Form.Item>
