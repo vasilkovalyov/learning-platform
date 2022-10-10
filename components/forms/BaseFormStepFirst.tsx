@@ -3,14 +3,12 @@ import Form from 'antd/lib/form'
 import Input from 'antd/lib/input/Input'
 import Password from 'antd/lib/input/Password'
 import { Button } from 'antd'
-import { IFormData } from '../../intefaces/auth'
+import { IFormData, IFormDataCompany } from '../../intefaces/auth'
 
-export interface IBaseFormStepFirst extends IFormData {
-  phone: string
-}
+export type BaseFormStepFirstType = IFormData & Pick<IFormDataCompany, 'phone'>
 
-function BaseFormStepFirst({ onSuccess }: { onSuccess?: (isSuccess: boolean, data: IBaseFormStepFirst) => void }) {
-  function onFinish(values: IBaseFormStepFirst) {
+function BaseFormStepFirst({ onSuccess }: { onSuccess?: (isSuccess: boolean, data: BaseFormStepFirstType) => void }) {
+  function onFinish(values: BaseFormStepFirstType) {
     onSuccess && onSuccess(true, values)
   }
 

@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import type { NextPage } from 'next'
 import Head from 'next/head'
@@ -12,114 +12,47 @@ import Col from 'antd/lib/col'
 import Space from 'antd/lib/space'
 import Button from 'antd/lib/button'
 
-import BaseFormStepFirst, { IBaseFormStepFirst } from 'components/forms/BaseFormStepFirst'
-import CompanyStepSecond, { IBaseFormStepSecond } from 'components/forms/CompanyStepSecond'
+import BaseFormStepFirst, { BaseFormStepFirstType } from 'components/forms/BaseFormStepFirst'
+import CompanyStepSecond, { BaseFormCompanyStepSecondType } from 'components/forms/CompanyStepSecond'
 
-import { PUBLIC_REQUESTS } from '../../../constants/api-requests'
-import { RoleType } from '../../../types/common'
-import $api from '../../../common/ajax-config'
+import { useFormAction, useFormSteps, IUseFormAction, IUserFormSteps } from '../../../hooks/useFormAction'
+import AuthService from '../../../services/auth'
 
 const { Title, Text } = Typography
 
-enum SignUpCompanyActionKind {
-  SUCCESS_FORM_FIRST = 'SUCCESS_FORM_FIRST',
-  IS_LOADING = 'IS_LOADING',
-  IS_LOADING_SUCCESS = 'IS_LOADING_SUCCESS',
-  ERROR_MESSAGE = 'ERROR_MESSAGE',
-}
-
-interface SignUpCompanyAction {
-  type: SignUpCompanyActionKind
-  payload: ISignUpCompanyState
-}
-
-interface ISignUpCompanyState {
-  isLoading: boolean
-  isSuccessFormFirst: boolean
-  isSuccessForms: boolean
-  formDataFirst: IBaseFormStepFirst | null
-  validationMessage: string | null
-}
-
-const initialState: ISignUpCompanyState = {
+const initialStateFormAction: IUseFormAction = {
   isLoading: false,
-  isSuccessFormFirst: false,
+  validationMessage: '',
+}
+
+const initialStateFormSteps: IUserFormSteps<BaseFormStepFirstType, BaseFormCompanyStepSecondType> = {
   isSuccessForms: false,
   formDataFirst: null,
-  validationMessage: null,
-}
-
-function signUpReducer(state: ISignUpCompanyState, action: SignUpCompanyAction) {
-  const { type, payload } = action
-  switch (type) {
-    case SignUpCompanyActionKind.SUCCESS_FORM_FIRST:
-      return {
-        ...state,
-        isSuccessFormFirst: payload.isSuccessFormFirst,
-        formDataFirst: payload.formDataFirst,
-      } as ISignUpCompanyState
-    case SignUpCompanyActionKind.IS_LOADING:
-      return {
-        ...state,
-        isLoading: payload.isLoading,
-      } as ISignUpCompanyState
-    case SignUpCompanyActionKind.IS_LOADING_SUCCESS:
-      return {
-        ...state,
-        isLoading: payload.isLoading,
-        isSuccessForms: payload.isSuccessForms,
-        validationMessage: payload.validationMessage,
-      } as ISignUpCompanyState
-    case SignUpCompanyActionKind.ERROR_MESSAGE:
-      return {
-        ...state,
-        isLoading: payload.isLoading,
-        validationMessage: payload.validationMessage,
-      } as ISignUpCompanyState
-    default:
-      return state
-  }
 }
 
 const Company: NextPage = () => {
-  const [state, dispatch] = useReducer(signUpReducer, initialState)
-  const { isSuccessFormFirst, isSuccessForms, isLoading, formDataFirst, validationMessage } = state
+  const [isLoading, validationMessage, toggleLoading, addValidationMessage] = useFormAction(initialStateFormAction)
+  const [isSuccessForm, successForm, setFormStepFirst, setFormStepSecond, formDataFirst, isSuccessFormFirst] =
+    useFormSteps<BaseFormStepFirstType, BaseFormCompanyStepSecondType>(initialStateFormSteps)
 
-  function successFormFirst(isSuccess: boolean, data: IBaseFormStepFirst) {
+  function successFormFirst(isSuccess: boolean, data: BaseFormStepFirstType) {
     if (!isSuccess) return
-    dispatch({
-      type: SignUpCompanyActionKind.SUCCESS_FORM_FIRST,
-      payload: {
-        isSuccessFormFirst: isSuccess,
-        formDataFirst: data,
-      } as ISignUpCompanyState,
-    })
+    setFormStepFirst(data)
   }
 
-  async function successFormSecond(isSuccess: boolean, data: IBaseFormStepSecond) {
+  async function successFormSecond(isSuccess: boolean, data: BaseFormCompanyStepSecondType) {
     if (!isSuccess) return
     try {
-      dispatch({
-        type: SignUpCompanyActionKind.IS_LOADING,
-        payload: {
-          isLoading: true,
-        } as ISignUpCompanyState,
-      })
-      const userData = { ...formDataFirst, ...data, role: 'company' as RoleType }
-      const response = await $api.post(PUBLIC_REQUESTS.SIGN_UP, { params: userData })
-      dispatch({
-        type: SignUpCompanyActionKind.IS_LOADING_SUCCESS,
-        payload: {
-          isLoading: false,
-          isSuccessForms: true,
-          validationMessage: response.data.message || null,
-        } as ISignUpCompanyState,
-      })
+      toggleLoading(true)
+      setFormStepSecond(data)
+      const userData = { ...formDataFirst, ...data }
+      const response = await AuthService.signUpCompany(userData)
+      toggleLoading(false)
+      addValidationMessage(response.message || '')
+      successForm()
     } catch (e) {
-      dispatch({
-        type: SignUpCompanyActionKind.ERROR_MESSAGE,
-        payload: { isLoading: false, validationMessage: e.response.data.message || e.message } as ISignUpCompanyState,
-      })
+      toggleLoading(false)
+      addValidationMessage(e.response.data.message || e.message)
     }
   }
 
@@ -148,7 +81,7 @@ const Company: NextPage = () => {
             <Title level={2} className="section-registration__heading">
               Registration Company
             </Title>
-            {!isSuccessForms ? (
+            {!isSuccessForm ? (
               <Row justify="center" gutter={[40, 40]}>
                 <Col span={24} md={14} lg={10}>
                   <BaseFormStepFirst onSuccess={successFormFirst} />

@@ -5,10 +5,7 @@ import Space from 'antd/lib/space'
 import { Button } from 'antd'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 
-export interface IBaseFormStepThird {
-  education: string[]
-  work_experience: string[]
-}
+import { IFormEducation } from '../../intefaces/auth'
 
 export interface IAdditionalFields {
   education_rest?: {
@@ -24,18 +21,18 @@ function TeacherStepThird({
   isLoading,
   validationMessage,
 }: {
-  onSuccess?: (isSuccess: boolean, data: IBaseFormStepThird) => void
+  onSuccess?: (isSuccess: boolean, data: IFormEducation) => void
   isLoading?: boolean
   validationMessage?: string | null
 }) {
-  function onFinish(values: IBaseFormStepThird & IAdditionalFields) {
+  function onFinish(values: IFormEducation & IAdditionalFields) {
     const educationArr = values.education_rest ? values.education_rest.map((el) => el.education_rest) : []
     const workArr = values.work_experience_rest ? values.work_experience_rest.map((el) => el.work_experience_rest) : []
 
     const updateValues = {
       education: [values.education, ...educationArr],
       work_experience: [values.work_experience, ...workArr],
-    } as IBaseFormStepThird
+    } as IFormEducation
     onSuccess && onSuccess(true, updateValues)
   }
 
