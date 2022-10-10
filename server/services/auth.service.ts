@@ -20,6 +20,7 @@ interface IAuthUserResponse {
 
 interface ICommonInfo {
     city: string
+    state: string
     country: string
 }
 
@@ -27,7 +28,6 @@ interface IUserTeacher extends ICommonInfo, IUserSignUp {
     education: string[]
     phone: string
     work_experience: string[]
-    diploma: string
     address: string
 }
 
@@ -120,7 +120,7 @@ class AuthService {
         const { error } = signUpTeacherValidation(params)
         if (error) throw ApiError.BadRequest(error.details[0].message);
 
-        const { login, email, confirm_password, role, address, city, country, education, phone, work_experience, diploma } = params
+        const { login, email, confirm_password, role, address, city, state, country, education, phone, work_experience } = params
         const userExist = await RoleModel.findOne({ email: email });
 
         const hashedPassword = await bcrypt.hash(confirm_password, bcrypt.genSaltSync(10));
@@ -133,11 +133,11 @@ class AuthService {
             role,
             address,
             city,
+            state,
             country,
             education,
             phone,
             work_experience,
-            diploma,
         });
 
         const savedUser = await teacherModel.save();
@@ -153,7 +153,7 @@ class AuthService {
         const { error } = signUpCompanyValidation(params)
         if (error) throw ApiError.BadRequest(error.details[0].message);
 
-        const { login, email, confirm_password, role, city, country, phone, company_name, inn_code, mailing_address, legal_address } = params
+        const { login, email, confirm_password, role, city, state, country, phone, company_name, inn_code, mailing_address, legal_address } = params
         const userExist = await RoleModel.findOne({ email: email });
 
         const hashedPassword = await bcrypt.hash(confirm_password, bcrypt.genSaltSync(10));
@@ -165,6 +165,7 @@ class AuthService {
             password: hashedPassword,
             role,
             city,
+            state,
             country,
             phone,
             company_name,
