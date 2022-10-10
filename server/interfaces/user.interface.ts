@@ -17,11 +17,11 @@ export interface IUserSignUp extends IUser {
 export interface ITeacherUser extends IUserSignUp {
   phone: string
   country: string
+  state: string
   city: string
   address: string
   education: string[]
   work_experience: string[]
-  diploma: any
 }
 
 export interface ICompanyUser extends IUser {
@@ -29,6 +29,7 @@ export interface ICompanyUser extends IUser {
   company_name: string
   inn_code: string
   country: string
+  state: string
   city: string
   legal_address: string
   mailing_address: string

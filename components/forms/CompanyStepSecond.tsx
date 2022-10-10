@@ -1,17 +1,20 @@
-import React, { useRef } from 'react'
+import React, { useEffect } from 'react'
 import Form from 'antd/lib/form'
+import Select from 'antd/lib/select'
 import Input from 'antd/lib/input/Input'
 import { Button } from 'antd'
 import Checkbox from 'antd/lib/checkbox'
 import type { CheckboxChangeEvent } from 'antd/es/checkbox'
 
-import { IFormAddress } from '../../intefaces/auth'
+import { IFormAddress, IFormDataCompany } from '../../intefaces/auth'
+import useCountriesAndCities, { IUseCountriesAndCities } from '../../hooks/useCountriesAndCities'
 
-export interface IBaseFormStepSecond extends IFormAddress {
-  company_name: string
-  inn_code: string
-  legal_address: string
-  mailing_address: string
+export type BaseFormCompanyStepSecondType = IFormDataCompany & IFormAddress
+
+const initialValue: IUseCountriesAndCities = {
+  countries: [],
+  states: [],
+  cities: [],
 }
 
 function CompanyStepSecond({
@@ -19,15 +22,23 @@ function CompanyStepSecond({
   isLoading,
   validationMessage,
 }: {
-  onSuccess?: (isSuccess: boolean, data: IBaseFormStepSecond) => void
+  onSuccess?: (isSuccess: boolean, data: BaseFormCompanyStepSecondType) => void
   isLoading?: boolean
   validationMessage?: string | null
 }) {
-  const legalAddress = useRef(null)
-  const mailingAddress = useRef(null)
   const [form] = Form.useForm()
+  const [countries, states, cities, isLoadingStates, isLoadingCities, getCounties, selectCountry, selectState] =
+    useCountriesAndCities(initialValue)
 
-  function onFinish(values: IBaseFormStepSecond) {
+  useEffect(() => {
+    async function setCountries() {
+      const countries = await getCounties()
+      form.setFieldsValue({ countries: countries })
+    }
+    setCountries()
+  }, [])
+
+  function onFinish(values: BaseFormCompanyStepSecondType) {
     onSuccess && onSuccess(true, values)
   }
 
@@ -68,20 +79,94 @@ function CompanyStepSecond({
         <Input id="inn-code" name="inn_code" className="form-auth__input" />
       </Form.Item>
       <Form.Item
-        className="form-auth__input-field form-auth__input-field--input"
         label="Country"
         name="country"
+        className="form-auth__input-field form-auth__input-field--select"
         rules={[{ required: true, message: 'Please input your country!' }]}
       >
-        <Input id="country" name="country" className="form-auth__input" />
+        <Select
+          onSelect={(value) => {
+            console.log(value)
+            selectCountry(value)
+          }}
+          id="country"
+          className="form-auth__select"
+          showSearch
+          optionFilterProp="children"
+          filterOption={(input, option) => (option!.children as unknown as string).includes(input)}
+          filterSort={(optionA, optionB) =>
+            (optionA!.children as unknown as string)
+              .toLowerCase()
+              .localeCompare((optionB!.children as unknown as string).toLowerCase())
+          }
+        >
+          {countries &&
+            countries.length &&
+            countries.map((country, index) => (
+              <Select.Option key={index} value={country.country_name}>
+                {country.country_name}
+              </Select.Option>
+            ))}
+        </Select>
       </Form.Item>
       <Form.Item
-        className="form-auth__input-field form-auth__input-field--input"
+        label="State"
+        name="state"
+        className="form-auth__input-field form-auth__input-field--select"
+        rules={[{ required: true, message: 'Please input your state!' }]}
+      >
+        <Select
+          loading={isLoadingStates}
+          disabled={isLoadingStates}
+          onSelect={(value) => selectState(value)}
+          id="state"
+          className="form-auth__select"
+          showSearch
+          optionFilterProp="children"
+          filterOption={(input, option) => (option!.children as unknown as string).includes(input)}
+          filterSort={(optionA, optionB) =>
+            (optionA!.children as unknown as string)
+              .toLowerCase()
+              .localeCompare((optionB!.children as unknown as string).toLowerCase())
+          }
+        >
+          {states &&
+            states.length &&
+            states.map((state, index) => (
+              <Select.Option key={index} value={state.state_name}>
+                {state.state_name}
+              </Select.Option>
+            ))}
+        </Select>
+      </Form.Item>
+      <Form.Item
         label="City"
         name="city"
-        rules={[{ required: true, message: 'Please input your City!' }]}
+        className="form-auth__input-field form-auth__input-field--select"
+        rules={[{ required: true, message: 'Please input your city!' }]}
       >
-        <Input id="city" name="city" className="form-auth__input" />
+        <Select
+          loading={isLoadingCities}
+          disabled={isLoadingCities}
+          id="city"
+          className="form-auth__select"
+          showSearch
+          optionFilterProp="children"
+          filterOption={(input, option) => (option!.children as unknown as string).includes(input)}
+          filterSort={(optionA, optionB) =>
+            (optionA!.children as unknown as string)
+              .toLowerCase()
+              .localeCompare((optionB!.children as unknown as string).toLowerCase())
+          }
+        >
+          {cities &&
+            cities.length &&
+            cities.map((city, index) => (
+              <Select.Option key={index} value={city.city_name}>
+                {city.city_name}
+              </Select.Option>
+            ))}
+        </Select>
       </Form.Item>
       <Form.Item
         className="form-auth__input-field form-auth__input-field--input"
@@ -89,7 +174,7 @@ function CompanyStepSecond({
         name="legal_address"
         rules={[{ required: true, message: 'Please input your Legal address!' }]}
       >
-        <Input id="legal-address" name="legal_address" className="form-auth__input" ref={legalAddress} />
+        <Input id="legal-address" name="legal_address" className="form-auth__input" />
       </Form.Item>
       <Form.Item
         className="form-auth__input-field form-auth__input-field--input"
@@ -97,7 +182,7 @@ function CompanyStepSecond({
         name="mailing_address"
         rules={[{ required: true, message: 'Please input your Mailing address!' }]}
       >
-        <Input id="mailing-address" name="mailing_address" className="form-auth__input" ref={mailingAddress} />
+        <Input id="mailing-address" name="mailing_address" className="form-auth__input" />
       </Form.Item>
       <Checkbox onChange={onChangeCheckbox}>Matches legal address</Checkbox>
       <Form.Item wrapperCol={{ span: 24 }} className="form-auth__input-field form-auth__input-field--button">

@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import type { NextPage } from 'next'
 import Head from 'next/head'
@@ -12,146 +12,65 @@ import Col from 'antd/lib/col'
 import Space from 'antd/lib/space'
 import Button from 'antd/lib/button'
 
-import BaseFormStepFirst, { IBaseFormStepFirst } from 'components/forms/BaseFormStepFirst'
-import TeacherStepSecond, { IBaseFormStepSecond } from 'components/forms/TeacherStepSecond'
-import TeacherStepThird, { IBaseFormStepThird } from 'components/forms/TeacherStepThird'
+import BaseFormStepFirst, { BaseFormStepFirstType } from 'components/forms/BaseFormStepFirst'
+import TeacherStepSecond, { IBaseFormTeacherStepSecond } from 'components/forms/TeacherStepSecond'
+import TeacherStepThird from 'components/forms/TeacherStepThird'
 
-import { PUBLIC_REQUESTS } from '../../../constants/api-requests'
-import { RoleType } from '../../../types/common'
-import $api from '../../../common/ajax-config'
+import { IFormEducation } from '../../../intefaces/auth'
 
-const { Title, Text } = Typography
+import { useFormAction, useFormSteps, IUseFormAction, IUserFormSteps } from '../../../hooks/useFormAction'
+import AuthService from '../../../services/auth'
 
-enum SignUpTeacherActionKind {
-  SUCCESS_FORM_FIRST = 'SUCCESS_FORM_FIRST',
-  SUCCESS_FORM_SECOND = 'SUCCESS_FORM_SECOND',
-  IS_LOADING = 'IS_LOADING',
-  IS_LOADING_SUCCESS = 'IS_LOADING_SUCCESS',
-  ERROR_MESSAGE = 'ERROR_MESSAGE',
-}
-
-interface SignUpTeacherAction {
-  type: SignUpTeacherActionKind
-  payload: ISignUpTeacherState
-}
-
-interface ISignUpTeacherState {
-  isLoading: boolean
-  isSuccessFormFirst: boolean
-  isSuccessFormSecond: boolean
-  isSuccessForms: boolean
-  formDataFirst: IBaseFormStepFirst | null
-  formDataSecond: IBaseFormStepSecond | null
-  validationMessage: string | null
-}
-
-const initialState: ISignUpTeacherState = {
+const initialStateFormAction: IUseFormAction = {
   isLoading: false,
-  isSuccessFormFirst: false,
-  isSuccessFormSecond: false,
+  validationMessage: '',
+}
+
+const initialStateFormSteps: IUserFormSteps<BaseFormStepFirstType, IBaseFormTeacherStepSecond> = {
   isSuccessForms: false,
   formDataFirst: null,
   formDataSecond: null,
-  validationMessage: null,
+  isSuccessFormFirst: false,
+  isSuccessFormSecond: false,
 }
 
-function signUpReducer(state: ISignUpTeacherState, action: SignUpTeacherAction) {
-  const { type, payload } = action
-  switch (type) {
-    case SignUpTeacherActionKind.SUCCESS_FORM_FIRST:
-      return {
-        ...state,
-        isSuccessFormFirst: payload.isSuccessFormFirst,
-        formDataFirst: payload.formDataFirst,
-      } as ISignUpTeacherState
-    case SignUpTeacherActionKind.SUCCESS_FORM_SECOND:
-      return {
-        ...state,
-        isSuccessFormSecond: payload.isSuccessFormSecond,
-        formDataSecond: payload.formDataSecond,
-      } as ISignUpTeacherState
-    case SignUpTeacherActionKind.IS_LOADING:
-      return {
-        ...state,
-        isLoading: payload.isLoading,
-      } as ISignUpTeacherState
-    case SignUpTeacherActionKind.IS_LOADING_SUCCESS:
-      return {
-        ...state,
-        isLoading: payload.isLoading,
-        isSuccessForms: payload.isSuccessForms,
-        validationMessage: payload.validationMessage,
-      } as ISignUpTeacherState
-    case SignUpTeacherActionKind.ERROR_MESSAGE:
-      return {
-        ...state,
-        isLoading: payload.isLoading,
-        validationMessage: payload.validationMessage,
-      } as ISignUpTeacherState
-    default:
-      return state
-  }
-}
+const { Title, Text } = Typography
 
 const RegistrationTeacher: NextPage = () => {
-  const [state, dispatch] = useReducer(signUpReducer, initialState)
-  const {
-    isSuccessFormFirst,
-    isSuccessFormSecond,
-    isLoading,
+  const [isLoading, validationMessage, toggleLoading, addValidationMessage] = useFormAction(initialStateFormAction)
+  const [
+    isSuccessForm,
+    successForm,
+    setFormStepFirst,
+    setFormStepSecond,
     formDataFirst,
+    isSuccessFormFirst,
     formDataSecond,
-    validationMessage,
-    isSuccessForms,
-  } = state
+    isSuccessFormSecond,
+  ] = useFormSteps<BaseFormStepFirstType, IBaseFormTeacherStepSecond>(initialStateFormSteps)
 
-  function successFormFirst(isSuccess: boolean, data: IBaseFormStepFirst) {
+  function successFormFirst(isSuccess: boolean, data: BaseFormStepFirstType) {
     if (!isSuccess) return
-    dispatch({
-      type: SignUpTeacherActionKind.SUCCESS_FORM_FIRST,
-      payload: {
-        isSuccessFormFirst: isSuccess,
-        formDataFirst: data,
-      } as ISignUpTeacherState,
-    })
+    setFormStepFirst(data)
   }
 
-  function successFormSecond(isSuccess: boolean, data: IBaseFormStepSecond) {
+  function successFormSecond(isSuccess: boolean, data: IBaseFormTeacherStepSecond) {
     if (!isSuccess) return
-    dispatch({
-      type: SignUpTeacherActionKind.SUCCESS_FORM_SECOND,
-      payload: {
-        isSuccessFormSecond: isSuccess,
-        formDataSecond: data,
-      } as ISignUpTeacherState,
-    })
+    setFormStepSecond(data)
   }
 
-  async function successFormThird(isSuccess: boolean, data: IBaseFormStepThird) {
+  async function successFormThird(isSuccess: boolean, data: IFormEducation) {
     if (!isSuccess) return
     try {
-      dispatch({
-        type: SignUpTeacherActionKind.IS_LOADING,
-        payload: {
-          isLoading: true,
-        } as ISignUpTeacherState,
-      })
-      const userData = { ...formDataFirst, ...formDataSecond, ...data, role: 'teacher' as RoleType }
-      const response = await $api.post(PUBLIC_REQUESTS.SIGN_UP, { params: userData })
-
-      dispatch({
-        type: SignUpTeacherActionKind.IS_LOADING_SUCCESS,
-        payload: {
-          isLoading: false,
-          isSuccessForms: true,
-          validationMessage: response.data.message || null,
-        } as ISignUpTeacherState,
-      })
+      toggleLoading(true)
+      const userData = { ...formDataFirst, ...formDataSecond, ...data }
+      const response = await AuthService.signUpTeacher(userData)
+      toggleLoading(false)
+      successForm()
+      addValidationMessage(response.message || '')
     } catch (e) {
-      dispatch({
-        type: SignUpTeacherActionKind.ERROR_MESSAGE,
-        payload: { isLoading: false, validationMessage: e.response.data.message || e.message } as ISignUpTeacherState,
-      })
+      toggleLoading(false)
+      addValidationMessage(e.response.data.message || e.message)
     }
   }
 
@@ -180,7 +99,7 @@ const RegistrationTeacher: NextPage = () => {
             <Title level={2} className="section-registration__heading">
               Registration Teacher
             </Title>
-            {!isSuccessForms ? (
+            {!isSuccessForm ? (
               <Row justify="center" gutter={[40, 40]}>
                 <Col span={24} md={14} lg={8}>
                   <BaseFormStepFirst onSuccess={successFormFirst} />
