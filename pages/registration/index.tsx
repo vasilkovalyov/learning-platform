@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 
-import PublicLayout from 'components/layouts/PublicLayout'
+import PublicLayout from 'layouts/PublicLayout'
 import Typography from 'antd/lib/typography'
 import Row from 'antd/lib/row'
 import Col from 'antd/lib/col'

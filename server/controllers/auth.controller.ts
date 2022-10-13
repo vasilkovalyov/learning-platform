@@ -15,20 +15,20 @@ class AuthController {
 
   async signUp(req, res) {
     try {
-      const { role  } = req.body.params // for prod
-      // const { role } = req.query // for postman
+      // const { role  } = req.body.params // for prod
+      const { role } = req.query // for postman
       let userData: any = null
       if (role as UserAccountType === 'student') {
-        userData = await UserService.signUpStudent(req.body.params); // for prod
-        // userData = await UserService.signUpStudent(req.query); // for postman
+        // userData = await UserService.signUpStudent(req.body.params); // for prod
+        userData = await UserService.signUpStudent(req.query); // for postman
       }
       if (role as UserAccountType === 'teacher') {
-        userData = await UserService.signUpTeacher(req.body.params); // for prod
-        // userData = await UserService.signUpTeacher(req.query); // for postman
+        // userData = await UserService.signUpTeacher(req.body.params); // for prod
+        userData = await UserService.signUpTeacher(req.query); // for postman
       }
       if (role as UserAccountType === 'company') {
-        userData = await UserService.signUpCompany(req.body.params); // for prod
-        // userData = await UserService.signUpCompany(req.query); // for postman
+        // userData = await UserService.signUpCompany(req.body.params); // for prod
+        userData = await UserService.signUpCompany(req.query); // for postman
       }
 
       // temp don`t remove!!!
@@ -45,8 +45,8 @@ class AuthController {
 
   async signIn(req, res) {
     try {
-      const userData = await UserService.signIn(req.body.params); // for prod
-      // const userData = await UserService.signIn(req.query); // for postman
+      // const userData = await UserService.signIn(req.body.params); // for prod
+      const userData = await UserService.signIn(req.query); // for postman
       res.json(userData);
     } catch(e) {
       console.error(e)

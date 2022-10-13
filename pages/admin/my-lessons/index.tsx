@@ -4,14 +4,14 @@ import AdminLayout from 'layouts/AdminLayout'
 
 const { Title } = Typography
 
-const Account = () => {
+const MyLessons = () => {
   return (
     <div>
-      <Title level={3}>Account</Title>
+      <Title level={3}>My Lessons</Title>
     </div>
   )
 }
 
-Account.PageLayout = AdminLayout
+MyLessons.PageLayout = AdminLayout
 
-export default Account
+export default MyLessons

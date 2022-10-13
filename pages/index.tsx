@@ -1,7 +1,7 @@
 import React from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import PublicLayout from 'components/layouts/PublicLayout'
+import PublicLayout from 'layouts/PublicLayout'
 
 const Home: NextPage = () => {
   return (
