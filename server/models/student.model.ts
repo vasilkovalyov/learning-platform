@@ -19,6 +19,7 @@ export const model = new Schema({
   role: {
     type: String,
     required: true,
+    ref: 'Role'
   },
   date: {
     type: Date,

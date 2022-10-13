@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
-import PublicLayout from 'components/layouts/PublicLayout'
+import PublicLayout from 'layouts/PublicLayout'
 import Typography from 'antd/lib/typography'
 import Layout from 'antd/lib/layout/layout'
 import Breadcrumb from 'antd/lib/breadcrumb'

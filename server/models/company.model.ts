@@ -13,9 +13,6 @@ export const model = new Schema({
     min: 6,
     max: 100
   },
-  role: {
-    type: String,
-  },
   city: {
     type: String,
   },
@@ -43,6 +40,11 @@ export const model = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  role: {
+    type: String,
+    required: true,
+    ref: 'Role'
   },
 })
 

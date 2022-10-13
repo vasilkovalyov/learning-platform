@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
-import PublicLayout from 'components/layouts/PublicLayout'
+import PublicLayout from 'layouts/PublicLayout'
 import Typography from 'antd/lib/typography'
 import Layout from 'antd/lib/layout/layout'
 import Breadcrumb from 'antd/lib/breadcrumb'
@@ -125,7 +125,6 @@ const Auth: NextPage = () => {
             </Breadcrumb>
           </div>
         </div>
-        {state && JSON.stringify(state, null, 2)}
         <Layout className="section-registration">
           <div className="container">
             <Title level={2} className="section-registration__heading">

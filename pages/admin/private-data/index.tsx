@@ -1,17 +1,16 @@
 import React from 'react'
 import Typography from 'antd/lib/typography'
 import AdminLayout from 'layouts/AdminLayout'
-
 const { Title } = Typography
 
-const Account = () => {
+const PrivateCard = () => {
   return (
     <div>
-      <Title level={3}>Account</Title>
+      <Title level={3}>Private Card</Title>
     </div>
   )
 }
 
-Account.PageLayout = AdminLayout
+PrivateCard.PageLayout = AdminLayout
 
-export default Account
+export default PrivateCard
