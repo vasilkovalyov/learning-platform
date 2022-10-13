@@ -11,15 +11,15 @@ class ApiError {
         this.message = message
     }
     
-    static BadRequest(message, errors = []) {
+    static BadRequest(message: string, errors = []) {
         return new ApiError(status.BAD_REQUEST, message, errors)
     }
 
-    static UnauthorizedError(message, errors = []) {
+    static UnauthorizedError(message: string, errors = []) {
         return new ApiError(status.UNAUTHORIZED, message, errors)
     }
 
-    static ForbiddenError(message, errors = []) {
+    static ForbiddenError(message: string, errors = []) {
         return new ApiError(status.FORBIDDEN, message, errors)
     }
 }
