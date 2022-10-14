@@ -60,28 +60,28 @@ function CompanyStepSecond({
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
-      className="form-auth form-auth--register form-auth--register-company form-auth--register-company-2"
+      className="form form-auth form-auth--register"
     >
       <Form.Item
-        className="form-auth__input-field form-auth__input-field--input"
+        className="form__input-field form__input-field--input"
         label="Company name"
         name="company_name"
         rules={[{ required: true, message: 'Please input your Company name!' }]}
       >
-        <Input id="company-name" name="company_name" className="form-auth__input" />
+        <Input id="company-name" name="company_name" className="form__input" />
       </Form.Item>
       <Form.Item
-        className="form-auth__input-field form-auth__input-field--input"
+        className="form__input-field form__input-field--input"
         label="Identification code"
         name="inn_code"
         rules={[{ required: true, message: 'Please input your inn code!' }]}
       >
-        <Input id="inn-code" name="inn_code" className="form-auth__input" />
+        <Input id="inn-code" name="inn_code" className="form__input" />
       </Form.Item>
       <Form.Item
         label="Country"
         name="country"
-        className="form-auth__input-field form-auth__input-field--select"
+        className="form__input-field form__input-field--select"
         rules={[{ required: true, message: 'Please input your country!' }]}
       >
         <Select
@@ -90,7 +90,7 @@ function CompanyStepSecond({
             selectCountry(value)
           }}
           id="country"
-          className="form-auth__select"
+          className="form__select"
           showSearch
           optionFilterProp="children"
           filterOption={(input, option) => (option!.children as unknown as string).includes(input)}
@@ -112,7 +112,7 @@ function CompanyStepSecond({
       <Form.Item
         label="State"
         name="state"
-        className="form-auth__input-field form-auth__input-field--select"
+        className="form__input-field form__input-field--select"
         rules={[{ required: true, message: 'Please input your state!' }]}
       >
         <Select
@@ -120,7 +120,7 @@ function CompanyStepSecond({
           disabled={isLoadingStates}
           onSelect={(value) => selectState(value)}
           id="state"
-          className="form-auth__select"
+          className="form__select"
           showSearch
           optionFilterProp="children"
           filterOption={(input, option) => (option!.children as unknown as string).includes(input)}
@@ -142,14 +142,14 @@ function CompanyStepSecond({
       <Form.Item
         label="City"
         name="city"
-        className="form-auth__input-field form-auth__input-field--select"
+        className="form__input-field form__input-field--select"
         rules={[{ required: true, message: 'Please input your city!' }]}
       >
         <Select
           loading={isLoadingCities}
           disabled={isLoadingCities}
           id="city"
-          className="form-auth__select"
+          className="form__select"
           showSearch
           optionFilterProp="children"
           filterOption={(input, option) => (option!.children as unknown as string).includes(input)}
@@ -169,23 +169,23 @@ function CompanyStepSecond({
         </Select>
       </Form.Item>
       <Form.Item
-        className="form-auth__input-field form-auth__input-field--input"
+        className="form__input-field form__input-field--input"
         label="Legal address"
         name="legal_address"
         rules={[{ required: true, message: 'Please input your Legal address!' }]}
       >
-        <Input id="legal-address" name="legal_address" className="form-auth__input" />
+        <Input id="legal-address" name="legal_address" className="form__input" />
       </Form.Item>
       <Form.Item
-        className="form-auth__input-field form-auth__input-field--input"
+        className="form__input-field form__input-field--input"
         label="Mailing address"
         name="mailing_address"
         rules={[{ required: true, message: 'Please input your Mailing address!' }]}
       >
-        <Input id="mailing-address" name="mailing_address" className="form-auth__input" />
+        <Input id="mailing-address" name="mailing_address" className="form__input" />
       </Form.Item>
       <Checkbox onChange={onChangeCheckbox}>Matches legal address</Checkbox>
-      <Form.Item wrapperCol={{ span: 24 }} className="form-auth__input-field form-auth__input-field--button">
+      <Form.Item wrapperCol={{ span: 24 }} className="form__input-field form__input-field--button">
         <Button type="primary" htmlType="submit" loading={isLoading}>
           Create account
         </Button>

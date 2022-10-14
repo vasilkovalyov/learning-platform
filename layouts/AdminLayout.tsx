@@ -2,8 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-
-// import PublicLayout from 'layouts/PublicLayout'
+import Avatar from 'antd/lib/avatar'
 import Typography from 'antd/lib/typography'
 import Layout from 'antd/lib/layout/layout'
 import Breadcrumb from 'antd/lib/breadcrumb'
@@ -44,7 +43,11 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
             </Title>
             <Row gutter={48}>
               <Col className="gutter-row" span={24} md={8} lg={6}>
-                <AdminPageNavigation />
+                <div className="section-admin__avatar-wrapper">
+                  <Avatar size={88} src="/images/avatar-default.jpg" />
+                </div>
+                <Title level={4}>Vasiliy Kovalyov</Title>
+                <AdminPageNavigation role="student" />
               </Col>
               <Col className="gutter-row" span={24} md={16}>
                 {children}

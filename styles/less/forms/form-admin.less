@@ -1,0 +1,41 @@
+.form-admin {
+  .form__input-field {
+  }
+
+  .ant-btn {
+    min-width: auto;
+  }
+
+  &__additional-btn {
+    color: @grey-2;
+    padding: 0;
+    height: auto;
+
+    span {
+      text-decoration: underline;
+    }
+  }
+
+  .form__input {
+    @media (min-width: 1024px) {
+      max-width: 300px;
+      width: 100%;
+      margin-right: 20px;
+    }
+  }
+
+  .ant-form-item-control-input {
+    + div {
+      @media (min-width: 1024px) {
+        max-width: 300px;
+        width: 100%;
+      }
+    }
+  }
+
+  .ant-form-item-control-input-content {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
