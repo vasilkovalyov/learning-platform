@@ -29,10 +29,10 @@ function StudentForm({
       initialValues={{ remember: true }}
       onFinish={onFinish}
       autoComplete="off"
-      className="form-auth form-auth--register form-auth--register-student"
+      className="form form-auth form-auth--register"
     >
       <Form.Item
-        className="form-auth__input-field form-auth__input-field--input"
+        className="form__input-field form__input-field--input"
         name="login"
         label="Login"
         rules={[{ required: true, message: 'Please input your login!' }]}
@@ -40,7 +40,7 @@ function StudentForm({
         <Input id="login" name="login" />
       </Form.Item>
       <Form.Item
-        className="form-auth__input-field form-auth__input-field--input"
+        className="form__input-field form__input-field--input"
         name="email"
         label="Email"
         rules={[{ required: true, type: 'email', message: 'Please input your email!' }]}
@@ -48,7 +48,7 @@ function StudentForm({
         <Input id="email" name="email" />
       </Form.Item>
       <Form.Item
-        className="form-auth__input-field form-auth__input-field--password"
+        className="form__input-field form__input-field--password"
         label="Password"
         name="password"
         rules={[
@@ -56,10 +56,10 @@ function StudentForm({
           { min: 6, message: 'Please must be minimum 6 characters!' },
         ]}
       >
-        <Password id="password" name="password" className="form-auth__input" />
+        <Password id="password" name="password" className="form__input" />
       </Form.Item>
       <Form.Item
-        className="form-auth__input-field form-auth__input-field--password form-auth__input-field--confirm_password"
+        className="form__input-field form__input-field--password form__input-field--confirm_password"
         name="confirm_password"
         label="Confirm Password"
         dependencies={['password']}
@@ -83,15 +83,15 @@ function StudentForm({
           }),
         ]}
       >
-        <Password id="confirm_password" name="confirm_password" className="form-auth__input" />
+        <Password id="confirm_password" name="confirm_password" className="form__input" />
       </Form.Item>
-      <Form.Item wrapperCol={{ span: 24 }} className="form-auth__input-field form-auth__input-field--button">
+      <Form.Item wrapperCol={{ span: 24 }} className="form__input-field form__input-field--button">
         <Button type="primary" htmlType="submit" loading={isLoading}>
           Sign up
         </Button>
       </Form.Item>
       {validationMessage && <p>{validationMessage}</p>}
-      <Typography className="form-auth__message">
+      <Typography className="form__message">
         <Text>You can sing up by usingh social network</Text>
       </Typography>
       <ul className="social-network-sing-up">

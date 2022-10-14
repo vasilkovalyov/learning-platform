@@ -28,10 +28,10 @@ function AuthForm({
       initialValues={{ remember: true }}
       onFinish={onFinish}
       autoComplete="off"
-      className="form-auth"
+      className="form form-auth"
     >
       <Form.Item
-        className="form-auth__input-field form-auth__input-field--input"
+        className="form__input-field form__input-field--input"
         name="email"
         label="Email"
         rules={[{ required: true, type: 'email', message: 'Please input your email!' }]}
@@ -39,15 +39,15 @@ function AuthForm({
         <Input id="email" name="email" type="email" />
       </Form.Item>
       <Form.Item
-        className="form-auth__input-field form-auth__input-field--password"
+        className="form__input-field form__input-field--password"
         label="Password"
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
-        <Password id="password" name="password" className="form-auth__input" />
+        <Password id="password" name="password" className="form__input" />
       </Form.Item>
       {validationMessage && <p>{validationMessage}</p>}
-      <Form.Item wrapperCol={{ span: 24 }} className="form-auth__input-field form-auth__input-field--button">
+      <Form.Item wrapperCol={{ span: 24 }} className="form__input-field form__input-field--button">
         <Button type="primary" htmlType="submit" loading={isLoading}>
           Sign in
         </Button>

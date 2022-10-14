@@ -47,12 +47,12 @@ function TeacherStepSecond({
       initialValues={{ remember: true }}
       onFinish={onFinish}
       autoComplete="off"
-      className="form-auth form-auth--register form-auth--register-teacher form-auth--register-teacher-2"
+      className="form form-auth form-auth--register"
     >
       <Form.Item
         label="Country"
         name="country"
-        className="form-auth__input-field form-auth__input-field--select"
+        className="form__input-field form__input-field--select"
         rules={[{ required: true, message: 'Please input your country!' }]}
       >
         <Select
@@ -61,7 +61,7 @@ function TeacherStepSecond({
             selectCountry(value)
           }}
           id="country"
-          className="form-auth__select"
+          className="form__select"
           showSearch
           optionFilterProp="children"
           filterOption={(input, option) => (option!.children as unknown as string).includes(input)}
@@ -83,7 +83,7 @@ function TeacherStepSecond({
       <Form.Item
         label="State"
         name="state"
-        className="form-auth__input-field form-auth__input-field--select"
+        className="form__input-field form__input-field--select"
         rules={[{ required: true, message: 'Please input your state!' }]}
       >
         <Select
@@ -91,7 +91,7 @@ function TeacherStepSecond({
           disabled={isLoadingStates}
           onSelect={(value) => selectState(value)}
           id="state"
-          className="form-auth__select"
+          className="form__select"
           showSearch
           optionFilterProp="children"
           filterOption={(input, option) => (option!.children as unknown as string).includes(input)}
@@ -113,14 +113,14 @@ function TeacherStepSecond({
       <Form.Item
         label="City"
         name="city"
-        className="form-auth__input-field form-auth__input-field--select"
+        className="form__input-field form__input-field--select"
         rules={[{ required: true, message: 'Please input your city!' }]}
       >
         <Select
           loading={isLoadingCities}
           disabled={isLoadingCities}
           id="city"
-          className="form-auth__select"
+          className="form__select"
           showSearch
           optionFilterProp="children"
           filterOption={(input, option) => (option!.children as unknown as string).includes(input)}
@@ -140,14 +140,14 @@ function TeacherStepSecond({
         </Select>
       </Form.Item>
       <Form.Item
-        className="form-auth__input-field form-auth__input-field--input"
+        className="form__input-field form__input-field--input"
         label="Address"
         name="address"
         rules={[{ required: true, message: 'Please input your address!' }]}
       >
-        <Input id="address" name="address" className="form-auth__input" />
+        <Input id="address" name="address" className="form__input" />
       </Form.Item>
-      <Form.Item wrapperCol={{ span: 24 }} className="form-auth__input-field form-auth__input-field--button">
+      <Form.Item wrapperCol={{ span: 24 }} className="form__input-field form__input-field--button">
         <Button type="primary" htmlType="submit">
           Next
         </Button>

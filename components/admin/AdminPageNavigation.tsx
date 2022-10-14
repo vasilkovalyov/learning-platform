@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 
 import Icon from 'components/Icon'
 import cn from 'classnames'
+import { RoleType } from '../../types/common'
 
 const { Title, Text } = Typography
 
@@ -15,10 +16,10 @@ interface INavigation {
   name: string
   icon: string
   title: string
-  role: any
+  role: RoleType | string
 }
 
-export default function AdminPageNavigation() {
+export default function AdminPageNavigation({ role = 'student' }: { role: RoleType }) {
   const router = useRouter()
   const page = router.pathname.split('/')[2] ? router.pathname.split('/')[2] : 'account'
   const [activeNav, setActiveNav] = useState<string>(page)
@@ -29,7 +30,7 @@ export default function AdminPageNavigation() {
       name: 'account',
       title: 'Account',
       icon: 'user',
-      role: [],
+      role: '',
     },
     {
       id: 2,
@@ -37,7 +38,7 @@ export default function AdminPageNavigation() {
       name: 'private-data',
       title: 'Private data',
       icon: 'private-data',
-      role: [],
+      role: '',
     },
     {
       id: 3,
@@ -45,47 +46,72 @@ export default function AdminPageNavigation() {
       name: 'my-lessons',
       title: 'My lessons',
       icon: 'lessons',
-      role: [],
+      role: '',
     },
     {
       id: 4,
+      path: '/admin/my-teachers',
+      name: 'my-teachers',
+      title: 'My teachers',
+      icon: 'heart-empty',
+      role: 'student' as RoleType,
+    },
+    {
+      id: 5,
       path: '/admin/payment-information',
       name: 'payment-information',
       title: 'Payment information',
       icon: 'payment-info',
-      role: [],
+      role: '',
     },
     {
-      id: 5,
+      id: 6,
       path: '/admin/services',
       name: 'services',
       title: 'Services',
       icon: 'services',
-      role: [],
+      role: 'teacher' as RoleType,
     },
     {
-      id: 6,
+      id: 7,
       path: '/admin/statistics',
       name: 'statistics',
       title: 'Statistics',
       icon: 'statistics',
-      role: [],
+      role: '',
     },
     {
-      id: 7,
+      id: 8,
+      path: '/admin/company-team',
+      name: 'company-team',
+      title: 'Company team',
+      icon: 'company',
+      role: 'company' as RoleType,
+    },
+    {
+      id: 9,
       path: '/admin/chats',
       name: 'chats',
       title: 'Chats',
       icon: 'chats',
-      role: [],
+      role: '',
     },
   ]
+
+  const getFilteredNav = (): INavigation[] => {
+    const updateNav = navigation.filter((navItem) => {
+      if (navItem.role === role || navItem.role === '') {
+        return navItem as INavigation
+      }
+    })
+    return updateNav
+  }
 
   return (
     <div className="admin-page-navigation">
       <List
         className="admin-page-navigation__navigation-list"
-        dataSource={navigation}
+        dataSource={getFilteredNav()}
         renderItem={(item) => (
           <List.Item
             key={item.id}
