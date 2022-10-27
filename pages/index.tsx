@@ -2,6 +2,7 @@ import React from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import PublicLayout from 'layouts/PublicLayout'
+import { wrapper } from '../redux/store'
 
 const Home: NextPage = () => {
   return (
@@ -20,3 +21,13 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ params }) => {
+  console.log('store', store.getState())
+
+  return {
+    props: {
+      authState: false,
+    },
+  }
+})

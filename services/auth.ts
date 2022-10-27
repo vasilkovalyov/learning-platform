@@ -8,6 +8,17 @@ interface ISignUpStudentResponse {
   message: string
 }
 
+interface ISignInResponse {
+  data: {
+    email: string
+    login: string
+    role: RoleType
+    _id: string
+  }
+  token: string
+  message: string
+}
+
 class AuthService {
   async signUpStudent(data: IFormData): Promise<ISignUpStudentResponse> {
     const response = await $api.post(PUBLIC_REQUESTS.SIGN_UP, {
@@ -39,6 +50,13 @@ class AuthService {
       },
     })
 
+    return response.data
+  }
+
+  async signIn(data: Pick<IFormData, 'email' | 'password'>): Promise<ISignInResponse> {
+    const response = await $api.post(PUBLIC_REQUESTS.SIGN_IN, {
+      params: data,
+    })
     return response.data
   }
 }

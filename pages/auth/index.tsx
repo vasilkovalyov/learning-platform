@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react'
+import { useDispatch } from 'react-redux'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import type { NextPage } from 'next'
@@ -11,97 +12,39 @@ import Breadcrumb from 'antd/lib/breadcrumb'
 import Row from 'antd/lib/row'
 import Col from 'antd/lib/col'
 
+import AuthService from '../../services/auth'
 import AuthForm, { AuthFormData } from 'components/forms/AuthForm'
-
-import $api from '../../common/ajax-config'
-import { PUBLIC_REQUESTS } from '../../constants/api-requests'
-import { RoleType } from '../../types/common'
+import { useFormAction, IUseFormAction } from '../../hooks/useFormAction'
+import { useActions } from '../../hooks/useActions'
 
 const { Title } = Typography
 
-enum SignIpActionKind {
-  SUCCESS_FORM = 'SUCCESS_FORM',
-  IS_LOADING = 'IS_LOADING',
-  IS_LOADING_SUCCESS = 'IS_LOADING_SUCCESS',
-  ERROR_MESSAGE = 'ERROR_MESSAGE',
-}
-
-interface SignUpCompanyAction {
-  type: SignIpActionKind
-  payload: ISignInState
-}
-
-interface ISignInState {
-  isLoading: boolean
-  formData: AuthFormData | null
-  validationMessage: string | null
-}
-
-const initialState: ISignInState = {
+const initialStateFormAction: IUseFormAction = {
   isLoading: false,
-  formData: null,
-  validationMessage: null,
-}
-
-function signInReducer(state: ISignInState, action: SignUpCompanyAction) {
-  const { type, payload } = action
-  switch (type) {
-    case SignIpActionKind.SUCCESS_FORM:
-      return {
-        ...state,
-        formData: payload.formData,
-      } as ISignInState
-    case SignIpActionKind.IS_LOADING:
-      return {
-        ...state,
-        isLoading: payload.isLoading,
-      } as ISignInState
-    case SignIpActionKind.IS_LOADING_SUCCESS:
-      return {
-        ...state,
-        isLoading: payload.isLoading,
-        validationMessage: payload.validationMessage,
-      } as ISignInState
-    case SignIpActionKind.ERROR_MESSAGE:
-      return {
-        ...state,
-        isLoading: payload.isLoading,
-        validationMessage: payload.validationMessage,
-      } as ISignInState
-    default:
-      return state
-  }
+  validationMessage: '',
 }
 
 const Auth: NextPage = () => {
-  const [state, dispatch] = useReducer(signInReducer, initialState)
-  const { isLoading, validationMessage } = state
+  const [isLoading, validationMessage, toggleLoading, addValidationMessage] = useFormAction(initialStateFormAction)
   const router = useRouter()
+  const dispatch = useDispatch()
+  const { login_user } = useActions()
 
   async function successSignUpForm(isSuccess: boolean, data: AuthFormData) {
     if (!isSuccess) return
 
     try {
-      dispatch({
-        type: SignIpActionKind.IS_LOADING,
-        payload: {
-          isLoading: true,
-        } as ISignInState,
-      })
-      await $api.post(PUBLIC_REQUESTS.SIGN_IN, { params: data })
+      toggleLoading(true)
+      const response = await AuthService.signIn(data)
+      console.log(response)
+      document.cookie = `token=${response.token}`
+      dispatch(login_user(response.data))
       router.push('/admin')
-      dispatch({
-        type: SignIpActionKind.IS_LOADING_SUCCESS,
-        payload: {
-          isLoading: false,
-        } as ISignInState,
-      })
+      toggleLoading(false)
     } catch (e) {
-      console.log(e.response)
-      dispatch({
-        type: SignIpActionKind.ERROR_MESSAGE,
-        payload: { isLoading: false, validationMessage: e.response.data.message || e.message } as ISignInState,
-      })
+      console.log(e)
+      toggleLoading(false)
+      addValidationMessage(e.response.data.message || e.message)
     }
   }
 

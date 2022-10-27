@@ -102,10 +102,12 @@ function AccountForm({
           label="Login"
           rules={[{ required: true, message: 'Please input your login!' }]}
         >
-          <Input id="login" name="login" className="form__input" />
-          <Button type="text" className="form-admin__additional-btn">
-            Remove the account
-          </Button>
+          <>
+            <Input id="login" name="login" className="form__input" />
+            <Button type="text" className="form-admin__additional-btn">
+              Remove the account
+            </Button>
+          </>
         </Form.Item>
       ) : null}
       {role === 'teacher' ? (
@@ -115,10 +117,12 @@ function AccountForm({
           label="Full name"
           rules={[{ required: true, message: 'Please input your email!' }]}
         >
-          <Input id="full-name" name="full_name" type="text" className="form__input" />
-          <Button type="text" className="form-admin__additional-btn">
-            Remove the account
-          </Button>
+          <>
+            <Input id="full-name" name="full_name" type="text" className="form__input" />
+            <Button type="text" className="form-admin__additional-btn">
+              Remove the account
+            </Button>
+          </>
         </Form.Item>
       ) : null}
       {role === 'company' ? (
@@ -128,10 +132,12 @@ function AccountForm({
           name="company_name"
           rules={[{ required: true, message: 'Please input your Company name!' }]}
         >
-          <Input id="company-name" name="company_name" className="form__input" />
-          <Button type="text" className="form-admin__additional-btn">
-            Remove the account
-          </Button>
+          <>
+            <Input id="company-name" name="company_name" className="form__input" />
+            <Button type="text" className="form-admin__additional-btn">
+              Remove the account
+            </Button>
+          </>
         </Form.Item>
       ) : null}
 
@@ -141,10 +147,12 @@ function AccountForm({
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
-        <Password id="password" name="password" className="form__input" />
-        <Button type="text" className="form-admin__additional-btn">
-          Change the password
-        </Button>
+        <>
+          <Password id="password" name="password" className="form__input" />
+          <Button type="text" className="form-admin__additional-btn">
+            Change the password
+          </Button>
+        </>
       </Form.Item>
       <Form.Item
         className="form__input-field form__input-field--input"

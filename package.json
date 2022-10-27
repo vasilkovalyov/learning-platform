@@ -13,6 +13,7 @@
     "start": "NODE_ENV=production node dist/server/app.js"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.6",
     "antd": "^4.23.1",
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
@@ -31,12 +32,17 @@
     "mongoose": "^6.6.0",
     "mongoose-extend-schema": "^1.0.0",
     "next": "12.3.0",
+    "next-redux-wrapper": "^8.0.0",
     "next-with-less": "^2.0.5",
     "nodemailer": "^6.7.8",
     "nodemon": "^2.0.19",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icomoon": "^2.5.4",
+    "react-redux": "^8.0.4",
+    "redux": "^4.2.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.4.1",
     "swiper": "^6.8.4",
     "ts-node": "^10.9.1"
   },
@@ -47,6 +53,7 @@
     "@types/nodemailer": "^6.4.6",
     "@types/react": "18.0.18",
     "@types/react-dom": "18.0.6",
+    "@types/react-redux": "^7.1.24",
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.23.0",
