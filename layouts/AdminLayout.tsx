@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
-import type { NextPage } from 'next'
 import Head from 'next/head'
 import Avatar from 'antd/lib/avatar'
 import Typography from 'antd/lib/typography'
@@ -12,6 +11,11 @@ import Col from 'antd/lib/col'
 import PublicLayout from './PublicLayout'
 
 import AdminPageNavigation from '../components/admin/AdminPageNavigation'
+
+import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import actions from 'redux/actions'
+const url = 'https://jsonplaceholder.typicode.com/todos/'
 
 const { Title } = Typography
 

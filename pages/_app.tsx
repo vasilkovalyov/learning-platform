@@ -1,6 +1,7 @@
 import React from 'react'
 import '../styles/less/main.less'
 import type { AppProps } from 'next/app'
+import { wrapper } from 'redux/store'
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps['Component'] & {
@@ -9,7 +10,6 @@ type ComponentWithPageLayout = AppProps & {
 }
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
-  // return <Component {...pageProps} />
   return (
     <>
       {Component.PageLayout ? (
@@ -23,4 +23,4 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   )
 }
 
-export default MyApp
+export default wrapper.withRedux(MyApp)
