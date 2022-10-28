@@ -7,6 +7,12 @@ import { useDispatch } from 'react-redux'
 import UserService from 'services/user'
 import { IUser } from 'intefaces/user'
 
+const initialProps = {
+  props: {
+    user: null,
+  },
+}
+
 const Home: NextPage = (props: { user: IUser }) => {
   const dispatch = useDispatch()
 
@@ -33,6 +39,8 @@ const Home: NextPage = (props: { user: IUser }) => {
 export default Home
 
 export async function getServerSideProps(ctx) {
+  if (!ctx.req.headers.cookie) return initialProps
+
   const cookies = ctx.req.headers.cookie.split(';')
   let userId: string | null = null
   for (let i = 0; i <= cookies.length - 1; i++) {
@@ -41,13 +49,7 @@ export async function getServerSideProps(ctx) {
     }
   }
 
-  if (!userId) {
-    return {
-      props: {
-        user: null,
-      },
-    }
-  }
+  if (!userId) return initialProps
 
   const user = await UserService.isAuthUser(userId)
 

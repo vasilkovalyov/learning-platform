@@ -14,6 +14,12 @@ import { useFormAction, IUseFormAction } from '../../hooks/useFormAction'
 
 const { Title } = Typography
 
+const initialProps = {
+  props: {
+    user: null,
+  },
+}
+
 const initialStateFormAction: IUseFormAction = {
   isLoading: false,
   validationMessage: '',
@@ -52,6 +58,7 @@ Account.PageLayout = AdminLayout
 export default Account
 
 export async function getServerSideProps(ctx) {
+  if (!ctx.req.headers.cookie) return initialProps
   const cookies = ctx.req.headers.cookie.split(';')
   let userId: string | null = null
   for (let i = 0; i <= cookies.length - 1; i++) {
@@ -60,13 +67,7 @@ export async function getServerSideProps(ctx) {
     }
   }
 
-  if (!userId) {
-    return {
-      props: {
-        user: null,
-      },
-    }
-  }
+  if (!userId) return initialProps
 
   const user = await UserService.isAuthUser(userId)
 
