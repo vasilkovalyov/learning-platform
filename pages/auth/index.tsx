@@ -1,9 +1,10 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import Cookies from 'js-cookie'
 
 import PublicLayout from 'layouts/PublicLayout'
 import Typography from 'antd/lib/typography'
@@ -12,10 +13,10 @@ import Breadcrumb from 'antd/lib/breadcrumb'
 import Row from 'antd/lib/row'
 import Col from 'antd/lib/col'
 
-import AuthService from '../../services/auth'
+import AuthService from 'services/auth'
 import AuthForm, { AuthFormData } from 'components/forms/AuthForm'
-import { useFormAction, IUseFormAction } from '../../hooks/useFormAction'
-import { useActions } from '../../hooks/useActions'
+import { useFormAction, IUseFormAction } from 'hooks/useFormAction'
+import { setAuthState } from 'redux/slices/auth'
 
 const { Title } = Typography
 
@@ -28,7 +29,6 @@ const Auth: NextPage = () => {
   const [isLoading, validationMessage, toggleLoading, addValidationMessage] = useFormAction(initialStateFormAction)
   const router = useRouter()
   const dispatch = useDispatch()
-  const { login_user } = useActions()
 
   async function successSignUpForm(isSuccess: boolean, data: AuthFormData) {
     if (!isSuccess) return
@@ -36,11 +36,10 @@ const Auth: NextPage = () => {
     try {
       toggleLoading(true)
       const response = await AuthService.signIn(data)
-      console.log(response)
-      document.cookie = `token=${response.token}`
-      dispatch(login_user(response.data))
+      Cookies.set('token', response.token)
+      Cookies.set('userId', response.data._id)
+      dispatch(setAuthState(response.data))
       router.push('/admin')
-      toggleLoading(false)
     } catch (e) {
       console.log(e)
       toggleLoading(false)

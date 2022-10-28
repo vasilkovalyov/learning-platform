@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import PublicLayout from 'layouts/PublicLayout'
-import { wrapper } from '../redux/store'
+import { setAuthState } from 'redux/slices/auth'
+import { useDispatch } from 'react-redux'
+import UserService from 'services/user'
+import { IUser } from 'intefaces/user'
 
-const Home: NextPage = () => {
+const Home: NextPage = (props: { user: IUser }) => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(setAuthState(props.user))
+  })
+
   return (
     <div>
       <Head>
@@ -15,6 +24,7 @@ const Home: NextPage = () => {
 
       <PublicLayout>
         <h1>Public Layout</h1>
+        {JSON.stringify(props)}
       </PublicLayout>
     </div>
   )
@@ -22,12 +32,28 @@ const Home: NextPage = () => {
 
 export default Home
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ params }) => {
-  console.log('store', store.getState())
+export async function getServerSideProps(ctx) {
+  const cookies = ctx.req.headers.cookie.split(';')
+  let userId: string | null = null
+  for (let i = 0; i <= cookies.length - 1; i++) {
+    if (cookies[i].includes('userId')) {
+      userId = cookies[i].split('=')[1]
+    }
+  }
+
+  if (!userId) {
+    return {
+      props: {
+        user: null,
+      },
+    }
+  }
+
+  const user = await UserService.isAuthUser(userId)
 
   return {
     props: {
-      authState: false,
+      user: user,
     },
   }
-})
+}

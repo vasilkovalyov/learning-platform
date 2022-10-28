@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
 import Avatar from 'antd/lib/avatar'
@@ -9,17 +9,16 @@ import Row from 'antd/lib/row'
 import Col from 'antd/lib/col'
 
 import PublicLayout from './PublicLayout'
+import { useSelector } from 'react-redux'
+import { selectAuthState } from 'redux/slices/auth'
 
 import AdminPageNavigation from '../components/admin/AdminPageNavigation'
-
-import axios from 'axios'
-import { useDispatch } from 'react-redux'
-import actions from 'redux/actions'
-const url = 'https://jsonplaceholder.typicode.com/todos/'
 
 const { Title } = Typography
 
 function AdminLayout({ children }: { children: React.ReactNode }) {
+  const authState = useSelector(selectAuthState)
+
   return (
     <div>
       <Head>
@@ -50,7 +49,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                 <div className="section-admin__avatar-wrapper">
                   <Avatar size={88} src="/images/avatar-default.jpg" />
                 </div>
-                <Title level={4}>Vasiliy Kovalyov</Title>
+                <Title level={4}>{authState?.login}</Title>
                 <AdminPageNavigation role="student" />
               </Col>
               <Col className="gutter-row" span={24} md={16}>

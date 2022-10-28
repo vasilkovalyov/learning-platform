@@ -1,12 +1,14 @@
 import thunk from 'redux-thunk'
 
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
+import { authSlice } from '../slices/auth'
 import { createWrapper } from 'next-redux-wrapper'
-import rootReducer from '../reducers'
 
 const makeStore = () =>
   configureStore({
-    reducer: rootReducer,
+    reducer: {
+      [authSlice.name]: authSlice.reducer,
+    },
     middleware: [thunk],
     devTools: true,
   })
