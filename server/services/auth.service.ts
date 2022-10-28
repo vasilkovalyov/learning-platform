@@ -13,7 +13,7 @@ import { UserAccountType } from '../types/common'
 const bcrypt = require('bcryptjs');
 
 interface IAuthUserResponse {
-    message: string
+    message?: string
     data: Partial<IUser> | null
     token?: string
 }
@@ -222,6 +222,29 @@ class AuthService {
             },
             message: `Succsess user signin ${user.login}`,
             token: token.accessToken,
+        }
+    }
+
+    async getUserById(id: string): Promise<Partial<IUser> | null> {
+        let user: Partial<IUser> = {}
+        const responseRole = await RoleModel.findOne({ id: id });
+        if (responseRole.role === 'student') {
+            user = await StudentModel.findOne({ _id: id })
+        }
+        if (responseRole.role === 'teacher') {
+            user = await TeacherModel.findOne({ _id: id })
+        }
+        if (responseRole.role === 'company') {
+            user = await CompanyModel.findOne({ _id: id })
+        }
+        if (!user) {
+            return null
+        }
+        return {
+            _id: user._id?.valueOf(),
+            login: user.login,
+            email: user.email,
+            role: user.role,
         }
     }
 }

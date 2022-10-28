@@ -9,6 +9,8 @@ import AuthController from '../controllers/auth.controller'
 router.get('/auth/activate/:hash', AuthController.activateUser);
 router.post('/auth/signup', AuthController.signUp);
 router.post('/auth/signin', AuthController.signIn);
+router.get('/user/:id', AuthController.getUserById);
+
 router.get('/users/', authUserMiddleware, (req, res) => {
   async function getUsers() {
     const data = await RoleModel.find();
@@ -16,7 +18,6 @@ router.get('/users/', authUserMiddleware, (req, res) => {
   }
   getUsers()
   .then(response => {
-    console.log('response', response)
     res.json({
       data: response
     })
