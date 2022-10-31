@@ -1,4 +1,5 @@
-import { IUser, IUserSignUp, ITeacherUser } from '../interfaces/user.interface';
+import { IUser, ITeacherUser, ICompanyUser } from '../interfaces/user.interface';
+import { IFormUser, IFormTeacher, IFormCompany } from '../interfaces/auth.interface';
 import StudentModel from "../models/student.model"
 import TeacherModel from "../models/teacher.model"
 import CompanyModel from "../models/company.model"
@@ -7,44 +8,16 @@ import PendingModel from "../models/pending-user.model"
 import { signUpStudentValidation, signInValidation, signUpTeacherValidation, signUpCompanyValidation } from "../validation/auth.validation"
 import TokenService from './token.service'
 import ApiError from '../exeptions/api.exeptions';
-import status from '../constants/status'
 import { UserAccountType } from '../types/common'
 
 const bcrypt = require('bcryptjs');
 
-interface IAuthUserResponse {
+type AuthTypeForm = Pick<IFormUser, 'email' | 'password'>
+
+interface IAuthUserResponse<T> {
     message?: string
-    data: Partial<IUser> | null
+    data: Partial<T> | null
     token?: string
-}
-
-interface ICommonInfo {
-    city: string
-    state: string
-    country: string
-}
-
-interface IUserTeacher extends ICommonInfo, IUserSignUp {
-    education: string[]
-    phone: string
-    work_experience: string[]
-    address: string
-}
-
-interface IUserCompany extends ICommonInfo, IUserSignUp {
-    company_name: string
-    inn_code: string
-    legal_address: string
-    mailing_address: string
-    phone: string
-}
-
-interface IAuthTeaserResponse extends IAuthUserResponse {
-    data: Partial<IUserTeacher> | null
-}
-
-interface IAuthCompanyResponse extends IAuthUserResponse {
-    data: Partial<IUserCompany> | null
 }
 
 class AuthService {
@@ -59,7 +32,7 @@ class AuthService {
                 email: user.email,
                 password: user.password,
                 role: user.role
-            } as IUser);
+            });
             await newUser.save()
         }
         if (user.role as UserAccountType === 'teacher') {
@@ -76,7 +49,7 @@ class AuthService {
         }
     }
 
-    async signUpStudent(params: IUserSignUp): Promise<IAuthUserResponse> {
+    async signUpStudent(params: IFormUser): Promise<IAuthUserResponse<IFormUser>> {
         const { error } = signUpStudentValidation(params)
         if (error) throw ApiError.BadRequest(error.details[0].message);
 
@@ -94,7 +67,7 @@ class AuthService {
             email,
             password: hashedPassword,
             role,
-        } as IUser);
+        } as IFormUser);
 
         // temp. don`t remove!!!!
         // const StudentModel = new PendingModel({
@@ -116,7 +89,7 @@ class AuthService {
         }
     }
 
-    async signUpTeacher(params: ITeacherUser): Promise<IAuthTeaserResponse> {
+    async signUpTeacher(params: IFormTeacher): Promise<IAuthUserResponse<IFormTeacher>> {
         const { error } = signUpTeacherValidation(params)
         if (error) throw ApiError.BadRequest(error.details[0].message);
 
@@ -149,7 +122,7 @@ class AuthService {
         }
     }
 
-    async signUpCompany(params: IUserCompany): Promise<IAuthCompanyResponse> {
+    async signUpCompany(params: IFormCompany): Promise<IAuthUserResponse<IFormCompany>> {
         const { error } = signUpCompanyValidation(params)
         if (error) throw ApiError.BadRequest(error.details[0].message);
 
@@ -188,7 +161,7 @@ class AuthService {
         await roleModel.save();
     }
 
-    async signIn(params: Pick<IUser, 'email' | 'password'>): Promise<IAuthUserResponse> {
+    async signIn(params: AuthTypeForm): Promise<IAuthUserResponse<IFormUser | IFormTeacher | IFormCompany>> {
         const { error } = signInValidation(params)
         if (error) throw ApiError.BadRequest(error.details[0].message);
 
@@ -225,26 +198,23 @@ class AuthService {
         }
     }
 
-    async getUserById(id: string): Promise<Partial<IUser> | null> {
+    async getUserById(id: string): Promise<IUser | ITeacherUser | ICompanyUser | any> {
         let user: Partial<IUser> = {}
-        const responseRole = await RoleModel.findOne({ id: id });
+        const responseRole = await RoleModel.findOne({ _id: id });
         if (responseRole.role === 'student') {
             user = await StudentModel.findOne({ _id: id })
+            return user as IUser
         }
         if (responseRole.role === 'teacher') {
             user = await TeacherModel.findOne({ _id: id })
+            return user as ITeacherUser
         }
         if (responseRole.role === 'company') {
             user = await CompanyModel.findOne({ _id: id })
+            return user as ICompanyUser
         }
         if (!user) {
             return null
-        }
-        return {
-            _id: user._id?.valueOf(),
-            login: user.login,
-            email: user.email,
-            role: user.role,
         }
     }
 }

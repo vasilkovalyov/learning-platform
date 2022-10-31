@@ -1,13 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { IUser } from 'intefaces/user'
 
 import { AppState } from '../store'
+import { RoleType } from 'types/common'
 
 export interface IAuthState {
   authState: {
-    email: string | null
-    login: string | null
-    role: string | null
-    _id: string | null
+    email: string
+    login: string
+    role: RoleType
+    _id: string
   } | null
 }
 
@@ -30,6 +32,6 @@ export const authSlice = createSlice({
 
 export const { setAuthState, clearAuthState } = authSlice.actions
 
-export const selectAuthState = (state: AppState) => state.auth.authState
+export const selectAuthState = (state: AppState): IUser | null => state.auth.authState
 
 export default authSlice.reducer

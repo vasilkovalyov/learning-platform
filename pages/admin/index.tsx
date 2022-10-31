@@ -8,9 +8,11 @@ import Col from 'antd/lib/col'
 import UserService from 'services/user'
 import { useDispatch } from 'react-redux'
 import { IUser } from 'intefaces/user'
-import { setAuthState } from 'redux/slices/auth'
+import { setAuthState, selectAuthState } from 'redux/slices/auth'
+import { useSelector } from 'react-redux'
 
 import { useFormAction, IUseFormAction } from '../../hooks/useFormAction'
+import { RoleType } from 'types/common'
 
 const { Title } = Typography
 
@@ -27,6 +29,7 @@ const initialStateFormAction: IUseFormAction = {
 
 function Account(props: { user: IUser }) {
   const [isLoading, validationMessage] = useFormAction(initialStateFormAction)
+  const authState = useSelector(selectAuthState)
 
   const dispatch = useDispatch()
 
@@ -43,7 +46,8 @@ function Account(props: { user: IUser }) {
       <Col span={24}>
         <Title level={3}>Account</Title>
         <AccountForm
-          role={'student'}
+          role={authState?.role as RoleType}
+          formData={authState}
           onSuccess={successSaveChanges}
           isLoading={isLoading}
           validationMessage={validationMessage}
@@ -68,7 +72,6 @@ export async function getServerSideProps(ctx) {
   }
 
   if (!userId) return initialProps
-
   const user = await UserService.isAuthUser(userId)
 
   return {

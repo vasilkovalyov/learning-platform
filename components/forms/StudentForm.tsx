@@ -8,16 +8,20 @@ import { IFormData } from '../../intefaces/auth'
 
 const { Text } = Typography
 
+interface IStudentForm extends IFormData {
+  confirm_password: string
+}
+
 function StudentForm({
   onSuccess,
   isLoading,
   validationMessage,
 }: {
-  onSuccess?: (isSuccess: boolean, data: IFormData) => void
+  onSuccess?: (isSuccess: boolean, data: IStudentForm) => void
   isLoading?: boolean
   validationMessage?: string | null
 }) {
-  function onFinish(values: IFormData) {
+  function onFinish(values: IStudentForm) {
     onSuccess && onSuccess(true, values)
   }
 

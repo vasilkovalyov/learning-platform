@@ -1,7 +1,7 @@
 const JoiValidation = require('joi');
-import { IUserSignIn, IUserSignUp, ICompanyUser, ITeacherUser } from "../interfaces/user.interface";
+import { IFormUser, IFormTeacher, IFormCompany } from "../interfaces/auth.interface";
 
-export const signInValidation = (data: IUserSignIn) => {
+export const signInValidation = (data: Pick<IFormUser, 'email' | 'password'>) => {
   const schema = JoiValidation.object({
     email: JoiValidation.string().required().email(),
     password: JoiValidation.string().min(6).required(),
@@ -10,7 +10,7 @@ export const signInValidation = (data: IUserSignIn) => {
   return schema.validate(data)
 }
 
-export const signUpStudentValidation = (data: IUserSignUp) => {
+export const signUpStudentValidation = (data: IFormUser) => {
   const schema = JoiValidation.object({
     login: JoiValidation.string().required(),
     email: JoiValidation.string().required().email(),
@@ -22,7 +22,7 @@ export const signUpStudentValidation = (data: IUserSignUp) => {
   return schema.validate(data)
 }
 
-export const signUpTeacherValidation = (data: IUserSignUp & ITeacherUser) => {
+export const signUpTeacherValidation = (data: IFormTeacher) => {
   const schema = JoiValidation.object({
     login: JoiValidation.string().required(),
     email: JoiValidation.string().required().email(),
@@ -41,7 +41,7 @@ export const signUpTeacherValidation = (data: IUserSignUp & ITeacherUser) => {
   return schema.validate(data)
 }
 
-export const signUpCompanyValidation = (data: IUserSignUp & ICompanyUser) => {
+export const signUpCompanyValidation = (data: IFormCompany) => {
   const schema = JoiValidation.object({
     login: JoiValidation.string().required(),
     email: JoiValidation.string().required().email(),

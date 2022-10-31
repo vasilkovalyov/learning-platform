@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { message, Upload } from 'antd'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import type { UploadChangeParam } from 'antd/es/upload'
@@ -10,12 +10,7 @@ import Password from 'antd/lib/input/Password'
 import { Button } from 'antd'
 import { IFormData } from '../../intefaces/auth'
 import { RoleType } from '../../types/common'
-
-const { Text } = Typography
-
-export interface IAccountForm<T> extends Omit<IFormData, 'confirm_password'> {
-  full_name
-}
+import { IUser, IUserTeacher, IUserCompany } from 'intefaces/user'
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   const reader = new FileReader()
@@ -38,16 +33,26 @@ const beforeUpload = (file: RcFile) => {
 function AccountForm({
   onSuccess,
   isLoading,
+  formData,
   validationMessage,
-  role = 'student',
+  role,
 }: {
   onSuccess?: <T>(isSuccess: boolean, data: T) => void
   isLoading?: boolean
+  formData: IUser | (IUser & IUserTeacher) | (IUser & IUserCompany) | null
   validationMessage?: string | null
   role: RoleType
 }) {
   const [loading, setLoading] = useState(false)
   const [imageUrl, setImageUrl] = useState<string>()
+  const [form] = Form.useForm()
+
+  useEffect(() => {
+    if (!formData) return
+    // form.setFieldsValue(formData)
+    console.log('formData', formData)
+    form.setFieldsValue(formData)
+  }, [formData])
 
   const handleChange: UploadProps['onChange'] = (info: UploadChangeParam<UploadFile>) => {
     if (info.file.status === 'uploading') {
@@ -76,6 +81,7 @@ function AccountForm({
 
   return (
     <Form
+      form={form}
       name="account-user"
       labelCol={{ span: 24 }}
       wrapperCol={{ span: 24 }}
@@ -95,6 +101,7 @@ function AccountForm({
       >
         {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
       </Upload>
+
       {role === 'student' ? (
         <Form.Item
           className="form__input-field form__input-field--input"
@@ -102,12 +109,7 @@ function AccountForm({
           label="Login"
           rules={[{ required: true, message: 'Please input your login!' }]}
         >
-          <>
-            <Input id="login" name="login" className="form__input" />
-            <Button type="text" className="form-admin__additional-btn">
-              Remove the account
-            </Button>
-          </>
+          <Input id="login" name="login" className="form__input" />
         </Form.Item>
       ) : null}
       {role === 'teacher' ? (
@@ -132,12 +134,10 @@ function AccountForm({
           name="company_name"
           rules={[{ required: true, message: 'Please input your Company name!' }]}
         >
-          <>
-            <Input id="company-name" name="company_name" className="form__input" />
-            <Button type="text" className="form-admin__additional-btn">
-              Remove the account
-            </Button>
-          </>
+          <Input id="company-name" name="company_name" className="form__input" />
+          {/* <Button type="text" className="form-admin__additional-btn">
+            Remove the account
+          </Button> */}
         </Form.Item>
       ) : null}
 
@@ -147,12 +147,10 @@ function AccountForm({
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
-        <>
-          <Password id="password" name="password" className="form__input" />
-          <Button type="text" className="form-admin__additional-btn">
-            Change the password
-          </Button>
-        </>
+        <Password id="password" name="password" className="form__input" />
+        {/* <Button type="text" className="form-admin__additional-btn">
+          Change the password
+        </Button> */}
       </Form.Item>
       <Form.Item
         className="form__input-field form__input-field--input"
