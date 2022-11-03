@@ -57,7 +57,6 @@ function TeacherStepSecond({
       >
         <Select
           onSelect={(value) => {
-            console.log(value)
             selectCountry(value)
           }}
           id="country"

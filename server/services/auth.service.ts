@@ -198,7 +198,7 @@ class AuthService {
         }
     }
 
-    async getUserById(id: string): Promise<IUser | ITeacherUser | ICompanyUser | any> {
+    async getUserById(id: string): Promise<IUser | ITeacherUser | ICompanyUser> {
         let user: Partial<IUser> = {}
         const responseRole = await RoleModel.findOne({ _id: id });
         if (responseRole.role === 'student') {

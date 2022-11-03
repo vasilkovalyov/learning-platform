@@ -86,7 +86,6 @@ function CompanyStepSecond({
       >
         <Select
           onSelect={(value) => {
-            console.log(value)
             selectCountry(value)
           }}
           id="country"

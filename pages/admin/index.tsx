@@ -62,21 +62,30 @@ Account.PageLayout = AdminLayout
 export default Account
 
 export async function getServerSideProps(ctx) {
-  if (!ctx.req.headers.cookie) return initialProps
-  const cookies = ctx.req.headers.cookie.split(';')
-  let userId: string | null = null
-  for (let i = 0; i <= cookies.length - 1; i++) {
-    if (cookies[i].includes('userId')) {
-      userId = cookies[i].split('=')[1]
+  try {
+    if (!ctx.req.headers.cookie) return initialProps
+    const cookies = ctx.req.headers.cookie.split(';')
+    let userId: string | null = null
+    let token: string | null = null
+
+    for (let i = 0; i <= cookies.length - 1; i++) {
+      if (cookies[i].includes('userId')) {
+        userId = cookies[i].split('=')[1]
+      }
+      if (cookies[i].includes('token')) {
+        token = cookies[i].split('=')[1]
+      }
     }
-  }
 
-  if (!userId) return initialProps
-  const user = await UserService.isAuthUser(userId)
+    if (!userId) return initialProps
+    const user = await UserService.isAuthUser(userId, token || '')
 
-  return {
-    props: {
-      user: user,
-    },
+    return {
+      props: {
+        user: user,
+      },
+    }
+  } catch (e) {
+    return initialProps
   }
 }

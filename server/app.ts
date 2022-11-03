@@ -11,6 +11,7 @@ const handle = app.getRequestHandler();
 const PORT = process.env.PORT || 3000;
 
 const authRoute = require('./routes/auth.route');
+const userRoute = require('./routes/user.route');
 
 (async () => {
   try {
@@ -28,6 +29,7 @@ const authRoute = require('./routes/auth.route');
     });
 
     server.use('/api', authRoute);
+    server.use('/api', userRoute);
     server.use(errorMiddleware);
 
     database().then(response => {

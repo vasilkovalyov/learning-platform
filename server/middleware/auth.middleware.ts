@@ -8,7 +8,7 @@ module.exports = async function (req, res, next) {
         const userData = await tokenService.validateAccessToken(authorizationHeader);
 
         if (!userData) return next(ApiError.UnauthorizedError('Token has been destroyed!'));
-        req.user = userData;
+        res.user = null;
         next();
     } catch (e) {
         return next(ApiError.UnauthorizedError('User is not authorized!'));

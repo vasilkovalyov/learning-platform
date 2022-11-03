@@ -50,7 +50,6 @@ function AccountForm({
   useEffect(() => {
     if (!formData) return
     // form.setFieldsValue(formData)
-    console.log('formData', formData)
     form.setFieldsValue(formData)
   }, [formData])
 
