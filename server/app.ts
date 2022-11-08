@@ -11,7 +11,9 @@ const handle = app.getRequestHandler();
 const PORT = process.env.PORT || 3000;
 
 const authRoute = require('./routes/auth.route');
-const userRoute = require('./routes/user.route');
+const companyRoute = require('./users/routes/company.route');
+const studentRoute = require('./users/routes/student.route');
+const teacherRoute = require('./users/routes/teacher.model');
 
 (async () => {
   try {
@@ -29,7 +31,9 @@ const userRoute = require('./routes/user.route');
     });
 
     server.use('/api', authRoute);
-    server.use('/api', userRoute);
+    server.use('/api', companyRoute);
+    server.use('/api', studentRoute);
+    server.use('/api', teacherRoute);
     server.use(errorMiddleware);
 
     database().then(response => {

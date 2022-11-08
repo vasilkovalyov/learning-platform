@@ -1,11 +1,10 @@
-const mongoose = require('mongoose');
-const extendSchema = require('mongoose-extend-schema');
+import mongoose from 'mongoose';
 
-import { model as StudentModel } from './student.model'
-import { model as TeacherModel } from './teacher.model'
-import { model as CompnayModel } from './company.model'
+import { model as StudentModel } from '../users/models/student.model'
+import { model as TeacherModel } from '../users/models/teacher.model'
+import { model as CompnayModel } from '../users/models/company.model'
 
-export const pendingModel = mongoose.Schema(StudentModel).add(TeacherModel).add(CompnayModel);
+export const pendingModel = new mongoose.Schema(StudentModel).add(TeacherModel).add(CompnayModel);
 
 export default mongoose.model('PendingUser', pendingModel)
 

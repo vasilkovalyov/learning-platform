@@ -1,4 +1,3 @@
-import { IUser } from './interfaces/user.interface';
 import nodemailer from 'nodemailer'
 
 export function sendConfirmationEmail({email, hash}: {email: string, hash: string}) {
@@ -35,7 +34,7 @@ export function sendConfirmationEmail({email, hash}: {email: string, hash: strin
       if (err) {
         console.log('err', err)
         rej(err)
-      } else {
+      } else {``
         res(info)
       }
     })

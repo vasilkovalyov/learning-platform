@@ -24,3 +24,9 @@ export interface IFormCompany extends IFormUser, IPlaceLiving {
   mailing_address: string
   phone: string
 }
+
+export interface IAuthUserResponse<T> {
+  message?: string
+  data: Partial<T> | null
+  token?: string
+}
