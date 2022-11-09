@@ -67,6 +67,7 @@ export async function getServerSideProps(ctx) {
     const cookies = ctx.req.headers.cookie.split(';')
     let userId: string | null = null
     let token: string | null = null
+    let role: RoleType | null = null
 
     for (let i = 0; i <= cookies.length - 1; i++) {
       if (cookies[i].includes('userId')) {
@@ -75,10 +76,13 @@ export async function getServerSideProps(ctx) {
       if (cookies[i].includes('token')) {
         token = cookies[i].split('=')[1]
       }
+      if (cookies[i].includes('role')) {
+        role = cookies[i].split('=')[1]
+      }
     }
 
-    if (!userId) return initialProps
-    const user = await UserService.isAuthUser(userId, token || '')
+    if (!userId || !role) return initialProps
+    const user = await UserService.isAuthUser(role, userId, token || '')
 
     return {
       props: {

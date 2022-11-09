@@ -6,6 +6,7 @@ import { setAuthState } from 'redux/slices/auth'
 import { useDispatch } from 'react-redux'
 import UserService from 'services/user'
 import { IUser } from 'intefaces/user'
+import { RoleType } from '../types/common'
 
 const initialProps = {
   props: {
@@ -45,6 +46,7 @@ export async function getServerSideProps(ctx) {
     const cookies = ctx.req.headers.cookie.split(';')
     let userId: string | null = null
     let token: string | null = null
+    let role: RoleType | null = null
 
     for (let i = 0; i <= cookies.length - 1; i++) {
       if (cookies[i].includes('userId')) {
@@ -53,11 +55,14 @@ export async function getServerSideProps(ctx) {
       if (cookies[i].includes('token')) {
         token = cookies[i].split('=')[1]
       }
+      if (cookies[i].includes('role')) {
+        role = cookies[i].split('=')[1]
+      }
     }
 
-    if (!userId) return initialProps
+    if (!userId || !role) return initialProps
 
-    const user = await UserService.isAuthUser(userId, token || '')
+    const user = await UserService.isAuthUser(role, userId, token || '')
 
     return {
       props: {
