@@ -36,7 +36,6 @@ const Auth: NextPage = () => {
     try {
       toggleLoading(true)
       const response = await AuthService.signIn(data)
-      console.log('response', response)
       Cookies.set('token', response.token)
       Cookies.set('userId', response.data._id)
       Cookies.set('role', response.data.role)

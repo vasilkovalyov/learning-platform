@@ -1,4 +1,4 @@
-import { IUser } from '../interfaces/user.interface';
+import { IStudent } from '../users/interfaces/student.interface';
 import { IFormUser, IFormTeacher, IFormCompany, IAuthUserResponse } from '../interfaces/auth.interface';
 import RoleModel from "../models/role.model"
 import PendingModel from "../models/pending-user.model"
@@ -9,8 +9,12 @@ import { UserAccountType } from '../types/common'
 import bcrypt from 'bcryptjs';
 
 import CompanyService from '../users/services/company.service'
-import StudentService from '../users/services/company.service'
-import TeacherService from '../users/services/company.service'
+import StudentService from '../users/services/student.service'
+import TeacherService from '../users/services/teacher.service'
+
+import CompanyDto from '../users/dto/company.dto'
+import StudentDto from '../users/dto/student.dto'
+import TeacherDto from '../users/dto/teacher.dto'
 
 type AuthTypeForm = Pick<IFormUser, 'email' | 'password'>
 
@@ -51,31 +55,29 @@ class AuthService {
         const findedRole = await RoleModel.findOne({ email: email });
         const pendingRole = await PendingModel.findOne({ email: email });
         if (pendingRole === null && findedRole === null) throw ApiError.BadRequest(`User with email - ${email} not exist!`);
-        let user: IUser | any
-
+        let userResponse: IStudent | any
+        let userDto: any
         if (findedRole && findedRole.role as UserAccountType === "student") {
-            user = await StudentService.getUserByEmail(email)
+            userResponse = await StudentService.getUserByEmail(email)
+            userDto = new StudentDto(userResponse).getAuthDataUser()
         }
         if (findedRole && findedRole.role as UserAccountType === "teacher") {
-            user = await CompanyService.getUserByEmail(email)
+            userResponse = await TeacherService.getUserByEmail(email)
+            userDto = new TeacherDto(userResponse).getAuthDataUser()
         }
         if (findedRole && findedRole.role as UserAccountType === "company") {
-            user = await TeacherService.getUserByEmail(email)
+            userResponse = await CompanyService.getUserByEmail(email)
+            // userDto = new CompanyDto(userResponse).getAuthDataUser()
+            userDto = null
         }
-
-        const validPass = await bcrypt.compare(password, user.password);
+        const validPass = await bcrypt.compare(password, userResponse.password);
         if (!validPass) throw ApiError.BadRequest(`Wrong password!`);
 
-        const token = await TokenService.generateTokens({ _id: user._id.valueOf(), role: user.role })
-
+        const token = await TokenService.generateTokens({ _id: userResponse._id.valueOf(), role: userResponse.role })
+        
         return {
-            data: {
-                _id: user._id.valueOf(),
-                login: user.login,
-                email: user.email,
-                role: user.role,
-            },
-            message: `Succsess user signin ${user.login}`,
+            data: userDto,
+            message: `Succsess user signin ${userDto.login}`,
             token: token.accessToken,
         }
     }

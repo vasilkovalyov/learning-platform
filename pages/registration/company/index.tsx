@@ -52,7 +52,8 @@ const Company: NextPage = () => {
       successForm()
     } catch (e) {
       toggleLoading(false)
-      addValidationMessage(e.response.data.message || e.message)
+      // addValidationMessage(e || e.message)
+      addValidationMessage(e.message || 'Error')
     }
   }
 

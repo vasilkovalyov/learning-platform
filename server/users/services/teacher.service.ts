@@ -1,10 +1,11 @@
 import { IFormTeacher, IAuthUserResponse } from "../../interfaces/auth.interface";
-import { ITeacherUser } from "../../interfaces/user.interface";
+import { ITeacherUser } from "../interfaces/teacher.interface";
 import { signUpTeacherValidation } from "../../validation/auth.validation"
 import ApiError from '../../exeptions/api.exeptions';
 import RoleModel from "../../models/role.model"
 import bcrypt from 'bcryptjs';
 import TeacherModel from "../models/teacher.model"
+import TeacherDto from "../dto/teacher.dto";
 
 class TeacherService {
   async getUserByEmail(email: string): Promise<ITeacherUser | null> {
@@ -36,7 +37,7 @@ class TeacherService {
     });
 
     const savedUser = await teacherModel.save();
-    const roleModel = new RoleModel({ id: savedUser._id, role, email })
+    const roleModel = new RoleModel({ _id: savedUser._id, role, email })
     await roleModel.save();
 
     return {
@@ -46,7 +47,9 @@ class TeacherService {
   }
 
   async getUserById(id: string): Promise<ITeacherUser | null> {
-    return await TeacherModel.findOne({ _id: id })
+    const data: ITeacherUser | null = await TeacherModel.findOne({ _id: id })
+    if (data === null) return null
+    return new TeacherDto(data).getAuthDataUser()
   }
 }
 

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { IUser } from 'intefaces/user'
+import { IUserStudent } from 'intefaces/user'
 
 import { AppState } from '../store'
 import { RoleType } from 'types/common'
@@ -32,6 +32,6 @@ export const authSlice = createSlice({
 
 export const { setAuthState, clearAuthState } = authSlice.actions
 
-export const selectAuthState = (state: AppState): IUser | null => state.auth.authState
+export const selectAuthState = (state: AppState): IUserStudent | null => state.auth.authState
 
 export default authSlice.reducer

@@ -10,10 +10,10 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 const PORT = process.env.PORT || 3000;
 
-const authRoute = require('./routes/auth.route');
-const companyRoute = require('./users/routes/company.route');
-const studentRoute = require('./users/routes/student.route');
-const teacherRoute = require('./users/routes/teacher.model');
+import authRoute from './routes/auth.route'
+import companyRoute from './users/routes/company.route'
+import studentRoute from './users/routes/student.route'
+import teacherRoute from './users/routes/teacher.route'
 
 (async () => {
   try {

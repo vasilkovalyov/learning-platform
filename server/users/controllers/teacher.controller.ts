@@ -1,4 +1,4 @@
-import TeacherService from "../services/company.service";
+import TeacherService from "../services/teacher.service";
 
 class TeacherController {
   async signUp(req, res) {

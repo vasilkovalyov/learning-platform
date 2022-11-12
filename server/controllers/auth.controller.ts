@@ -1,10 +1,10 @@
-import UserService from "../services/auth.service"
+import AuthService from "../services/auth.service"
 
 class AuthController {
   // async activateUser(req, res) {
   //   const { hash } = req.params
   //   try {
-  //     await UserService.activateUser(hash);
+  //     await AuthService.activateUser(hash);
   //     // res.redirect(process.env.API_URL); // temp don`t remove!!!
   //   } catch(e) {
   //     res.json(e)
@@ -13,8 +13,8 @@ class AuthController {
 
   async signIn(req, res) {
     try {
-      const userData = await UserService.signIn(req.body.params); // for prod
-      // const userData = await UserService.signIn(req.query); // for postman
+      const userData = await AuthService.signIn(req.body.params); // for prod
+      // const userData = await AuthService.signIn(req.query); // for postman
       res.json(userData);
     } catch(e) {
       console.error(e)

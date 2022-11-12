@@ -5,7 +5,7 @@ import PublicLayout from 'layouts/PublicLayout'
 import { setAuthState } from 'redux/slices/auth'
 import { useDispatch } from 'react-redux'
 import UserService from 'services/user'
-import { IUser } from 'intefaces/user'
+import { IUserStudent } from 'intefaces/user'
 import { RoleType } from '../types/common'
 
 const initialProps = {
@@ -14,7 +14,7 @@ const initialProps = {
   },
 }
 
-const Home: NextPage = (props: { user: IUser }) => {
+const Home: NextPage = (props: { user: IUserStudent }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -61,7 +61,6 @@ export async function getServerSideProps(ctx) {
     }
 
     if (!userId || !role) return initialProps
-
     const user = await UserService.isAuthUser(role, userId, token || '')
 
     return {

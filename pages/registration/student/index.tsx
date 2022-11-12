@@ -35,7 +35,6 @@ const initialStateFormSteps: IUserFormSteps<IFormData, null> = {
 const RegistrationStudent: NextPage = () => {
   const [isLoading, validationMessage, toggleLoading, addValidationMessage] = useFormAction(initialStateFormAction)
   const [isSuccessForm, successForm] = useFormSteps<IFormData, null>(initialStateFormSteps)
-
   async function successSignUpForm(isSuccess: boolean, data: IFormData) {
     if (!isSuccess) return
 
@@ -46,9 +45,8 @@ const RegistrationStudent: NextPage = () => {
       addValidationMessage(response.message || '')
       successForm()
     } catch (e) {
-      console.log(e)
       toggleLoading(false)
-      addValidationMessage(e.response.data.message || e.message)
+      addValidationMessage((e.response.data && e.response.data.message) || e.message)
     }
   }
 

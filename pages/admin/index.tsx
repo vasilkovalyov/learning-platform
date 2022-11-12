@@ -7,7 +7,7 @@ import Col from 'antd/lib/col'
 
 import UserService from 'services/user'
 import { useDispatch } from 'react-redux'
-import { IUser } from 'intefaces/user'
+import { IUserStudent } from 'intefaces/user'
 import { setAuthState, selectAuthState } from 'redux/slices/auth'
 import { useSelector } from 'react-redux'
 
@@ -27,9 +27,11 @@ const initialStateFormAction: IUseFormAction = {
   validationMessage: '',
 }
 
-function Account(props: { user: IUser }) {
+function Account(props: { user: IUserStudent | null }) {
   const [isLoading, validationMessage] = useFormAction(initialStateFormAction)
   const authState = useSelector(selectAuthState)
+
+  // useEffect(() => {}, [])
 
   const dispatch = useDispatch()
 
@@ -83,7 +85,14 @@ export async function getServerSideProps(ctx) {
 
     if (!userId || !role) return initialProps
     const user = await UserService.isAuthUser(role, userId, token || '')
-
+    if (!user) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      }
+    }
     return {
       props: {
         user: user,

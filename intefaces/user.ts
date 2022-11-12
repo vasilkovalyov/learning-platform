@@ -1,6 +1,6 @@
 import { RoleType } from 'types/common'
 
-export interface IUser {
+export interface IUserStudent {
   email: string
   login: string
   role: RoleType

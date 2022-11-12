@@ -1,5 +1,5 @@
 import { IFormCompany, IAuthUserResponse } from "../../interfaces/auth.interface";
-import { ICompanyUser } from "../../interfaces/user.interface";
+import { ICompanyUser } from "../interfaces/company.interface";
 import { signUpCompanyValidation } from "../../validation/auth.validation"
 import ApiError from '../../exeptions/api.exeptions';
 import RoleModel from "../../models/role.model"
@@ -37,7 +37,7 @@ class CompanyService {
     });
 
     const savedUser = await companyModel.save();
-    const roleModel = new RoleModel({ id: savedUser._id, role, email })
+    const roleModel = new RoleModel({ _id: savedUser._id, role, email })
     await roleModel.save();
 
     return {

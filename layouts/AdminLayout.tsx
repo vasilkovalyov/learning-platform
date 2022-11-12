@@ -42,7 +42,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
         <Layout className="section-admin">
           <div className="container">
             <Title level={2} className="section-admin__heading">
-              Personal Area
+              <span className="section-admin__heading-role">{authState?.role}</span> - Personal Area
             </Title>
             <Row gutter={48}>
               <Col className="gutter-row" span={24} md={8} lg={6}>

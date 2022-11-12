@@ -4,7 +4,7 @@ import { RoleType } from '../../types/common';
 class TokenService {
     async generateTokens(payload: { _id: string, role: RoleType }) {
         const accessToken = await jwt.sign(payload, process.env.JWT_ACCESS_SECRET, { expiresIn: "1d" });
-        const refreshToken = await jwt.sign(payload, process.env.JWT_REFRESH_SECRET, { expiresIn: "30d" });
+        const refreshToken = await jwt.sign(payload, process.env.JWT_REFRESH_SECRET, { expiresIn: "1d" });
 
         return {
           accessToken: accessToken,

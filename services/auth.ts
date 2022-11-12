@@ -2,22 +2,22 @@ import { PUBLIC_REQUESTS } from 'constants/api-requests'
 import $api from '../common/ajax-config'
 import { RoleType } from 'types/common'
 import { IFormData, IFormDataCompany, IFormDataTeacher } from 'intefaces/auth'
-import { IUser } from 'intefaces/user'
+import { IUserStudent, IUserCompany, IUserTeacher } from 'intefaces/user'
 
-interface ISignUpStudentResponse {
-  data: null
+interface ISignUpResponse<T> {
+  data: T
   message: string
 }
 
 interface ISignInResponse {
-  data: IUser
+  data: IUserStudent
   token: string
   message: string
 }
 
 class AuthService {
-  async signUpStudent(data: IFormData): Promise<ISignUpStudentResponse> {
-    const response = await $api.post(`/${PUBLIC_REQUESTS.SIGN_UP}`, {
+  async signUpStudent(data: IFormData): Promise<ISignUpResponse<IUserStudent>> {
+    const response = await $api.post(`${PUBLIC_REQUESTS.SIGN_UP_STUDENT}`, {
       params: {
         ...data,
         role: 'student' as RoleType,
@@ -27,8 +27,8 @@ class AuthService {
     return response.data
   }
 
-  async signUpTeacher(data: IFormDataTeacher): Promise<ISignUpStudentResponse> {
-    const response = await $api.post(`/${PUBLIC_REQUESTS.SIGN_UP}`, {
+  async signUpTeacher(data: IFormDataTeacher): Promise<ISignUpResponse<IUserTeacher>> {
+    const response = await $api.post(`/${PUBLIC_REQUESTS.SIGN_UP_TEACHER}`, {
       params: {
         ...data,
         role: 'teacher' as RoleType,
@@ -38,8 +38,8 @@ class AuthService {
     return response.data
   }
 
-  async signUpCompany(data: IFormDataCompany): Promise<ISignUpStudentResponse> {
-    const response = await $api.post(`/${PUBLIC_REQUESTS.SIGN_UP}`, {
+  async signUpCompany(data: IFormDataCompany): Promise<ISignUpResponse<IUserCompany>> {
+    const response = await $api.post(`/${PUBLIC_REQUESTS.SIGN_UP_COMPANY}`, {
       params: {
         ...data,
         role: 'company' as RoleType,

@@ -10,7 +10,7 @@ import Password from 'antd/lib/input/Password'
 import { Button } from 'antd'
 import { IFormData } from '../../intefaces/auth'
 import { RoleType } from '../../types/common'
-import { IUser, IUserTeacher, IUserCompany } from 'intefaces/user'
+import { IUserStudent, IUserTeacher, IUserCompany } from 'intefaces/user'
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   const reader = new FileReader()
@@ -39,7 +39,7 @@ function AccountForm({
 }: {
   onSuccess?: <T>(isSuccess: boolean, data: T) => void
   isLoading?: boolean
-  formData: IUser | (IUser & IUserTeacher) | (IUser & IUserCompany) | null
+  formData: IUserStudent | (IUserStudent & IUserTeacher) | (IUserStudent & IUserCompany) | null
   validationMessage?: string | null
   role: RoleType
 }) {
@@ -101,17 +101,15 @@ function AccountForm({
         {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
       </Upload>
 
-      {role === 'student' ? (
-        <Form.Item
-          className="form__input-field form__input-field--input"
-          name="login"
-          label="Login"
-          rules={[{ required: true, message: 'Please input your login!' }]}
-        >
-          <Input id="login" name="login" className="form__input" />
-        </Form.Item>
-      ) : null}
-      {role === 'teacher' ? (
+      <Form.Item
+        className="form__input-field form__input-field--input"
+        name="login"
+        label="Login"
+        rules={[{ required: true, message: 'Please input your login!' }]}
+      >
+        <Input id="login" name="login" className="form__input" />
+      </Form.Item>
+      {/* {role === 'teacher' ? (
         <Form.Item
           className="form__input-field form__input-field--input"
           name="full_name"
@@ -120,12 +118,9 @@ function AccountForm({
         >
           <>
             <Input id="full-name" name="full_name" type="text" className="form__input" />
-            <Button type="text" className="form-admin__additional-btn">
-              Remove the account
-            </Button>
           </>
         </Form.Item>
-      ) : null}
+      ) : null} */}
       {role === 'company' ? (
         <Form.Item
           className="form__input-field form__input-field--input"
