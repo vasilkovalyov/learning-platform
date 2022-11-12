@@ -1,18 +1,18 @@
 import { RoleType } from '../../../types/common'
-import { IStudent } from '../interfaces/student.interface'
+import { IUser } from '../interfaces/user.interface'
 
-abstract class UserDto implements IStudent {
+abstract class UserDto implements IUser {
   _id: string
   login: string
   email: string
   role: RoleType
-  phone?: string | undefined
+  phone?: string
   
-  constructor(data: IStudent) {
+  constructor(data: IUser) {
     this._id = data._id
     this.email = data.email
     this.login = data.login
-    this.phone = data.phone
+    this.phone = data.phone || ''
     this.role = data.role
   }
 

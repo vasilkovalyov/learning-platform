@@ -65,12 +65,17 @@ export default Account
 
 export async function getServerSideProps(ctx) {
   try {
-    if (!ctx.req.headers.cookie) return initialProps
+    if (!ctx.req.headers.cookie)
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      }
     const cookies = ctx.req.headers.cookie.split(';')
     let userId: string | null = null
     let token: string | null = null
     let role: RoleType | null = null
-
     for (let i = 0; i <= cookies.length - 1; i++) {
       if (cookies[i].includes('userId')) {
         userId = cookies[i].split('=')[1]

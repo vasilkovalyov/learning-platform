@@ -1,9 +1,5 @@
-import { RoleType } from "../../../types/common"
+import { IUser } from './user.interface'
 
-export interface IStudent {
-  _id: string
-  login: string
-  email: string
-  role: RoleType
-  phone?: string
+export interface IStudent extends IUser {
+  fullname: string
 }

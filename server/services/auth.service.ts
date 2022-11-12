@@ -70,11 +70,10 @@ class AuthService {
             // userDto = new CompanyDto(userResponse).getAuthDataUser()
             userDto = null
         }
+
         const validPass = await bcrypt.compare(password, userResponse.password);
         if (!validPass) throw ApiError.BadRequest(`Wrong password!`);
-
         const token = await TokenService.generateTokens({ _id: userResponse._id.valueOf(), role: userResponse.role })
-        
         return {
             data: userDto,
             message: `Succsess user signin ${userDto.login}`,

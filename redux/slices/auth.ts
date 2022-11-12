@@ -6,6 +6,7 @@ import { RoleType } from 'types/common'
 
 export interface IAuthState {
   authState: {
+    fullname: string
     email: string
     login: string
     role: RoleType

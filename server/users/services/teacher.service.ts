@@ -16,13 +16,14 @@ class TeacherService {
     const { error } = signUpTeacherValidation(params)
     if (error) throw ApiError.BadRequest(error.details[0].message);
 
-    const { login, email, confirm_password, role, address, city, state, country, education, phone, work_experience } = params
+    const { login, email, confirm_password, role, address, city, state, country, education, phone, work_experience, fullname } = params
     const userExist = await RoleModel.findOne({ email: email });
 
     const hashedPassword = await bcrypt.hash(confirm_password, bcrypt.genSaltSync(10));
     if (userExist) throw ApiError.BadRequest(`User with email - ${email} alreary exist!`);
 
     const teacherModel = new TeacherModel({
+      fullname,
       login,
       email,
       password: hashedPassword,

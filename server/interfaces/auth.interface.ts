@@ -4,6 +4,7 @@ import { IPlaceLiving } from './common';
 export interface IFormUser {
   _id?: string
   login: string
+  fullname: string
   email: string
   password: string
   confirm_password: string
@@ -17,7 +18,7 @@ export interface IFormTeacher extends IFormUser, IPlaceLiving {
   address: string
 }
 
-export interface IFormCompany extends IFormUser, IPlaceLiving {
+export interface IFormCompany extends Omit<IFormUser, 'fullname'>, IPlaceLiving {
   company_name: string
   inn_code: string
   legal_address: string

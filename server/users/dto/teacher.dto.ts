@@ -8,9 +8,11 @@ class TeacherDto extends UserDto {
   city: string
   state: string
   country: string
+  fullname: string
 
   constructor(data: ITeacherUser) {
     super(data)
+    this.fullname = data.fullname
     this.address = data.address
     this.education = data.education
     this.work_experience = data.work_experience
@@ -22,6 +24,7 @@ class TeacherDto extends UserDto {
   getAuthDataUser() {
     return {
       _id: this._id,
+      fullname: this.fullname,
       email: this.email,
       login: this.login,
       phone: this.phone,

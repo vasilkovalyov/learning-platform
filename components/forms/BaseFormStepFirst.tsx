@@ -29,6 +29,14 @@ function BaseFormStepFirst({ onSuccess }: { onSuccess?: (isSuccess: boolean, dat
     >
       <Form.Item
         className="form__input-field form__input-field--input"
+        name="fullname"
+        label="Full name"
+        rules={[{ required: true, message: 'Please input your full name!' }]}
+      >
+        <Input id="fullname" name="fullname" />
+      </Form.Item>
+      <Form.Item
+        className="form__input-field form__input-field--input"
         name="login"
         label="Login"
         rules={[{ required: true, message: 'Please input your login!' }]}

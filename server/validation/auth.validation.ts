@@ -13,6 +13,7 @@ export const signInValidation = (data: Pick<IFormUser, 'email' | 'password'>) =>
 export const signUpStudentValidation = (data: IFormUser) => {
   const schema = JoiValidation.object({
     login: JoiValidation.string().required(),
+    fullname: JoiValidation.string().required(),
     email: JoiValidation.string().required().email(),
     password: JoiValidation.string().min(6).required(),
     confirm_password: JoiValidation.string().required().valid(JoiValidation.ref('password')),
@@ -24,6 +25,7 @@ export const signUpStudentValidation = (data: IFormUser) => {
 
 export const signUpTeacherValidation = (data: IFormTeacher) => {
   const schema = JoiValidation.object({
+    fullname: JoiValidation.string().required(),
     login: JoiValidation.string().required(),
     email: JoiValidation.string().required().email(),
     password: JoiValidation.string().min(6).required(),
@@ -44,6 +46,7 @@ export const signUpTeacherValidation = (data: IFormTeacher) => {
 export const signUpCompanyValidation = (data: IFormCompany) => {
   const schema = JoiValidation.object({
     login: JoiValidation.string().required(),
+    fullname: JoiValidation.string().required(),
     email: JoiValidation.string().required().email(),
     password: JoiValidation.string().min(6).required(),
     confirm_password: JoiValidation.string().required().valid(JoiValidation.ref('password')),
@@ -58,6 +61,6 @@ export const signUpCompanyValidation = (data: IFormCompany) => {
     role: JoiValidation.string().valid('company'),
   })
 
-  return signUpStudentValidation(data) && schema.validate(data)
+  return schema.validate(data)
 }
 

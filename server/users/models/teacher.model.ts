@@ -2,6 +2,9 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema
 
 export const model = new Schema({
+  fullname: {
+    type: String,
+  },
   login: {
     type: String,
   },

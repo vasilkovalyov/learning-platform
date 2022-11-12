@@ -16,16 +16,16 @@ class StudentService {
     const { error } = signUpStudentValidation(params)
     if (error) throw ApiError.BadRequest(error.details[0].message);
 
-    const { login, email, confirm_password, role } = params
-
+    const { login, email, confirm_password, role, fullname } = params
     const userRoleExist = await RoleModel.findOne({ email: email });
     // const userPendingExist = await PendingModel.findOne({ email: email }); // temp. don`t remove!!!!
 
-    const hashedPassword = await bcrypt.hash(confirm_password, bcrypt.genSaltSync(10));
     if (userRoleExist) throw ApiError.BadRequest(`User with email - ${email} alreary exist!`); // temp. should remove later!!!
+    const hashedPassword = await bcrypt.hash(confirm_password, bcrypt.genSaltSync(10));
     // if (userRoleExist && userPendingExist) throw ApiError.BadRequest(`User with email - ${email} alreary exist!`); // temp. don`t remove!!!!
     const studentModel = new StudentModel({
       login,
+      fullname,
       email,
       password: hashedPassword,
       role,

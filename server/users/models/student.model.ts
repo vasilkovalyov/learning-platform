@@ -2,6 +2,9 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema
 
 export const model = new Schema({
+  fullname: {
+    type: String,
+  },
   login: {
     type: String,
     required: true
@@ -20,6 +23,10 @@ export const model = new Schema({
     type: String,
     required: true,
     ref: 'Role'
+  },
+  phone: {
+    type: String,
+    required: false,
   },
   date: {
     type: Date,
