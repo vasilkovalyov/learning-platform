@@ -4,10 +4,17 @@ import Input from 'antd/lib/input/Input'
 import Password from 'antd/lib/input/Password'
 import { Button } from 'antd'
 import { IFormData, IFormDataCompany } from '../../intefaces/auth'
+import { RoleType } from '../../types/common'
 
 export type BaseFormStepFirstType = IFormData & Pick<IFormDataCompany, 'phone'>
 
-function BaseFormStepFirst({ onSuccess }: { onSuccess?: (isSuccess: boolean, data: BaseFormStepFirstType) => void }) {
+function BaseFormStepFirst({
+  onSuccess,
+  type,
+}: {
+  onSuccess?: (isSuccess: boolean, data: BaseFormStepFirstType) => void
+  type: RoleType
+}) {
   function onFinish(values: BaseFormStepFirstType) {
     onSuccess && onSuccess(true, values)
   }
@@ -27,14 +34,16 @@ function BaseFormStepFirst({ onSuccess }: { onSuccess?: (isSuccess: boolean, dat
       autoComplete="off"
       className="form form-auth form-auth-form--register"
     >
-      <Form.Item
-        className="form__input-field form__input-field--input"
-        name="fullname"
-        label="Full name"
-        rules={[{ required: true, message: 'Please input your full name!' }]}
-      >
-        <Input id="fullname" name="fullname" />
-      </Form.Item>
+      {type !== 'company' ? (
+        <Form.Item
+          className="form__input-field form__input-field--input"
+          name="fullname"
+          label="Full name"
+          rules={[{ required: true, message: 'Please input your full name!' }]}
+        >
+          <Input id="fullname" name="fullname" />
+        </Form.Item>
+      ) : null}
       <Form.Item
         className="form__input-field form__input-field--input"
         name="login"

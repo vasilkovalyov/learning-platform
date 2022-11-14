@@ -46,7 +46,6 @@ export const signUpTeacherValidation = (data: IFormTeacher) => {
 export const signUpCompanyValidation = (data: IFormCompany) => {
   const schema = JoiValidation.object({
     login: JoiValidation.string().required(),
-    fullname: JoiValidation.string().required(),
     email: JoiValidation.string().required().email(),
     password: JoiValidation.string().min(6).required(),
     confirm_password: JoiValidation.string().required().valid(JoiValidation.ref('password')),

@@ -85,7 +85,7 @@ const Company: NextPage = () => {
             {!isSuccessForm ? (
               <Row justify="center" gutter={[40, 40]}>
                 <Col span={24} md={14} lg={10}>
-                  <BaseFormStepFirst onSuccess={successFormFirst} />
+                  <BaseFormStepFirst onSuccess={successFormFirst} type="company" />
                 </Col>
                 {isSuccessFormFirst ? (
                   <Col span={24} md={14} lg={10}>

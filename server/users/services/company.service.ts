@@ -5,6 +5,7 @@ import ApiError from '../../exeptions/api.exeptions';
 import RoleModel from "../../models/role.model"
 import bcrypt from 'bcryptjs';
 import CompanyModel from "../models/company.model"
+import CompanyDto from "../dto/company.dto";
 
 class CompanyService {
   async getUserByEmail(email: string): Promise<ICompanyUser | null> {
@@ -47,7 +48,10 @@ class CompanyService {
   }
 
   async getUserById(id: string): Promise<ICompanyUser | null> {
-    return await CompanyModel.findOne({ _id: id })
+    // return await CompanyModel.findOne({ _id: id })
+    const data: ICompanyUser | null = await CompanyModel.findOne({ _id: id })
+    if (data === null) return null
+    return new CompanyDto(data).getAuthDataUser()
   }
 }
 

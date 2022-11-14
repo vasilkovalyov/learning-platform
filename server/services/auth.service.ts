@@ -67,8 +67,7 @@ class AuthService {
         }
         if (findedRole && findedRole.role as UserAccountType === "company") {
             userResponse = await CompanyService.getUserByEmail(email)
-            // userDto = new CompanyDto(userResponse).getAuthDataUser()
-            userDto = null
+            userDto = new CompanyDto(userResponse).getAuthDataUser()
         }
 
         const validPass = await bcrypt.compare(password, userResponse.password);
