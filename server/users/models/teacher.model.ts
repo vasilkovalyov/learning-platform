@@ -30,49 +30,91 @@ export const model = new Schema({
   },
 })
 
-export const TeacherBaseInfoModel = mongoose.model('Teacher', model)
-
-export const TeacherPrivateDataModel = mongoose.model('TeacherPrivateData', new Schema({
-  country: [String],
-  state: [String],
-  city: [String],
-  local_time:[String],
-  about_info:[String],
-  lang_speaking: [String],
-  lang_teaching: [String],
-  students_ages: [String],
-  subjects: [String],
-  address: String,
+const modelPrivateData = new Schema({
+  country: {
+    type: String
+  },
+  state: {
+    type: String
+  },
+  city: {
+    type: String
+  },
+  local_time: {
+    type: String
+  },
+  about_info: {
+    type: String
+  },
+  lang_speaking: {
+    type: [String]
+  },
+  lang_teaching: {
+    type: [String]
+  },
+  students_ages: {
+    type: [String]
+  },
+  subjects: {
+    type: [String]
+  },
+  address: {
+    type: String
+  },
   teacher: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true,
     ref: 'Teacher'
   }
 })
-)
 
 const lessonSchema = new mongoose.Schema({
-  id: String,
-  label: String,
-  value: String,
+  id: {
+    type: String
+  },
+  label: {
+    type: String
+  },
+  value: {
+    type: String
+  },
 })
 
-export const TeacherServicesModel = mongoose.model('TeacherServicesData', new Schema({
+const modelServiceData = new Schema({
   lessons_info: {
     lessons: [lessonSchema],
-    lesson_duration: String
+    lesson_duration: {
+      type: String
+    },
   },
-  levels_studying: [String],
-  speaking_accent: [String],
-  lesson_content: [String],
-  tests: [String],
-  education: [String],
-  work_experience: [String],
-  certificates: [String],
+  levels_studying: {
+    type: [String]
+  },
+  speaking_accent: {
+    type: [String]
+  },
+  lesson_content: {
+    type: [String]
+  },
+  tests: {
+    type: [String]
+  },
+  education: {
+    type: [String]
+  },
+  work_experience: {
+    type: [String]
+  },
+  certificates: {
+    type: [String]
+  },
   teacher: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true,
     ref: 'Teacher'
   }
 })
-)
+
+export const TeacherBaseInfoModel = mongoose.model('Teacher', model)
+export const TeacherPrivateDataModel = mongoose.model('TeacherPrivateData', modelPrivateData)
+export const TeacherServicesModel = mongoose.model('TeacherServicesData', modelServiceData)

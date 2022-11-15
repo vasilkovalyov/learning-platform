@@ -102,7 +102,7 @@ const RegistrationTeacher: NextPage = () => {
             {!isSuccessForm ? (
               <Row justify="center" gutter={[40, 40]}>
                 <Col span={24} md={14} lg={8}>
-                  <BaseFormStepFirst onSuccess={successFormFirst} />
+                  <BaseFormStepFirst onSuccess={successFormFirst} type="teacher" />
                 </Col>
                 {isSuccessFormFirst ? (
                   <Col span={24} md={14} lg={8}>

@@ -245,8 +245,10 @@ function TeacherPrivateDataForm() {
                             ))}
                         </Select>
                       </Form.Item>
-                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
-                      <PlusCircleOutlined onClick={() => add()} />
+                      {name !== 0 ? (
+                        <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
+                      ) : null}
+                      <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
                     </Space>
                   ))}
                 </>
@@ -283,8 +285,10 @@ function TeacherPrivateDataForm() {
                             ))}
                         </Select>
                       </Form.Item>
-                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
-                      <PlusCircleOutlined onClick={() => add()} />
+                      {name !== 0 ? (
+                        <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
+                      ) : null}
+                      <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
                     </Space>
                   ))}
                 </>
@@ -323,8 +327,10 @@ function TeacherPrivateDataForm() {
                             ))}
                         </Select>
                       </Form.Item>
-                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
-                      <PlusCircleOutlined onClick={() => add()} />
+                      {name !== 0 ? (
+                        <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
+                      ) : null}
+                      <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
                     </Space>
                   ))}
                 </>
@@ -361,8 +367,10 @@ function TeacherPrivateDataForm() {
                             ))}
                         </Select>
                       </Form.Item>
-                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
-                      <PlusCircleOutlined onClick={() => add()} />
+                      {name !== 0 ? (
+                        <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
+                      ) : null}
+                      <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
                     </Space>
                   ))}
                 </>
@@ -437,8 +445,10 @@ function TeacherPrivateDataForm() {
                             ))}
                         </Select>
                       </Form.Item>
-                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
-                      <PlusCircleOutlined onClick={() => add()} />
+                      {name !== 0 ? (
+                        <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
+                      ) : null}
+                      <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
                     </Space>
                   ))}
                 </>
@@ -475,8 +485,10 @@ function TeacherPrivateDataForm() {
                             ))}
                         </Select>
                       </Form.Item>
-                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
-                      <PlusCircleOutlined onClick={() => add()} />
+                      {name !== 0 ? (
+                        <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
+                      ) : null}
+                      <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
                     </Space>
                   ))}
                 </>
@@ -501,8 +513,10 @@ function TeacherPrivateDataForm() {
                       >
                         <Input id="lesson_content" name="lesson_content" type="text" className="form__input" />
                       </Form.Item>
-                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
-                      <PlusCircleOutlined onClick={() => add()} />
+                      {name !== 0 ? (
+                        <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
+                      ) : null}
+                      <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
                     </Space>
                   ))}
                 </>
@@ -527,8 +541,10 @@ function TeacherPrivateDataForm() {
                       >
                         <Input id="tests" name="tests" type="text" className="form__input" />
                       </Form.Item>
-                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
-                      <PlusCircleOutlined onClick={() => add()} />
+                      {name !== 0 ? (
+                        <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
+                      ) : null}
+                      <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
                     </Space>
                   ))}
                 </>
@@ -555,8 +571,10 @@ function TeacherPrivateDataForm() {
                       >
                         <Input id="education" name="education" type="text" className="form__input" />
                       </Form.Item>
-                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
-                      <PlusCircleOutlined onClick={() => add()} />
+                      {name !== 0 ? (
+                        <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
+                      ) : null}
+                      <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
                     </Space>
                   ))}
                 </>
@@ -581,8 +599,10 @@ function TeacherPrivateDataForm() {
                       >
                         <Input id="work_experience" name="work_experience" type="text" className="form__input" />
                       </Form.Item>
-                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
-                      <PlusCircleOutlined onClick={() => add()} />
+                      {name !== 0 ? (
+                        <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
+                      ) : null}
+                      <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
                     </Space>
                   ))}
                 </>
@@ -607,8 +627,10 @@ function TeacherPrivateDataForm() {
                       >
                         <Input id="certificates" name="certificates" type="text" className="form__input" />
                       </Form.Item>
-                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
-                      <PlusCircleOutlined onClick={() => add()} />
+                      {name !== 0 ? (
+                        <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
+                      ) : null}
+                      <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
                     </Space>
                   ))}
                 </>

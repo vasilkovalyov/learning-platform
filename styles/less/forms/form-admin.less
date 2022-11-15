@@ -6,6 +6,12 @@
       &:nth-child(1) {
         width: 100%;
       }
+
+      &:not(:first-child) {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: -8px;
+      }
     }
   }
 
@@ -25,9 +31,7 @@
 
   .form__input {
     @media (min-width: 1024px) {
-      // max-width: 300px;
       width: 100%;
-      // margin-right: 20px;
     }
   }
 
