@@ -13,7 +13,32 @@ import { Button } from 'antd'
 
 const { Title } = Typography
 import timeZones from 'static-data/local-times.json'
+
 import levelEducation from 'static-data/level-education.json'
+import speakingAccent from 'static-data/speaking-accents.json'
+
+const lesson_duration = [
+  {
+    id: 1,
+    label: '30 min',
+    value: '30',
+  },
+  {
+    id: 2,
+    label: '45 min',
+    value: '45',
+  },
+  {
+    id: 3,
+    label: '1 hour',
+    value: '60',
+  },
+  {
+    id: 4,
+    label: '1 hour 30 min',
+    value: '90',
+  },
+]
 
 const lessons_info = {
   lessons: [
@@ -23,14 +48,14 @@ const lessons_info = {
       value: '10$',
     },
     {
-      id: '2',
-      label: 'For 10 lesson',
-      value: '100$',
-    },
-    {
       id: '3',
       label: 'For 5 lesson',
       value: '50$',
+    },
+    {
+      id: '2',
+      label: 'For 10 lesson',
+      value: '100$',
     },
     {
       id: '4',
@@ -38,16 +63,52 @@ const lessons_info = {
       value: '200$',
     },
   ],
-  lesson_duration: '30 мин',
+  lesson_duration: {
+    id: 3,
+    label: '1 hour',
+    value: '60',
+  },
 }
 
-const fields = [
+const fields_levels_studying = [
   {
-    levels_studying: {
-      id: 3,
-      value: 'info_3',
-      text: 'Info 3',
-    },
+    levels_studying: levelEducation[0],
+  },
+]
+
+const fields_speaking_accent = [
+  {
+    speaking_accent: speakingAccent[0],
+  },
+]
+
+const fields_lesson_content = [
+  {
+    lesson_content: '',
+  },
+]
+
+const fields_tests = [
+  {
+    tests: '',
+  },
+]
+
+const fields_education = [
+  {
+    education: '',
+  },
+]
+
+const fields_work_experience = [
+  {
+    work_experience: '',
+  },
+]
+
+const fields_certificates = [
+  {
+    certificates: '',
   },
 ]
 
@@ -69,7 +130,13 @@ function TeacherPrivateDataForm() {
       lesson_duration: lessons_info.lesson_duration,
     })
     form.setFieldsValue({
-      levels_studying: fields,
+      levels_studying: fields_levels_studying,
+      speaking_accent: fields_speaking_accent,
+      lesson_content: fields_lesson_content,
+      tests: fields_tests,
+      education: fields_education,
+      work_experience: fields_work_experience,
+      certificates: fields_certificates,
     })
   }, [])
 
@@ -105,7 +172,7 @@ function TeacherPrivateDataForm() {
                 timeZones.length &&
                 timeZones.map((tm) => (
                   <Select.Option key={tm.id} value={tm.value}>
-                    {tm.text}
+                    {tm.label}
                   </Select.Option>
                 ))}
             </Select>
@@ -135,20 +202,35 @@ function TeacherPrivateDataForm() {
           ))}
         <Col span={24} md={12}>
           <Form.Item
-            className="form__input-field form__input-field--input"
+            className="form__input-field form__input-field--select"
             name="lesson_duration"
             label="Lessons duration"
           >
-            <Input id="lesson_duration" name="lesson_duration" type="text" className="form__input" />
+            <Select id="lesson_duration" className="form__select" showSearch optionFilterProp="children">
+              {lesson_duration &&
+                lesson_duration.length &&
+                lesson_duration.map((ld) => (
+                  <Select.Option key={ld.id} value={ld.value}>
+                    {ld.label}
+                  </Select.Option>
+                ))}
+            </Select>
           </Form.Item>
         </Col>
+      </Row>
+      <Row gutter={24} justify="space-between">
         <Col span={24} md={12}>
-          <Form.Item label="Levels studying">
+          <Form.Item label="Levels studying" className="form__input-field form__input-field--select">
             <Form.List name="levels_studying">
-              {(fields, { add, remove }) => (
+              {(fields_levels_studying, { add, remove }) => (
                 <>
-                  {fields.map(({ key, name, ...restField }) => (
-                    <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                  {fields_levels_studying.map(({ key, name, ...restField }) => (
+                    <Space
+                      key={key}
+                      style={{ display: 'flex', marginBottom: 8 }}
+                      align="baseline"
+                      className="space-select"
+                    >
                       <Form.Item
                         {...restField}
                         name={[name, 'levels_studying']}
@@ -157,14 +239,108 @@ function TeacherPrivateDataForm() {
                         <Select id="levels_studying" className="form__select" showSearch optionFilterProp="children">
                           {levelEducation &&
                             levelEducation.length &&
-                            levelEducation.map((tm) => (
-                              <Select.Option key={tm.id} value={tm.value}>
-                                {tm.text}
-                              </Select.Option>
+                            levelEducation.map((le) => (
+                              <>
+                                {le.value !== '' ? (
+                                  <Select.Option key={le.id} value={le.value}>
+                                    {le.label}
+                                  </Select.Option>
+                                ) : null}
+                              </>
                             ))}
                         </Select>
                       </Form.Item>
-                      <MinusCircleOutlined onClick={() => remove(name)} />
+                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
+                      <PlusCircleOutlined onClick={() => add()} />
+                    </Space>
+                  ))}
+                </>
+              )}
+            </Form.List>
+          </Form.Item>
+          <Form.Item label="Speaking accent" className="form__input-field form__input-field--select">
+            <Form.List name="speaking_accent">
+              {(fields_speaking_accent, { add, remove }) => (
+                <>
+                  {fields_speaking_accent.map(({ key, name, ...restField }) => (
+                    <Space
+                      key={key}
+                      style={{ display: 'flex', marginBottom: 8 }}
+                      align="baseline"
+                      className="space-select"
+                    >
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'speaking_accent']}
+                        className="form__input-field form__input-field--input"
+                      >
+                        <Select id="speaking_accent" className="form__select" showSearch optionFilterProp="children">
+                          {speakingAccent &&
+                            speakingAccent.length &&
+                            speakingAccent.map((sa) => (
+                              <>
+                                {sa.value !== '' ? (
+                                  <Select.Option key={sa.id} value={sa.value}>
+                                    {sa.label}
+                                  </Select.Option>
+                                ) : null}
+                              </>
+                            ))}
+                        </Select>
+                      </Form.Item>
+                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
+                      <PlusCircleOutlined onClick={() => add()} />
+                    </Space>
+                  ))}
+                </>
+              )}
+            </Form.List>
+          </Form.Item>
+          <Form.Item label="Lesson content" className="form__input-field form__input-field--input">
+            <Form.List name="lesson_content">
+              {(fields_lesson_content, { add, remove }) => (
+                <>
+                  {fields_lesson_content.map(({ key, name, ...restField }) => (
+                    <Space
+                      key={key}
+                      style={{ display: 'flex', marginBottom: 8 }}
+                      align="baseline"
+                      className="space-select"
+                    >
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'lesson_content']}
+                        className="form__input-field form__input-field--input"
+                      >
+                        <Input id="lesson_content" name="lesson_content" type="text" className="form__input" />
+                      </Form.Item>
+                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
+                      <PlusCircleOutlined onClick={() => add()} />
+                    </Space>
+                  ))}
+                </>
+              )}
+            </Form.List>
+          </Form.Item>
+          <Form.Item label="Tests" className="form__input-field form__input-field--input">
+            <Form.List name="tests">
+              {(fields_tests, { add, remove }) => (
+                <>
+                  {fields_tests.map(({ key, name, ...restField }) => (
+                    <Space
+                      key={key}
+                      style={{ display: 'flex', marginBottom: 8 }}
+                      align="baseline"
+                      className="space-select"
+                    >
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'tests']}
+                        className="form__input-field form__input-field--input"
+                      >
+                        <Input id="tests" name="tests" type="text" className="form__input" />
+                      </Form.Item>
+                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
                       <PlusCircleOutlined onClick={() => add()} />
                     </Space>
                   ))}
@@ -173,191 +349,86 @@ function TeacherPrivateDataForm() {
             </Form.List>
           </Form.Item>
         </Col>
-        {/* <Col span={24} md={12}>
-          <Form.List name="speaking_accent">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map(({ key, name, ...restField }) => (
-                  <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                    <Form.Item
-                      {...restField}
-                      name={[name, 'speaking_accent']}
-                      className="form__input-field form__input-field--input"
+        <Col span={24} md={12}>
+          <Form.Item label="Education" className="form__input-field form__input-field--input">
+            <Form.List name="education">
+              {(fields_education, { add, remove }) => (
+                <>
+                  {fields_education.map(({ key, name, ...restField }) => (
+                    <Space
+                      key={key}
+                      style={{ display: 'flex', marginBottom: 8 }}
+                      align="baseline"
+                      className="space-select"
                     >
-                      <Select
-                        id="speaking_accent"
-                        className="form__select"
-                        showSearch
-                        optionFilterProp="children"
-                        placeholder="Speaking accent"
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'education']}
+                        className="form__input-field form__input-field--input"
                       >
-                        {levelEducation &&
-                          levelEducation.length &&
-                          levelEducation.map((tm) => (
-                            <Select.Option key={tm.id} value={tm.value}>
-                              {tm.text}
-                            </Select.Option>
-                          ))}
-                      </Select>
-                    </Form.Item>
-                    <MinusCircleOutlined onClick={() => remove(name)} />
-                    <PlusCircleOutlined onClick={() => add()} />
-                  </Space>
-                ))}
-              </>
-            )}
-          </Form.List>
-        </Col> */}
-        {/* <Col span={24} md={12}>
-          <Form.List name="lesson_content">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map(({ key, name, ...restField }) => (
-                  <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                    <Form.Item
-                      {...restField}
-                      name={[name, 'lesson_content']}
-                      className="form__input-field form__input-field--input"
+                        <Input id="education" name="education" type="text" className="form__input" />
+                      </Form.Item>
+                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
+                      <PlusCircleOutlined onClick={() => add()} />
+                    </Space>
+                  ))}
+                </>
+              )}
+            </Form.List>
+          </Form.Item>
+          <Form.Item label="Work experience" className="form__input-field form__input-field--input">
+            <Form.List name="work_experience">
+              {(fields_work_experience, { add, remove }) => (
+                <>
+                  {fields_work_experience.map(({ key, name, ...restField }) => (
+                    <Space
+                      key={key}
+                      style={{ display: 'flex', marginBottom: 8 }}
+                      align="baseline"
+                      className="space-select"
                     >
-                      <Input placeholder="Lesson Content" />
-                    </Form.Item>
-                    <MinusCircleOutlined onClick={() => remove(name)} />
-                  </Space>
-                ))}
-                <Form.Item>
-                  <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />} className="form__add-field-btn">
-                    Add education
-                  </Button>
-                </Form.Item>
-              </>
-            )}
-          </Form.List>
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'work_experience']}
+                        className="form__input-field form__input-field--input"
+                      >
+                        <Input id="work_experience" name="work_experience" type="text" className="form__input" />
+                      </Form.Item>
+                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
+                      <PlusCircleOutlined onClick={() => add()} />
+                    </Space>
+                  ))}
+                </>
+              )}
+            </Form.List>
+          </Form.Item>
+          <Form.Item label="Certificates" className="form__input-field form__input-field--input">
+            <Form.List name="certificates">
+              {(fields_certificates, { add, remove }) => (
+                <>
+                  {fields_certificates.map(({ key, name, ...restField }) => (
+                    <Space
+                      key={key}
+                      style={{ display: 'flex', marginBottom: 8 }}
+                      align="baseline"
+                      className="space-select"
+                    >
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'certificates']}
+                        className="form__input-field form__input-field--input"
+                      >
+                        <Input id="certificates" name="certificates" type="text" className="form__input" />
+                      </Form.Item>
+                      {name !== 0 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
+                      <PlusCircleOutlined onClick={() => add()} />
+                    </Space>
+                  ))}
+                </>
+              )}
+            </Form.List>
+          </Form.Item>
         </Col>
-        <Col span={24} md={12}>
-          <Form.List name="education_rest">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map(({ key, name, ...restField }) => (
-                  <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                    <Form.Item
-                      {...restField}
-                      name={[name, 'education_rest']}
-                      className="form__input-field form__input-field--input"
-                    >
-                      <Input placeholder="Education" />
-                    </Form.Item>
-                    <MinusCircleOutlined onClick={() => remove(name)} />
-                  </Space>
-                ))}
-                <Form.Item>
-                  <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />} className="form__add-field-btn">
-                    Add education
-                  </Button>
-                </Form.Item>
-              </>
-            )}
-          </Form.List>
-        </Col>
-        <Col span={24} md={12}>
-          <Form.List name="tests">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map(({ key, name, ...restField }) => (
-                  <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                    <Form.Item
-                      {...restField}
-                      name={[name, 'tests']}
-                      className="form__input-field form__input-field--input"
-                    >
-                      <Input placeholder="Tests" />
-                    </Form.Item>
-                    <MinusCircleOutlined onClick={() => remove(name)} />
-                  </Space>
-                ))}
-                <Form.Item>
-                  <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />} className="form__add-field-btn">
-                    Add education
-                  </Button>
-                </Form.Item>
-              </>
-            )}
-          </Form.List>
-        </Col>
-        <Col span={24} md={12}>
-          <Form.List name="education">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map(({ key, name, ...restField }) => (
-                  <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                    <Form.Item
-                      {...restField}
-                      name={[name, 'education']}
-                      className="form__input-field form__input-field--input"
-                    >
-                      <Input placeholder="Education" />
-                    </Form.Item>
-                    <MinusCircleOutlined onClick={() => remove(name)} />
-                  </Space>
-                ))}
-                <Form.Item>
-                  <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />} className="form__add-field-btn">
-                    Add education
-                  </Button>
-                </Form.Item>
-              </>
-            )}
-          </Form.List>
-        </Col>
-        <Col span={24} md={12}>
-          <Form.List name="work_experience">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map(({ key, name, ...restField }) => (
-                  <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                    <Form.Item
-                      {...restField}
-                      name={[name, 'work_experience']}
-                      className="form__input-field form__input-field--input"
-                    >
-                      <Input placeholder="Work Experience" />
-                    </Form.Item>
-                    <MinusCircleOutlined onClick={() => remove(name)} />
-                  </Space>
-                ))}
-                <Form.Item>
-                  <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />} className="form__add-field-btn">
-                    Add education
-                  </Button>
-                </Form.Item>
-              </>
-            )}
-          </Form.List>
-        </Col>
-        <Col span={24} md={12}>
-          <Form.List name="certificates">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map(({ key, name, ...restField }) => (
-                  <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                    <Form.Item
-                      {...restField}
-                      name={[name, 'certificates']}
-                      className="form__input-field form__input-field--input"
-                    >
-                      <Input placeholder="Certificates" />
-                    </Form.Item>
-                    <MinusCircleOutlined onClick={() => remove(name)} />
-                  </Space>
-                ))}
-                <Form.Item>
-                  <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />} className="form__add-field-btn">
-                    Add education
-                  </Button>
-                </Form.Item>
-              </>
-            )}
-          </Form.List>
-        </Col> */}
       </Row>
       <Form.Item wrapperCol={{ span: 24 }} className="form__input-field form__input-field--button">
         <Button type="primary" htmlType="submit">
