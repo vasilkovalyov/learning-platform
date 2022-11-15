@@ -1,0 +1,32 @@
+[
+  {
+    "id": 0,
+    "value": "",
+    "label": ""
+  },
+  {
+    "id": 1,
+    "value": "10-15",
+    "label": "10-15 year old"
+  },
+  {
+    "id": 2,
+    "value": "15-20",
+    "label": "15-20 year old"
+  },
+  {
+    "id": 3,
+    "value": "20-30",
+    "label": "20-30 year old"
+  },
+  {
+    "id": 4,
+    "value": "30-40",
+    "label": "20-30 year old"
+  },
+  {
+    "id": 5,
+    "value": "40+",
+    "label": "40+ year old"
+  }
+]
