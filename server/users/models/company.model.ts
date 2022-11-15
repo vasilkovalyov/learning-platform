@@ -48,4 +48,4 @@ export const model = new Schema({
   },
 })
 
-export default mongoose.model('Company', model)
+export const CompanyBaseInfoModel = mongoose.model('Company', model)

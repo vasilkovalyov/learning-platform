@@ -4,12 +4,12 @@ import { signUpTeacherValidation } from "../../validation/auth.validation"
 import ApiError from '../../exeptions/api.exeptions';
 import RoleModel from "../../models/role.model"
 import bcrypt from 'bcryptjs';
-import TeacherModel from "../models/teacher.model"
+import { TeacherBaseInfoModel, TeacherPrivateDataModel, TeacherServicesModel } from "../models/teacher.model"
 import TeacherDto from "../dto/teacher.dto";
 
 class TeacherService {
   async getUserByEmail(email: string): Promise<ITeacherUser | null> {
-    return await TeacherModel.findOne({ email: email });
+    return await TeacherBaseInfoModel.findOne({ email: email });
   }
 
   async signUp(params: IFormTeacher): Promise<IAuthUserResponse<IFormTeacher>> {
@@ -22,22 +22,34 @@ class TeacherService {
     const hashedPassword = await bcrypt.hash(confirm_password, bcrypt.genSaltSync(10));
     if (userExist) throw ApiError.BadRequest(`User with email - ${email} alreary exist!`);
 
-    const teacherModel = new TeacherModel({
+
+    const teacherBaseInfoModel = new TeacherBaseInfoModel({
       fullname,
       login,
       email,
       password: hashedPassword,
+      phone,
       role,
+    });
+
+    const savedUser = await teacherBaseInfoModel.save();
+
+    const teacherPrivateDataModel = new TeacherPrivateDataModel({
+      teacher: savedUser._id,
       address,
       city,
       state,
       country,
-      education,
-      phone,
-      work_experience,
-    });
+    })
+    await teacherPrivateDataModel.save()
 
-    const savedUser = await teacherModel.save();
+    const teacherServicesModel = new TeacherServicesModel({
+      teacher: savedUser._id,
+      education,
+      work_experience
+    })
+    await teacherServicesModel.save()
+  
     const roleModel = new RoleModel({ _id: savedUser._id, role, email })
     await roleModel.save();
 
@@ -48,7 +60,7 @@ class TeacherService {
   }
 
   async getUserById(id: string): Promise<ITeacherUser | null> {
-    const data: ITeacherUser | null = await TeacherModel.findOne({ _id: id })
+    const data: ITeacherUser | null = await TeacherBaseInfoModel.findOne({ _id: id })
     if (data === null) return null
     return new TeacherDto(data).getAuthDataUser()
   }

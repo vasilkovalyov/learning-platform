@@ -4,12 +4,12 @@ import { signUpCompanyValidation } from "../../validation/auth.validation"
 import ApiError from '../../exeptions/api.exeptions';
 import RoleModel from "../../models/role.model"
 import bcrypt from 'bcryptjs';
-import CompanyModel from "../models/company.model"
+import { CompanyBaseInfoModel } from "../models/company.model"
 import CompanyDto from "../dto/company.dto";
 
 class CompanyService {
   async getUserByEmail(email: string): Promise<ICompanyUser | null> {
-    return await CompanyModel.findOne({ email: email });
+    return await CompanyBaseInfoModel.findOne({ email: email });
   }
 
   async signUp(params: IFormCompany): Promise<IAuthUserResponse<IFormCompany>> {
@@ -22,7 +22,7 @@ class CompanyService {
     const hashedPassword = await bcrypt.hash(confirm_password, bcrypt.genSaltSync(10));
     if (userExist) throw ApiError.BadRequest(`User with email - ${email} alreary exist!`);
 
-    const companyModel = new CompanyModel({
+    const companyBaseInfoModel = new CompanyBaseInfoModel({
       login,
       email,
       password: hashedPassword,
@@ -37,7 +37,7 @@ class CompanyService {
       legal_address,
     });
 
-    const savedUser = await companyModel.save();
+    const savedUser = await companyBaseInfoModel.save();
     const roleModel = new RoleModel({ _id: savedUser._id, role, email })
     await roleModel.save();
 
@@ -48,8 +48,7 @@ class CompanyService {
   }
 
   async getUserById(id: string): Promise<ICompanyUser | null> {
-    // return await CompanyModel.findOne({ _id: id })
-    const data: ICompanyUser | null = await CompanyModel.findOne({ _id: id })
+    const data: ICompanyUser | null = await CompanyBaseInfoModel.findOne({ _id: id })
     if (data === null) return null
     return new CompanyDto(data).getAuthDataUser()
   }

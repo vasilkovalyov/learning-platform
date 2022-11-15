@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "value": "info_1",
+    "text": "Info 1"
+  },
+  {
+    "id": 2,
+    "value": "info_2",
+    "text": "Info 2"
+  },
+  {
+    "id": 3,
+    "value": "info_3",
+    "text": "Info 3"
+  },
+  {
+    "id": 4,
+    "value": "info_4",
+    "text": "Info 4"
+  }
+]

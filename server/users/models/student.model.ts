@@ -34,4 +34,24 @@ export const model = new Schema({
   },
 })
 
-export default mongoose.model('Student', model)
+export const StudentBaseInfoModel = mongoose.model('Student', model)
+
+
+export const StudentPrivateDataModel = mongoose.model('StudentPrivateData', new Schema({
+  country: {
+    type: String,
+  },
+  state: {
+    type: String,
+  },
+  city: {
+    type: String,
+  },
+  local_time: {
+    type: String
+  },
+  about_info: {
+    type: String
+  }
+})
+)
