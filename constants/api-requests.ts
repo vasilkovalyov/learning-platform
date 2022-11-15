@@ -8,4 +8,5 @@ export const PUBLIC_REQUESTS = {
 
 export const PRIVATE_REQUESTS = {
   BASE: '',
+  TEACHER_SAVE_PRIVATE_DATA: 'teacher/private-data',
 }

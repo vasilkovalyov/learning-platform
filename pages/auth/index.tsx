@@ -39,6 +39,7 @@ const Auth: NextPage = () => {
       Cookies.set('token', response.token)
       Cookies.set('userId', response.data._id)
       Cookies.set('role', response.data.role)
+      localStorage.setItem('userId', response.data._id || '')
       dispatch(setAuthState(response.data))
       router.push('/admin')
     } catch (e) {

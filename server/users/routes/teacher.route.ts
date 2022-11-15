@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.post('/auth/teacher/signup', TeacherController.signUp);
 router.get('/teacher/:id', authUserMiddleware, TeacherController.getUserById);
+router.get('/teacher/private-data/:id', authUserMiddleware, TeacherController.getUserPrivateData);
 
 export default router

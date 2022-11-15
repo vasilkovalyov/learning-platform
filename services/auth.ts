@@ -17,7 +17,7 @@ interface ISignInResponse {
 
 class AuthService {
   async signUpStudent(data: IFormData): Promise<ISignUpResponse<IUserStudent>> {
-    const response = await $api.post(`${PUBLIC_REQUESTS.SIGN_UP_STUDENT}`, {
+    const response = await $api().post(`${PUBLIC_REQUESTS.SIGN_UP_STUDENT}`, {
       params: {
         ...data,
         role: 'student' as RoleType,
@@ -28,7 +28,7 @@ class AuthService {
   }
 
   async signUpTeacher(data: IFormDataTeacher): Promise<ISignUpResponse<IUserTeacher>> {
-    const response = await $api.post(`/${PUBLIC_REQUESTS.SIGN_UP_TEACHER}`, {
+    const response = await $api().post(`/${PUBLIC_REQUESTS.SIGN_UP_TEACHER}`, {
       params: {
         ...data,
         role: 'teacher' as RoleType,
@@ -39,7 +39,7 @@ class AuthService {
   }
 
   async signUpCompany(data: IFormDataCompany): Promise<ISignUpResponse<IUserCompany>> {
-    const response = await $api.post(`/${PUBLIC_REQUESTS.SIGN_UP_COMPANY}`, {
+    const response = await $api().post(`/${PUBLIC_REQUESTS.SIGN_UP_COMPANY}`, {
       params: {
         ...data,
         role: 'company' as RoleType,
@@ -50,7 +50,7 @@ class AuthService {
   }
 
   async signIn(data: Pick<IFormData, 'email' | 'password'>): Promise<ISignInResponse> {
-    const response = await $api.post(`/${PUBLIC_REQUESTS.SIGN_IN}`, {
+    const response = await $api().post(`/${PUBLIC_REQUESTS.SIGN_IN}`, {
       params: data,
     })
     return response.data

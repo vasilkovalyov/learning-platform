@@ -22,6 +22,8 @@ function Header() {
     dispatch(clearAuthState())
     document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:01 GTM;'
     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GTM;'
+    document.cookie = 'role=; expires=Thu, 01 Jan 1970 00:00:01 GTM;'
+    localStorage.removeItem('userId')
   }
 
   return (

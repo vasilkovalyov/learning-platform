@@ -1,16 +1,22 @@
-import { IPlaceLiving } from "../../interfaces/common"
-import { IStudent } from "./student.interface"
+import { RoleType } from 'types/common'
 
-export interface ITeacherUser extends IStudent {}
+export interface ITeacherAuthInfo {
+  _id?: string
+  fullname: string
+  email: string
+  login: string
+  role: RoleType
+  phone: string
+}
 
 export interface ITeacherPrivateData {
   _id: string
-  private_data: Partial<ITeacherPrivate> | null
-  lessons: Partial<ITeacherLessonsInfo> | null
-  services: Partial<ITeacherServicesData> | null
+  private_data: Partial<ITeacherPrivateInfo>
+  lessons: Partial<ITeacherLessonsInfo>
+  services: Partial<ITeacherServices>
 }
 
-export interface ITeacherPrivate {
+export interface ITeacherPrivateInfo {
   address: string
   city: string
   state: string
@@ -30,7 +36,7 @@ export interface ITeacherLessonsInfo {
   lesson_duration: number
 }
 
-export interface ITeacherServicesData {
+export interface ITeacherServices {
   lang_speaking: string[]
   students_ages: string[]
   lang_teaching: string[]

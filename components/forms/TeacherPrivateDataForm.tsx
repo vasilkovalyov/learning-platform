@@ -8,10 +8,14 @@ import Col from 'antd/lib/col'
 import Typography from 'antd/lib/typography'
 import Space from 'antd/lib/space'
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons'
+import { ITeacherPrivateData } from 'intefaces/teacher.interface'
 
 import { Button } from 'antd'
 
 const { Title } = Typography
+
+import TeacherService from 'services/teacher.service'
+
 import timeZones from 'static-data/local-times.json'
 
 import levelEducation from 'static-data/level-education.json'
@@ -26,16 +30,19 @@ const fields_lang_speaking = [
     lang_speaking: langSpeaking[0],
   },
 ]
+
 const fields_lang_teaching = [
   {
     lang_speaking: langTeaching[0],
   },
 ]
+
 const fields_subjects = [
   {
     lang_speaking: subjects[0],
   },
 ]
+
 const fields_students_ages = [
   {
     lang_speaking: studentsAges[0],
@@ -169,8 +176,51 @@ function TeacherPrivateDataForm() {
     })
   }, [])
 
+  useEffect(() => {
+    TeacherService.loadPrivateData(localStorage.getItem('userId') || '').then((res) => {
+      console.log(res)
+      form.setFieldsValue({
+        country: res.private_data.country,
+        state: res.private_data.state,
+        city: res.private_data.city,
+        work_experience: res.private_data.work_experience,
+      })
+    })
+  })
+
   function onFinish(values) {
-    console.log('values', values)
+    const data: ITeacherPrivateData = {
+      _id: localStorage.getItem('userId') || '',
+      private_data: {
+        address: values.address,
+        country: values.country,
+        state: values.state,
+        city: values.city,
+        certificates: values.certificates,
+        education: values.education,
+        work_experience: values.work_experience,
+        local_time: values.local_time,
+        about_info: values.about_info,
+      },
+      lessons: {
+        lesson_1: values.lesson_1,
+        lesson_10: values.lesson_10,
+        lesson_20: values.lesson_20,
+        lesson_5: values.lesson_5,
+        lesson_duration: +values.lesson_duration,
+      },
+      services: {
+        lang_speaking: values.lang_speaking,
+        lang_teaching: values.lang_teaching,
+        lesson_content: values.lesson_content,
+        levels_studying: values.levels_studying,
+        speaking_accent: values.speaking_accent,
+        students_ages: values.students_ages,
+        subjects: values.subjects,
+        tests: values.tests,
+      },
+    }
+    const response = TeacherService.savePrivateData(data)
   }
 
   return (
@@ -220,12 +270,7 @@ function TeacherPrivateDataForm() {
               {(fields_lang_speaking, { add, remove }) => (
                 <>
                   {fields_lang_speaking.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      style={{ display: 'flex', marginBottom: 8 }}
-                      align="baseline"
-                      className="space-select"
-                    >
+                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
                       <Form.Item
                         {...restField}
                         name={[name, 'lang_speaking']}
@@ -234,14 +279,14 @@ function TeacherPrivateDataForm() {
                         <Select id="lang_speaking" className="form__select" showSearch optionFilterProp="children">
                           {langSpeaking &&
                             langSpeaking.length &&
-                            langSpeaking.map((le) => (
-                              <>
-                                {le.value !== '' ? (
-                                  <Select.Option key={le.id} value={le.value}>
-                                    {le.label}
+                            langSpeaking.map((ls) => (
+                              <React.Fragment key={ls.id}>
+                                {ls.value !== '' ? (
+                                  <Select.Option key={ls.id} value={ls.value}>
+                                    {ls.label}
                                   </Select.Option>
                                 ) : null}
-                              </>
+                              </React.Fragment>
                             ))}
                         </Select>
                       </Form.Item>
@@ -260,12 +305,7 @@ function TeacherPrivateDataForm() {
               {(fields_students_ages, { add, remove }) => (
                 <>
                   {fields_students_ages.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      style={{ display: 'flex', marginBottom: 8 }}
-                      align="baseline"
-                      className="space-select"
-                    >
+                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
                       <Form.Item
                         {...restField}
                         name={[name, 'students_ages']}
@@ -274,14 +314,14 @@ function TeacherPrivateDataForm() {
                         <Select id="students_ages" className="form__select" showSearch optionFilterProp="children">
                           {studentsAges &&
                             studentsAges.length &&
-                            studentsAges.map((le) => (
-                              <>
-                                {le.value !== '' ? (
-                                  <Select.Option key={le.id} value={le.value}>
-                                    {le.label}
+                            studentsAges.map((sa) => (
+                              <React.Fragment key={sa.id}>
+                                {sa.value !== '' ? (
+                                  <Select.Option key={sa.id} value={sa.value}>
+                                    {sa.label}
                                   </Select.Option>
                                 ) : null}
-                              </>
+                              </React.Fragment>
                             ))}
                         </Select>
                       </Form.Item>
@@ -302,12 +342,7 @@ function TeacherPrivateDataForm() {
               {(fields_lang_teaching, { add, remove }) => (
                 <>
                   {fields_lang_teaching.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      style={{ display: 'flex', marginBottom: 8 }}
-                      align="baseline"
-                      className="space-select"
-                    >
+                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
                       <Form.Item
                         {...restField}
                         name={[name, 'lang_teaching']}
@@ -316,14 +351,14 @@ function TeacherPrivateDataForm() {
                         <Select id="lang_teaching" className="form__select" showSearch optionFilterProp="children">
                           {langTeaching &&
                             langTeaching.length &&
-                            langTeaching.map((le) => (
-                              <>
-                                {le.value !== '' ? (
-                                  <Select.Option key={le.id} value={le.value}>
-                                    {le.label}
+                            langTeaching.map((lt) => (
+                              <React.Fragment key={lt.id}>
+                                {lt.value !== '' ? (
+                                  <Select.Option key={lt.id} value={lt.value}>
+                                    {lt.label}
                                   </Select.Option>
                                 ) : null}
-                              </>
+                              </React.Fragment>
                             ))}
                         </Select>
                       </Form.Item>
@@ -342,12 +377,7 @@ function TeacherPrivateDataForm() {
               {(fields_subjects, { add, remove }) => (
                 <>
                   {fields_subjects.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      style={{ display: 'flex', marginBottom: 8 }}
-                      align="baseline"
-                      className="space-select"
-                    >
+                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
                       <Form.Item
                         {...restField}
                         name={[name, 'subjects']}
@@ -356,14 +386,14 @@ function TeacherPrivateDataForm() {
                         <Select id="subjects" className="form__select" showSearch optionFilterProp="children">
                           {subjects &&
                             subjects.length &&
-                            subjects.map((le) => (
-                              <>
-                                {le.value !== '' ? (
-                                  <Select.Option key={le.id} value={le.value}>
-                                    {le.label}
+                            subjects.map((subject) => (
+                              <React.Fragment key={subject.id}>
+                                {subject.value !== '' ? (
+                                  <Select.Option key={subject.id} value={subject.value}>
+                                    {subject.label}
                                   </Select.Option>
                                 ) : null}
-                              </>
+                              </React.Fragment>
                             ))}
                         </Select>
                       </Form.Item>
@@ -420,12 +450,7 @@ function TeacherPrivateDataForm() {
               {(fields_levels_studying, { add, remove }) => (
                 <>
                   {fields_levels_studying.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      style={{ display: 'flex', marginBottom: 8 }}
-                      align="baseline"
-                      className="space-select"
-                    >
+                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
                       <Form.Item
                         {...restField}
                         name={[name, 'levels_studying']}
@@ -435,13 +460,13 @@ function TeacherPrivateDataForm() {
                           {levelEducation &&
                             levelEducation.length &&
                             levelEducation.map((le) => (
-                              <>
+                              <React.Fragment key={le.id}>
                                 {le.value !== '' ? (
                                   <Select.Option key={le.id} value={le.value}>
                                     {le.label}
                                   </Select.Option>
                                 ) : null}
-                              </>
+                              </React.Fragment>
                             ))}
                         </Select>
                       </Form.Item>
@@ -460,12 +485,7 @@ function TeacherPrivateDataForm() {
               {(fields_speaking_accent, { add, remove }) => (
                 <>
                   {fields_speaking_accent.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      style={{ display: 'flex', marginBottom: 8 }}
-                      align="baseline"
-                      className="space-select"
-                    >
+                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
                       <Form.Item
                         {...restField}
                         name={[name, 'speaking_accent']}
@@ -475,13 +495,13 @@ function TeacherPrivateDataForm() {
                           {speakingAccent &&
                             speakingAccent.length &&
                             speakingAccent.map((sa) => (
-                              <>
+                              <React.Fragment key={sa.id}>
                                 {sa.value !== '' ? (
                                   <Select.Option key={sa.id} value={sa.value}>
                                     {sa.label}
                                   </Select.Option>
                                 ) : null}
-                              </>
+                              </React.Fragment>
                             ))}
                         </Select>
                       </Form.Item>
@@ -500,12 +520,7 @@ function TeacherPrivateDataForm() {
               {(fields_lesson_content, { add, remove }) => (
                 <>
                   {fields_lesson_content.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      style={{ display: 'flex', marginBottom: 8 }}
-                      align="baseline"
-                      className="space-select"
-                    >
+                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
                       <Form.Item
                         {...restField}
                         name={[name, 'lesson_content']}
@@ -528,12 +543,7 @@ function TeacherPrivateDataForm() {
               {(fields_tests, { add, remove }) => (
                 <>
                   {fields_tests.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      style={{ display: 'flex', marginBottom: 8 }}
-                      align="baseline"
-                      className="space-select"
-                    >
+                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
                       <Form.Item
                         {...restField}
                         name={[name, 'tests']}
@@ -558,12 +568,7 @@ function TeacherPrivateDataForm() {
               {(fields_education, { add, remove }) => (
                 <>
                   {fields_education.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      style={{ display: 'flex', marginBottom: 8 }}
-                      align="baseline"
-                      className="space-select"
-                    >
+                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
                       <Form.Item
                         {...restField}
                         name={[name, 'education']}
@@ -586,12 +591,7 @@ function TeacherPrivateDataForm() {
               {(fields_work_experience, { add, remove }) => (
                 <>
                   {fields_work_experience.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      style={{ display: 'flex', marginBottom: 8 }}
-                      align="baseline"
-                      className="space-select"
-                    >
+                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
                       <Form.Item
                         {...restField}
                         name={[name, 'work_experience']}
@@ -614,12 +614,7 @@ function TeacherPrivateDataForm() {
               {(fields_certificates, { add, remove }) => (
                 <>
                   {fields_certificates.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      style={{ display: 'flex', marginBottom: 8 }}
-                      align="baseline"
-                      className="space-select"
-                    >
+                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
                       <Form.Item
                         {...restField}
                         name={[name, 'certificates']}

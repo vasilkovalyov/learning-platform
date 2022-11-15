@@ -46,58 +46,8 @@ const modelPrivateData = new Schema({
   about_info: {
     type: String
   },
-  lang_speaking: {
-    type: [String]
-  },
-  lang_teaching: {
-    type: [String]
-  },
-  students_ages: {
-    type: [String]
-  },
-  subjects: {
-    type: [String]
-  },
   address: {
     type: String
-  },
-  teacher: {
-    type: String,
-    required: true,
-    ref: 'Teacher'
-  }
-})
-
-const lessonSchema = new mongoose.Schema({
-  id: {
-    type: String
-  },
-  label: {
-    type: String
-  },
-  value: {
-    type: String
-  },
-})
-
-const modelServiceData = new Schema({
-  lessons_info: {
-    lessons: [lessonSchema],
-    lesson_duration: {
-      type: String
-    },
-  },
-  levels_studying: {
-    type: [String]
-  },
-  speaking_accent: {
-    type: [String]
-  },
-  lesson_content: {
-    type: [String]
-  },
-  tests: {
-    type: [String]
   },
   education: {
     type: [String]
@@ -115,6 +65,47 @@ const modelServiceData = new Schema({
   }
 })
 
+const modelLessons = new Schema({
+  lesson_1: String,
+  lesson_5: String,
+  lesson_10: String,
+  lesson_20: String,
+  lesson_duration: Number,
+})
+
+const modelService = new Schema({
+  lang_speaking: {
+    type: [String]
+  },
+  lang_teaching: {
+    type: [String]
+  },
+  students_ages: {
+    type: [String]
+  },
+  subjects: {
+    type: [String]
+  },
+  levels_studying: {
+    type: [String]
+  },
+  speaking_accent: {
+    type: [String]
+  },
+  lesson_content: {
+    type: [String]
+  },
+  tests: {
+    type: [String]
+  },
+  teacher: {
+    type: String,
+    required: true,
+    ref: 'Teacher'
+  }
+})
+
 export const TeacherBaseInfoModel = mongoose.model('Teacher', model)
-export const TeacherPrivateDataModel = mongoose.model('TeacherPrivateData', modelPrivateData)
-export const TeacherServicesModel = mongoose.model('TeacherServicesData', modelServiceData)
+export const TeacherPrivateDataModel = mongoose.model('TeacherPrivateInfo', modelPrivateData)
+export const TeacherLessonsModel = mongoose.model('TeacherLessonsInfo', modelLessons)
+export const TeacherServicesModel = mongoose.model('TeacherServices', modelService)
