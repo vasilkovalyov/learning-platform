@@ -33,19 +33,19 @@ const fields_lang_speaking = [
 
 const fields_lang_teaching = [
   {
-    lang_speaking: langTeaching[0],
+    lang_teaching: langTeaching[0],
   },
 ]
 
 const fields_subjects = [
   {
-    lang_speaking: subjects[0],
+    subjects: subjects[0],
   },
 ]
 
 const fields_students_ages = [
   {
-    lang_speaking: studentsAges[0],
+    students_ages: studentsAges[0],
   },
 ]
 
@@ -71,36 +71,6 @@ const lesson_duration = [
     value: '90',
   },
 ]
-
-const lessons_info = {
-  lessons: [
-    {
-      id: '1',
-      label: 'For 1 lesson',
-      value: '10$',
-    },
-    {
-      id: '3',
-      label: 'For 5 lesson',
-      value: '50$',
-    },
-    {
-      id: '2',
-      label: 'For 10 lesson',
-      value: '100$',
-    },
-    {
-      id: '4',
-      label: 'For 20 lesson',
-      value: '200$',
-    },
-  ],
-  lesson_duration: {
-    id: 3,
-    label: '1 hour',
-    value: '60',
-  },
-}
 
 const fields_levels_studying = [
   {
@@ -144,23 +114,10 @@ const fields_certificates = [
   },
 ]
 
-const getLessonsFormData = (lessons) => {
-  const lessonObj = {}
-
-  lessons.forEach((lesson) => {
-    lessonObj['lesson-' + lesson.id] = lesson.value
-  })
-  return lessonObj
-}
-
 function TeacherPrivateDataForm() {
   const [form] = Form.useForm()
 
   useEffect(() => {
-    form.setFieldsValue(getLessonsFormData(lessons_info.lessons))
-    form.setFieldsValue({
-      lesson_duration: lessons_info.lesson_duration,
-    })
     form.setFieldsValue({
       lang_speaking: fields_lang_speaking,
       students_ages: fields_students_ages,
@@ -177,50 +134,72 @@ function TeacherPrivateDataForm() {
   }, [])
 
   useEffect(() => {
-    TeacherService.loadPrivateData(localStorage.getItem('userId') || '').then((res) => {
+    TeacherService.loadPrivateData(localStorage.getItem('userId') || '').then((res: ITeacherPrivateData) => {
       console.log(res)
       form.setFieldsValue({
         country: res.private_data.country,
         state: res.private_data.state,
         city: res.private_data.city,
-        work_experience: res.private_data.work_experience,
+        work_experience: res.private_data.work_experience?.map((item) => {
+          return {
+            work_experience: item,
+          }
+        }),
+        education: res.private_data.education?.map((item) => {
+          return {
+            education: item,
+          }
+        }),
+        lesson_1: res.lessons?.lesson_1,
+        lesson_5: res.lessons?.lesson_5,
+        lesson_10: res.lessons?.lesson_10,
+        lesson_20: res.lessons?.lesson_20,
+        lesson_duration: res.lessons?.lesson_duration,
+        lang_speaking: res.services.lang_speaking,
       })
     })
   })
 
   function onFinish(values) {
-    const data: ITeacherPrivateData = {
-      _id: localStorage.getItem('userId') || '',
-      private_data: {
-        address: values.address,
-        country: values.country,
-        state: values.state,
-        city: values.city,
-        certificates: values.certificates,
-        education: values.education,
-        work_experience: values.work_experience,
-        local_time: values.local_time,
-        about_info: values.about_info,
-      },
-      lessons: {
-        lesson_1: values.lesson_1,
-        lesson_10: values.lesson_10,
-        lesson_20: values.lesson_20,
-        lesson_5: values.lesson_5,
-        lesson_duration: +values.lesson_duration,
-      },
-      services: {
-        lang_speaking: values.lang_speaking,
-        lang_teaching: values.lang_teaching,
-        lesson_content: values.lesson_content,
-        levels_studying: values.levels_studying,
-        speaking_accent: values.speaking_accent,
-        students_ages: values.students_ages,
-        subjects: values.subjects,
-        tests: values.tests,
-      },
+    console.log(values)
+    try {
+      const data: ITeacherPrivateData = {
+        _id: localStorage.getItem('userId') || '',
+        private_data: {
+          address: values.address,
+          country: values.country,
+          state: values.state,
+          city: values.city,
+          certificates: values.certificates.map((item) => item.certificates),
+          education: values.education.map((item) => item.education),
+          work_experience: values.work_experience.map((item) => item.work_experience),
+          local_time: values.local_time,
+          about_info: values.about_info,
+        },
+        lessons: {
+          lesson_1: values.lesson_1,
+          lesson_10: values.lesson_10,
+          lesson_20: values.lesson_20,
+          lesson_5: values.lesson_5,
+          lesson_duration: +values.lesson_duration,
+        },
+        services: {
+          lang_speaking: values.lang_speaking.map((item) => item.lang_speaking),
+          lang_teaching: values.lang_teaching.map((item) => item.lang_teaching),
+          lesson_content: values.lesson_content.map((item) => item.lesson_content),
+          levels_studying: values.levels_studying.map((item) => item.levels_studying),
+          speaking_accent: values.speaking_accent.map((item) => item.speaking_accent),
+          students_ages: values.students_ages.map((item) => item.students_ages),
+          subjects: values.subjects.map((item) => item.subjects),
+          tests: values.tests.map((item) => item.tests),
+        },
+      }
+      // TeacherService.savePrivateData(data).then((res) => {
+      //   console.log('res', res)
+      // })
+    } catch (e) {
+      console.log(e)
     }
-    const response = TeacherService.savePrivateData(data)
   }
 
   return (
@@ -413,18 +392,26 @@ function TeacherPrivateDataForm() {
         Lesson Info
       </Title>
       <Row gutter={24} justify="space-between">
-        {lessons_info.lessons.length &&
-          lessons_info.lessons.map((lesson) => (
-            <Col key={lesson.id} span={24} md={12}>
-              <Form.Item
-                className="form__input-field form__input-field--input"
-                name={`lesson-${lesson.id}`}
-                label={lesson.label}
-              >
-                <Input id={`lesson-${lesson.id}`} name={`lesson-${lesson.id}`} type="text" className="form__input" />
-              </Form.Item>
-            </Col>
-          ))}
+        <Col span={24} md={12}>
+          <Form.Item className="form__input-field form__input-field--input" name="lesson_1" label="Form 1 lesson">
+            <Input id="lesson-1" name="lesson_1" type="text" className="form__input" />
+          </Form.Item>
+        </Col>
+        <Col span={24} md={12}>
+          <Form.Item className="form__input-field form__input-field--input" name="lesson_5" label="Form 5 lesson">
+            <Input id="lesson-5" name="lesson_5" type="text" className="form__input" />
+          </Form.Item>
+        </Col>
+        <Col span={24} md={12}>
+          <Form.Item className="form__input-field form__input-field--input" name="lesson_10" label="Form 10 lesson">
+            <Input id="lesson-10" name="lesson_10" type="text" className="form__input" />
+          </Form.Item>
+        </Col>
+        <Col span={24} md={12}>
+          <Form.Item className="form__input-field form__input-field--input" name="lesson_20" label="Form 20 lesson">
+            <Input id="lesson-20" name="lesson_20" type="text" className="form__input" />
+          </Form.Item>
+        </Col>
         <Col span={24} md={12}>
           <Form.Item
             className="form__input-field form__input-field--select"

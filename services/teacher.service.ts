@@ -16,7 +16,8 @@ class TeacherService {
 
   async savePrivateData(props: ITeacherPrivateData) {
     try {
-      const response = await $api().post(`${PRIVATE_REQUESTS.TEACHER_SAVE_PRIVATE_DATA}`, {
+      const token = getCookie('token')
+      const response = await $api(token).post(`${PRIVATE_REQUESTS.TEACHER_SAVE_PRIVATE_DATA}`, {
         params: {
           ...props,
         },

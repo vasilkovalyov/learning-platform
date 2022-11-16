@@ -1,4 +1,3 @@
-import { IPlaceLiving } from "../../interfaces/common"
 import { IStudent } from "./student.interface"
 
 export interface ITeacherUser extends IStudent {}
@@ -31,12 +30,44 @@ export interface ITeacherLessonsInfo {
 }
 
 export interface ITeacherServicesData {
-  lang_speaking: string[]
-  students_ages: string[]
-  lang_teaching: string[]
-  subjects: string[]
-  levels_studying: string[]
-  speaking_accent: string[]
-  lesson_content: string[]
-  tests: string[]
+  lang_speaking: {
+    id: string
+    value: string
+    label: string
+  }[]
+  students_ages: {
+    id: string
+    value: string
+    label: string
+  }[]
+  lang_teaching: {
+    id: string
+    value: string
+    label: string
+  }[]
+  subjects: {
+    id: string
+    value: string
+    label: string
+  }[]
+  levels_studying: {
+    id: string
+    value: string
+    label: string
+  }[]
+  speaking_accent: {
+    id: string
+    value: string
+    label: string
+  }[]
+  lesson_content: {
+    id: string
+    value: string
+    label: string
+  }[]
+  tests: {
+    id: string
+    value: string
+    label: string
+  }[]
 }

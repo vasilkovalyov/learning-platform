@@ -66,37 +66,52 @@ const modelPrivateData = new Schema({
 })
 
 const modelLessons = new Schema({
-  lesson_1: String,
-  lesson_5: String,
-  lesson_10: String,
-  lesson_20: String,
-  lesson_duration: Number,
+  lesson_1: {
+    type: String,
+  },
+  lesson_5: {
+    type: String,
+  },
+  lesson_10: {
+    type: String,
+  },
+  lesson_20: {
+    type: String,
+  },
+  lesson_duration: {
+    type: Number,
+  },
+  teacher: {
+    type: String,
+    required: true,
+    ref: 'Teacher'
+  }
 })
 
 const modelService = new Schema({
   lang_speaking: {
-    type: [String]
+    type: [Object]
   },
   lang_teaching: {
-    type: [String]
+    type: [Object]
   },
   students_ages: {
-    type: [String]
+    type: [Object]
   },
   subjects: {
-    type: [String]
+    type: [Object]
   },
   levels_studying: {
-    type: [String]
+    type: [Object]
   },
   speaking_accent: {
-    type: [String]
+    type: [Object]
   },
   lesson_content: {
-    type: [String]
+    type: [Object]
   },
   tests: {
-    type: [String]
+    type: [Object]
   },
   teacher: {
     type: String,

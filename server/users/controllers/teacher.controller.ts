@@ -38,6 +38,16 @@ class TeacherController {
       res.status(e.status).json(e)
     }
   }
+
+  async updateUserPrivateData(req, res) {
+    try {
+      const userData = await TeacherService.updateUserPrivateData(req.body.params)
+      res.json(userData);
+    } catch(e) {
+      console.error(e)
+      res.status(e.status).json(e)
+    }
+  }
 }
 
 export default new TeacherController()
