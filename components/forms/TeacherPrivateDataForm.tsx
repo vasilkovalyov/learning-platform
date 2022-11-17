@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Form from 'antd/lib/form'
 import Input from 'antd/lib/input/Input'
 import TextArea from 'antd/lib/input/TextArea'
@@ -9,6 +9,7 @@ import Typography from 'antd/lib/typography'
 import Space from 'antd/lib/space'
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { ITeacherPrivateData } from 'intefaces/teacher.interface'
+import { openNotification } from 'common/utilities'
 
 import { Button } from 'antd'
 
@@ -130,12 +131,10 @@ const defaultOptions = {
 
 function TeacherPrivateDataForm() {
   const [form] = Form.useForm()
+  const [isLoadingSubmit, setIsLoadingSubmit] = useState<boolean>(false)
 
   useEffect(() => {
     form.setFieldsValue(defaultOptions)
-  }, [])
-
-  useEffect(() => {
     TeacherService.loadPrivateData(localStorage.getItem('userId') || '').then((res: ITeacherPrivateData) => {
       form.setFieldsValue({
         country: res.private_data.country,
@@ -208,44 +207,42 @@ function TeacherPrivateDataForm() {
   })
 
   function onFinish(values) {
-    try {
-      const data: ITeacherPrivateData = {
-        _id: localStorage.getItem('userId') || '',
-        private_data: {
-          address: values.address,
-          country: values.country,
-          state: values.state,
-          city: values.city,
-          certificates: values.certificates.map((item) => item.certificates),
-          education: values.education.map((item) => item.education),
-          work_experience: values.work_experience.map((item) => item.work_experience),
-          local_time: values.local_time.local_time,
-          about_info: values.about_info,
-        },
-        lessons: {
-          lesson_1: values.lesson_1,
-          lesson_10: values.lesson_10,
-          lesson_20: values.lesson_20,
-          lesson_5: values.lesson_5,
-          lesson_duration: +values.lesson_duration,
-        },
-        services: {
-          lang_speaking: values.lang_speaking.map((item) => item.lang_speaking),
-          lang_teaching: values.lang_teaching.map((item) => item.lang_teaching),
-          lesson_content: values.lesson_content.map((item) => item.lesson_content),
-          levels_studying: values.levels_studying.map((item) => item.levels_studying),
-          speaking_accent: values.speaking_accent.map((item) => item.speaking_accent),
-          students_ages: values.students_ages.map((item) => item.students_ages),
-          subjects: values.subjects.map((item) => item.subjects),
-          tests: values.tests.map((item) => item.tests),
-        },
-      }
-      TeacherService.savePrivateData(data).then((res) => {
-        console.log('res', res)
-      })
-    } catch (e) {
-      console.log(e)
+    setIsLoadingSubmit(true)
+    const data: ITeacherPrivateData = {
+      _id: localStorage.getItem('userId') || '',
+      private_data: {
+        address: values.address,
+        country: values.country,
+        state: values.state,
+        city: values.city,
+        certificates: values.certificates.map((item) => item.certificates),
+        education: values.education.map((item) => item.education),
+        work_experience: values.work_experience.map((item) => item.work_experience),
+        local_time: values.local_time.local_time,
+        about_info: values.about_info,
+      },
+      lessons: {
+        lesson_1: values.lesson_1,
+        lesson_10: values.lesson_10,
+        lesson_20: values.lesson_20,
+        lesson_5: values.lesson_5,
+        lesson_duration: +values.lesson_duration,
+      },
+      services: {
+        lang_speaking: values.lang_speaking.map((item) => item.lang_speaking),
+        lang_teaching: values.lang_teaching.map((item) => item.lang_teaching),
+        lesson_content: values.lesson_content.map((item) => item.lesson_content),
+        levels_studying: values.levels_studying.map((item) => item.levels_studying),
+        speaking_accent: values.speaking_accent.map((item) => item.speaking_accent),
+        students_ages: values.students_ages.map((item) => item.students_ages),
+        subjects: values.subjects.map((item) => item.subjects),
+        tests: values.tests.map((item) => item.tests),
+      },
     }
+    TeacherService.savePrivateData(data).then((res) => {
+      setIsLoadingSubmit(false)
+      openNotification('bottomRight')
+    })
   }
 
   return (
@@ -668,7 +665,7 @@ function TeacherPrivateDataForm() {
         </Col>
       </Row>
       <Form.Item wrapperCol={{ span: 24 }} className="form__input-field form__input-field--button">
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={isLoadingSubmit}>
           Save changes
         </Button>
       </Form.Item>
