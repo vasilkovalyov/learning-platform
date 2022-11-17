@@ -7,6 +7,6 @@ export interface IStudent extends IUser {
 }
 
 export interface IStudentPrivateData extends IPlaceLiving {
-  local_time: string
+  local_time: number
   about_info: string
 }

@@ -41,7 +41,7 @@ const modelPrivateData = new Schema({
     type: String
   },
   local_time: {
-    type: String
+    type: Number
   },
   about_info: {
     type: String

@@ -24,7 +24,7 @@ export interface ITeacherPrivateInfo {
   education: string[]
   work_experience: string[]
   certificates: string[]
-  local_time: string
+  local_time: number
   about_info: string
 }
 

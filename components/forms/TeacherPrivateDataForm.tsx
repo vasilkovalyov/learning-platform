@@ -114,28 +114,29 @@ const fields_certificates = [
   },
 ]
 
+const defaultOptions = {
+  lang_speaking: fields_lang_speaking,
+  students_ages: fields_students_ages,
+  lang_teaching: fields_lang_teaching,
+  subjects: fields_subjects,
+  levels_studying: fields_levels_studying,
+  speaking_accent: fields_speaking_accent,
+  lesson_content: fields_lesson_content,
+  tests: fields_tests,
+  education: fields_education,
+  work_experience: fields_work_experience,
+  certificates: fields_certificates,
+}
+
 function TeacherPrivateDataForm() {
   const [form] = Form.useForm()
 
   useEffect(() => {
-    form.setFieldsValue({
-      lang_speaking: fields_lang_speaking,
-      students_ages: fields_students_ages,
-      lang_teaching: fields_lang_teaching,
-      subjects: fields_subjects,
-      levels_studying: fields_levels_studying,
-      speaking_accent: fields_speaking_accent,
-      lesson_content: fields_lesson_content,
-      tests: fields_tests,
-      education: fields_education,
-      work_experience: fields_work_experience,
-      certificates: fields_certificates,
-    })
+    form.setFieldsValue(defaultOptions)
   }, [])
 
   useEffect(() => {
     TeacherService.loadPrivateData(localStorage.getItem('userId') || '').then((res: ITeacherPrivateData) => {
-      console.log(res)
       form.setFieldsValue({
         country: res.private_data.country,
         state: res.private_data.state,
@@ -150,18 +151,63 @@ function TeacherPrivateDataForm() {
             education: item,
           }
         }),
+        lang_speaking: res.services.lang_speaking?.map((item) => {
+          return {
+            lang_speaking: item,
+          }
+        }),
+        students_ages: res.services.students_ages?.map((item) => {
+          return {
+            students_ages: item,
+          }
+        }),
+        lang_teaching: res.services.lang_teaching?.map((item) => {
+          return {
+            lang_teaching: item,
+          }
+        }),
+        subjects: res.services.subjects?.map((item) => {
+          return {
+            subjects: item,
+          }
+        }),
+        levels_studying: res.services.levels_studying?.map((item) => {
+          return {
+            levels_studying: item,
+          }
+        }),
+        speaking_accent: res.services.speaking_accent?.map((item) => {
+          return {
+            speaking_accent: item,
+          }
+        }),
+        lesson_content: res.services.lesson_content?.map((item) => {
+          return {
+            lesson_content: item,
+          }
+        }),
+        tests: res.services.tests?.map((item) => {
+          return {
+            tests: item,
+          }
+        }),
+        certificates: res.private_data.certificates?.map((item) => {
+          return {
+            certificates: item,
+          }
+        }),
+        about_info: res.private_data.about_info,
+        local_time: res.private_data.local_time,
         lesson_1: res.lessons?.lesson_1,
         lesson_5: res.lessons?.lesson_5,
         lesson_10: res.lessons?.lesson_10,
         lesson_20: res.lessons?.lesson_20,
         lesson_duration: res.lessons?.lesson_duration,
-        lang_speaking: res.services.lang_speaking,
       })
     })
   })
 
   function onFinish(values) {
-    console.log(values)
     try {
       const data: ITeacherPrivateData = {
         _id: localStorage.getItem('userId') || '',
@@ -173,7 +219,7 @@ function TeacherPrivateDataForm() {
           certificates: values.certificates.map((item) => item.certificates),
           education: values.education.map((item) => item.education),
           work_experience: values.work_experience.map((item) => item.work_experience),
-          local_time: values.local_time,
+          local_time: values.local_time.local_time,
           about_info: values.about_info,
         },
         lessons: {
@@ -194,9 +240,9 @@ function TeacherPrivateDataForm() {
           tests: values.tests.map((item) => item.tests),
         },
       }
-      // TeacherService.savePrivateData(data).then((res) => {
-      //   console.log('res', res)
-      // })
+      TeacherService.savePrivateData(data).then((res) => {
+        console.log('res', res)
+      })
     } catch (e) {
       console.log(e)
     }

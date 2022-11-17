@@ -48,7 +48,7 @@ export const StudentPrivateDataModel = mongoose.model('StudentPrivateData', new 
     type: String,
   },
   local_time: {
-    type: String
+    type: Number
   },
   about_info: {
     type: String
