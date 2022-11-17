@@ -1,9 +1,20 @@
 import notification, { NotificationPlacement } from 'antd/lib/notification'
 
-export const openNotification = (placement: NotificationPlacement) => {
+interface INotification {
+  message: string
+  description?: string
+  duration: number
+}
+const defaultProps: INotification = {
+  message: `Data of user has been saved successful`,
+  duration: 3,
+}
+
+export const openNotification = (placement: NotificationPlacement, props: INotification = defaultProps) => {
   notification.info({
-    message: `Data of user has been saved successful`,
-    duration: 3,
+    message: props.message,
+    description: props.description,
+    duration: props.duration,
     placement,
   })
 }

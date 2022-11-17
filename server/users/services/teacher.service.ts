@@ -79,7 +79,6 @@ class TeacherService {
   }
 
   async updateUserPrivateData(params: ITeacherPrivateData) {
-    console.log(params)
     const privateData = await TeacherPrivateDataModel.findOneAndUpdate(
       { teacher: params._id },
       { 
@@ -126,6 +125,37 @@ class TeacherService {
       lessons: lessonsData,
       private_data: privateData,
       services: servicesData
+    }
+  }
+
+  async updateUserAuthData(params: ITeacherUser) {
+    const role = await RoleModel.findById(params._id)
+    if (role?.email !== params.email) {
+      await RoleModel.findByIdAndUpdate(
+        { _id: role?._id },
+        {
+          email: params.email,
+        },
+        { useFindAndModify: true }
+      )
+    }
+    const authData = await TeacherBaseInfoModel.findOneAndUpdate(
+      { _id: params._id },
+      { 
+        email: params.email,
+        fullname: params.fullname,
+        login: params.login,
+        phone: params.phone,
+        role: params.role,
+      },
+      { useFindAndModify: true }
+    )
+    console.log('authData', authData)
+    return {
+      data: {
+        ...authData
+        
+      }
     }
   }
 }

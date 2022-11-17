@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Typography from 'antd/lib/typography'
 import AdminLayout from 'layouts/AdminLayout'
 import AccountForm from '../../components/forms/AccountForm'
@@ -14,6 +14,9 @@ import { useSelector } from 'react-redux'
 import { useFormAction, IUseFormAction } from '../../hooks/useFormAction'
 import { RoleType } from 'types/common'
 
+import TeacherService from 'services/teacher.service'
+import { openNotification } from 'common/utilities'
+
 const { Title } = Typography
 
 const initialProps = {
@@ -28,10 +31,8 @@ const initialStateFormAction: IUseFormAction = {
 }
 
 function Account(props: { user: IUserStudent | null }) {
-  const [isLoading, validationMessage] = useFormAction(initialStateFormAction)
+  const [isLoading, validationMessage, toggleLoading] = useFormAction(initialStateFormAction)
   const authState = useSelector(selectAuthState)
-
-  // useEffect(() => {}, [])
 
   const dispatch = useDispatch()
 
@@ -39,8 +40,18 @@ function Account(props: { user: IUserStudent | null }) {
     dispatch(setAuthState(props.user))
   })
 
-  function successSaveChanges() {
-    console.log('1')
+  function successSaveChanges(isSuccess, data) {
+    toggleLoading(true)
+    if (authState?.role === 'teacher') {
+      TeacherService.saveAccountData({
+        ...data,
+        _id: authState._id,
+      }).then((res) => {
+        console.log(res)
+        toggleLoading(false)
+        openNotification('bottomRight')
+      })
+    }
   }
 
   return (

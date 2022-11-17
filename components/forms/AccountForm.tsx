@@ -70,12 +70,7 @@ function AccountForm({
         </Form.Item>
       ) : null}
 
-      <Form.Item
-        className="form__input-field form__input-field--password"
-        label="Password"
-        name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
-      >
+      <Form.Item className="form__input-field form__input-field--password" label="Password" name="password">
         <Password id="password" name="password" className="form__input" />
       </Form.Item>
       <Form.Item
