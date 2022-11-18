@@ -8,6 +8,8 @@ import UserService from 'services/user'
 import { IUserStudent } from 'intefaces/user'
 import { RoleType } from '../types/common'
 
+import Calendar from 'components/calendar/calendar'
+
 const initialProps = {
   props: {
     user: null,
@@ -32,6 +34,7 @@ const Home: NextPage = (props: { user: IUserStudent }) => {
       <PublicLayout>
         <h1>Public Layout</h1>
         <pre>{JSON.stringify(props, null, 4)}</pre>
+        <Calendar />
       </PublicLayout>
     </div>
   )
