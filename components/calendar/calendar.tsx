@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import List from 'antd/lib/list'
+import Typography from 'antd/lib/typography'
 import cn from 'classnames'
 // import moment from 'moment'
-import { createDate, ICreateDate } from './utilities/createDate'
-import { createMonth } from './utilities/createMonth'
-import { createYear } from './utilities/createYear'
-import { getMonthesNames } from './utilities/getMonthesNames'
-import { getWeekDaysNames } from './utilities/getWeekDays'
-import { getMonthNumberOfDays } from './utilities/getMonthNumberOfDays'
+import CalendarDate, { ICreateDate } from './utilities/CalendarDate'
+import CalendarMonth from './utilities/CalendarMonth'
+import CalendarYear from './utilities/CalendarYear'
+import CalendarWeek from './utilities/CalendarWeek'
+import CalendarDay from './utilities/CalendarDay'
 
 enum CalendarEventTypeColor {
   PERSONAL_LESSON = '#D1EAE7',
@@ -15,42 +15,6 @@ enum CalendarEventTypeColor {
   AVAILABLE_TIME = '#E9F4FF',
   UNAVAILABLE_TIME = '#F2F5FA',
 }
-
-const firstWeeksDay = 2
-const monthNumberOfDays = getMonthNumberOfDays(createDate().monthIndex, createDate().year)
-const days = createMonth().createMonthDays()
-const prevMonthDays = createMonth({ date: new Date(createDate().year, createDate().monthIndex - 1) }).createMonthDays()
-const nextMonthDays = createMonth({ date: new Date(createDate().year, createDate().monthIndex + 1) }).createMonthDays()
-
-const firstDay = days[0]
-const lastDay = days[monthNumberOfDays - 1]
-const shiftIndex = firstWeeksDay - 1
-
-const numberOfPrevDays =
-  firstDay.dayNumberInWeek - 1 - shiftIndex < 0
-    ? 7 - (firstWeeksDay - firstDay.dayNumberInWeek)
-    : firstDay.dayNumberInWeek - 1 - shiftIndex
-
-const numberOfNextDays =
-  7 - lastDay.dayNumberInWeek + shiftIndex > 6
-    ? 7 - lastDay.dayNumberInWeek - (7 - shiftIndex)
-    : 7 - lastDay.dayNumberInWeek + shiftIndex
-
-const totalCalendarDays = days.length + numberOfPrevDays + numberOfNextDays
-const result: ICreateDate[] = []
-
-for (let i = 0; i < numberOfPrevDays; i++) {
-  const inverted = numberOfPrevDays
-  result[i] = prevMonthDays[prevMonthDays.length - inverted]
-}
-for (let i = numberOfPrevDays; i < totalCalendarDays - numberOfNextDays; i++) {
-  result[i] = days[i - numberOfPrevDays]
-}
-for (let i = totalCalendarDays - numberOfNextDays; i < totalCalendarDays; i++) {
-  result[i] = nextMonthDays[i - totalCalendarDays + numberOfNextDays]
-}
-
-console.log('result totla ', result)
 
 interface ICalendarLessonsType {
   id: string
@@ -112,12 +76,22 @@ const dateTypeViews: ICalendarDateTypeView[] = [
   },
 ]
 
+const { Paragraph } = Typography
+
 function Calendar() {
   const [dateView, setDateView] = useState<CalendarModeView>('day')
+  const calendarMonthInst = new CalendarMonth()
+  const dayInst = new CalendarDay()
+  const calendarDateInst = new CalendarDate()
+  const weeks = new CalendarWeek().getWeekDaysNames()
+  const currentDate = calendarDateInst.createDate()
+  const days = calendarMonthInst.getTotalDaysInView()
 
   function onHandleDateView(type: CalendarModeView) {
     setDateView(type)
   }
+
+  const isWeekend = (day: string) => day === 'Sunday' || day === 'Saturday'
 
   return (
     <div className="calendar-events">
@@ -140,6 +114,35 @@ function Calendar() {
           </List.Item>
         )}
       />
+
+      <Paragraph>
+        Today is {currentDate.day}
+        <span> </span>
+        {calendarDateInst.formatDate(currentDate.date, 'DD MMMM YYYY')}
+      </Paragraph>
+
+      <div className="calendar-week-days">
+        {weeks.map((week, key) => (
+          <div key={key} className="calendar-week-days__item">
+            <div className={cn('calendar-week-days__cell', { active: currentDate.day === week.day })}>{week.day}</div>
+          </div>
+        ))}
+      </div>
+      <div className="calendar-days">
+        {days.map((day) => (
+          <div key={day.timestamp} className="calendar-days__item">
+            <div
+              className={cn(
+                'calendar-days__cell',
+                { today: dayInst.checkIsToday(day.date) },
+                { weekend: isWeekend(day.day) },
+              )}
+            >
+              {day.dayNumber}
+            </div>
+          </div>
+        ))}
+      </div>
 
       <List
         className="calendar-events__event-types"
