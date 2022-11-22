@@ -6,6 +6,11 @@ export interface ICreateMonthProps {
   date?: Date
 }
 
+export interface ITotalDaysInViewProps {
+  year?: number
+  monthIndex?: number
+}
+
 export interface ICreateMonth {
   monthIndex: number
   monthName: string
@@ -15,19 +20,31 @@ export interface ICreateMonth {
   createMonthDays: () => ICreateDate[]
 }
 
+export interface IMonth {
+  month: string
+  monthIndex: number
+  monthShort: string
+  date: Date
+}
+
 class CalendarMonth {
   private firstWeeksDay = 2
   private shiftIndex = this.firstWeeksDay - 1
+  private DAYS_IN_WEEK = 7
 
   getMonthDays(year: number, monthIndex: number, locale = 'en-En'): ICreateDate[] {
     return this.createMonth({ date: new Date(year, monthIndex), locale }).createMonthDays()
+  }
+
+  isCurrentMonth(year: number, monthIndex: number): boolean {
+    return new Date().getMonth() === monthIndex && year === new Date().getFullYear()
   }
 
   getMonthNumberOfDays(monthIndex: number, yearNumber: number = new Date().getFullYear()): number {
     return new Date(yearNumber, monthIndex + 1, 0).getDate()
   }
 
-  getMonthesNames(locale = 'en-En') {
+  getMonthesNames(locale = 'en-En'): IMonth[] {
     const calendarDateInst = new CalendarDate()
     const monthesNames: {
       month: ReturnType<typeof calendarDateInst.createDate>['month']
@@ -62,66 +79,60 @@ class CalendarMonth {
     return days
   }
 
-  getPrevMonthDays(): ICreateDate[] {
-    const calendarDateInst = new CalendarDate()
-    return this.createMonth({
-      date: new Date(calendarDateInst.createDate().year, calendarDateInst.createDate().monthIndex - 1),
-    }).createMonthDays()
-  }
-
-  getNextMonthDays(): ICreateDate[] {
-    const calendarDateInst = new CalendarDate()
-    return this.createMonth({
-      date: new Date(calendarDateInst.createDate().year, calendarDateInst.createDate().monthIndex + 1),
-    }).createMonthDays()
-  }
-
-  getDaysInMonth(): ICreateDate[] {
-    return this.createMonth().createMonthDays()
-  }
-
-  getNumberPrevMonthDays(): number {
-    const firstDay = this.getDaysInMonth()[0]
+  getNumberPrevMonthDays(firstDay: ICreateDate): number {
     const numberOfPrevMonthDays =
       firstDay.dayNumberInWeek - 1 - this.shiftIndex < 0
-        ? 7 - (this.firstWeeksDay - firstDay.dayNumberInWeek)
+        ? this.DAYS_IN_WEEK - (this.firstWeeksDay - firstDay.dayNumberInWeek)
         : firstDay.dayNumberInWeek - 1 - this.shiftIndex
     return numberOfPrevMonthDays
   }
 
-  getNumberNextMonthDays(): number {
-    const monthNumberOfDays = this.getMonthNumberOfDays(
-      new CalendarDate().createDate().monthIndex,
-      new CalendarDate().createDate().year,
-    )
-    const lastDay = this.createMonth().createMonthDays()[monthNumberOfDays - 1]
+  getNumberNextMonthDays(lastDay: ICreateDate): number {
     const numberOfNextMonthDays =
-      7 - lastDay.dayNumberInWeek + this.shiftIndex > 6
-        ? 7 - lastDay.dayNumberInWeek - (7 - this.shiftIndex)
-        : 7 - lastDay.dayNumberInWeek + this.shiftIndex
+      this.DAYS_IN_WEEK - lastDay.dayNumberInWeek + this.shiftIndex > 6
+        ? this.DAYS_IN_WEEK - lastDay.dayNumberInWeek - (this.DAYS_IN_WEEK - this.shiftIndex)
+        : this.DAYS_IN_WEEK - lastDay.dayNumberInWeek + this.shiftIndex
     return numberOfNextMonthDays
   }
 
-  getTotalDaysInView(): ICreateDate[] {
-    const result: ICreateDate[] = []
-    const prevMonthDays = this.getPrevMonthDays()
-    const numberOfPrevMonthDays = this.getNumberPrevMonthDays()
-    const nextMonthDays = this.getNextMonthDays()
-    const numberOfNextMonthDays = this.getNumberNextMonthDays()
-    const days = this.getDaysInMonth()
-    const totalCalendarDays = days.length + numberOfPrevMonthDays + numberOfNextMonthDays
+  getTotalDaysInView(params?: ITotalDaysInViewProps): ICreateDate[] {
+    const createDateInst = new CalendarDate()
 
-    for (let i = 0; i < numberOfPrevMonthDays; i++) {
-      const inverted = numberOfPrevMonthDays
+    const selectedYear = params?.year ?? createDateInst.createDate().year
+    const selectedMonthIndex = params?.monthIndex ?? createDateInst.createDate().monthIndex
+
+    const monthNumberOfDays = this.getMonthNumberOfDays(selectedMonthIndex, selectedYear)
+
+    const days = this.createMonth({
+      date: new Date(selectedYear, selectedMonthIndex),
+    }).createMonthDays()
+
+    const prevMonthDays = this.createMonth({
+      date: new Date(selectedYear, selectedMonthIndex - 1),
+    }).createMonthDays()
+    const nextMonthDays = this.createMonth({
+      date: new Date(selectedYear, selectedMonthIndex + 1),
+    }).createMonthDays()
+
+    const firstDay = days[0]
+    const lastDay = days[monthNumberOfDays - 1]
+
+    const numberOfPrevDays = this.getNumberPrevMonthDays(firstDay)
+    const numberOfNextDays = this.getNumberNextMonthDays(lastDay)
+
+    const totalCalendarDays = days.length + numberOfPrevDays + numberOfNextDays
+    const result: ICreateDate[] = []
+
+    for (let i = 0; i < numberOfPrevDays; i++) {
+      const inverted = numberOfPrevDays - i
       result[i] = prevMonthDays[prevMonthDays.length - inverted]
     }
-    for (let i = numberOfPrevMonthDays; i < totalCalendarDays - numberOfNextMonthDays; i++) {
-      result[i] = days[i - numberOfPrevMonthDays]
+    for (let i = numberOfPrevDays; i < totalCalendarDays - numberOfNextDays; i++) {
+      result[i] = days[i - numberOfPrevDays]
     }
-    for (let i = totalCalendarDays - numberOfNextMonthDays; i < totalCalendarDays; i++) {
-      result[i] = nextMonthDays[i - totalCalendarDays + numberOfNextMonthDays]
+    for (let i = totalCalendarDays - numberOfNextDays; i < totalCalendarDays; i++) {
+      result[i] = nextMonthDays[i - totalCalendarDays + numberOfNextDays]
     }
-
     return result
   }
 

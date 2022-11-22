@@ -1,3 +1,91 @@
+.calendar-events {
+  &__date-view-list {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+
+  &__date-view {
+    font-size: 16px;
+    color: @grey-2;
+    font-weight: 600;
+    text-decoration: underline;
+    padding: 0;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    text-transform: capitalize;
+    cursor: pointer;
+
+    &:not(:first-child) {
+      margin-left: 20px;
+    }
+
+    &.active {
+      color: @red;
+    }
+  }
+
+  &__month-switcher {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  &__month-switcher-button {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  &__month-switcher-icon {
+    margin: 0 !important;
+  }
+
+  &__month {
+    color: @black-2;
+    font-size: 20px;
+    font-weight: 700;
+
+    &.ant-typography {
+      margin-bottom: 0;
+    }
+  }
+
+  &__event-types {
+    padding: 20px 0;
+  }
+
+  &__event-type {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &:not(:last-child) {
+      margin-right: 30px;
+    }
+  }
+
+  &__event-type-color {
+    width: 24px;
+    height: 24px;
+    border-radius: @border-radius-md;
+    margin-right: 12px;
+  }
+
+  &__event-type-heading {
+
+  }
+
+  &__today-info {
+    font-weight: 600;
+    color: @grey-2;
+    font-size: 16px;
+  }
+
+}
+
 .calendar-week-days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -27,13 +115,11 @@
   grid-template-columns: repeat(7, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-
-  &__item {
-    
-  }
+  overflow: hidden;
+  border-radius: 0 0 30px 30px;
+  margin-bottom: 20px;
 
   &__cell {
-    background-color: @grey-3;
     font-weight: 600;
     font-size: @font-size-base;
     padding: 20px;
@@ -41,16 +127,21 @@
     border: 1px solid @grey-4;
     font-size: 22px;
     background-color: #E9F4FF;
-    color: @black-2;
     
-    &.today {
-      color: @red;
+    &.current-month {
+      color: @black-2;
     }
     &.weekend {
       background-color: #F2F5FA;
+      &.current-month {
+        background-color: #F2F5FA;
+      }
     }
-    &.out-month {
+    &.another-month {
       color: @grey-2;
+    }
+    &.today {
+      color: @red;
     }
   }
 }
