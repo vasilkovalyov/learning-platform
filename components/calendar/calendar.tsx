@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import List from 'antd/lib/list'
 import Typography from 'antd/lib/typography'
 import cn from 'classnames'
 
-import CalendarDate, { ICreateDate } from './utilities/CalendarDate'
-import CalendarMonth, { IMonth } from './utilities/CalendarMonth'
-import CalendarYear from './utilities/CalendarYear'
+import CalendarDate from './utilities/CalendarDate'
+import CalendarMonth from './utilities/CalendarMonth'
 import CalendarWeek from './utilities/CalendarWeek'
 import CalendarDay from './utilities/CalendarDay'
 import Row from 'antd/lib/row'
@@ -13,6 +11,8 @@ import Col from 'antd/lib/col'
 import Button from 'antd/lib/button'
 import Space from 'antd/lib/space'
 import Icon from 'components/Icon'
+
+import { useCalendar } from './hooks/useCalendar'
 
 enum CalendarEventTypeColor {
   PERSONAL_LESSON = '#D1EAE7',
@@ -90,9 +90,9 @@ function Calendar() {
   const calendarDateInst = new CalendarDate()
   const weeks = new CalendarWeek().getWeekDaysNames()
   const currentDate = calendarDateInst.createDate()
-  const [selectedMonth, setSelectedMonth] = useState(currentDate.monthIndex)
-  const [selectedYear, setSelectedYear] = useState(currentDate.year)
-  const [days, setDays] = useState<ICreateDate[]>([])
+
+  const [days, selectedMonth, selectedYear, setDays, nextMonth, prevMonth, getMonthByIndex, isWeekend] =
+    useCalendar(currentDate)
 
   function onHandleDateView(type: CalendarModeView) {
     setDateView(type)
@@ -100,43 +100,7 @@ function Calendar() {
 
   useEffect(() => {
     setDays(calendarMonthInst.getTotalDaysInView())
-    console.log('calendarMonthInst.getTotalDaysInView()', calendarMonthInst.getTotalDaysInView())
   }, [])
-
-  const getMonthByIndex = (index: number): IMonth => {
-    let targetMonth!: IMonth
-    for (let i = 0; i <= calendarMonthInst.getMonthesNames().length - 1; i++) {
-      if (calendarMonthInst.getMonthesNames()[i].monthIndex === index) {
-        targetMonth = calendarMonthInst.getMonthesNames()[i]
-        break
-      }
-    }
-    return targetMonth
-  }
-
-  const isWeekend = (day: string) => day === 'Sunday' || day === 'Saturday'
-
-  function onHandlePrevMonth() {
-    if (selectedMonth === 0) {
-      setSelectedMonth(11)
-      setSelectedYear(selectedYear - 1)
-      setDays(calendarMonthInst.getTotalDaysInView({ year: selectedYear - 1, monthIndex: 11 }))
-      return
-    }
-    setSelectedMonth(selectedMonth - 1)
-    setDays(calendarMonthInst.getTotalDaysInView({ year: selectedYear, monthIndex: selectedMonth - 1 }))
-  }
-
-  function onHandleNextMonth() {
-    if (selectedMonth > 10) {
-      setSelectedMonth(0)
-      setSelectedYear(selectedYear + 1)
-      setDays(calendarMonthInst.getTotalDaysInView({ year: selectedYear + 1, monthIndex: 0 }))
-      return
-    }
-    setSelectedMonth(selectedMonth + 1)
-    setDays(calendarMonthInst.getTotalDaysInView({ year: selectedYear, monthIndex: selectedMonth + 1 }))
-  }
 
   return (
     <div className="calendar-events">
@@ -161,7 +125,7 @@ function Calendar() {
       <Row justify="center">
         <Col span={24} md={12}>
           <Space size={[30, 30]} direction="horizontal" className="calendar-events__month-switcher">
-            <Button onClick={onHandlePrevMonth} className="calendar-events__month-switcher-button">
+            <Button onClick={prevMonth} className="calendar-events__month-switcher-button">
               <Icon icon="chevron-left" size={20} className="calendar-events__month-switcher-icon" />
             </Button>
             <Paragraph className="calendar-events__month">
@@ -170,7 +134,7 @@ function Calendar() {
                 {selectedYear}
               </Space>
             </Paragraph>
-            <Button onClick={onHandleNextMonth} className="calendar-events__month-switcher-button">
+            <Button onClick={nextMonth} className="calendar-events__month-switcher-button">
               <Icon icon="chevron-right" size={20} className="calendar-events__month-switcher-icon" />
             </Button>
           </Space>
