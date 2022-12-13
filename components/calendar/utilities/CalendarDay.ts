@@ -22,6 +22,16 @@ class CalendarDay {
     )
   }
 
+  getDayHours(start = 0, end = 24, gap = 1): string[] {
+    const hoursArray: string[] = []
+    for (let i = start; i <= end; i++) {
+      for (let j = 0; j < gap; j++) {
+        hoursArray.push(`${i < 10 ? `0${i}` : i}:${j === 0 ? `00` : 15 * j}`)
+      }
+    }
+    return hoursArray
+  }
+
   checkIsToday(date: Date) {
     const today = new Date()
 

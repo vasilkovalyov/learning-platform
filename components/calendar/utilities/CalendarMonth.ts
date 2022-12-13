@@ -101,6 +101,19 @@ class CalendarMonth {
     const selectedYear = params?.year ?? createDateInst.createDate().year
     const selectedMonthIndex = params?.monthIndex ?? createDateInst.createDate().monthIndex
 
+    const days = this.createMonth({
+      date: new Date(selectedYear, selectedMonthIndex),
+    }).createMonthDays()
+
+    return days
+  }
+
+  getTotalDaysInViewMonth(params?: ITotalDaysInViewProps): ICreateDate[] {
+    const createDateInst = new CalendarDate()
+
+    const selectedYear = params?.year ?? createDateInst.createDate().year
+    const selectedMonthIndex = params?.monthIndex ?? createDateInst.createDate().monthIndex
+
     const monthNumberOfDays = this.getMonthNumberOfDays(selectedMonthIndex, selectedYear)
 
     const days = this.createMonth({

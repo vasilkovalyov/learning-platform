@@ -1,4 +1,20 @@
 .calendar-events {
+
+  &--month-view &__month-switcher {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  &--week-view &__date-info {
+    margin-left: 100px;
+  }
+
+  &--day-view &__date-info {
+    margin-left: 100px;
+  }
+
   &__date-view-list {
     display: flex;
     align-items: center;
@@ -28,10 +44,7 @@
   }
 
   &__month-switcher {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 
   &__month-switcher-button {
@@ -74,16 +87,127 @@
     margin-right: 12px;
   }
 
-  &__event-type-heading {
-
-  }
-
   &__today-info {
     font-weight: 600;
     color: @grey-2;
     font-size: 16px;
   }
 
+  &__controls-day {
+    margin: 0 -4px 20px;
+  }
+
+  &__control-day-button {
+    padding: 10px;
+    margin: 0 4px;
+  }
+}
+
+.calendar-day-hours {
+  &__item {
+    height: 100px;
+    font-weight: 600;
+    font-size: 16px;
+    color: @grey-2;
+    text-align: center;
+  }
+}
+
+.calendar-day-view {
+  display: flex;
+  height: 800px;
+  overflow-y: scroll;
+
+  &__left {
+    width: 100px;
+    padding: 0 20px;
+  }
+
+  &__right {
+    flex: 1;
+  }
+}
+
+.calendar-week-view {
+  display: flex;
+  height: 800px;
+  overflow-y: scroll;
+
+  &__left {
+    width: 100px;
+    padding: 14px 20px;
+  }
+
+  &__right {
+    flex: 1;
+  }
+
+  &__controls {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 -4px 16px;
+  }
+
+  &__switcher-button {
+    padding: 6px;
+    margin: 0 4px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.calendar-day-times {
+  &--day &__cell {
+    &:not(:last-child) {
+      border-bottom: 1px solid #DFE3E7;
+    }
+  }
+  
+  &--week {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+  }
+
+  &--week &__item {
+    &:not(:last-child) {
+      border-right: 1px solid #DFE3E7;
+    }
+  }
+
+  &--week &__cell {
+    &:not(:last-child) {
+      border-bottom: 1px solid #DFE3E7;
+    }
+  }
+
+  &__item.weekend &__cell {
+    background-color: #F2F5FA;
+  }
+  
+  &__cell {
+    position: relative;
+    height: 100px;
+    background-color: #E9F4FF;
+    padding: 6px;
+
+    .timeline {
+      position: absolute;
+      top: 40%;
+      left: -20px;
+      right: 0;
+      height: 1px;
+      border: 1px solid @red;
+    }
+  }
 }
 
 .calendar-week-days {
@@ -92,7 +216,9 @@
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   overflow: hidden;
-  border-radius: 30px 30px 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 
   &__item {
     
@@ -116,7 +242,6 @@
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   overflow: hidden;
-  border-radius: 0 0 30px 30px;
   margin-bottom: 20px;
 
   &__cell {

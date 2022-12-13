@@ -7,6 +7,8 @@ class CalendarWeek {
     return Math.ceil((pastDaysYear + firstDayOfYear.getDay() + 1) / 7)
   }
 
+  // getDaysInWeek() {}
+
   getWeekDaysNames(firstWeekDay = 2, locale = 'en-En') {
     const weekDaysNames: {
       day: ReturnType<typeof this.createDate>['day']
