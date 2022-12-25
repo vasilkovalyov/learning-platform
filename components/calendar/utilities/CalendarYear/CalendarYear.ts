@@ -9,22 +9,24 @@ import { ICalendarEvent } from '../CalendarEvent/CalendarEvent.type'
 import { localeDefault, weekDaysCount } from '../../constants'
 
 class CalendarYear {
-  private _weeks: number
   private _year: number
-  private _monthes: IMonth[] | []
   locale: string
-  events: ICalendarEvent[]
+  private _events: ICalendarEvent[]
+  private _weeksTotalCount: number
 
   constructor(options: ICalendarYearOptions) {
     this._year = options.year ?? new Date().getFullYear()
+    this._events = options.events || []
     this.locale = options?.locale ?? localeDefault
-    this._monthes = this.getYearMonthes()
-    this._weeks = new CalendarWeek({ date: new Date(this._year, 0, 0) }).getWeeksInYear()
-    this.events = options.events || []
+    this._weeksTotalCount = new CalendarWeek({ date: new Date(this._year, 0, 0) }).getWeeksTotalCountInYear()
   }
 
-  get weeks() {
-    return this._weeks
+  get events(): ICalendarEvent[] {
+    return this._events
+  }
+
+  set events(events: ICalendarEvent[]) {
+    this._events = events
   }
 
   get year(): number {
@@ -35,16 +37,12 @@ class CalendarYear {
     this._year = year
   }
 
-  get monthes(): IMonth[] {
-    return this._monthes
+  getWeeksTotalCount() {
+    return this._weeksTotalCount
   }
 
-  set monthes(monthItems: IMonth[]) {
-    this._monthes = monthItems
-  }
-
-  getYearMonthes(): IMonth[] {
-    const monthes: IMonth[] = []
+  getYearMonthes(): CalendarMonth[] {
+    const monthes: CalendarMonth[] = []
     for (let i = 0; i < 12; i++) {
       const events =
         this.events &&
@@ -76,7 +74,11 @@ class CalendarYear {
 
   getTotalWeeksDaysInYear(): IDay[] {
     const weekInst = new CalendarWeek({ locale: this.locale, date: new Date(this._year, 0, 1) })
-    const totalDays = [...weekInst.getPrevDaysInFirstWeek(), ...this.getYearDays(), ...weekInst.getPastDaysInLastWeek()]
+    const totalDays = [
+      ...weekInst.getPrevDaysInFirstWeek(new Date(this._year, 0, 1)),
+      ...this.getYearDays(),
+      ...weekInst.getPastDaysInLastWeek(new Date(this._year, 12, 0)),
+    ]
     return totalDays
   }
 
@@ -113,7 +115,7 @@ class CalendarYear {
       monthes: this.getYearMonthes(),
       isCurrent: new Date().getFullYear() === this._year,
       year: this._year,
-      weeks: new CalendarWeek({ date: new Date(this._year, 0, 0) }).getWeeksInYear(),
+      weeksTotalCount: new CalendarWeek({ date: new Date(this._year, 0, 0) }).getWeeksTotalCountInYear(),
     }
   }
 }

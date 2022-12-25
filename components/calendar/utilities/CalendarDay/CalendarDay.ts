@@ -7,11 +7,15 @@ class CalendarDay {
   date: Date
   locale: string
   private _events: ICalendarEvent[] | []
+  private _weekendDays: string[]
+  private _isCurrentMonth: boolean
 
   constructor(options?: ICalendarDayOptions) {
     this.date = options?.date ?? new Date()
     this.locale = options?.locale ?? localeDefault
     this._events = options?.events || []
+    this._weekendDays = options?.weekendDays || ['Saturday', 'Sunday']
+    this._isCurrentMonth = options?.isCurrentMonth ?? false
   }
 
   get events() {
@@ -44,8 +48,10 @@ class CalendarDay {
       monthNumber,
       monthIndex,
       timestamp,
+      isCurrentMonth: this._isCurrentMonth,
       events: this.events,
       isToday: this.isToday(this.date),
+      isWeekend: this._weekendDays && this._weekendDays.find((weekend) => weekend === day) ? true : false,
     }
   }
 

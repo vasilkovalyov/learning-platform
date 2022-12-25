@@ -4,6 +4,8 @@ export interface ICalendarDayOptions {
   date?: Date
   locale?: string
   events?: ICalendarEvent[]
+  weekendDays?: string[]
+  isCurrentMonth?: boolean
 }
 
 export interface IDay {
@@ -20,5 +22,7 @@ export interface IDay {
   monthIndex: number
   timestamp: number
   isToday: boolean
+  isWeekend: boolean
+  isCurrentMonth: boolean
   events?: ICalendarEvent[]
 }

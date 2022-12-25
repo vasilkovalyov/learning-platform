@@ -2,6 +2,7 @@ import { ICalendarMonth, IMonth, IMonthName } from './CalendarMonth.type'
 import CalendarDay from '../CalendarDay/CalendarDay'
 import { IDay } from '../CalendarDay/CalendarDay.type'
 import { ICalendarEvent } from '../CalendarEvent/CalendarEvent.type'
+import CalendarWeek from '../CalendarWeek/CalendarWeek'
 
 import { localeDefault } from '../../constants'
 
@@ -16,7 +17,6 @@ class CalendarMonth {
   monthShort: string
   monthNumber: number
   events: ICalendarEvent[] | []
-  monthDays: IDay[]
 
   constructor(options?: ICalendarMonth) {
     this.date = options?.date ?? new Date()
@@ -29,7 +29,15 @@ class CalendarMonth {
     this.monthName = this.date.toLocaleDateString(this.locale ?? localeDefault, { month: 'long' })
     this.monthShort = this.date.toLocaleDateString(this.locale ?? localeDefault, { month: 'short' })
     this.monthNumber = this.monthIndex + 1
-    this.monthDays = this.getMonthDays()
+  }
+
+  getMonthDaysFullView(): IDay[] {
+    const monthIndex = this.date ? this.date.getMonth() : new Date().getMonth()
+    const prevDays = new CalendarWeek().getPrevDaysInFirstWeek(new Date(this.date.getFullYear(), monthIndex, 1))
+    const pastDays = new CalendarWeek().getPastDaysInLastWeek(new Date(this.date.getFullYear(), monthIndex + 1, 0))
+    const updatePrevDays = prevDays.length === 7 ? [] : prevDays
+    const updatePastDays = pastDays.length === 7 ? [] : pastDays
+    return [...updatePrevDays, ...this.getMonthDays(), ...updatePastDays]
   }
 
   getMonthDays(): IDay[] {
@@ -55,6 +63,7 @@ class CalendarMonth {
       days[i] = new CalendarDay({
         date: new Date(year, monthIndex, i + 1),
         locale: this.locale,
+        isCurrentMonth: true,
         events: events,
       }).getDay()
     }
@@ -73,6 +82,7 @@ class CalendarMonth {
       monthShort: d.toLocaleDateString(this.locale || localeDefault, { month: 'short' }),
       year: targetYear,
       monthDays: this.getMonthDays(),
+      monthDaysFullView: this.getMonthDaysFullView(),
       isCurrent: this.isCurrentMonth(targetYear, targetMonth),
     }
   }
@@ -102,6 +112,18 @@ class CalendarMonth {
 
   isCurrentMonth(year: number, monthIndex: number): boolean {
     return new Date().getMonth() === monthIndex && year === new Date().getFullYear()
+  }
+
+  getMonthNameByIndex(index: number): IMonthName {
+    let targetMonth!: IMonthName
+    const monthes = this.getMonthesNames()
+    for (let i = 0; i <= monthes.length - 1; i++) {
+      if (monthes[i].monthIndex === index) {
+        targetMonth = monthes[i]
+        break
+      }
+    }
+    return targetMonth
   }
 }
 

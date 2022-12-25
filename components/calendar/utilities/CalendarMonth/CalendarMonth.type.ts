@@ -16,6 +16,7 @@ export interface IMonth {
   monthShort: string
   year: number
   monthDays: IDay[]
+  monthDaysFullView: IDay[]
   isCurrent: boolean
 }
 

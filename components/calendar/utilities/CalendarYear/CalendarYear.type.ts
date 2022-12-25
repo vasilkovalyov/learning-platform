@@ -1,5 +1,5 @@
 import { ICalendarEvent } from '../CalendarEvent/CalendarEvent.type'
-import { IMonth } from '../CalendarMonth/CalendarMonth.type'
+import CalendarMonth from '../CalendarMonth/CalendarMonth'
 
 export interface ICalendarYearOptions {
   locale?: string
@@ -11,6 +11,6 @@ export interface ICalendarYear {
   locale: string
   year: number
   isCurrent: boolean
-  monthes: IMonth[]
-  weeks: number
+  monthes: CalendarMonth[]
+  weeksTotalCount: number
 }

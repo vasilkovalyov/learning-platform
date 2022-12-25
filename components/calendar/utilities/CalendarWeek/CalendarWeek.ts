@@ -8,17 +8,15 @@ class CalendarWeek {
   date: Date
   locale: string
   weekStartNumber: number
+  private _year: number
+  private _msDayTime: number
 
   constructor(options?: ICalendarWeekOptions) {
     this.date = options?.date || new Date()
     this.locale = options?.locale || localeDefault
     this.weekStartNumber = options?.weekStartNumber || 1
-  }
-
-  getWeeksInYear(): number {
-    const firstDayOfYear = new Date(this.date.getFullYear(), 0, 1)
-    const pastDaysYear = (this.date.getTime() - firstDayOfYear.getTime()) / 86400000
-    return Math.ceil((pastDaysYear + firstDayOfYear.getDay() + 1) / weekDaysCount)
+    this._year = this.date.getFullYear()
+    this._msDayTime = 86400000
   }
 
   getWeekNames(type: 'long' | 'short' = 'long'): string[] {
@@ -33,36 +31,67 @@ class CalendarWeek {
     return [...weekDays.slice(this.weekStartNumber), ...weekDays.slice(0, this.weekStartNumber)]
   }
 
-  getPrevDaysInFirstWeek(): IDay[] {
-    const firstDay = new Date(this.date.getFullYear(), 0, 1)
+  getPrevDaysInFirstWeek(date?: Date): IDay[] {
+    const firstDay = date ?? new Date(this.date.getFullYear(), 0, 1)
+    const monthIndex = !date ? 0 : date.getMonth()
     const prevDays: IDay[] = []
-
-    for (let i = firstDay.getDay(); i > 1; i--) {
-      const d = new Date(this.date.getFullYear(), 0, 2 - i)
+    for (let i = firstDay.getDay() || 7; i > 1; i--) {
       prevDays.push(
         new CalendarDay({
+          date: new Date(firstDay.getFullYear(), monthIndex, 2 - i),
+          isCurrentMonth: false,
           locale: this.locale,
-        }).getDay(d.getFullYear(), d.getMonth(), d.getDate()),
+        }).getDay(),
       )
     }
 
     return prevDays
   }
 
-  getPastDaysInLastWeek(): IDay[] {
-    const lastDay = new Date(this.date.getFullYear(), 12, 0)
+  getPastDaysInLastWeek(date?: Date): IDay[] {
+    const lastDay = date ?? new Date(this.date.getFullYear(), 12, 0)
+    const monthIndex = !date ? 11 : date.getMonth()
+
     const pastDays: IDay[] = []
 
     for (let i = lastDay.getDay() + 1; i <= weekDaysCount; i++) {
-      const d = new Date(this.date.getFullYear(), 11, lastDay.getDate() + (i - lastDay.getDay()))
       pastDays.push(
         new CalendarDay({
+          date: new Date(lastDay.getFullYear(), monthIndex, lastDay.getDate() + (i - lastDay.getDay())),
+          isCurrentMonth: false,
           locale: this.locale,
-        }).getDay(d.getFullYear(), d.getMonth(), d.getDate()),
+        }).getDay(),
       )
     }
 
     return pastDays
+  }
+
+  getWeekDaysByNumber(weekNumber?: number): IDay[] {
+    const weekNum = weekNumber ?? this.getCurrentWeekNumberInYear()
+    const days: IDay[] = []
+    const firstDayYear = new Date(this._year, 0, 1)
+    const firstDayNumber = 1 - firstDayYear.getDay() + 1
+
+    for (let i = 0; i < weekDaysCount; i++) {
+      days[i] = new CalendarDay({
+        date: new Date(this._year, 0, (weekNum - 1) * 7 + firstDayNumber + i),
+      }).getDay()
+    }
+    return days
+  }
+
+  getWeeksTotalCountInYear(): number {
+    const firstDayOfYear = new Date(this.date.getFullYear(), 0, 1)
+    const pastDaysYear = (this.date.getTime() - firstDayOfYear.getTime()) / this._msDayTime
+    return Math.ceil((pastDaysYear + firstDayOfYear.getDay() + 1) / weekDaysCount)
+  }
+
+  getCurrentWeekNumberInYear(): number {
+    const currentDate = new Date()
+    const startDate = new Date(currentDate.getFullYear(), 0, 1)
+    const days = Math.floor((currentDate.getTime() - startDate.getTime()) / this._msDayTime)
+    return Math.ceil(days / 7)
   }
 }
 

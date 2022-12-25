@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback, useMemo } from 'react'
 import Typography from 'antd/lib/typography'
 import cn from 'classnames'
 
-import CalendarDate from './utilities/CalendarDate'
-import CalendarMonth from './utilities/CalendarMonth'
-import CalendarWeek from './utilities/CalendarWeek'
-import CalendarDay from './utilities/CalendarDay'
+import CalendarYear from './utilities/CalendarYear/CalendarYear'
+import CalendarMonth from './utilities/CalendarMonth/CalendarMonth'
+import CalendarWeek from './utilities/CalendarWeek/CalendarWeek'
+import { ICalendarWeek } from './utilities/CalendarWeek/CalendarWeek.type'
+import CalendarDay from './utilities/CalendarDay/CalendarDay'
+import { IDay } from './utilities/CalendarDay/CalendarDay.type'
+
 import Row from 'antd/lib/row'
 import Col from 'antd/lib/col'
 import Button from 'antd/lib/button'
@@ -13,8 +16,9 @@ import Space from 'antd/lib/space'
 import Icon from 'components/Icon'
 
 import { getCurrentTime } from './utilities/time'
+import { formatDate } from './utilities/date'
 
-import { useCalendar } from './hooks/useCalendar'
+import { useCalendar } from './hooks/useCalendar-old'
 
 enum CalendarEventTypeColor {
   PERSONAL_LESSON = '#D1EAE7',
@@ -87,28 +91,22 @@ const { Paragraph, Text } = Typography
 
 function Calendar() {
   const [dateView, setDateView] = useState<CalendarModeView>('month')
-  const calendarMonthInst = new CalendarMonth()
-  const dayInst = new CalendarDay()
-  const calendarDateInst = new CalendarDate()
-  const weeks = new CalendarWeek().getWeekDaysNames()
+  const weekInst = new CalendarWeek()
+  const today = new CalendarDay().getDay()
+  const weeksNames = weekInst.getWeekNames()
+  const dayHours = new CalendarDay().getDayHours(8, 22)
 
-  const [
-    todayDate,
-    targetDate,
-    days,
-    selectedMonth,
-    selectedYear,
-    setTodayDate,
-    setDays,
-    nextWeek,
-    prevWeek,
-    nextDay,
-    prevDay,
-    nextMonth,
-    prevMonth,
-    getMonthByIndex,
-    isWeekend,
-  ] = useCalendar(calendarDateInst.createDate())
+  const [year, setYear] = useState<CalendarYear>(new CalendarYear({ year: new Date().getFullYear() }))
+  const currentWeek = year.getYearWeeks().filter((week) => week.isCurrent === true)[0]
+  const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth())
+  const [days, setDays] = useState<CalendarMonth>(year.getYearMonthes()[selectedMonth])
+  // const [weeks, setWeeks] = useState<ICalendarWeek>(year.getYearWeeks()[currentWeek.weekNumber - 1])
+  // const [weekNumber, setWeekNumber] = useState<number>(currentWeek.weekNumber)
+  const [selectedDay, setSelectedDay] = useState<IDay>(new CalendarDay().getDay())
+  console.log('year', year)
+  // console.log('total', year.getYearWeeks())
+  // console.log('weekNumber', weekNumber)
+  // console.log('weeks', weeks)
 
   const calendarViewClassnames = cn({
     'calendar-events--month-view': dateView === 'month',
@@ -120,13 +118,84 @@ function Calendar() {
     setDateView(type)
   }
 
-  useEffect(() => {
-    if (dateView === 'month') {
-      setDays(calendarMonthInst.getTotalDaysInViewMonth())
-    } else {
-      setDays(calendarMonthInst.getTotalDaysInView())
+  function prevMonth() {
+    if (selectedMonth === 0) {
+      const prevYear = new CalendarYear({ year: year.year - 1 })
+      setYear(prevYear)
+      setSelectedMonth(11)
+      setDays(prevYear.getYearMonthes()[11])
+      return
     }
-  }, [dateView])
+    setSelectedMonth(selectedMonth - 1)
+    setDays(year.getYearMonthes()[selectedMonth - 1])
+  }
+
+  function nextMonth() {
+    if (selectedMonth > 10) {
+      const newYear = new CalendarYear({ year: year.year + 1 })
+      setYear(newYear)
+      setSelectedMonth(0)
+      setDays(newYear.getYearMonthes()[0])
+      return
+    }
+    setSelectedMonth(selectedMonth + 1)
+    setDays(year.getYearMonthes()[selectedMonth + 1])
+  }
+
+  function prevWeek() {
+    // if (weekNumber > 0) {
+    //   setWeekNumber(weekNumber - 1)
+    //   // console.log('[weekNumber - 1]', year.getYearWeeks()[weekNumber - 1])
+    //   // setWeeks(year.getYearWeeks()[weekNumber - 1])
+    // }
+  }
+
+  function nextWeek() {
+    // if (weekNumber < year.getWeeksTotalCount()) {
+    //   setWeekNumber(weekNumber + 1)
+    //   // console.log('[weekNumber + 1]', year.getYearWeeks()[weekNumber + 1])
+    //   // setWeeks(year.getYearWeeks()[weekNumber + 1])
+    // }
+  }
+
+  function prevDay() {
+    if (selectedDay.dayNumber <= 1) {
+      if (selectedMonth === 0) {
+        const prevYear = new CalendarYear({ year: year.year - 1 })
+        const prevMonthDay = new CalendarDay({ date: new Date(year.year - 1, 12, 0) }).getDay()
+        setYear(prevYear)
+        setSelectedMonth(11)
+        setSelectedDay(prevMonthDay)
+      } else {
+        const prevMonth = selectedMonth - 1
+        const prevMonthDay = new CalendarDay({ date: new Date(year.year, selectedMonth, 0) }).getDay()
+        setSelectedDay(prevMonthDay)
+        setSelectedMonth(prevMonth)
+      }
+    } else {
+      const prevDay = new CalendarDay({ date: new Date(year.year, selectedMonth, selectedDay.dayNumber - 1) }).getDay()
+      setSelectedDay(prevDay)
+    }
+  }
+
+  function nextDay() {
+    if (selectedDay.dayNumber >= days.getMonthDays().length) {
+      if (selectedMonth === 11) {
+        const nextYear = new CalendarYear({ year: year.year + 1 })
+        const nextMonthDay = new CalendarDay({ date: new Date(nextYear.year, 0, 1) }).getDay()
+        setYear(nextYear)
+        setSelectedMonth(0)
+        setSelectedDay(nextMonthDay)
+      } else {
+        const nextMonthDay = new CalendarDay({ date: new Date(year.year, selectedMonth, 1) }).getDay()
+        setSelectedMonth(selectedMonth + 1)
+        setSelectedDay(nextMonthDay)
+      }
+    } else {
+      const nextDay = new CalendarDay({ date: new Date(year.year, selectedMonth, selectedDay.dayNumber + 1) }).getDay()
+      setSelectedDay(nextDay)
+    }
+  }
 
   return (
     <div className={cn('calendar-events', calendarViewClassnames)}>
@@ -148,24 +217,26 @@ function Calendar() {
         </Row>
       ) : null}
 
+      {/* <p>{weekNumber}</p> */}
+
       <div className="calendar-events__date-info">
         <Row justify="center">
           <Col span={24}>
             <Space size={[30, 30]} direction="horizontal" className="calendar-events__month-switcher">
               {dateView === 'month' ? (
-                <Button onClick={prevMonth} className="calendar-events__month-switcher-button">
+                <Button onClick={() => prevMonth()} className="calendar-events__month-switcher-button">
                   <Icon icon="chevron-left" size={20} className="calendar-events__month-switcher-icon" />
                 </Button>
               ) : null}
               <Paragraph className="calendar-events__month">
                 <Space>
-                  {dateView === 'day' ? calendarDateInst.formatDate(targetDate.date, 'DD') : null}
-                  {getMonthByIndex(selectedMonth).month}
-                  {selectedYear}
+                  {dateView === 'day' ? formatDate(selectedDay.date, 'DD') : null}
+                  {new CalendarMonth().getMonthNameByIndex(selectedMonth).month}
+                  {year.year}
                 </Space>
               </Paragraph>
               {dateView === 'month' ? (
-                <Button onClick={nextMonth} className="calendar-events__month-switcher-button">
+                <Button onClick={() => nextMonth()} className="calendar-events__month-switcher-button">
                   <Icon icon="chevron-right" size={20} className="calendar-events__month-switcher-icon" />
                 </Button>
               ) : null}
@@ -174,18 +245,16 @@ function Calendar() {
         </Row>
 
         <Paragraph className="calendar-events__today-info">
-          {todayDate.date === targetDate.date ? 'Today is' : null} {targetDate.day}
+          {today.date === selectedDay.date ? 'Today is' : null} {selectedDay.day}
           <span> </span>
-          {dateView !== 'day'
-            ? calendarDateInst.formatDate(targetDate.date, 'DD MMMM YYYY')
-            : getCurrentTime(new Date())}
+          {dateView !== 'day' ? formatDate(selectedDay.date, 'DD MMMM YYYY') : getCurrentTime(new Date())}
         </Paragraph>
         {dateView === 'day' ? (
           <div className="calendar-events__controls-day">
-            <Button onClick={prevDay} className="calendar-events__control-day-button">
+            <Button onClick={() => prevDay()} className="calendar-events__control-day-button">
               <Icon icon="chevron-left" size={20} className="calendar-events__control-day-icon" />
             </Button>
-            <Button onClick={nextDay} className="calendar-events__control-day-button">
+            <Button onClick={() => nextDay()} className="calendar-events__control-day-button">
               <Icon icon="chevron-right" size={20} className="calendar-events__control-day-icon" />
             </Button>
           </div>
@@ -196,7 +265,7 @@ function Calendar() {
         <div className="calendar-day-view">
           <div className="calendar-day-view__left">
             <div className="calendar-day-hours">
-              {dayInst.getDayHours(8, 22).map((item, key) => (
+              {dayHours.map((item, key) => (
                 <div key={key} className="calendar-day-hours__item">
                   {item}
                 </div>
@@ -208,7 +277,7 @@ function Calendar() {
               <div className="calendar-day-times calendar-day-times--day">
                 <div className="calendar-day-times__timeline"></div>
                 <div className="calendar-day-times__item">
-                  {dayInst.getDayHours(8, 22).map((item, key) => (
+                  {dayHours.map((item, key) => (
                     <div key={key} className="calendar-day-times__cell">
                       {item.split(':')[0] === new Date().getHours().toString() ? (
                         <div
@@ -229,15 +298,15 @@ function Calendar() {
         <div className="calendar-week-view">
           <div className="calendar-week-view__left">
             <div className="calendar-week-view__controls">
-              <Button onClick={prevWeek} className="calendar-week-view__switcher-button">
+              <Button onClick={() => prevWeek()} className="calendar-week-view__switcher-button">
                 <Icon icon="chevron-left" size={20} className="calendar-week-view__switcher-icon" />
               </Button>
-              <Button onClick={nextWeek} className="calendar-week-view__switcher-button">
+              <Button onClick={() => nextWeek()} className="calendar-week-view__switcher-button">
                 <Icon icon="chevron-right" size={20} className="calendar-week-view__switcher-icon" />
               </Button>
             </div>
             <div className="calendar-day-hours">
-              {dayInst.getDayHours(8, 22).map((item, key) => (
+              {dayHours.map((item, key) => (
                 <div key={key} className="calendar-day-hours__item">
                   {item}
                 </div>
@@ -247,22 +316,28 @@ function Calendar() {
           <div className="calendar-week-view__right">
             <div className="calendar-week-view__body">
               <div className="calendar-week-days">
-                {weeks.map((week, key) => (
+                {weeksNames.map((week, key) => (
                   <div key={key} className="calendar-week-days__item">
                     <div
                       className={cn('calendar-week-days__cell', {
-                        active: todayDate.day === week.day && selectedMonth === todayDate.monthIndex,
+                        active: selectedDay.day === week && selectedMonth === selectedDay.monthIndex,
                       })}
                     >
-                      {week.day}
+                      <div>{week}</div>
+                      {/* <div>
+                        {weeks.days[key].dayNumber < 10 ? `0${weeks.days[key].dayNumber}` : weeks.days[key].dayNumber}
+                      </div> */}
                     </div>
                   </div>
                 ))}
               </div>
               <div className="calendar-day-times calendar-day-times--week">
-                {weeks.map((week, key) => (
-                  <div key={key} className={cn('calendar-day-times__item', { weekend: isWeekend(week.day) })}>
-                    {dayInst.getDayHours(8, 22).map((item, key) => (
+                {weeksNames.map((week, key) => (
+                  <div
+                    key={key}
+                    className={cn('calendar-day-times__item', { weekend: week === 'Saturday' || week === 'Sunday' })}
+                  >
+                    {dayHours.map((item, key) => (
                       <div key={key} className="calendar-day-times__cell"></div>
                     ))}
                   </div>
@@ -276,28 +351,28 @@ function Calendar() {
       {dateView === 'month' ? (
         <>
           <div className="calendar-week-days">
-            {weeks.map((week, key) => (
+            {weeksNames.map((week, key) => (
               <div key={key} className="calendar-week-days__item">
                 <div
                   className={cn('calendar-week-days__cell', {
-                    active: todayDate.day === week.day && selectedMonth === todayDate.monthIndex,
+                    active: selectedDay.day === week && selectedMonth === selectedDay.monthIndex,
                   })}
                 >
-                  {week.day}
+                  {week}
                 </div>
               </div>
             ))}
           </div>
           <div className="calendar-days">
-            {days.map((day, key) => (
+            {days.getMonthDaysFullView().map((day, key) => (
               <div key={key} className="calendar-days__item">
                 <div
                   className={cn(
                     'calendar-days__cell',
-                    { today: dayInst.checkIsToday(day.date) },
-                    { 'current-month': calendarMonthInst.isCurrentMonth(selectedYear, day.monthIndex) },
-                    { 'another-month': day.monthIndex !== selectedMonth },
-                    { weekend: isWeekend(day.day) },
+                    { today: day.isToday },
+                    { 'current-month': day.isCurrentMonth },
+                    { 'another-month': !day.isCurrentMonth },
+                    { weekend: day.isWeekend },
                   )}
                 >
                   {day.dayNumber}
