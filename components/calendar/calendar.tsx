@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react'
+import React, { useState } from 'react'
 import Typography from 'antd/lib/typography'
 import cn from 'classnames'
 
@@ -17,8 +17,6 @@ import Icon from 'components/Icon'
 
 import { getCurrentTime } from './utilities/time'
 import { formatDate } from './utilities/date'
-
-import { useCalendar } from './hooks/useCalendar-old'
 
 enum CalendarEventTypeColor {
   PERSONAL_LESSON = '#D1EAE7',
@@ -92,21 +90,20 @@ const { Paragraph, Text } = Typography
 function Calendar() {
   const [dateView, setDateView] = useState<CalendarModeView>('month')
   const weekInst = new CalendarWeek()
-  const today = new CalendarDay().getDay()
-  const weeksNames = weekInst.getWeekNames()
-  const dayHours = new CalendarDay().getDayHours(8, 22)
+  const dayInst = new CalendarDay()
 
-  const [year, setYear] = useState<CalendarYear>(new CalendarYear({ year: new Date().getFullYear() }))
-  const currentWeek = year.getYearWeeks().filter((week) => week.isCurrent === true)[0]
-  const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth())
+  const today = dayInst.getDay()
+  const todayYear = new CalendarYear({ year: today.year })
+  const weeksNames = weekInst.getWeekNames()
+  const dayHours = dayInst.getDayHours(8, 22)
+
+  const [year, setYear] = useState<CalendarYear>(new CalendarYear({ year: today.year }))
+  // const currentWeek = todayYear.getYearWeeks().filter((week) => week.isCurrent === true)[0]
+  const [selectedMonth, setSelectedMonth] = useState<number>(today.monthIndex)
   const [days, setDays] = useState<CalendarMonth>(year.getYearMonthes()[selectedMonth])
   // const [weeks, setWeeks] = useState<ICalendarWeek>(year.getYearWeeks()[currentWeek.weekNumber - 1])
   // const [weekNumber, setWeekNumber] = useState<number>(currentWeek.weekNumber)
-  const [selectedDay, setSelectedDay] = useState<IDay>(new CalendarDay().getDay())
-  console.log('year', year)
-  // console.log('total', year.getYearWeeks())
-  // console.log('weekNumber', weekNumber)
-  // console.log('weeks', weeks)
+  const [selectedDay, setSelectedDay] = useState<IDay>(dayInst.getDay())
 
   const calendarViewClassnames = cn({
     'calendar-events--month-view': dateView === 'month',
@@ -115,6 +112,12 @@ function Calendar() {
   })
 
   function onHandleDateView(type: CalendarModeView) {
+    if (dateView === 'month' && type === 'day' && today.monthIndex !== selectedMonth) {
+      setSelectedDay(new CalendarDay({ date: new Date(year.year, selectedMonth, 1) }).getDay())
+    }
+    if (dateView === 'day' && type === 'month') {
+      // setSelectedDay(today)
+    }
     setDateView(type)
   }
 
@@ -136,27 +139,53 @@ function Calendar() {
       setYear(newYear)
       setSelectedMonth(0)
       setDays(newYear.getYearMonthes()[0])
+      // setSelectedDay(new CalendarDay({ date: new Date(year.year + 1, 0, 1) }).getDay())
       return
     }
     setSelectedMonth(selectedMonth + 1)
     setDays(year.getYearMonthes()[selectedMonth + 1])
+    // setSelectedDay(new CalendarDay({ date: new Date(year.year, selectedMonth + 1, 1) }).getDay())
   }
 
-  function prevWeek() {
-    // if (weekNumber > 0) {
-    //   setWeekNumber(weekNumber - 1)
-    //   // console.log('[weekNumber - 1]', year.getYearWeeks()[weekNumber - 1])
-    //   // setWeeks(year.getYearWeeks()[weekNumber - 1])
-    // }
-  }
+  // function prevWeek() {
+  //   if (weekNumber > 1) {
+  //     const weekNum = weekNumber - 1
+  //     const fDay = year.getYearWeeks()[weekNum - 1].days[0]
+  //     setSelectedMonth(fDay.monthIndex)
+  //     setWeekNumber(weekNumber - 1)
+  //     setWeeks(year.getYearWeeks()[weekNum - 1])
+  //     setSelectedDay(fDay)
+  //     return
+  //   }
+  //   const prevYear = new CalendarYear({ year: year.year - 1 })
+  //   const prevYearTotalWeeksCount = prevYear.getWeeksTotalCount()
+  //   const fDay = year.getYearWeeks()[prevYearTotalWeeksCount - 1].days[0]
+  //   setYear(prevYear)
+  //   setSelectedMonth(11)
+  //   setWeekNumber(prevYearTotalWeeksCount)
+  //   setWeeks(prevYear.getYearWeeks()[prevYearTotalWeeksCount - 1])
+  //   setSelectedDay(fDay)
+  // }
 
-  function nextWeek() {
-    // if (weekNumber < year.getWeeksTotalCount()) {
-    //   setWeekNumber(weekNumber + 1)
-    //   // console.log('[weekNumber + 1]', year.getYearWeeks()[weekNumber + 1])
-    //   // setWeeks(year.getYearWeeks()[weekNumber + 1])
-    // }
-  }
+  // function nextWeek() {
+  //   if (weekNumber < year.getWeeksTotalCount()) {
+  //     const weekNum = weekNumber - 1
+  //     const fDay = year.getYearWeeks()[weekNum + 1].days[0]
+  //     setSelectedMonth(fDay.monthIndex)
+  //     setWeekNumber(weekNumber + 1)
+  //     setWeeks(year.getYearWeeks()[weekNum + 1])
+  //     setSelectedDay(fDay)
+  //     return
+  //   }
+  //   const nextYear = new CalendarYear({ year: year.year + 1 })
+  //   const nextYearTotalWeeksCount = nextYear.getWeeksTotalCount()
+  //   const fDay = year.getYearWeeks()[nextYearTotalWeeksCount - 1].days[0]
+  //   setYear(nextYear)
+  //   setSelectedMonth(0)
+  //   setWeekNumber(2)
+  //   setWeeks(nextYear.getYearWeeks()[1])
+  //   setSelectedDay(fDay)
+  // }
 
   function prevDay() {
     if (selectedDay.dayNumber <= 1) {
@@ -217,8 +246,6 @@ function Calendar() {
         </Row>
       ) : null}
 
-      {/* <p>{weekNumber}</p> */}
-
       <div className="calendar-events__date-info">
         <Row justify="center">
           <Col span={24}>
@@ -245,9 +272,9 @@ function Calendar() {
         </Row>
 
         <Paragraph className="calendar-events__today-info">
-          {today.date === selectedDay.date ? 'Today is' : null} {selectedDay.day}
-          <span> </span>
-          {dateView !== 'day' ? formatDate(selectedDay.date, 'DD MMMM YYYY') : getCurrentTime(new Date())}
+          {dateView === 'month' || dateView === 'week'
+            ? `Today is ${today.day} ${formatDate(today.date, 'DD MMMM YYYY')}`
+            : `${selectedDay.day} ${getCurrentTime(new Date())}`}
         </Paragraph>
         {dateView === 'day' ? (
           <div className="calendar-events__controls-day">
@@ -294,7 +321,7 @@ function Calendar() {
         </div>
       ) : null}
 
-      {dateView === 'week' ? (
+      {/* {dateView === 'week' ? (
         <div className="calendar-week-view">
           <div className="calendar-week-view__left">
             <div className="calendar-week-view__controls">
@@ -320,13 +347,13 @@ function Calendar() {
                   <div key={key} className="calendar-week-days__item">
                     <div
                       className={cn('calendar-week-days__cell', {
-                        active: selectedDay.day === week && selectedMonth === selectedDay.monthIndex,
+                        active: weeks.days[key].isToday,
                       })}
                     >
                       <div>{week}</div>
-                      {/* <div>
+                      <div>
                         {weeks.days[key].dayNumber < 10 ? `0${weeks.days[key].dayNumber}` : weeks.days[key].dayNumber}
-                      </div> */}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -346,7 +373,7 @@ function Calendar() {
             </div>
           </div>
         </div>
-      ) : null}
+      ) : null} */}
 
       {dateView === 'month' ? (
         <>
@@ -355,7 +382,8 @@ function Calendar() {
               <div key={key} className="calendar-week-days__item">
                 <div
                   className={cn('calendar-week-days__cell', {
-                    active: selectedDay.day === week && selectedMonth === selectedDay.monthIndex,
+                    // active: selectedDay.day === week && selectedMonth === selectedDay.monthIndex,
+                    active: selectedDay.dayNumberInWeek - 1 === key && selectedDay.day === week,
                   })}
                 >
                   {week}

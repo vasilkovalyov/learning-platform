@@ -26,7 +26,7 @@ class CalendarDay {
     const dayNumber = this.date.getDate()
     const day = this.date.toLocaleDateString(this.locale, { weekday: 'long' })
     const dayShort = this.date.toLocaleDateString(this.locale, { weekday: 'short' })
-    const dayNumberInWeek = this.date.getDay() + 1
+    const dayNumberInWeek = this.date.getDay() || 1
     const year = this.date.getFullYear()
     const yearShort = this.date.toLocaleDateString(this.locale, { year: '2-digit' })
     const month = this.date.toLocaleDateString(this.locale, { month: 'long' })

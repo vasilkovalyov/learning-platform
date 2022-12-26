@@ -23,8 +23,8 @@ class CalendarMonth {
     this.locale = options?.locale ?? localeDefault
     this.events = options?.events ?? []
 
-    this.year = this.date.getFullYear() ?? new Date().getFullYear()
-    this.monthIndex = this.date.getMonth() ?? new Date().getMonth()
+    this.year = this.date.getFullYear() ?? this.date.getFullYear()
+    this.monthIndex = this.date.getMonth() ?? this.date.getMonth()
     this.isCurrent = this.isCurrentMonth(this.year, this.monthIndex)
     this.monthName = this.date.toLocaleDateString(this.locale ?? localeDefault, { month: 'long' })
     this.monthShort = this.date.toLocaleDateString(this.locale ?? localeDefault, { month: 'short' })
@@ -106,12 +106,11 @@ class CalendarMonth {
   }
 
   getTodayMonth() {
-    const d = new Date()
-    return this.createMonth(d.getFullYear(), d.getMonth())
+    return this.createMonth(this.date.getFullYear(), this.date.getMonth())
   }
 
   isCurrentMonth(year: number, monthIndex: number): boolean {
-    return new Date().getMonth() === monthIndex && year === new Date().getFullYear()
+    return this.date.getMonth() === monthIndex && year === this.date.getFullYear()
   }
 
   getMonthNameByIndex(index: number): IMonthName {
