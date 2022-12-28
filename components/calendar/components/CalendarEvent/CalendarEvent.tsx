@@ -1,9 +1,9 @@
 import React from 'react'
 
 import cn from 'classnames'
-import { ICalendarEvent } from './CalendarEvent.type'
+import { ICalendarEventProps } from './CalendarEvent.type'
 
-export default function CalendarEvent({ id, title, type, dateFrom, dateTo, isCompact, styles }: ICalendarEvent) {
+export default function CalendarEvent({ id, title, type, dateFrom, dateTo, isCompact, styles }: ICalendarEventProps) {
   const typeClassname = cn({
     'calendar-event--personal': type === 'personal',
     'calendar-event--group': type === 'group',

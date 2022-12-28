@@ -8,7 +8,7 @@ import UserService from 'services/user'
 import { IUserStudent } from 'intefaces/user'
 import { RoleType } from '../types/common'
 
-import { ICalendarEvent } from '../components/calendar/utilities/CalendarEvent/CalendarEvent.type'
+import { ICalendarEvent } from '../components/calendar/components/CalendarEvent/CalendarEvent.type'
 
 import Calendar from 'components/calendar/calendar'
 
@@ -67,7 +67,7 @@ const Home: NextPage = (props: { user: IUserStudent }) => {
       <PublicLayout>
         <h1>Public Layout</h1>
         <pre>{JSON.stringify(props, null, 4)}</pre>
-        <Calendar events={events} />
+        <Calendar events={events} date={new Date()} />
       </PublicLayout>
     </div>
   )

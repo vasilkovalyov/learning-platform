@@ -1,12 +1,18 @@
 import { IDay } from '../CalendarDay/CalendarDay.type'
 import { ICalendarEvent } from '../CalendarEvent/CalendarEvent.type'
 
-export interface ICalendarMonth {
+export interface ICalendarMonthProps {
+  date: Date
+  today: Date
+  locale?: string
+  events?: ICalendarEvent[]
+}
+
+export interface ICalendarClassMonthOptions {
   date: Date
   locale?: string
   // monthIndex?: number
   // year?: number
-  events?: ICalendarEvent[]
 }
 
 export interface IMonth {

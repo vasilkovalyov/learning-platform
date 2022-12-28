@@ -1,6 +1,12 @@
 import { ICalendarEvent } from '../CalendarEvent/CalendarEvent.type'
 
-export interface ICalendarDayOptions {
+export interface ICalendarDayProps {
+  date: Date
+  locale?: string
+  events?: ICalendarEvent[]
+}
+
+export interface ICalendarDayClassOptions {
   date?: Date
   locale?: string
   events?: ICalendarEvent[]
@@ -15,7 +21,6 @@ export interface IDay {
   dayShort: string
   dayNumberInWeek: number
   year: number
-  yearShort: string
   month: string
   monthShort: string
   monthNumber: number
@@ -23,6 +28,6 @@ export interface IDay {
   timestamp: number
   isToday: boolean
   isWeekend: boolean
+  monthTotalDays: number
   isCurrentMonth: boolean
-  events?: ICalendarEvent[]
 }
