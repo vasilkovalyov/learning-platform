@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Typography from 'antd/lib/typography'
 import cn from 'classnames'
+
+import CalendarEvent from './components/CalendarEvent/CalendarEvent'
+import { CalendarEventType } from './components/CalendarEvent/CalendarEvent.type'
 
 import CalendarYear from './utilities/CalendarYear/CalendarYear'
 import CalendarMonth from './utilities/CalendarMonth/CalendarMonth'
@@ -8,6 +11,7 @@ import CalendarWeek from './utilities/CalendarWeek/CalendarWeek'
 import { ICalendarWeek } from './utilities/CalendarWeek/CalendarWeek.type'
 import CalendarDay from './utilities/CalendarDay/CalendarDay'
 import { IDay } from './utilities/CalendarDay/CalendarDay.type'
+import { ICalendarEvent } from './utilities/CalendarEvent/CalendarEvent.type'
 
 import Row from 'antd/lib/row'
 import Col from 'antd/lib/col'
@@ -87,23 +91,33 @@ const dateTypeViews: ICalendarDateTypeView[] = [
 
 const { Paragraph, Text } = Typography
 
-function Calendar() {
+interface ICalendar {
+  events?: ICalendarEvent[]
+}
+
+function Calendar({ events = [] }: ICalendar) {
   const [dateView, setDateView] = useState<CalendarModeView>('month')
+  const [e, setE] = useState<ICalendarEvent[]>(events)
   const weekInst = new CalendarWeek()
   const dayInst = new CalendarDay()
+  // console.log(weekInst.getCurrentWeekNumberInYear())
 
   const today = dayInst.getDay()
   const todayYear = new CalendarYear({ year: today.year })
   const weeksNames = weekInst.getWeekNames()
   const dayHours = dayInst.getDayHours(8, 22)
 
-  const [year, setYear] = useState<CalendarYear>(new CalendarYear({ year: today.year }))
-  // const currentWeek = todayYear.getYearWeeks().filter((week) => week.isCurrent === true)[0]
+  const [year, setYear] = useState<CalendarYear>(new CalendarYear({ year: today.year, events: e }))
+  const currentWeek = todayYear.getYearWeeks().filter((week) => week.isCurrent === true)[0]
   const [selectedMonth, setSelectedMonth] = useState<number>(today.monthIndex)
   const [days, setDays] = useState<CalendarMonth>(year.getYearMonthes()[selectedMonth])
-  // const [weeks, setWeeks] = useState<ICalendarWeek>(year.getYearWeeks()[currentWeek.weekNumber - 1])
-  // const [weekNumber, setWeekNumber] = useState<number>(currentWeek.weekNumber)
+  const [weeks, setWeeks] = useState<ICalendarWeek>(year.getYearWeeks()[currentWeek.weekNumber - 1])
+  const [weekNumber, setWeekNumber] = useState<number>(currentWeek.weekNumber)
   const [selectedDay, setSelectedDay] = useState<IDay>(dayInst.getDay())
+
+  useEffect(() => {
+    // console.log('events', events)
+  }, [events])
 
   const calendarViewClassnames = cn({
     'calendar-events--month-view': dateView === 'month',
@@ -147,45 +161,45 @@ function Calendar() {
     // setSelectedDay(new CalendarDay({ date: new Date(year.year, selectedMonth + 1, 1) }).getDay())
   }
 
-  // function prevWeek() {
-  //   if (weekNumber > 1) {
-  //     const weekNum = weekNumber - 1
-  //     const fDay = year.getYearWeeks()[weekNum - 1].days[0]
-  //     setSelectedMonth(fDay.monthIndex)
-  //     setWeekNumber(weekNumber - 1)
-  //     setWeeks(year.getYearWeeks()[weekNum - 1])
-  //     setSelectedDay(fDay)
-  //     return
-  //   }
-  //   const prevYear = new CalendarYear({ year: year.year - 1 })
-  //   const prevYearTotalWeeksCount = prevYear.getWeeksTotalCount()
-  //   const fDay = year.getYearWeeks()[prevYearTotalWeeksCount - 1].days[0]
-  //   setYear(prevYear)
-  //   setSelectedMonth(11)
-  //   setWeekNumber(prevYearTotalWeeksCount)
-  //   setWeeks(prevYear.getYearWeeks()[prevYearTotalWeeksCount - 1])
-  //   setSelectedDay(fDay)
-  // }
+  function prevWeek() {
+    if (weekNumber > 1) {
+      const weekNum = weekNumber - 1
+      const fDay = year.getYearWeeks()[weekNum - 1].days[0]
+      setSelectedMonth(fDay.monthIndex)
+      setWeekNumber(weekNumber - 1)
+      setWeeks(year.getYearWeeks()[weekNum - 1])
+      setSelectedDay(fDay)
+      return
+    }
+    const prevYear = new CalendarYear({ year: year.year - 1 })
+    const prevYearTotalWeeksCount = prevYear.getWeeksTotalCount()
+    const fDay = year.getYearWeeks()[prevYearTotalWeeksCount - 1].days[0]
+    setYear(prevYear)
+    setSelectedMonth(11)
+    setWeekNumber(prevYearTotalWeeksCount)
+    setWeeks(prevYear.getYearWeeks()[prevYearTotalWeeksCount - 1])
+    setSelectedDay(fDay)
+  }
 
-  // function nextWeek() {
-  //   if (weekNumber < year.getWeeksTotalCount()) {
-  //     const weekNum = weekNumber - 1
-  //     const fDay = year.getYearWeeks()[weekNum + 1].days[0]
-  //     setSelectedMonth(fDay.monthIndex)
-  //     setWeekNumber(weekNumber + 1)
-  //     setWeeks(year.getYearWeeks()[weekNum + 1])
-  //     setSelectedDay(fDay)
-  //     return
-  //   }
-  //   const nextYear = new CalendarYear({ year: year.year + 1 })
-  //   const nextYearTotalWeeksCount = nextYear.getWeeksTotalCount()
-  //   const fDay = year.getYearWeeks()[nextYearTotalWeeksCount - 1].days[0]
-  //   setYear(nextYear)
-  //   setSelectedMonth(0)
-  //   setWeekNumber(2)
-  //   setWeeks(nextYear.getYearWeeks()[1])
-  //   setSelectedDay(fDay)
-  // }
+  function nextWeek() {
+    if (weekNumber < year.getWeeksTotalCount()) {
+      const weekNum = weekNumber - 1
+      const fDay = year.getYearWeeks()[weekNum + 1].days[0]
+      setSelectedMonth(fDay.monthIndex)
+      setWeekNumber(weekNumber + 1)
+      setWeeks(year.getYearWeeks()[weekNum + 1])
+      setSelectedDay(fDay)
+      return
+    }
+    const nextYear = new CalendarYear({ year: year.year + 1 })
+    const nextYearTotalWeeksCount = nextYear.getWeeksTotalCount()
+    const fDay = year.getYearWeeks()[nextYearTotalWeeksCount - 1].days[0]
+    setYear(nextYear)
+    setSelectedMonth(0)
+    setWeekNumber(2)
+    setWeeks(nextYear.getYearWeeks()[1])
+    setSelectedDay(fDay)
+  }
 
   function prevDay() {
     if (selectedDay.dayNumber <= 1) {
@@ -224,6 +238,59 @@ function Calendar() {
       const nextDay = new CalendarDay({ date: new Date(year.year, selectedMonth, selectedDay.dayNumber + 1) }).getDay()
       setSelectedDay(nextDay)
     }
+  }
+
+  function renderEventsForDay(date: Date, events: ICalendarEvent[]) {
+    const cellHeight = 100
+    const startHourWith = 8
+    const filteredEvents = events.filter((e) => e.duration.from.getDate() === date.getDate())
+
+    if (!filteredEvents.length) return null
+
+    return filteredEvents.map((item) => {
+      const dateFrom = item.duration.from
+      const dateTo = item.duration.to
+      const topPosition = cellHeight * (dateFrom.getHours() - startHourWith + dateFrom.getMinutes() / 60)
+      const height = (dateTo.getHours() - dateFrom.getHours() + dateTo.getMinutes() / 60) * cellHeight
+
+      return (
+        <CalendarEvent
+          key={item.id}
+          id={item.id}
+          title={item.title}
+          dateFrom={dateFrom}
+          dateTo={dateTo}
+          type={item.type}
+          styles={{
+            top: topPosition,
+            height: height,
+          }}
+        />
+      )
+    })
+  }
+
+  function renderEventsForDayInMonth(date: Date, events: ICalendarEvent[]) {
+    const filteredEvents = events.filter(
+      (e) =>
+        e.duration.from.getFullYear() === date.getFullYear() &&
+        e.duration.from.getMonth() === date.getMonth() &&
+        e.duration.from.getDate() === date.getDate(),
+    )
+    if (!filteredEvents.length) return null
+
+    const uniqEvents = { personal: 0, group: 0 }
+    filteredEvents.forEach((event) => (uniqEvents[event.type] += 1))
+
+    return Object.entries(uniqEvents).map((item, index) => {
+      const [key, count] = item
+      const lessons = (lessonCount: number) => {
+        return `${item[1]} ${lessonCount === 1 ? 'lesson' : 'lessons'}`
+      }
+      return (
+        <CalendarEvent key={index} id={key} title={lessons(count)} type={key as CalendarEventType} isCompact={true} />
+      )
+    })
   }
 
   return (
@@ -304,6 +371,7 @@ function Calendar() {
               <div className="calendar-day-times calendar-day-times--day">
                 <div className="calendar-day-times__timeline"></div>
                 <div className="calendar-day-times__item">
+                  {renderEventsForDay(selectedDay.date, events)}
                   {dayHours.map((item, key) => (
                     <div key={key} className="calendar-day-times__cell">
                       {item.split(':')[0] === new Date().getHours().toString() ? (
@@ -321,7 +389,7 @@ function Calendar() {
         </div>
       ) : null}
 
-      {/* {dateView === 'week' ? (
+      {dateView === 'week' ? (
         <div className="calendar-week-view">
           <div className="calendar-week-view__left">
             <div className="calendar-week-view__controls">
@@ -364,6 +432,7 @@ function Calendar() {
                     key={key}
                     className={cn('calendar-day-times__item', { weekend: week === 'Saturday' || week === 'Sunday' })}
                   >
+                    {renderEventsForDay(weeks.days[key].date, events)}
                     {dayHours.map((item, key) => (
                       <div key={key} className="calendar-day-times__cell"></div>
                     ))}
@@ -373,7 +442,7 @@ function Calendar() {
             </div>
           </div>
         </div>
-      ) : null} */}
+      ) : null}
 
       {dateView === 'month' ? (
         <>
@@ -382,7 +451,6 @@ function Calendar() {
               <div key={key} className="calendar-week-days__item">
                 <div
                   className={cn('calendar-week-days__cell', {
-                    // active: selectedDay.day === week && selectedMonth === selectedDay.monthIndex,
                     active: selectedDay.dayNumberInWeek - 1 === key && selectedDay.day === week,
                   })}
                 >
@@ -403,7 +471,8 @@ function Calendar() {
                     { weekend: day.isWeekend },
                   )}
                 >
-                  {day.dayNumber}
+                  <span className="calendar-days__cell-day-number">{day.dayNumber}</span>
+                  <div className="calendar-days__cell-events">{renderEventsForDayInMonth(day.date, events)}</div>
                 </div>
               </div>
             ))}

@@ -10,6 +10,7 @@ class CalendarWeek {
   weekStartNumber: number
   private _year: number
   private _msDayTime: number
+  private _currentWeek: number
 
   constructor(options?: ICalendarWeekOptions) {
     this.date = options?.date || new Date()
@@ -88,6 +89,11 @@ class CalendarWeek {
   }
 
   getCurrentWeekNumberInYear(): number {
+    const fDayYear = new Date(this._year, 0, 1)
+    const fDayWeekYear = new Date(this._year, 0, 1 - fDayYear.getDay() + 1)
+    const today = new Date()
+    const fDayWeekYearTime = today
+    const fDayTodayWeek = new Date(this._year, today.getMonth(), today.getDate() - today.getDay() + 1)
     const currentDate = new Date()
     const startDate = new Date(currentDate.getFullYear(), 0, 1)
     const days = Math.floor((currentDate.getTime() - startDate.getTime()) / this._msDayTime)

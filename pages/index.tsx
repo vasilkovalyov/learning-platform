@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import PublicLayout from 'layouts/PublicLayout'
@@ -8,6 +8,8 @@ import UserService from 'services/user'
 import { IUserStudent } from 'intefaces/user'
 import { RoleType } from '../types/common'
 
+import { ICalendarEvent } from '../components/calendar/utilities/CalendarEvent/CalendarEvent.type'
+
 import Calendar from 'components/calendar/calendar'
 
 const initialProps = {
@@ -16,8 +18,39 @@ const initialProps = {
   },
 }
 
+const eventsDate: ICalendarEvent[] = [
+  {
+    id: '1',
+    title: 'event 1',
+    duration: {
+      from: new Date(2022, 11, 27, 13, 20),
+      to: new Date(2022, 11, 27, 15, 20),
+    },
+    type: 'personal',
+  },
+  {
+    id: '2',
+    title: 'event 2',
+    duration: {
+      from: new Date(2022, 11, 27, 16, 0),
+      to: new Date(2022, 11, 27, 17, 0),
+    },
+    type: 'group',
+  },
+  {
+    id: '3',
+    title: 'event 3',
+    duration: {
+      from: new Date(2022, 11, 27, 9, 0),
+      to: new Date(2022, 11, 27, 11, 0),
+    },
+    type: 'group',
+  },
+]
+
 const Home: NextPage = (props: { user: IUserStudent }) => {
   const dispatch = useDispatch()
+  const [events, setEvents] = useState<ICalendarEvent[] | []>(eventsDate)
 
   useEffect(() => {
     dispatch(setAuthState(props.user))
@@ -34,7 +67,7 @@ const Home: NextPage = (props: { user: IUserStudent }) => {
       <PublicLayout>
         <h1>Public Layout</h1>
         <pre>{JSON.stringify(props, null, 4)}</pre>
-        <Calendar />
+        <Calendar events={events} />
       </PublicLayout>
     </div>
   )
