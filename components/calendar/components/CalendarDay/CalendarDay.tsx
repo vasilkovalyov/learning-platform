@@ -109,7 +109,7 @@ export default function CalendarDay({ date, events = [], locale = 'en-En' }: ICa
   return (
     <>
       <div className="calendar-events__date-info">
-        <Paragraph className="calendar-events__month">
+        <Paragraph className={cn('calendar-events__month', { active: CalendarDayClass.isToday(day.date) })}>
           <Space>
             {formatDate(day.date, 'DD')}
             {CalendarMonthClass.getMonthNameByIndex(monthIndex).month}

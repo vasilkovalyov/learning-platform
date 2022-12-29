@@ -22,7 +22,7 @@ import { formatDate } from '../../utilities/date'
 
 const { Paragraph, Text } = Typography
 
-export default function CalendarMonth({ date, events, today, locale = 'en-En' }: ICalendarMonthProps) {
+export default function CalendarMonth({ date, events, today = new Date(), locale = 'en-En' }: ICalendarMonthProps) {
   const todayDay = new CalendarDayClass({ date: today, locale }).getDay()
   const weekInst = new CalendarWeekClass()
   const monthInst = new CalendarMonthClass({ date: date, locale: locale })
@@ -114,7 +114,7 @@ export default function CalendarMonth({ date, events, today, locale = 'en-En' }:
           <div key={key} className="calendar-week-days__item">
             <div
               className={cn('calendar-week-days__cell', {
-                active: todayDay.dayNumberInWeek - 1 === key && todayDay.day === week,
+                active: todayDay.day === week && todayDay.monthIndex === monthIndex,
               })}
             >
               {week}
@@ -128,7 +128,7 @@ export default function CalendarMonth({ date, events, today, locale = 'en-En' }:
             <div
               className={cn(
                 'calendar-days__cell',
-                { today: day.isToday },
+                { today: day.isToday && todayDay.monthIndex === monthIndex },
                 { 'current-month': day.isCurrentMonth },
                 { 'another-month': !day.isCurrentMonth },
                 { weekend: day.isWeekend },

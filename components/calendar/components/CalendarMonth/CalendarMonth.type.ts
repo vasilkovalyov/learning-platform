@@ -3,7 +3,7 @@ import { ICalendarEvent } from '../CalendarEvent/CalendarEvent.type'
 
 export interface ICalendarMonthProps {
   date: Date
-  today: Date
+  today?: Date
   locale?: string
   events?: ICalendarEvent[]
 }

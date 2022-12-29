@@ -2,10 +2,10 @@ import { IDay } from '../CalendarDay/CalendarDay.type'
 import { ICalendarEvent } from '../CalendarEvent/CalendarEvent.type'
 
 export interface ICalendarWeekProps {
-  // year: number
-  // monthIndex: number
+  date: Date
+  today?: Date
   locale?: string
-  events?: ICalendarEvent
+  events?: ICalendarEvent[]
 }
 
 export interface ICalendarWeekClassOptions {

@@ -135,8 +135,8 @@ function Calendar({ date = new Date(), events = [] }: ICalendar) {
       ) : null}
 
       {calendarView === 'day' ? <CalendarDayComponent date={dateState} events={events} /> : null}
-      {calendarView === 'week' ? <CalendarWeekComponent /> : null}
-      {calendarView === 'month' ? <CalendarMonthComponent today={new Date()} date={dateState} events={events} /> : null}
+      {calendarView === 'week' ? <CalendarWeekComponent date={dateState} events={events} /> : null}
+      {calendarView === 'month' ? <CalendarMonthComponent date={dateState} events={events} /> : null}
 
       {lessonsTypes && lessonsTypes.length ? (
         <Row className="calendar-events__event-types">

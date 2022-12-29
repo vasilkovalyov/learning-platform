@@ -32,6 +32,14 @@ class CalendarWeek {
     return [...weekDays.slice(this.weekStartNumber), ...weekDays.slice(0, this.weekStartNumber)]
   }
 
+  static getWeekDayByDate(date: Date): IDay[] {
+    console.log('date', date)
+    const firstDay = date.getDate() - date.getDay() + 1
+    return Array.from(Array(weekDaysCount).keys()).map((num) => {
+      return new CalendarDay({ date: new Date(date.getFullYear(), date.getMonth(), firstDay + num) }).getDay()
+    })
+  }
+
   getPrevDaysInFirstWeek(date?: Date): IDay[] {
     const firstDay = date ?? new Date(this.date.getFullYear(), 0, 1)
     const monthIndex = !date ? 0 : date.getMonth()
