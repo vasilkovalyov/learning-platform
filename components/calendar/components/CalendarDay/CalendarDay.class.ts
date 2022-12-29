@@ -25,7 +25,6 @@ class CalendarDay {
     const monthShort = this.date.toLocaleDateString(this.locale, { month: 'short' })
     const monthNumber = this.date.getMonth() + 1
     const monthIndex = this.date.getMonth()
-    const monthTotalDays = new Date(year, monthIndex, 0).getDate()
     const timestamp = this.date.getTime()
 
     return {
@@ -40,7 +39,6 @@ class CalendarDay {
       monthNumber,
       monthIndex,
       timestamp,
-      monthTotalDays,
       isCurrentMonth: this._isCurrentMonth,
       isToday: CalendarDay.isToday(this.date),
       isWeekend: this._weekendDays && this._weekendDays.find((weekend) => weekend === day) ? true : false,

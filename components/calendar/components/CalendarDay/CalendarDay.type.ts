@@ -28,6 +28,5 @@ export interface IDay {
   timestamp: number
   isToday: boolean
   isWeekend: boolean
-  monthTotalDays: number
   isCurrentMonth: boolean
 }

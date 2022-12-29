@@ -86,7 +86,7 @@ export default function CalendarDay({ date, events = [], locale = 'en-En' }: ICa
   }
 
   function nextDay() {
-    if (day.dayNumber > day.monthTotalDays) {
+    if (day.dayNumber >= new Date(year, monthIndex + 1, 0).getDate()) {
       if (monthIndex === 11) {
         const nextYear = year + 1
         const nextMonthDay = new CalendarDayClass({ date: new Date(nextYear, 0, 1) }).getDay()
