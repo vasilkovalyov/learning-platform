@@ -35,7 +35,9 @@ export default function CalendarDay({ date, events = [], locale = 'en-En' }: ICa
     const startHourWith = 8
     const filteredEvents = events.filter(
       (e) =>
-        new Date(e.eventStart).getDate() === date.getDate() && new Date(e.eventStart).getMonth() === date.getMonth(),
+        new Date(e.eventStart).getDate() === date.getDate() &&
+        new Date(e.eventStart).getMonth() === date.getMonth() &&
+        new Date(e.eventStart).getFullYear() === date.getFullYear(),
     )
 
     if (!filteredEvents.length) return null
