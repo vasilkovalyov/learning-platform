@@ -92,7 +92,7 @@ interface ICalendar {
 
 function Calendar({ date = new Date(), events = [] }: ICalendar) {
   const [dateState, setDateState] = useState<Date>(date)
-  const [calendarView, setCalendarView] = useState<CalendarModeView>('month')
+  const [calendarView, setCalendarView] = useState<CalendarModeView>('day')
   const dayInst = new CalendarClassDay()
 
   const today = dayInst.getDay()

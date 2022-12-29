@@ -17,10 +17,9 @@ import CalendarDayClass from '../CalendarDay/CalendarDay.class'
 
 import { ICalendarMonthProps } from './CalendarMonth.type'
 import { IDay } from '../CalendarDay/CalendarDay.type'
-import { getCurrentTime } from '../../utilities/time'
 import { formatDate } from '../../utilities/date'
 
-const { Paragraph, Text } = Typography
+const { Paragraph } = Typography
 
 export default function CalendarMonth({ date, events, today = new Date(), locale = 'en-En' }: ICalendarMonthProps) {
   const todayDay = new CalendarDayClass({ date: today, locale }).getDay()
@@ -29,14 +28,15 @@ export default function CalendarMonth({ date, events, today = new Date(), locale
 
   const [monthDays, setMonthDays] = useState<IDay[]>(monthInst.getMonthDaysFullView())
   const [monthIndex, setMonthIndex] = useState<number>(date.getMonth())
+  const [monthName, setMonthName] = useState<string>(monthInst.monthName)
   const [year, setYear] = useState<number>(date.getFullYear())
 
   function renderEvents(date: Date, events: ICalendarEvent[] = []) {
     const filteredEvents = events.filter(
       (e) =>
-        e.duration.from.getFullYear() === date.getFullYear() &&
-        e.duration.from.getMonth() === date.getMonth() &&
-        e.duration.from.getDate() === date.getDate(),
+        new Date(e.eventStart).getFullYear() === date.getFullYear() &&
+        new Date(e.eventStart).getMonth() === date.getMonth() &&
+        new Date(e.eventStart).getDate() === date.getDate(),
     )
     if (!filteredEvents.length) return null
 
@@ -59,12 +59,14 @@ export default function CalendarMonth({ date, events, today = new Date(), locale
       const prevYear = year - 1
       const monthInst = new CalendarMonthClass({ date: new Date(prevYear, 11, 1), locale })
       setYear(prevYear)
+      setMonthName(monthInst.monthName)
       setMonthIndex(11)
       setMonthDays(monthInst.getMonthDaysFullView())
       return
     }
     const prevMonth = monthIndex - 1
     const monthInst = new CalendarMonthClass({ date: new Date(year, prevMonth, 1), locale })
+    setMonthName(monthInst.monthName)
     setMonthIndex(prevMonth)
     setMonthDays(monthInst.getMonthDaysFullView())
   }
@@ -74,12 +76,14 @@ export default function CalendarMonth({ date, events, today = new Date(), locale
       const nextYear = year + 1
       const monthInst = new CalendarMonthClass({ date: new Date(nextYear, 0, 1), locale })
       setYear(nextYear)
+      setMonthName(monthInst.monthName)
       setMonthIndex(0)
       setMonthDays(monthInst.getMonthDaysFullView())
       return
     }
     const nextMonth = monthIndex + 1
     const monthInst = new CalendarMonthClass({ date: new Date(year, nextMonth, 1), locale })
+    setMonthName(monthInst.monthName)
     setMonthIndex(nextMonth)
     setMonthDays(monthInst.getMonthDaysFullView())
   }
@@ -94,7 +98,7 @@ export default function CalendarMonth({ date, events, today = new Date(), locale
             </Button>
             <Paragraph className="calendar-events__month">
               <Space>
-                {CalendarMonthClass.getMonthNameByIndex(monthIndex).month}
+                {monthName}
                 {year}
               </Space>
             </Paragraph>
@@ -114,7 +118,7 @@ export default function CalendarMonth({ date, events, today = new Date(), locale
           <div key={key} className="calendar-week-days__item">
             <div
               className={cn('calendar-week-days__cell', {
-                active: todayDay.day === week && todayDay.monthIndex === monthIndex,
+                active: todayDay.day === week && todayDay.monthIndex === monthIndex && todayDay.year === year,
               })}
             >
               {week}

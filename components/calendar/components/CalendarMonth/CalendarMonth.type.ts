@@ -11,8 +11,6 @@ export interface ICalendarMonthProps {
 export interface ICalendarClassMonthOptions {
   date: Date
   locale?: string
-  // monthIndex?: number
-  // year?: number
 }
 
 export interface IMonth {

@@ -22,28 +22,22 @@ const eventsDate: ICalendarEvent[] = [
   {
     id: '1',
     title: 'event 1',
-    duration: {
-      from: new Date(2022, 11, 27, 13, 20),
-      to: new Date(2022, 11, 27, 15, 20),
-    },
+    eventStart: '2022-12-27T13:20:00.083Z',
+    eventEnd: '2022-12-27T15:20:00.083Z',
     type: 'personal',
   },
   {
     id: '2',
     title: 'event 2',
-    duration: {
-      from: new Date(2022, 11, 27, 16, 0),
-      to: new Date(2022, 11, 27, 17, 0),
-    },
+    eventStart: '2022-12-27T16:20:00.083Z',
+    eventEnd: '2022-12-27T17:20:00.083Z',
     type: 'group',
   },
   {
     id: '3',
     title: 'event 3',
-    duration: {
-      from: new Date(2022, 11, 27, 9, 0),
-      to: new Date(2022, 11, 27, 11, 0),
-    },
+    eventStart: '2022-12-27T09:20:00.083Z',
+    eventEnd: '2022-12-27T11:20:00.083Z',
     type: 'group',
   },
 ]

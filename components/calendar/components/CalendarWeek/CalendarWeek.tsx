@@ -18,11 +18,10 @@ import CalendarDayClass from '../CalendarDay/CalendarDay.class'
 import CalendarMonthClass from '../CalendarMonth/CalendarMonth.class'
 
 import { ICalendarWeekProps } from './CalendarWeek.type'
-import { getCurrentTime } from '../../utilities/time'
 import { formatDate } from '../../utilities/date'
 import { weekDaysCount } from '../../constants'
 
-const { Paragraph, Text } = Typography
+const { Paragraph } = Typography
 
 export default function CalendarWeek({ date, today = new Date(), events, locale = 'en-En' }: ICalendarWeekProps) {
   const todayDay = new CalendarDayClass({ date: today, locale }).getDay()
@@ -38,23 +37,28 @@ export default function CalendarWeek({ date, today = new Date(), events, locale 
   function renderEvents(date: Date, events: ICalendarEvent[] = []) {
     const cellHeight = 100
     const startHourWith = 8
-    const filteredEvents = events.filter((e) => e.duration.from.getDate() === date.getDate())
+    const filteredEvents = events.filter(
+      (e) =>
+        new Date(e.eventStart).getDate() === date.getDate() && new Date(e.eventStart).getMonth() === date.getMonth(),
+    )
 
     if (!filteredEvents.length) return null
 
     return filteredEvents.map((item) => {
-      const dateFrom = item.duration.from
-      const dateTo = item.duration.to
-      const topPosition = cellHeight * (dateFrom.getHours() - startHourWith + dateFrom.getMinutes() / 60)
-      const height = (dateTo.getHours() - dateFrom.getHours() + dateTo.getMinutes() / 60) * cellHeight
+      const dateStart = new Date(item.eventStart)
+      const dateEnd = new Date(item.eventEnd)
+      const hourStartWithTimeZone = dateStart.getHours() + new Date().getTimezoneOffset() / 60
+      const hourEndWithTimeZone = dateEnd.getHours() + new Date().getTimezoneOffset() / 60
+      const topPosition = cellHeight * (hourStartWithTimeZone - startHourWith + dateStart.getMinutes() / 60)
+      const height = (hourEndWithTimeZone - hourStartWithTimeZone + dateEnd.getMinutes() / 60) * cellHeight
 
       return (
         <CalendarEvent
           key={item.id}
           id={item.id}
           title={item.title}
-          dateFrom={dateFrom}
-          dateTo={dateTo}
+          eventStart={`${dateStart.getHours()}:${dateStart.getMinutes()}`}
+          eventEnd={`${dateEnd.getHours()}:${dateEnd.getMinutes()}`}
           type={item.type}
           styles={{
             top: topPosition,

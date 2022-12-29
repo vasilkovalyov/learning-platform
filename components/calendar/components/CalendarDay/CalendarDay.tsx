@@ -12,7 +12,6 @@ import CalendarEvent from '../CalendarEvent/CalendarEvent'
 import { ICalendarEvent } from '../CalendarEvent/CalendarEvent.type'
 
 import CalendarMonthClass from '../CalendarMonth/CalendarMonth.class'
-import CalendarWeekClass from '../CalendarWeek/CalendarWeek.class'
 import CalendarDayClass from '../CalendarDay/CalendarDay.class'
 
 import { IDay } from '../CalendarDay/CalendarDay.type'
@@ -31,26 +30,31 @@ export default function CalendarDay({ date, events = [], locale = 'en-En' }: ICa
   const [year, setYear] = useState<number>(date.getFullYear())
   const [day, setDay] = useState<IDay>(new CalendarDayClass({ date: date, locale }).getDay())
 
-  function renderEvents(date: Date, events: ICalendarEvent[]) {
+  function renderEvents(date: Date, events: ICalendarEvent[] = []) {
     const cellHeight = 100
     const startHourWith = 8
-    const filteredEvents = events.filter((e) => e.duration.from.getDate() === date.getDate())
+    const filteredEvents = events.filter(
+      (e) =>
+        new Date(e.eventStart).getDate() === date.getDate() && new Date(e.eventStart).getMonth() === date.getMonth(),
+    )
 
     if (!filteredEvents.length) return null
 
     return filteredEvents.map((item) => {
-      const dateFrom = item.duration.from
-      const dateTo = item.duration.to
-      const topPosition = cellHeight * (dateFrom.getHours() - startHourWith + dateFrom.getMinutes() / 60)
-      const height = (dateTo.getHours() - dateFrom.getHours() + dateTo.getMinutes() / 60) * cellHeight
+      const dateStart = new Date(item.eventStart)
+      const dateEnd = new Date(item.eventEnd)
+      const hourStartWithTimeZone = dateStart.getHours() + new Date().getTimezoneOffset() / 60
+      const hourEndWithTimeZone = dateEnd.getHours() + new Date().getTimezoneOffset() / 60
+      const topPosition = cellHeight * (hourStartWithTimeZone - startHourWith + dateStart.getMinutes() / 60)
+      const height = (hourEndWithTimeZone - hourStartWithTimeZone + dateEnd.getMinutes() / 60) * cellHeight
 
       return (
         <CalendarEvent
           key={item.id}
           id={item.id}
           title={item.title}
-          dateFrom={dateFrom}
-          dateTo={dateTo}
+          eventStart={`${dateStart.getHours()}:${dateStart.getMinutes()}`}
+          eventEnd={`${dateEnd.getHours()}:${dateEnd.getMinutes()}`}
           type={item.type}
           styles={{
             top: topPosition,
@@ -90,8 +94,9 @@ export default function CalendarDay({ date, events = [], locale = 'en-En' }: ICa
         setMonthIndex(0)
         setDay(nextMonthDay)
       } else {
-        const nextMonthDay = new CalendarDayClass({ date: new Date(year, monthIndex, 1) }).getDay()
-        setMonthIndex(monthIndex + 1)
+        const nextMonth = monthIndex + 1
+        const nextMonthDay = new CalendarDayClass({ date: new Date(year, nextMonth, 1) }).getDay()
+        setMonthIndex(nextMonth)
         setDay(nextMonthDay)
       }
     } else {
