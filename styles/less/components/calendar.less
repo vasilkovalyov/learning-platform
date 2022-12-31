@@ -7,21 +7,14 @@
   }
 
   &--week-view &__date-info {
-    margin-left: 100px;
+    // margin-left: 100px;
   }
 
   &--day-view &__date-info {
-    margin-left: 100px;
+    // margin-left: 100px;
   }
 
-  &__date-view-list {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-  }
-
-  &__date-view {
+  &__view-switcher-button {
     font-size: 16px;
     color: @grey-2;
     font-weight: 600;
@@ -73,21 +66,10 @@
     padding: 20px 0;
   }
 
-  &__event-type {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-
-    &:not(:last-child) {
-      margin-right: 30px;
-    }
-  }
-
   &__event-type-color {
     width: 24px;
     height: 24px;
     border-radius: @border-radius-md;
-    margin-right: 12px;
   }
 
   &__today-info {
@@ -97,22 +79,23 @@
   }
 
   &__controls-day {
-    margin: 0 -4px 20px;
+    // margin: 0 -4px 20px;
   }
 
   &__control-day-button {
     padding: 10px;
-    margin: 0 4px;
   }
 }
 
 .calendar-day-hours {
   &__item {
-    height: 100px;
+    display: block;
+    padding: 0;
     font-weight: 600;
     font-size: 16px;
     color: @grey-2;
     text-align: center;
+    height: 100px;
   }
 }
 

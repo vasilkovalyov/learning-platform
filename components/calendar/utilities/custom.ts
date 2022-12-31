@@ -39,3 +39,14 @@ export function getEventsArrayForDay(date: Date, events: ICalendarEvent[] = []):
     }
   })
 }
+
+export function getFilteredEventByDate(date: Date, events: ICalendarEvent[]): ICalendarEvent[] | [] {
+  const filteredEvents = events.filter(
+    (e) =>
+      new Date(e.eventStart).getDate() === date.getDate() &&
+      new Date(e.eventStart).getMonth() === date.getMonth() &&
+      new Date(e.eventStart).getFullYear() === date.getFullYear(),
+  )
+
+  return filteredEvents
+}

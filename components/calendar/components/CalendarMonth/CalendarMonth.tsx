@@ -46,9 +46,7 @@ export default function CalendarMonth({ date, events, today = new Date(), locale
     return Object.entries(uniqEvents).map((item, index) => {
       const [key, count] = item
       if (!count) return null
-      const lessons = (lessonCount: number) => {
-        return `${item[1]} ${lessonCount === 1 ? 'lesson' : 'lessons'}`
-      }
+      const lessons = (lessonCount: number) => `${item[1]} ${lessonCount === 1 ? 'lesson' : 'lessons'}`
       return (
         <CalendarEvent key={index} id={key} title={lessons(count)} type={key as CalendarEventType} isCompact={true} />
       )
@@ -109,11 +107,9 @@ export default function CalendarMonth({ date, events, today = new Date(), locale
           </Space>
         </Col>
       </Row>
-      <div className="calendar-events__date-info">
-        <Paragraph className="calendar-events__today-info">
-          {`Today is ${todayDay.day} ${formatDate(todayDay.date, 'DD MMMM YYYY')}`}
-        </Paragraph>
-      </div>
+      <Paragraph className="calendar-events__today-info">
+        {`Today is ${todayDay.day} ${formatDate(todayDay.date, 'DD MMMM YYYY')}`}
+      </Paragraph>
       <div className="calendar-week-days">
         {weekInst.getWeekNames().map((week, key) => (
           <div key={key} className="calendar-week-days__item">
