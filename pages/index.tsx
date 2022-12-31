@@ -29,15 +29,15 @@ const eventsDate: ICalendarEvent[] = [
   {
     id: '2',
     title: 'event 2',
-    eventStart: '2022-12-27T16:20:00.083Z',
-    eventEnd: '2022-12-27T17:20:00.083Z',
+    eventStart: '2022-12-28T16:20:00.083Z',
+    eventEnd: '2022-12-28T17:20:00.083Z',
     type: 'group',
   },
   {
     id: '3',
     title: 'event 3',
-    eventStart: '2022-12-27T09:20:00.083Z',
-    eventEnd: '2022-12-27T11:20:00.083Z',
+    eventStart: '2022-12-31T09:20:00.083Z',
+    eventEnd: '2022-12-31T11:20:00.083Z',
     type: 'group',
   },
 ]

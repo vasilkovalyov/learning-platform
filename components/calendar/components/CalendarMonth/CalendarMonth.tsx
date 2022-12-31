@@ -38,13 +38,14 @@ export default function CalendarMonth({ date, events, today = new Date(), locale
         new Date(e.eventStart).getMonth() === date.getMonth() &&
         new Date(e.eventStart).getDate() === date.getDate(),
     )
+
     if (!filteredEvents.length) return null
 
     const uniqEvents = { personal: 0, group: 0 }
     filteredEvents.forEach((event) => (uniqEvents[event.type] += 1))
-
     return Object.entries(uniqEvents).map((item, index) => {
       const [key, count] = item
+      if (!count) return null
       const lessons = (lessonCount: number) => {
         return `${item[1]} ${lessonCount === 1 ? 'lesson' : 'lessons'}`
       }
