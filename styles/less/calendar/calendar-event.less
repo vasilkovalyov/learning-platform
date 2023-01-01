@@ -1,0 +1,69 @@
+.calendar-event {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  z-index: 1;
+  padding: 14px;
+  border-radius: 6px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: 4px;
+    bottom: 14px;
+    width: 4px;
+    border-radius: 11px;
+  }
+
+  &--compact {
+    position: relative;
+    padding: 14px 12px 6px;
+    min-height: 54px;
+
+    &::before {
+      top: 6px;
+      left: 12px;
+      right: 12px;
+      bottom: auto;
+      width: auto;
+      height: 6px;
+    }
+  }
+
+  &--compact &__title {
+    max-width: 50px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  &--personal {
+    background-color: @event-personal-lesson-color;
+  }
+
+  &--personal {
+    &::before {
+      background-color: #629d9e;
+    }
+  }
+
+  &--group {
+    background-color: @event-group-lesson-color;
+  }
+
+  &--group {
+    &::before {
+      background-color: #d99754;
+    }
+  }
+
+  &__title {
+    font-size: 12px;
+    color: #1a1a1a;
+  }
+
+  &__time {
+    font-size: 12px;
+  }
+}

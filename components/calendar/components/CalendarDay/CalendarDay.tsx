@@ -88,43 +88,51 @@ export default function CalendarDay({ date, events = [], locale = 'en-En' }: ICa
   }
 
   return (
-    <>
-      <Paragraph className={cn('calendar-events__month', { active: CalendarDayClass.isToday(day.date) })}>
-        <Space>
-          {formatDate(day.date, 'DD')}
-          {CalendarMonthClass.getMonthNameByIndex(monthIndex).month}
-          {year}
-        </Space>
-      </Paragraph>
-      <Paragraph className="calendar-events__today-info">{`${day.day} ${getCurrentTime(new Date())}`}</Paragraph>
-      <Row className="calendar-events__controls-day">
-        <Space size={8}>
-          <Button onClick={prevDay} className="calendar-events__control-day-button">
-            <Icon icon="chevron-left" size={20} className="calendar-events__control-day-icon" />
-          </Button>
-          <Button onClick={nextDay} className="calendar-events__control-day-button">
-            <Icon icon="chevron-right" size={20} className="calendar-events__control-day-icon" />
-          </Button>
-        </Space>
-      </Row>
-      <Row className="calendar-day-view">
-        <Col className="calendar-day-view__left">
+    <div className="calendar-day">
+      <div className="calendar-day__top-info">
+        <Paragraph
+          className={cn('calendar-day__date font-bold color-black', {
+            'calendar-day__date--active': CalendarDayClass.isToday(day.date),
+          })}
+        >
+          <Space>
+            {formatDate(day.date, 'DD')}
+            {CalendarMonthClass.getMonthNameByIndex(monthIndex).month}
+            {year}
+          </Space>
+        </Paragraph>
+        <Paragraph className="calendar-day__today-info font-semibold color-grey">
+          {`${day.day} ${getCurrentTime(new Date())}`}
+        </Paragraph>
+        <Row className="calendar-day__controls">
+          <Space size={8}>
+            <Button onClick={prevDay} className="calendar-day__control-button">
+              <Icon icon="chevron-left" size={20} />
+            </Button>
+            <Button onClick={nextDay} className="calendar-day__control-button">
+              <Icon icon="chevron-right" size={20} />
+            </Button>
+          </Space>
+        </Row>
+      </div>
+      <Row className="calendar-day__body">
+        <Col className="calendar-day__body-left">
           <CalendarHours from={calendarStartHourFrom} to={calendarStartHourTo} />
         </Col>
-        <Col className="calendar-day-view__right">
+        <Col className="calendar-day__body-right">
           <div className="calendar-day-times calendar-day-times--day">
             {currentHour < calendarStartHourFrom || currentHour < calendarStartHourTo ? (
               <div className="calendar-day-times__timeline" style={{ top: getCurrentTimePosition() + 'px' }}></div>
             ) : null}
             {renderEvents(day.date, events)}
-            <List className="calendar-day-times__item">
+            <List className="calendar-day__cell-list">
               {dayHours.map((item, key) => (
-                <List.Item key={key} className="calendar-day-times__cell"></List.Item>
+                <List.Item key={key} className="calendar-day__cell"></List.Item>
               ))}
             </List>
           </div>
         </Col>
       </Row>
-    </>
+    </div>
   )
 }

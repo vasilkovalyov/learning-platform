@@ -23,9 +23,9 @@ export default function CalendarEvent({
       className={cn('calendar-event', typeClassname, { 'calendar-event--compact': isCompact })}
       style={styles || undefined}
     >
-      <p className="calendar-event__title">{title}</p>
+      <p className="calendar-event__title font-semibold">{title}</p>
       {!isCompact ? (
-        <div className="calendar-event__time">
+        <div className="calendar-event__time color-grey">
           {eventStart} - {eventEnd}
         </div>
       ) : null}

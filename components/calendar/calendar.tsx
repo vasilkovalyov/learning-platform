@@ -14,7 +14,7 @@ import { CalendarModeView } from './calendar.type'
 
 function Calendar({ date = new Date(), events = [] }: ICalendar) {
   const [dateState, setDateState] = useState<Date>(date)
-  const [calendarView, setCalendarView] = useState<CalendarModeView>(CalendarModeView.DAY)
+  const [calendarView, setCalendarView] = useState<CalendarModeView>(CalendarModeView.MONTH)
   const dayInst = new CalendarClassDay()
 
   const today = dayInst.getDay()

@@ -21,12 +21,14 @@ function CalendarViewSwitchers({ selectedView = CalendarModeView.DAY, onClick }:
   }
 
   return (
-    <Row justify="end">
+    <Row className="calendar-view-switchers" justify="end">
       <Space size={20}>
         {dateTypeViews.map((dateType, index) => (
           <Button
             key={index}
-            className={cn('calendar-events__view-switcher-button', { active: calendarView === dateType.type })}
+            className={cn('calendar-view-switchers__button', {
+              'calendar-view-switchers__button--active': calendarView === dateType.type,
+            })}
             onClick={() => onHandleSwitchView(dateType.type as CalendarModeView)}
           >
             {dateType.title}

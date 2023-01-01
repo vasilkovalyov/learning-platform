@@ -13,7 +13,7 @@ function CalendarHours({ from, to, className }: ICalendarHoursProps) {
   return (
     <List split={false} className={cn('calendar-day-hours', className)}>
       {hoursList.map((item, key) => (
-        <List.Item key={key} className="calendar-day-hours__item">
+        <List.Item key={key} className="calendar-day-hours__item font-semibold color-grey">
           {item}
         </List.Item>
       ))}

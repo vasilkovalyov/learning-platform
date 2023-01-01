@@ -65,46 +65,47 @@ export default function CalendarWeek({ date, today = new Date(), events, locale 
   }
 
   return (
-    <>
-      <Row justify="center">
-        <Col span={24}>
-          <Paragraph className="calendar-events__month">
-            <Space>
-              {CalendarMonthClass.getMonthNameByIndex(day.monthIndex).month}
-              {day.year}
-            </Space>
-          </Paragraph>
-          <Paragraph className="calendar-events__today-info">
-            {`Today is ${todayDay.day} ${formatDate(todayDay.date, 'DD MMMM YYYY')}`}
-          </Paragraph>
-        </Col>
-      </Row>
-      <Row className="calendar-week-view">
-        <Col className="calendar-week-view__left">
-          <Row className="calendar-week-view__controls">
-            <Space size={8}>
-              <Button onClick={prevWeek} className="calendar-week-view__switcher-button">
-                <Icon icon="chevron-left" size={20} className="calendar-week-view__switcher-icon" />
-              </Button>
-              <Button onClick={nextWeek} className="calendar-week-view__switcher-button">
-                <Icon icon="chevron-right" size={20} className="calendar-week-view__switcher-icon" />
-              </Button>
-            </Space>
-          </Row>
+    <div className="calendar-week">
+      <div className="calendar-week__top-info">
+        <Row justify="center">
+          <Col span={24}>
+            <Paragraph className="calendar-week__date font-bold color-black">
+              <Space>
+                {CalendarMonthClass.getMonthNameByIndex(day.monthIndex).month}
+                {day.year}
+              </Space>
+            </Paragraph>
+            <Paragraph className="calendar-week__today-info font-semibold color-grey">
+              {`Today is ${todayDay.day} ${formatDate(todayDay.date, 'DD MMMM YYYY')}`}
+            </Paragraph>
+            <Row className="calendar-week__controls">
+              <Space size={8}>
+                <Button onClick={prevWeek} className="calendar-week__control-button">
+                  <Icon icon="chevron-left" size={20} />
+                </Button>
+                <Button onClick={nextWeek} className="calendar-week__control-button">
+                  <Icon icon="chevron-right" size={20} />
+                </Button>
+              </Space>
+            </Row>
+          </Col>
+        </Row>
+      </div>
+      <Row className="calendar-week__body">
+        <Col className="calendar-week__body-left">
           <CalendarHours from={calendarStartHourFrom} to={calendarStartHourTo} />
         </Col>
-        <Col className="calendar-week-view__right">
+        <Col className="calendar-week__body-right">
           <div className="calendar-week-days">
             {weekNames.map((weekName, key) => (
-              <div key={key} className="calendar-week-days__item">
-                <div
-                  className={cn('calendar-week-days__cell', {
-                    active: week[key].isToday,
-                  })}
-                >
-                  <div>{weekName}</div>
-                  <div>{week[key].dayNumber < 10 ? `0${week[key].dayNumber}` : week[key].dayNumber}</div>
-                </div>
+              <div
+                key={key}
+                className={cn('calendar-week-days__cell', {
+                  active: week[key].isToday,
+                })}
+              >
+                <div>{weekName}</div>
+                <div>{week[key].dayNumber < 10 ? `0${week[key].dayNumber}` : week[key].dayNumber}</div>
               </div>
             ))}
           </div>
@@ -125,6 +126,6 @@ export default function CalendarWeek({ date, today = new Date(), events, locale 
           </div>
         </Col>
       </Row>
-    </>
+    </div>
   )
 }

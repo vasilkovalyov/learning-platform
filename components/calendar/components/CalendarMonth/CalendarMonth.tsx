@@ -88,56 +88,54 @@ export default function CalendarMonth({ date, events, today = new Date(), locale
   }
 
   return (
-    <div>
-      <Row justify="center">
-        <Col span={24}>
-          <Space size={[30, 30]} direction="horizontal" className="calendar-events__month-switcher">
-            <Button onClick={prevMonth} className="calendar-events__month-switcher-button">
-              <Icon icon="chevron-left" size={20} className="calendar-events__month-switcher-icon" />
+    <div className="calendar-month">
+      <Row className="calendar-month__controls" justify="center">
+        <Col span={18} className="d-flex d-flex-justify-center">
+          <Space size={[30, 30]} direction="horizontal">
+            <Button onClick={prevMonth} className="calendar-month__control-button">
+              <Icon icon="chevron-left" size={20} />
             </Button>
-            <Paragraph className="calendar-events__month">
+            <Paragraph className="calendar-month__month font-bold color-black">
               <Space>
                 {monthName}
                 {year}
               </Space>
             </Paragraph>
-            <Button onClick={nextMonth} className="calendar-events__month-switcher-button">
-              <Icon icon="chevron-right" size={20} className="calendar-events__month-switcher-icon" />
+            <Button onClick={nextMonth} className="calendar-month__control-button">
+              <Icon icon="chevron-right" size={20} />
             </Button>
           </Space>
         </Col>
       </Row>
-      <Paragraph className="calendar-events__today-info">
+      <Paragraph className="calendar-month__today-info text-center font-semibold color-grey">
         {`Today is ${todayDay.day} ${formatDate(todayDay.date, 'DD MMMM YYYY')}`}
       </Paragraph>
       <div className="calendar-week-days">
         {weekInst.getWeekNames().map((week, key) => (
-          <div key={key} className="calendar-week-days__item">
-            <div
-              className={cn('calendar-week-days__cell', {
-                active: todayDay.day === week && todayDay.monthIndex === monthIndex && todayDay.year === year,
-              })}
-            >
-              {week}
-            </div>
+          <div
+            key={key}
+            className={cn('calendar-week-days__cell ', {
+              active: todayDay.day === week && todayDay.monthIndex === monthIndex && todayDay.year === year,
+            })}
+          >
+            {week}
           </div>
         ))}
       </div>
-      <div className="calendar-days">
+      <div className="calendar-month__days">
         {monthDays.map((day, key) => (
-          <div key={key} className="calendar-days__item">
-            <div
-              className={cn(
-                'calendar-days__cell',
-                { today: day.isToday && todayDay.monthIndex === monthIndex },
-                { 'current-month': day.isCurrentMonth },
-                { 'another-month': !day.isCurrentMonth },
-                { weekend: day.isWeekend },
-              )}
-            >
-              <span className="calendar-days__cell-day-number">{day.dayNumber}</span>
-              <div className="calendar-days__cell-events">{renderEvents(day.date, events)}</div>
-            </div>
+          <div
+            key={key}
+            className={cn(
+              'calendar-month__day-cell font-semibold',
+              { 'calendar-month__day-cell--today': day.isToday && todayDay.monthIndex === monthIndex },
+              { 'calendar-month__day-cell--current-month': day.isCurrentMonth },
+              { 'calendar-month__day-cell--another-month': !day.isCurrentMonth },
+              { 'calendar-month__day-cell--weekend': day.isWeekend },
+            )}
+          >
+            <span className="calendar-month__day-cell-day-number">{day.dayNumber}</span>
+            <div className="calendar-month__day-cell-events">{renderEvents(day.date, events)}</div>
           </div>
         ))}
       </div>
