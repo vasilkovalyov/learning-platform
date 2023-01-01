@@ -11,6 +11,7 @@ import { RoleType } from '../types/common'
 import { ICalendarEvent } from '../components/calendar/components/CalendarEvent/CalendarEvent.type'
 
 import Calendar from 'components/calendar/calendar'
+import LessonCard from 'components/LessonCard/LessonCard'
 
 const initialProps = {
   props: {
@@ -62,6 +63,15 @@ const Home: NextPage = (props: { user: IUserStudent }) => {
         <h1>Public Layout</h1>
         <pre>{JSON.stringify(props, null, 4)}</pre>
         <Calendar events={events} date={new Date()} />
+        <LessonCard
+          id={'1'}
+          dateTimestamp={'2023-01-01'}
+          heading={'Basic Spanish skills'}
+          eventStart={'19:03'}
+          eventEnd={'20:03'}
+          registeredCount={15}
+          maxPersons={10}
+        />
       </PublicLayout>
     </div>
   )

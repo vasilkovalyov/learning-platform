@@ -120,7 +120,7 @@ const RegistrationTeacher: NextPage = () => {
                 ) : null}
               </Row>
             ) : (
-              <div className="ta-c">
+              <div className="text-center">
                 <Space size={[8, 16]} direction="vertical">
                   <Typography>
                     <Text>{validationMessage && validationMessage}</Text>
