@@ -91,7 +91,7 @@ export default function CalendarDay({ date, events = [], locale = 'en-En' }: ICa
     <div className="calendar-day">
       <div className="calendar-day__top-info">
         <Paragraph
-          className={cn('calendar-day__date font-bold color-black', {
+          className={cn('calendar-day__date font-bold', {
             'calendar-day__date--active': CalendarDayClass.isToday(day.date),
           })}
         >

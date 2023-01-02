@@ -1,4 +1,5 @@
 import { ICalendarEvent, CalendarEventType } from '../components/CalendarEvent/CalendarEvent.type'
+import { scheduleCalendarCellHeight } from '../constants'
 
 export interface IEventsArrayForDay {
   id: string
@@ -49,4 +50,11 @@ export function getFilteredEventByDate(date: Date, events: ICalendarEvent[]): IC
   )
 
   return filteredEvents
+}
+
+// for string format = 2023-01-02T13:20:00.083Z
+// return string format = 13:20
+export function getTimeFormatTimestamp(timestamp: string): string {
+  const splitTime = timestamp.split('T')[1].split(':')
+  return `${splitTime[0]}:${splitTime[1]}`
 }

@@ -11,6 +11,7 @@ import { RoleType } from '../types/common'
 import { ICalendarEvent } from '../components/calendar/components/CalendarEvent/CalendarEvent.type'
 
 import Calendar from 'components/calendar/calendar'
+import ScheduleCalendar from 'components/calendar/schedule-calendar'
 import LessonCard from 'components/LessonCard/LessonCard'
 
 const initialProps = {
@@ -23,22 +24,22 @@ const eventsDate: ICalendarEvent[] = [
   {
     id: '1',
     title: 'event 1',
-    eventStart: '2022-12-27T13:20:00.083Z',
-    eventEnd: '2022-12-27T15:20:00.083Z',
+    eventStart: '2023-01-02T13:20:00.083Z',
+    eventEnd: '2023-01-02T15:20:00.083Z',
     type: 'personal',
   },
   {
     id: '2',
     title: 'event 2',
-    eventStart: '2022-12-28T16:20:00.083Z',
-    eventEnd: '2022-12-28T17:20:00.083Z',
+    eventStart: '2023-01-04T16:20:00.083Z',
+    eventEnd: '2023-01-04T17:20:00.083Z',
     type: 'group',
   },
   {
     id: '3',
     title: 'event 3',
-    eventStart: '2022-12-31T09:20:00.083Z',
-    eventEnd: '2022-12-31T11:20:00.083Z',
+    eventStart: '2023-01-12T09:20:00.083Z',
+    eventEnd: '2023-01-12T11:20:00.083Z',
     type: 'group',
   },
 ]
@@ -62,8 +63,9 @@ const Home: NextPage = (props: { user: IUserStudent }) => {
       <PublicLayout>
         <h1>Public Layout</h1>
         <pre>{JSON.stringify(props, null, 4)}</pre>
-        <Calendar events={events} date={new Date()} />
-        <LessonCard
+        {/* <Calendar events={events} date={new Date()} /> */}
+        <ScheduleCalendar events={events} date={new Date()} />
+        {/* <LessonCard
           id={'1'}
           dateTimestamp={'2023-01-01'}
           heading={'Basic Spanish skills'}
@@ -71,7 +73,7 @@ const Home: NextPage = (props: { user: IUserStudent }) => {
           eventEnd={'20:03'}
           registeredCount={15}
           maxPersons={10}
-        />
+        /> */}
       </PublicLayout>
     </div>
   )
