@@ -1,0 +1,41 @@
+.lesson-card {
+  background: #f7f9fc;
+  border: 1px solid #dce3e8;
+  padding: 24px 24px 12px;
+  max-width: 330px;
+  width: 100%;
+
+  &__badge {
+    border-radius: 20px;
+    padding: 6px 12px 6px 12px;
+    font-size: 12px;
+    margin-bottom: 18px;
+    display: inline-block;
+
+    svg {
+      vertical-align: middle;
+      margin-bottom: 2px;
+      margin-right: 6px;
+    }
+  }
+
+  &__badge--date {
+    background-color: #c7f2eb;
+  }
+
+  &__badge--time {
+    background-color: #ffdee4;
+  }
+
+  &__heading {
+    &.ant-typography {
+      margin-bottom: 12px;
+    }
+  }
+
+  &__info-heading {
+    &.ant-typography {
+      margin-bottom: 0;
+    }
+  }
+}
