@@ -139,7 +139,8 @@ function LessonsCalendar({ date, events, locale = 'en-En' }: ICalendar) {
                   ).toFixed(2)
                   const height = (
                     (hourEndWithTimeZone - hourStartWithTimeZone + dateEnd.getMinutes() / hourMinutes) *
-                    lessonsCalendarCellHeight
+                      lessonsCalendarCellHeight -
+                    (dateEnd.getMinutes() / hourMinutes) * lessonsCalendarCellHeight
                   ).toFixed(2)
                   return (
                     <div

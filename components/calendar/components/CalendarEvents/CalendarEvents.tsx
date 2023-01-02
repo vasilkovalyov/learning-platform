@@ -15,7 +15,8 @@ function CalendarEvents({ events }: ICalendarEventsProps) {
         const topPosition =
           calendarCellHeight * (hourStartWithTimeZone - calendarStartHourFrom + dateStart.getMinutes() / hourMinutes)
         const height =
-          (hourEndWithTimeZone - hourStartWithTimeZone + dateEnd.getMinutes() / hourMinutes) * calendarCellHeight
+          (hourEndWithTimeZone - hourStartWithTimeZone + dateEnd.getMinutes() / hourMinutes) * calendarCellHeight -
+          (dateEnd.getMinutes() / hourMinutes) * calendarCellHeight
         return (
           <CalendarEvent
             key={event.id}
