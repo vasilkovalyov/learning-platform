@@ -10,9 +10,10 @@ import { RoleType } from '../types/common'
 
 import { ICalendarEvent } from '../components/calendar/components/CalendarEvent/CalendarEvent.type'
 
-import Calendar from 'components/calendar/calendar'
-import ScheduleCalendar from 'components/calendar/schedule-calendar'
-import LessonCard from 'components/LessonCard/LessonCard'
+// import Calendar from 'components/calendar/calendar'
+// import ScheduleCalendar from 'components/calendar/schedule-calendar'
+import LessonsCalendar from 'components/calendar/lessons-calendar'
+// import LessonCard from 'components/LessonCard/LessonCard'
 
 const initialProps = {
   props: {
@@ -24,8 +25,8 @@ const eventsDate: ICalendarEvent[] = [
   {
     id: '1',
     title: 'event 1',
-    eventStart: '2023-01-02T13:20:00.083Z',
-    eventEnd: '2023-01-02T15:20:00.083Z',
+    eventStart: '2023-01-02T09:20:00.083Z',
+    eventEnd: '2023-01-02T10:20:00.083Z',
     type: 'personal',
   },
   {
@@ -41,6 +42,13 @@ const eventsDate: ICalendarEvent[] = [
     eventStart: '2023-01-12T09:20:00.083Z',
     eventEnd: '2023-01-12T11:20:00.083Z',
     type: 'group',
+  },
+  {
+    id: '4',
+    title: 'event 4',
+    eventStart: '2023-01-17T17:00:00.083Z',
+    eventEnd: '2023-01-17T18:00:00.083Z',
+    type: 'course',
   },
 ]
 
@@ -64,7 +72,8 @@ const Home: NextPage = (props: { user: IUserStudent }) => {
         <h1>Public Layout</h1>
         <pre>{JSON.stringify(props, null, 4)}</pre>
         {/* <Calendar events={events} date={new Date()} /> */}
-        <ScheduleCalendar events={events} date={new Date()} />
+        <LessonsCalendar events={events} date={new Date()} />
+        {/* <ScheduleCalendar events={events} date={new Date()} /> */}
         {/* <LessonCard
           id={'1'}
           dateTimestamp={'2023-01-01'}

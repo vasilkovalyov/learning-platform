@@ -1,4 +1,4 @@
-export type CalendarEventType = 'personal' | 'group'
+export type CalendarEventType = 'personal' | 'group' | 'course'
 
 export interface ICalendarEventProps {
   id: string

@@ -91,6 +91,10 @@ class CalendarMonth {
 
     return days
   }
+
+  static getDaysCountInMonthByIndex(year: number, monthNumber: number): number {
+    return new Date(year, monthNumber, 0).getDate()
+  }
 }
 
 export default CalendarMonth

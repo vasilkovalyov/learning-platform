@@ -1,7 +1,7 @@
 import React, { useState, MouseEvent, useRef } from 'react'
 import cn from 'classnames'
 
-import { IScheduleCalendarProps } from './calendar.type'
+import { ICalendar } from './calendar.type'
 import { IDay } from './components/CalendarDay/CalendarDay.type'
 import { ICalendarEvent } from './components/CalendarEvent/CalendarEvent.type'
 
@@ -33,7 +33,7 @@ import { getFilteredEventByDate } from './utilities/custom'
 
 const { Title, Text } = Typography
 
-function ScheduleCalendar({ date, events, locale = 'en-En' }: IScheduleCalendarProps) {
+function ScheduleCalendar({ date, events, locale = 'en-En' }: ICalendar) {
   const dayTimesRef = useRef<HTMLDivElement | null>(null)
   const lessonScheduleCardContainerRef = useRef<HTMLDivElement | null>(null)
 

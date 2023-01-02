@@ -21,8 +21,8 @@ function CalendarEvents({ events }: ICalendarEventsProps) {
             key={event.id}
             id={event.id}
             title={event.title}
-            eventStart={`${dateStart.getHours()}:${dateStart.getMinutes()}`}
-            eventEnd={`${dateEnd.getHours()}:${dateEnd.getMinutes()}`}
+            eventStart={`${hourStartWithTimeZone}:${dateStart.getMinutes()}`}
+            eventEnd={`${hourEndWithTimeZone}:${dateEnd.getMinutes()}`}
             type={event.type}
             styles={{
               top: topPosition,

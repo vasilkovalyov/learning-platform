@@ -5,8 +5,18 @@ export enum CalendarEventTypeColor {
   UNAVAILABLE_TIME = '#F2F5FA',
 }
 
+export enum CalendarLessonTypeColor {
+  PERSONAL_LESSON = '#C0D1FF',
+  GROUP_LESSON = '#A7E6C8',
+  COURSE_LESSON = '#FCAAAA',
+}
+
 export interface ICalendarEventType {
   type: string
   title: string
-  color: CalendarEventTypeColor
+  color: string
+}
+
+export interface ICalendarEventsTypesProps {
+  items: ICalendarEventType[]
 }

@@ -3,6 +3,8 @@ import cn from 'classnames'
 
 import CalendarClassDay from './components/CalendarDay/CalendarDay.class'
 
+import { eventsTypes } from './components/CalendarEventsTypes/CalendarEventsTypes.data'
+
 import CalendarMonthComponent from './components/CalendarMonth/CalendarMonth'
 import CalendarWeekComponent from './components/CalendarWeek/CalendarWeek'
 import CalendarDayComponent from './components/CalendarDay/CalendarDay'
@@ -12,7 +14,7 @@ import CalendarEventsTypes from './components/CalendarEventsTypes/CalendarEvents
 import { ICalendar } from './calendar.type'
 import { CalendarModeView } from './calendar.type'
 
-function Calendar({ date = new Date(), events = [] }: ICalendar) {
+function Calendar({ date = new Date(), events = [], locale = 'en-En' }: ICalendar) {
   const [dateState, setDateState] = useState<Date>(date)
   const [calendarView, setCalendarView] = useState<CalendarModeView>(CalendarModeView.MONTH)
   const dayInst = new CalendarClassDay()
@@ -46,7 +48,7 @@ function Calendar({ date = new Date(), events = [] }: ICalendar) {
       {calendarView === CalendarModeView.DAY ? <CalendarDayComponent date={dateState} events={events} /> : null}
       {calendarView === CalendarModeView.WEEK ? <CalendarWeekComponent date={dateState} events={events} /> : null}
       {calendarView === CalendarModeView.MONTH ? <CalendarMonthComponent date={dateState} events={events} /> : null}
-      <CalendarEventsTypes />
+      <CalendarEventsTypes items={eventsTypes} />
     </div>
   )
 }

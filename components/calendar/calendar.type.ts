@@ -8,10 +8,5 @@ export enum CalendarModeView {
 export interface ICalendar {
   date: Date
   events?: ICalendarEvent[]
-}
-
-export interface IScheduleCalendarProps {
-  date: Date
-  events?: ICalendarEvent[]
   locale?: string
 }
