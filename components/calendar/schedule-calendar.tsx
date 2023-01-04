@@ -173,7 +173,8 @@ function ScheduleCalendar({ date, events, locale = 'en-En' }: ICalendar) {
                     (hourStartWithTimeZone - calendarStartHourFrom + dateStart.getMinutes() / hourMinutes)
                   const height =
                     (hourEndWithTimeZone - hourStartWithTimeZone + dateEnd.getMinutes() / hourMinutes) *
-                    scheduleCalendarCellHeight
+                      scheduleCalendarCellHeight -
+                    (dateEnd.getMinutes() / hourMinutes) * scheduleCalendarCellHeight
                   return (
                     <button
                       key={event.id}
