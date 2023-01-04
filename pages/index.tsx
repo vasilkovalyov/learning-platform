@@ -12,8 +12,9 @@ import { ICalendarEvent } from '../components/calendar/components/CalendarEvent/
 
 // import Calendar from 'components/calendar/calendar'
 // import ScheduleCalendar from 'components/calendar/schedule-calendar'
-import LessonsCalendar from 'components/calendar/lessons-calendar'
+// import LessonsCalendar from 'components/calendar/lessons-calendar'
 // import LessonCard from 'components/LessonCard/LessonCard'
+import BookingTestLesson from 'components/BookTeacherLessons/TestLesson/BookingTestLesson'
 
 const initialProps = {
   props: {
@@ -72,7 +73,7 @@ const Home: NextPage = (props: { user: IUserStudent }) => {
         <h1>Public Layout</h1>
         <pre>{JSON.stringify(props, null, 4)}</pre>
         {/* <Calendar events={events} date={new Date()} /> */}
-        <LessonsCalendar events={events} date={new Date()} />
+        {/* <LessonsCalendar events={events} date={new Date()} /> */}
         {/* <ScheduleCalendar events={events} date={new Date()} /> */}
         {/* <LessonCard
           id={'1'}
@@ -83,6 +84,7 @@ const Home: NextPage = (props: { user: IUserStudent }) => {
           registeredCount={15}
           maxPersons={10}
         /> */}
+        <BookingTestLesson id={'1'} heading={'Test Lesson'} duration={80} price={10} buttonText={'Book Lesson'} />
       </PublicLayout>
     </div>
   )
