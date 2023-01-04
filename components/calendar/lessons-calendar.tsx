@@ -8,12 +8,6 @@ import { CalendarLessonTypeColor } from './components/CalendarEventsTypes/Calend
 import CalendarMonthClass from './components/CalendarMonth/CalendarMonth.class'
 import CalendarDayClass from './components/CalendarDay/CalendarDay.class'
 
-import Row from 'antd/lib/row'
-import Col from 'antd/lib/col'
-import Space from 'antd/lib/space'
-import Button from 'antd/lib/button'
-import Typography from 'antd/lib/typography'
-
 import CalendarHours from './components/CalendarHours/CalendarHours'
 import CalendarEventsTypes from './components/CalendarEventsTypes/CalendarEventsTypes'
 
@@ -24,8 +18,6 @@ import { calendarStartHourFrom, calendarStartHourTo, lessonsCalendarCellHeight, 
 import { getFilteredEventByDate } from './utilities/custom'
 
 import { lessonsTypes } from './components/CalendarEventsTypes/CalendarEventsTypes.data'
-
-const { Text } = Typography
 
 function LessonsCalendar({ date, events, locale = 'en-En' }: ICalendar) {
   const dayHours = CalendarDayClass.getDayHours(calendarStartHourFrom, calendarStartHourTo)
@@ -100,24 +92,24 @@ function LessonsCalendar({ date, events, locale = 'en-En' }: ICalendar) {
 
   return (
     <div className="lessons-calendar">
-      <Row justify="center" className="lessons-calendar-month__controls">
-        <Col className="d-flex d-flex-justify-center">
-          <Space size={20} className="lessons-calendar__controls">
-            <Button onClick={prevMonth} className="lessons-calendar__control-button">
+      <div className="lessons-calendar-month__controls">
+        <div className="d-flex d-flex-justify-center">
+          <div className="lessons-calendar__controls">
+            <button onClick={prevMonth} className="lessons-calendar__control-button">
               <Icon icon="chevron-left" size={20} />
-            </Button>
-            <Text className="lessons-calendar__month color-black font-bold">{monthName}</Text>
-            <Button onClick={nextMonth} className="lessons-calendar__control-button">
+            </button>
+            <span className="lessons-calendar__month color-black font-bold">{monthName}</span>
+            <button onClick={nextMonth} className="lessons-calendar__control-button">
               <Icon icon="chevron-right" size={20} />
-            </Button>
-          </Space>
-        </Col>
-      </Row>
-      <Row className="lessons-calendar__body">
-        <Col className="lessons-calendar__body-left">
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="lessons-calendar__body">
+        <div className="lessons-calendar__body-left">
           <CalendarHours from={calendarStartHourFrom} to={calendarStartHourTo} className="lessons-calendar-hours" />
-        </Col>
-        <Col className="lessons-calendar__body-right">
+        </div>
+        <div className="lessons-calendar__body-right">
           <div className="lessons-calendar-month-days">
             {Array.from(Array(daysCountInMonth).keys()).map((dayNumber, key) => (
               <div key={key} className={cn('lessons-calendar-month-days__cell text-center font-bold color-black')}>
@@ -163,8 +155,8 @@ function LessonsCalendar({ date, events, locale = 'en-En' }: ICalendar) {
               </div>
             ))}
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
       <CalendarEventsTypes items={lessonsTypes} />
     </div>
   )

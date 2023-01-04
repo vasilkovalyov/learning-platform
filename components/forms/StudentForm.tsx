@@ -1,12 +1,5 @@
 import React from 'react'
-import Form from 'antd/lib/form'
-import Input from 'antd/lib/input/Input'
-import Password from 'antd/lib/input/Password'
-import Typography from 'antd/lib/typography'
-import { Button } from 'antd'
 import { IFormData } from '../../intefaces/auth'
-
-const { Text } = Typography
 
 interface IStudentForm extends IFormData {
   confirm_password: string
@@ -26,89 +19,79 @@ function StudentForm({
   }
 
   return (
-    <Form
-      name="sign-up-student"
-      labelCol={{ span: 24 }}
-      wrapperCol={{ span: 24 }}
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-      autoComplete="off"
-      className="form form-auth form-auth--register"
-    >
-      <Form.Item
+    <form name="sign-up-student" autoComplete="off" className="form form-auth form-auth--register">
+      <div
         className="form__input-field form__input-field--input"
-        name="fullname"
-        label="Full name"
-        rules={[{ required: true, message: 'Please input your full name!' }]}
+        // name="fullname"
+        // label="Full name"
+        // rules={[{ required: true, message: 'Please input your full name!' }]}
       >
-        <Input id="fullname" name="fullname" />
-      </Form.Item>
-      <Form.Item
+        <input id="fullname" name="fullname" />
+      </div>
+      <div
         className="form__input-field form__input-field--input"
-        name="login"
-        label="Login"
-        rules={[{ required: true, message: 'Please input your login!' }]}
+        // name="login"
+        // label="Login"
+        // rules={[{ required: true, message: 'Please input your login!' }]}
       >
-        <Input id="login" name="login" />
-      </Form.Item>
-      <Form.Item
+        <input id="login" name="login" />
+      </div>
+      <div
         className="form__input-field form__input-field--input"
-        name="email"
-        label="Email"
-        rules={[{ required: true, type: 'email', message: 'Please input your email!' }]}
+        // name="email"
+        // label="Email"
+        // rules={[{ required: true, type: 'email', message: 'Please input your email!' }]}
       >
-        <Input id="email" name="email" />
-      </Form.Item>
-      <Form.Item
+        <input id="email" name="email" />
+      </div>
+      <div
         className="form__input-field form__input-field--password"
-        label="Password"
-        name="password"
-        rules={[
-          { required: true, message: 'Please input your password!' },
-          { min: 6, message: 'Please must be minimum 6 characters!' },
-        ]}
+        // label="Password"
+        // name="password"
+        // rules={[
+        //   { required: true, message: 'Please input your password!' },
+        //   { min: 6, message: 'Please must be minimum 6 characters!' },
+        // ]}
       >
-        <Password id="password" name="password" className="form__input" />
-      </Form.Item>
-      <Form.Item
+        <input id="password" name="password" className="form__input" />
+      </div>
+      <div
         className="form__input-field form__input-field--password form__input-field--confirm_password"
-        name="confirm_password"
-        label="Confirm Password"
-        dependencies={['password']}
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: 'Please confirm your password!',
-          },
-          {
-            min: 6,
-            message: 'Please must be minimum 6 characters!',
-          },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              if (!value || getFieldValue('password') === value) {
-                return Promise.resolve()
-              }
-              return Promise.reject(new Error('The two passwords that you entered do not match!'))
-            },
-          }),
-        ]}
+        // name="confirm_password"
+        // label="Confirm Password"
+        // dependencies={['password']}
+        // hasFeedback
+        // rules={[
+        //   {
+        //     required: true,
+        //     message: 'Please confirm your password!',
+        //   },
+        //   {
+        //     min: 6,
+        //     message: 'Please must be minimum 6 characters!',
+        //   },
+        //   ({ getFieldValue }) => ({
+        //     validator(_, value) {
+        //       if (!value || getFieldValue('password') === value) {
+        //         return Promise.resolve()
+        //       }
+        //       return Promise.reject(new Error('The two passwords that you entered do not match!'))
+        //     },
+        //   }),
+        // ]}
       >
-        <Password id="confirm_password" name="confirm_password" className="form__input" />
-      </Form.Item>
-      <Form.Item wrapperCol={{ span: 24 }} className="form__input-field form__input-field--button">
-        <Button type="primary" htmlType="submit" loading={isLoading}>
-          Sign up
-        </Button>
-      </Form.Item>
+        <input id="confirm_password" name="confirm_password" className="form__input" />
+      </div>
+      <div className="form__input-field form__input-field--button">
+        <button>Sign up</button>
+      </div>
       {validationMessage && <p>{validationMessage}</p>}
-      <Typography className="form__message">
-        <Text>You can sing up by usingh social network</Text>
-      </Typography>
+      <p className="form__message">
+        <span>You can sing up by usingh social network</span>
+      </p>
       <ul className="social-network-sing-up">
         <li className="social-network-sing-up__item">
-          <Button className="social-network-sing-up__btn">
+          <button className="social-network-sing-up__btn">
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clipPath="url(#clip0_132_283)">
                 <path
@@ -126,10 +109,10 @@ function StudentForm({
                 </clipPath>
               </defs>
             </svg>
-          </Button>
+          </button>
         </li>
         <li className="social-network-sing-up__item">
-          <Button className="social-network-sing-up__btn">
+          <button className="social-network-sing-up__btn">
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clipPath="url(#clip0_132_287)">
                 <path
@@ -155,10 +138,10 @@ function StudentForm({
                 </clipPath>
               </defs>
             </svg>
-          </Button>
+          </button>
         </li>
         <li className="social-network-sing-up__item">
-          <Button className="social-network-sing-up__btn">
+          <button className="social-network-sing-up__btn">
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clipPath="url(#clip0_132_292)">
                 <path
@@ -176,10 +159,10 @@ function StudentForm({
                 </clipPath>
               </defs>
             </svg>
-          </Button>
+          </button>
         </li>
       </ul>
-    </Form>
+    </form>
   )
 }
 

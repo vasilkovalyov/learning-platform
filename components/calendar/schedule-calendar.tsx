@@ -8,12 +8,7 @@ import { ICalendarEvent } from './components/CalendarEvent/CalendarEvent.type'
 import CalendarWeekClass from './components/CalendarWeek/CalendarWeek.class'
 import CalendarDayClass from './components/CalendarDay/CalendarDay.class'
 
-import Row from 'antd/lib/row'
-import Col from 'antd/lib/col'
-import Space from 'antd/lib/space'
-import Button from 'antd/lib/button'
 import CalendarHours from './components/CalendarHours/CalendarHours'
-import Typography from 'antd/lib/typography'
 
 import Icon from 'components/Icon'
 import LessonScheduleCard from '../LessonScheduleCard/LessonScheduleCard'
@@ -30,8 +25,6 @@ import {
 } from './constants'
 
 import { getFilteredEventByDate } from './utilities/custom'
-
-const { Title, Text } = Typography
 
 function ScheduleCalendar({ date, events, locale = 'en-En' }: ICalendar) {
   const dayTimesRef = useRef<HTMLDivElement | null>(null)
@@ -108,38 +101,36 @@ function ScheduleCalendar({ date, events, locale = 'en-En' }: ICalendar) {
 
   return (
     <div className="schedule-calendar">
-      <Title level={2} className="schedule-calendar__heading font-bold color-black">
-        Schedule
-      </Title>
-      <Row className="calendar-week__controls">
-        <Col span={24} md={4}>
-          <Space className="schedule-calendar__current-time">
+      <h2 className="schedule-calendar__heading font-bold color-black">Schedule</h2>
+      <div className="calendar-week__controls">
+        <div>
+          <div className="schedule-calendar__current-time">
             <Icon icon="clock-circular-outline" size={15} />
-            <Text className="schedule-calendar__current-time-text font-semibold">{getCurrentTime(new Date())}</Text>
-          </Space>
-        </Col>
-        <Col span={24} md={16} className="d-flex d-flex-justify-center">
-          <Space size={8} className="schedule-calendar__controls">
-            <Button onClick={prevWeek} className="schedule-calendar__control-button">
+            <span className="schedule-calendar__current-time-text font-semibold">{getCurrentTime(new Date())}</span>
+          </div>
+        </div>
+        <div className="d-flex d-flex-justify-center">
+          <div className="schedule-calendar__controls">
+            <button onClick={prevWeek} className="schedule-calendar__control-button">
               <Icon icon="chevron-left" size={20} />
-            </Button>
-            <Space size={20} className="schedule-calendar__week-dates">
-              <Text className="font-bold color-black">{formatDate(week[0].date, 'DD MMMM YYYY')}</Text>
-              <Text>-</Text>
-              <Text className="font-bold color-black">{formatDate(week[weekDaysCount - 1].date, 'DD MMMM YYYY')}</Text>
-            </Space>
-            <Button onClick={nextWeek} className="schedule-calendar__control-button">
+            </button>
+            <div className="schedule-calendar__week-dates">
+              <span className="font-bold color-black">{formatDate(week[0].date, 'DD MMMM YYYY')}</span>
+              <span>-</span>
+              <span className="font-bold color-black">{formatDate(week[weekDaysCount - 1].date, 'DD MMMM YYYY')}</span>
+            </div>
+            <button onClick={nextWeek} className="schedule-calendar__control-button">
               <Icon icon="chevron-right" size={20} />
-            </Button>
-          </Space>
-        </Col>
-        <Col span={24} md={4}></Col>
-      </Row>
-      <Row className="schedule-calendar__body">
-        <Col className="schedule-calendar__body-left">
+            </button>
+          </div>
+        </div>
+        <div></div>
+      </div>
+      <div className="schedule-calendar__body">
+        <div className="schedule-calendar__body-left">
           <CalendarHours from={calendarStartHourFrom} to={calendarStartHourTo} className="schedule-calendar-hours" />
-        </Col>
-        <Col className="schedule-calendar__body-right">
+        </div>
+        <div className="schedule-calendar__body-right">
           <div className="schedule-calendar-week-days">
             {weekNames.map((weekName, key) => (
               <div
@@ -148,10 +139,10 @@ function ScheduleCalendar({ date, events, locale = 'en-En' }: ICalendar) {
                   active: week[key].isToday,
                 })}
               >
-                <Space size={6}>
+                <div>
                   {weekName}
                   {week[key].dayNumber < 10 ? `0${week[key].dayNumber}` : week[key].dayNumber}
-                </Space>
+                </div>
               </div>
             ))}
           </div>
@@ -215,8 +206,8 @@ function ScheduleCalendar({ date, events, locale = 'en-En' }: ICalendar) {
               <LessonScheduleCard {...selectedLessonSchedule} onClick={(id) => onClickSelectedLesson(id)} />
             ) : null}
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,6 +1,6 @@
-import notification, { NotificationPlacement } from 'antd/lib/notification'
+// import notification, { NotificationPlacement } from 'antd/lib/notification'
 
-interface INotification {
+export interface INotification {
   message: string
   description?: string
   duration: number
@@ -10,11 +10,11 @@ const defaultProps: INotification = {
   duration: 3,
 }
 
-export const openNotification = (placement: NotificationPlacement, props: INotification = defaultProps) => {
-  notification.info({
-    message: props.message,
-    description: props.description,
-    duration: props.duration,
-    placement,
-  })
-}
+// export const openNotification = (placement: NotificationPlacement, props: INotification = defaultProps) => {
+//   notification.info({
+//     message: props.message,
+//     description: props.description,
+//     duration: props.duration,
+//     placement,
+//   })
+// }

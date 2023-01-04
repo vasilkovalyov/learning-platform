@@ -1,5 +1,3 @@
-const useLessLoader = require('storybook-less-loader')
-
 module.exports = {
   stories: [
     '../stories/**/*.stories.mdx',

@@ -7,18 +7,11 @@ import Head from 'next/head'
 import Cookies from 'js-cookie'
 
 import PublicLayout from 'layouts/PublicLayout'
-import Typography from 'antd/lib/typography'
-import Layout from 'antd/lib/layout/layout'
-import Breadcrumb from 'antd/lib/breadcrumb'
-import Row from 'antd/lib/row'
-import Col from 'antd/lib/col'
 
 import AuthService from 'services/auth'
 import AuthForm, { AuthFormData } from 'components/forms/AuthForm'
 import { useFormAction, IUseFormAction } from 'hooks/useFormAction'
 import { setAuthState } from 'redux/slices/auth'
-
-const { Title } = Typography
 
 const initialStateFormAction: IUseFormAction = {
   isLoading: false,
@@ -59,28 +52,26 @@ const Auth: NextPage = () => {
       <PublicLayout>
         <div className="breadcrumb-block">
           <div className="container">
-            <Breadcrumb>
-              <Breadcrumb.Item>
+            <div>
+              <div>
                 <Link href="/">
                   <a>Home</a>
                 </Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item>Sign in</Breadcrumb.Item>
-            </Breadcrumb>
+              </div>
+              <div>Sign in</div>
+            </div>
           </div>
         </div>
-        <Layout className="section-registration">
+        <div className="section-registration">
           <div className="container">
-            <Title level={2} className="section-registration__heading">
-              Sign in
-            </Title>
-            <Row justify="center">
-              <Col span={24} md={14} lg={8}>
+            <h2 className="section-registration__heading">Sign in</h2>
+            <div>
+              <div>
                 <AuthForm onSuccess={successSignUpForm} isLoading={isLoading} validationMessage={validationMessage} />
-              </Col>
-            </Row>
+              </div>
+            </div>
           </div>
-        </Layout>
+        </div>
       </PublicLayout>
     </div>
   )

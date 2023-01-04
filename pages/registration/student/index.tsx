@@ -4,23 +4,13 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 
 import PublicLayout from 'layouts/PublicLayout'
-import Typography from 'antd/lib/typography'
-import Layout from 'antd/lib/layout/layout'
-import Breadcrumb from 'antd/lib/breadcrumb'
-import Row from 'antd/lib/row'
-import Col from 'antd/lib/col'
-import Space from 'antd/lib/space'
-
 import { IFormData } from '../../../intefaces/auth'
 
 import StudentForm from '../../../components/forms/StudentForm'
-import Button from 'antd/lib/button'
 
 import AuthService from '../../../services/auth'
 
 import { useFormAction, useFormSteps, IUseFormAction, IUserFormSteps } from '../../../hooks/useFormAction'
-
-const { Title, Text } = Typography
 
 const initialStateFormAction: IUseFormAction = {
   isLoading: false,
@@ -60,23 +50,21 @@ const RegistrationStudent: NextPage = () => {
       <PublicLayout>
         <div className="breadcrumb-block">
           <div className="container">
-            <Breadcrumb>
-              <Breadcrumb.Item>
+            <ul>
+              <li>
                 <Link href="/">
                   <a>Home</a>
                 </Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item>Student</Breadcrumb.Item>
-            </Breadcrumb>
+              </li>
+              <li>Student</li>
+            </ul>
           </div>
         </div>
-        <Layout className="section-registration">
+        <div className="section-registration">
           <div className="container">
-            <Title level={2} className="section-registration__heading">
-              Registration Student
-            </Title>
-            <Row justify="center">
-              <Col span={24} md={14} lg={9}>
+            <h2 className="section-registration__heading">Registration Student</h2>
+            <div>
+              <div>
                 {!isSuccessForm ? (
                   <StudentForm
                     onSuccess={successSignUpForm}
@@ -85,20 +73,16 @@ const RegistrationStudent: NextPage = () => {
                   />
                 ) : (
                   <div className="text-center">
-                    <Space size={[8, 16]} direction="vertical">
-                      <Typography>
-                        <Text>{validationMessage && validationMessage}</Text>
-                      </Typography>
-                      <Button type="primary" href="/">
-                        Ok
-                      </Button>
-                    </Space>
+                    <span>{validationMessage && validationMessage}</span>
+                    <Link href="/">
+                      <a>Ok</a>
+                    </Link>
                   </div>
                 )}
-              </Col>
-            </Row>
+              </div>
+            </div>
           </div>
-        </Layout>
+        </div>
       </PublicLayout>
     </div>
   )

@@ -4,14 +4,8 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 import PublicLayout from 'layouts/PublicLayout'
-import Typography from 'antd/lib/typography'
-import Row from 'antd/lib/row'
-import Col from 'antd/lib/col'
-import Layout from 'antd/lib/layout/layout'
 
 import RegisterCard from 'components/client/RegisterCard'
-
-const { Title } = Typography
 
 const Registration: NextPage = () => {
   return (
@@ -22,36 +16,34 @@ const Registration: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PublicLayout>
-        <Layout className="section-registration">
+        <div className="section-registration">
           <div className="container">
-            <Title level={2} className="section-registration__heading">
-              Registration
-            </Title>
-            <Row align="middle" justify="center" gutter={[40, 40]}>
-              <Col xs={24} lg={8}>
+            <h2 className="section-registration__heading">Registration</h2>
+            <div>
+              <div>
                 <Link href="/registration/student">
                   <a className="section-registration__card-link">
                     <RegisterCard title="Student" type="student" />
                   </a>
                 </Link>
-              </Col>
-              <Col xs={24} lg={8}>
+              </div>
+              <div>
                 <Link href="/registration/teacher">
                   <a className="section-registration__card-link">
                     <RegisterCard title="Teacher" type="teacher" />
                   </a>
                 </Link>
-              </Col>
-              <Col xs={24} lg={8}>
+              </div>
+              <div>
                 <Link href="/registration/company">
                   <a className="section-registration__card-link">
                     <RegisterCard title="Company" type="company" />
                   </a>
                 </Link>
-              </Col>
-            </Row>
+              </div>
+            </div>
           </div>
-        </Layout>
+        </div>
       </PublicLayout>
     </div>
   )

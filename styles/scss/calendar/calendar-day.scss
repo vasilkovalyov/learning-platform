@@ -1,0 +1,74 @@
+.calendar-day {
+  &__top-info {
+    margin-left: 100px;
+  }
+
+  &__date {
+    font-size: 20px;
+    // color: @black-2;
+
+    &--active {
+      // color: @primary-color;
+    }
+
+    &.ant-typography {
+      margin-bottom: 0;
+    }
+  }
+
+  &__today-info {
+    font-size: 16px;
+  }
+
+  &__controls {
+    margin-bottom: 20px;
+  }
+
+  &__control-button {
+    padding: 10px;
+  }
+
+  &__body {
+    display: flex;
+    height: 800px;
+    overflow-y: scroll;
+  }
+
+  &__body-left {
+    width: 100px;
+    padding: 0 20px;
+  }
+
+  &__body-right {
+    flex: 1;
+  }
+
+  &__cell-list {
+    position: relative;
+  }
+
+  &__cell-list.weekend &__cell {
+    // background-color: @event-unavailable-lesson-color;
+  }
+
+  &__cell {
+    position: relative;
+    height: 100px;
+    // background-color: @event-available-lesson-color;
+    padding: 6px;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #dfe3e7;
+    }
+  }
+
+  &__timeline {
+    position: absolute;
+    top: 40%;
+    left: -20px;
+    right: 0;
+    height: 1px;
+    // border: 1px solid @red;
+    z-index: 1;
+  }
+}

@@ -1,14 +1,9 @@
 import React, { useState } from 'react'
-import Typography from 'antd/lib/typography'
-import List from 'antd/lib/list'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
-
+import Link from 'next/link'
 import Icon from 'components/Icon'
 import cn from 'classnames'
 import { RoleType } from '../../types/common'
-
-const { Title, Text } = Typography
 
 interface INavigation {
   id: number
@@ -109,11 +104,9 @@ export default function AdminPageNavigation({ role = 'student' }: { role: RoleTy
 
   return (
     <div className="admin-page-navigation">
-      <List
-        className="admin-page-navigation__navigation-list"
-        dataSource={getFilteredNav()}
-        renderItem={(item) => (
-          <List.Item
+      <ul className="admin-page-navigation__navigation-list">
+        {getFilteredNav().map((item) => (
+          <li
             key={item.id}
             className={cn('admin-page-navigation__navigation-item', {
               'admin-page-navigation__navigation-item--active': activeNav === item.name,
@@ -123,12 +116,12 @@ export default function AdminPageNavigation({ role = 'student' }: { role: RoleTy
             <Link href={item.path}>
               <a className="admin-page-navigation__navigation-link">
                 <Icon icon={item.icon} size={20} className="admin-page-navigation__navigation-icon" />
-                <Text>{item.title}</Text>
+                <span>{item.title}</span>
               </a>
             </Link>
-          </List.Item>
-        )}
-      />
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

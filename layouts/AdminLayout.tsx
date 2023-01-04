@@ -1,20 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
-import Avatar from 'antd/lib/avatar'
-import Typography from 'antd/lib/typography'
-import Layout from 'antd/lib/layout/layout'
-import Breadcrumb from 'antd/lib/breadcrumb'
-import Row from 'antd/lib/row'
-import Col from 'antd/lib/col'
 
 import PublicLayout from './PublicLayout'
 import { useSelector } from 'react-redux'
 import { selectAuthState } from 'redux/slices/auth'
 
 import AdminPageNavigation from '../components/admin/AdminPageNavigation'
-
-const { Title } = Typography
 
 function AdminLayout({ children }: { children: React.ReactNode }) {
   const authState = useSelector(selectAuthState)
@@ -29,35 +21,33 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
       <PublicLayout>
         <div className="breadcrumb-block">
           <div className="container">
-            <Breadcrumb>
-              <Breadcrumb.Item>
+            <div>
+              <div>
                 <Link href="/">
                   <a>Home</a>
                 </Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item>Admin page</Breadcrumb.Item>
-            </Breadcrumb>
+              </div>
+              <div>Admin page</div>
+            </div>
           </div>
         </div>
-        <Layout className="section-admin">
+        <div className="section-admin">
           <div className="container">
-            <Title level={2} className="section-admin__heading">
+            <h3 className="section-admin__heading">
               <span className="section-admin__heading-role">{authState?.role}</span> - Personal Area
-            </Title>
-            <Row gutter={48}>
-              <Col className="gutter-row" span={24} md={8} lg={6}>
+            </h3>
+            <div>
+              <div className="gutter-row">
                 <div className="section-admin__avatar-wrapper">
-                  <Avatar size={88} src="/images/avatar-default.jpg" />
+                  <img src="/images/avatar-default.jpg" />
                 </div>
-                <Title level={4}>{authState?.login}</Title>
+                <h4>{authState?.login}</h4>
                 <AdminPageNavigation role="student" />
-              </Col>
-              <Col className="gutter-row" span={24} md={16}>
-                {children}
-              </Col>
-            </Row>
+              </div>
+              <div className="gutter-row">{children}</div>
+            </div>
           </div>
-        </Layout>
+        </div>
       </PublicLayout>
     </div>
   )

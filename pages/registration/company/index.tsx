@@ -4,21 +4,12 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 
 import PublicLayout from 'layouts/PublicLayout'
-import Typography from 'antd/lib/typography'
-import Layout from 'antd/lib/layout/layout'
-import Breadcrumb from 'antd/lib/breadcrumb'
-import Row from 'antd/lib/row'
-import Col from 'antd/lib/col'
-import Space from 'antd/lib/space'
-import Button from 'antd/lib/button'
 
 import BaseFormStepFirst, { BaseFormStepFirstType } from 'components/forms/BaseFormStepFirst'
 import CompanyStepSecond, { BaseFormCompanyStepSecondType } from 'components/forms/CompanyStepSecond'
 
 import { useFormAction, useFormSteps, IUseFormAction, IUserFormSteps } from '../../../hooks/useFormAction'
 import AuthService from '../../../services/auth'
-
-const { Title, Text } = Typography
 
 const initialStateFormAction: IUseFormAction = {
   isLoading: false,
@@ -67,50 +58,48 @@ const Company: NextPage = () => {
       <PublicLayout>
         <div className="breadcrumb-block">
           <div className="container">
-            <Breadcrumb>
-              <Breadcrumb.Item>
+            <div>
+              <div>
                 <Link href="/">
                   <a>Home</a>
                 </Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item>Company</Breadcrumb.Item>
-            </Breadcrumb>
+              </div>
+              <div>Company</div>
+            </div>
           </div>
         </div>
-        <Layout className="section-registration">
+        <div className="section-registration">
           <div className="container">
-            <Title level={2} className="section-registration__heading">
-              Registration Company
-            </Title>
+            <h3 className="section-registration__heading">Registration Company</h3>
             {!isSuccessForm ? (
-              <Row justify="center" gutter={[40, 40]}>
-                <Col span={24} md={14} lg={10}>
+              <div>
+                <div>
                   <BaseFormStepFirst onSuccess={successFormFirst} type="company" />
-                </Col>
+                </div>
                 {isSuccessFormFirst ? (
-                  <Col span={24} md={14} lg={10}>
+                  <div>
                     <CompanyStepSecond
                       onSuccess={successFormSecond}
                       isLoading={isLoading}
                       validationMessage={validationMessage}
                     />
-                  </Col>
+                  </div>
                 ) : null}
-              </Row>
+              </div>
             ) : (
               <div className="text-center">
-                <Space size={[8, 16]} direction="vertical">
-                  <Typography>
-                    <Text>{validationMessage && validationMessage}</Text>
-                  </Typography>
-                  <Button type="primary" href="/">
-                    Ok
-                  </Button>
-                </Space>
+                <div>
+                  <p>
+                    <span>{validationMessage && validationMessage}</span>
+                  </p>
+                  <Link href="/">
+                    <a>Ok</a>
+                  </Link>
+                </div>
               </div>
             )}
           </div>
-        </Layout>
+        </div>
       </PublicLayout>
     </div>
   )

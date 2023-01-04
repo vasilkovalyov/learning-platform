@@ -1,12 +1,6 @@
 import React, { useState } from 'react'
 import cn from 'classnames'
 
-import Row from 'antd/lib/row'
-import Col from 'antd/lib/col'
-import List from 'antd/lib/list'
-import Space from 'antd/lib/space'
-import Typography from 'antd/lib/typography'
-import Button from 'antd/lib/button'
 import Icon from 'components/Icon'
 
 import CalendarHours from '../CalendarHours/CalendarHours'
@@ -23,8 +17,6 @@ import { getCurrentTime } from '../../utilities/time'
 import { formatDate } from '../../utilities/date'
 import { getFilteredEventByDate } from '../../utilities/custom'
 import { calendarStartHourFrom, calendarStartHourTo, calendarCellHeight } from '../../constants'
-
-const { Paragraph } = Typography
 
 export default function CalendarDay({ date, events = [], locale = 'en-En' }: ICalendarDayProps) {
   const dayHours = CalendarDayClass.getDayHours(calendarStartHourFrom, calendarStartHourTo)
@@ -90,49 +82,49 @@ export default function CalendarDay({ date, events = [], locale = 'en-En' }: ICa
   return (
     <div className="calendar-day">
       <div className="calendar-day__top-info">
-        <Paragraph
+        <div
           className={cn('calendar-day__date font-bold', {
             'calendar-day__date--active': CalendarDayClass.isToday(day.date),
           })}
         >
-          <Space>
+          <div>
             {formatDate(day.date, 'DD')}
             {CalendarMonthClass.getMonthNameByIndex(monthIndex).month}
             {year}
-          </Space>
-        </Paragraph>
-        <Paragraph className="calendar-day__today-info font-semibold color-grey">
+          </div>
+        </div>
+        <div className="calendar-day__today-info font-semibold color-grey">
           {`${day.day} ${getCurrentTime(new Date())}`}
-        </Paragraph>
-        <Row className="calendar-day__controls">
-          <Space size={8}>
-            <Button onClick={prevDay} className="calendar-day__control-button">
+        </div>
+        <div className="calendar-day__controls">
+          <div>
+            <button onClick={prevDay} className="calendar-day__control-button">
               <Icon icon="chevron-left" size={20} />
-            </Button>
-            <Button onClick={nextDay} className="calendar-day__control-button">
+            </button>
+            <button onClick={nextDay} className="calendar-day__control-button">
               <Icon icon="chevron-right" size={20} />
-            </Button>
-          </Space>
-        </Row>
+            </button>
+          </div>
+        </div>
       </div>
-      <Row className="calendar-day__body">
-        <Col className="calendar-day__body-left">
+      <div className="calendar-day__body">
+        <div className="calendar-day__body-left">
           <CalendarHours from={calendarStartHourFrom} to={calendarStartHourTo} />
-        </Col>
-        <Col className="calendar-day__body-right">
+        </div>
+        <div className="calendar-day__body-right">
           <div className="calendar-day-times calendar-day-times--day">
             {currentHour < calendarStartHourFrom || currentHour < calendarStartHourTo ? (
               <div className="calendar-day-times__timeline" style={{ top: getCurrentTimePosition() + 'px' }}></div>
             ) : null}
             {renderEvents(day.date, events)}
-            <List className="calendar-day__cell-list">
+            <ul className="calendar-day__cell-list">
               {dayHours.map((item, key) => (
-                <List.Item key={key} className="calendar-day__cell"></List.Item>
+                <li key={key} className="calendar-day__cell"></li>
               ))}
-            </List>
+            </ul>
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
     </div>
   )
 }

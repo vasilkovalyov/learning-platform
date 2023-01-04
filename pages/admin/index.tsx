@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import Typography from 'antd/lib/typography'
 import AdminLayout from 'layouts/AdminLayout'
 import AccountForm from '../../components/forms/AccountForm'
-import Row from 'antd/lib/row'
-import Col from 'antd/lib/col'
 
 import UserService from 'services/user'
 import { useDispatch } from 'react-redux'
@@ -15,9 +12,7 @@ import { useFormAction, IUseFormAction } from '../../hooks/useFormAction'
 import { RoleType } from 'types/common'
 
 import TeacherService from 'services/teacher.service'
-import { openNotification } from 'common/utilities'
-
-const { Title } = Typography
+// import { openNotification } from 'common/utilities'
 
 const initialProps = {
   props: {
@@ -49,15 +44,15 @@ function Account(props: { user: IUserStudent | null }) {
       }).then((res) => {
         console.log(res)
         toggleLoading(false)
-        openNotification('bottomRight')
+        // openNotification('bottomRight')
       })
     }
   }
 
   return (
-    <Row>
-      <Col span={24}>
-        <Title level={3}>Account</Title>
+    <div>
+      <div>
+        <h3>Account</h3>
         <AccountForm
           role={authState?.role as RoleType}
           formData={authState}
@@ -65,8 +60,8 @@ function Account(props: { user: IUserStudent | null }) {
           isLoading={isLoading}
           validationMessage={validationMessage}
         />
-      </Col>
-    </Row>
+      </div>
+    </div>
   )
 }
 

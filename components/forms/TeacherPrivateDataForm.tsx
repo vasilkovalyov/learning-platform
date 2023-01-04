@@ -1,19 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import Form from 'antd/lib/form'
-import Input from 'antd/lib/input/Input'
-import TextArea from 'antd/lib/input/TextArea'
-import Select from 'antd/lib/select'
-import Row from 'antd/lib/row'
-import Col from 'antd/lib/col'
-import Typography from 'antd/lib/typography'
-import Space from 'antd/lib/space'
-import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons'
+
 import { ITeacherPrivateData } from 'intefaces/teacher.interface'
-import { openNotification } from 'common/utilities'
-
-import { Button } from 'antd'
-
-const { Title } = Typography
+// import { openNotification } from 'common/utilities'
 
 import TeacherService from 'services/teacher.service'
 
@@ -130,79 +118,79 @@ const defaultOptions = {
 }
 
 function TeacherPrivateDataForm() {
-  const [form] = Form.useForm()
+  // const [form] = Form.useForm()
   const [isLoadingSubmit, setIsLoadingSubmit] = useState<boolean>(false)
 
   useEffect(() => {
-    form.setFieldsValue(defaultOptions)
+    // form.setFieldsValue(defaultOptions)
     TeacherService.loadPrivateData(localStorage.getItem('userId') || '').then((res: ITeacherPrivateData) => {
-      form.setFieldsValue({
-        country: res.private_data.country,
-        state: res.private_data.state,
-        city: res.private_data.city,
-        work_experience: res.private_data.work_experience?.map((item) => {
-          return {
-            work_experience: item,
-          }
-        }),
-        education: res.private_data.education?.map((item) => {
-          return {
-            education: item,
-          }
-        }),
-        lang_speaking: res.services.lang_speaking?.map((item) => {
-          return {
-            lang_speaking: item,
-          }
-        }),
-        students_ages: res.services.students_ages?.map((item) => {
-          return {
-            students_ages: item,
-          }
-        }),
-        lang_teaching: res.services.lang_teaching?.map((item) => {
-          return {
-            lang_teaching: item,
-          }
-        }),
-        subjects: res.services.subjects?.map((item) => {
-          return {
-            subjects: item,
-          }
-        }),
-        levels_studying: res.services.levels_studying?.map((item) => {
-          return {
-            levels_studying: item,
-          }
-        }),
-        speaking_accent: res.services.speaking_accent?.map((item) => {
-          return {
-            speaking_accent: item,
-          }
-        }),
-        lesson_content: res.services.lesson_content?.map((item) => {
-          return {
-            lesson_content: item,
-          }
-        }),
-        tests: res.services.tests?.map((item) => {
-          return {
-            tests: item,
-          }
-        }),
-        certificates: res.private_data.certificates?.map((item) => {
-          return {
-            certificates: item,
-          }
-        }),
-        about_info: res.private_data.about_info,
-        local_time: res.private_data.local_time,
-        lesson_1: res.lessons?.lesson_1,
-        lesson_5: res.lessons?.lesson_5,
-        lesson_10: res.lessons?.lesson_10,
-        lesson_20: res.lessons?.lesson_20,
-        lesson_duration: res.lessons?.lesson_duration,
-      })
+      // form.setFieldsValue({
+      //   country: res.private_data.country,
+      //   state: res.private_data.state,
+      //   city: res.private_data.city,
+      //   work_experience: res.private_data.work_experience?.map((item) => {
+      //     return {
+      //       work_experience: item,
+      //     }
+      //   }),
+      //   education: res.private_data.education?.map((item) => {
+      //     return {
+      //       education: item,
+      //     }
+      //   }),
+      //   lang_speaking: res.services.lang_speaking?.map((item) => {
+      //     return {
+      //       lang_speaking: item,
+      //     }
+      //   }),
+      //   students_ages: res.services.students_ages?.map((item) => {
+      //     return {
+      //       students_ages: item,
+      //     }
+      //   }),
+      //   lang_teaching: res.services.lang_teaching?.map((item) => {
+      //     return {
+      //       lang_teaching: item,
+      //     }
+      //   }),
+      //   subjects: res.services.subjects?.map((item) => {
+      //     return {
+      //       subjects: item,
+      //     }
+      //   }),
+      //   levels_studying: res.services.levels_studying?.map((item) => {
+      //     return {
+      //       levels_studying: item,
+      //     }
+      //   }),
+      //   speaking_accent: res.services.speaking_accent?.map((item) => {
+      //     return {
+      //       speaking_accent: item,
+      //     }
+      //   }),
+      //   lesson_content: res.services.lesson_content?.map((item) => {
+      //     return {
+      //       lesson_content: item,
+      //     }
+      //   }),
+      //   tests: res.services.tests?.map((item) => {
+      //     return {
+      //       tests: item,
+      //     }
+      //   }),
+      //   certificates: res.private_data.certificates?.map((item) => {
+      //     return {
+      //       certificates: item,
+      //     }
+      //   }),
+      //   about_info: res.private_data.about_info,
+      //   local_time: res.private_data.local_time,
+      //   lesson_1: res.lessons?.lesson_1,
+      //   lesson_5: res.lessons?.lesson_5,
+      //   lesson_10: res.lessons?.lesson_10,
+      //   lesson_20: res.lessons?.lesson_20,
+      //   lesson_duration: res.lessons?.lesson_duration,
+      // })
     })
   })
 
@@ -241,435 +229,423 @@ function TeacherPrivateDataForm() {
     }
     TeacherService.savePrivateData(data).then((res) => {
       setIsLoadingSubmit(false)
-      openNotification('bottomRight')
+      // openNotification('bottomRight')
     })
   }
 
   return (
-    <Form
-      form={form}
+    <form
+      // form={form}
       name="private-data-user"
-      labelCol={{ span: 24 }}
-      wrapperCol={{ span: 24 }}
-      initialValues={{ remember: true }}
+      // labelCol={{ span: 24 }}
+
+      // initialValues={{ remember: true }}
       autoComplete="off"
       className="form form-admin"
-      onFinish={onFinish}
+      // onFinish={onFinish}
     >
-      <Row gutter={24} justify="space-between">
-        <Col span={24} md={12}>
-          <Form.Item className="form__input-field form__input-field--input" name="country" label="Country">
-            <Input id="country" name="country" type="country" className="form__input" />
-          </Form.Item>
-          <Form.Item className="form__input-field form__input-field--input" name="state" label="State">
-            <Input id="state" name="state" type="state" className="form__input" />
-          </Form.Item>
-          <Form.Item className="form__input-field form__input-field--input" name="city" label="City">
-            <Input id="city" name="city" type="city" className="form__input" />
-          </Form.Item>
-        </Col>
-        <Col span={24} md={12}>
-          <Form.Item className="form__input-field form__input-field--textarea" name="about_info" label="About">
-            <TextArea id="about_info" name="about_info" className="form__textarea" rows={6} />
-          </Form.Item>
-          <Form.Item label="Local time" name="local_time" className="form__input-field form__input-field--select">
-            <Select id="local_time" className="form__select" showSearch optionFilterProp="children">
+      <div>
+        <div>
+          <div className="form__input-field form__input-field--input">
+            <input id="country" name="country" type="country" className="form__input" />
+          </div>
+          <div className="form__input-field form__input-field--input">
+            <input id="state" name="state" type="state" className="form__input" />
+          </div>
+          <div className="form__input-field form__input-field--input">
+            <input id="city" name="city" type="city" className="form__input" />
+          </div>
+        </div>
+        <div>
+          <div className="form__input-field form__input-field--textarea">
+            <textarea id="about_info" name="about_info" className="form__textarea" rows={6} />
+          </div>
+          <div className="form__input-field form__input-field--select">
+            <select id="local_time" className="form__select">
               {timeZones &&
                 timeZones.length &&
                 timeZones.map((tm) => (
-                  <Select.Option key={tm.id} value={tm.value}>
+                  <li key={tm.id} value={tm.value}>
                     {tm.label}
-                  </Select.Option>
+                  </li>
                 ))}
-            </Select>
-          </Form.Item>
-        </Col>
-      </Row>
-      <Row gutter={24} justify="space-between">
-        <Col span={24} md={12}>
-          <Form.Item label="Language speaking" className="form__input-field form__input-field--select">
-            <Form.List name="lang_speaking">
+            </select>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div>
+          <div className="form__input-field form__input-field--select">
+            {/* <ul name="lang_speaking">
               {(fields_lang_speaking, { add, remove }) => (
                 <>
                   {fields_lang_speaking.map(({ key, name, ...restField }) => (
-                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
-                      <Form.Item
+                    <div key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
+                      <div
                         {...restField}
                         name={[name, 'lang_speaking']}
                         className="form__input-field form__input-field--input"
                       >
-                        <Select id="lang_speaking" className="form__select" showSearch optionFilterProp="children">
+                        <select id="lang_speaking" className="form__select" showSearch optionFilterProp="children">
                           {langSpeaking &&
                             langSpeaking.length &&
                             langSpeaking.map((ls) => (
                               <React.Fragment key={ls.id}>
                                 {ls.value !== '' ? (
-                                  <Select.Option key={ls.id} value={ls.value}>
+                                  <li key={ls.id} value={ls.value}>
                                     {ls.label}
-                                  </Select.Option>
+                                  </li>
                                 ) : null}
                               </React.Fragment>
                             ))}
-                        </Select>
-                      </Form.Item>
+                        </select>
+                      </div>
                       {name !== 0 ? (
                         <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
                       ) : null}
                       <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
-                    </Space>
+                    </div>
                   ))}
                 </>
               )}
-            </Form.List>
-          </Form.Item>
-          <Form.Item label="Students ages" className="form__input-field form__input-field--select">
-            <Form.List name="students_ages">
-              {(fields_students_ages, { add, remove }) => (
+            </ul> */}
+          </div>
+          <div className="form__input-field form__input-field--select">
+            <ul data-name="students_ages">
+              {/* {(fields_students_ages, { add, remove }) => (
                 <>
                   {fields_students_ages.map(({ key, name, ...restField }) => (
-                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
-                      <Form.Item
+                    <div key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
+                      <div
                         {...restField}
                         name={[name, 'students_ages']}
                         className="form__input-field form__input-field--input"
                       >
-                        <Select id="students_ages" className="form__select" showSearch optionFilterProp="children">
+                        <select id="students_ages" className="form__select" showSearch optionFilterProp="children">
                           {studentsAges &&
                             studentsAges.length &&
                             studentsAges.map((sa) => (
                               <React.Fragment key={sa.id}>
                                 {sa.value !== '' ? (
-                                  <Select.Option key={sa.id} value={sa.value}>
+                                  <li key={sa.id} value={sa.value}>
                                     {sa.label}
-                                  </Select.Option>
+                                  </li>
                                 ) : null}
                               </React.Fragment>
                             ))}
-                        </Select>
-                      </Form.Item>
+                        </select>
+                      </div>
                       {name !== 0 ? (
                         <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
                       ) : null}
                       <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
-                    </Space>
+                    </div>
                   ))}
                 </>
-              )}
-            </Form.List>
-          </Form.Item>
-        </Col>
-        <Col span={24} md={12}>
-          <Form.Item label="Language teaching" className="form__input-field form__input-field--select">
-            <Form.List name="lang_teaching">
-              {(fields_lang_teaching, { add, remove }) => (
+              )} */}
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div className="form__input-field form__input-field--select">
+            <ul data-name="lang_teaching">
+              {/* {(fields_lang_teaching, { add, remove }) => (
                 <>
                   {fields_lang_teaching.map(({ key, name, ...restField }) => (
-                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
-                      <Form.Item
+                    <div key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
+                      <div
                         {...restField}
                         name={[name, 'lang_teaching']}
                         className="form__input-field form__input-field--input"
                       >
-                        <Select id="lang_teaching" className="form__select" showSearch optionFilterProp="children">
+                        <select id="lang_teaching" className="form__select" showSearch optionFilterProp="children">
                           {langTeaching &&
                             langTeaching.length &&
                             langTeaching.map((lt) => (
                               <React.Fragment key={lt.id}>
                                 {lt.value !== '' ? (
-                                  <Select.Option key={lt.id} value={lt.value}>
+                                  <li key={lt.id} value={lt.value}>
                                     {lt.label}
-                                  </Select.Option>
+                                  </li>
                                 ) : null}
                               </React.Fragment>
                             ))}
-                        </Select>
-                      </Form.Item>
+                        </select>
+                      </div>
                       {name !== 0 ? (
                         <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
                       ) : null}
                       <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
-                    </Space>
+                    </div>
                   ))}
                 </>
-              )}
-            </Form.List>
-          </Form.Item>
-          <Form.Item label="Subjects" className="form__input-field form__input-field--select">
-            <Form.List name="subjects">
-              {(fields_subjects, { add, remove }) => (
+              )} */}
+            </ul>
+          </div>
+          <div className="form__input-field form__input-field--select">
+            <ul data-name="subjects">
+              {/* {(fields_subjects, { add, remove }) => (
                 <>
                   {fields_subjects.map(({ key, name, ...restField }) => (
-                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
-                      <Form.Item
+                    <div key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
+                      <div
                         {...restField}
                         name={[name, 'subjects']}
                         className="form__input-field form__input-field--input"
                       >
-                        <Select id="subjects" className="form__select" showSearch optionFilterProp="children">
+                        <select id="subjects" className="form__select" showSearch optionFilterProp="children">
                           {subjects &&
                             subjects.length &&
                             subjects.map((subject) => (
                               <React.Fragment key={subject.id}>
                                 {subject.value !== '' ? (
-                                  <Select.Option key={subject.id} value={subject.value}>
+                                  <li key={subject.id} value={subject.value}>
                                     {subject.label}
-                                  </Select.Option>
+                                  </li>
                                 ) : null}
                               </React.Fragment>
                             ))}
-                        </Select>
-                      </Form.Item>
+                        </select>
+                      </div>
                       {name !== 0 ? (
                         <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
                       ) : null}
                       <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
-                    </Space>
+                    </div>
                   ))}
                 </>
-              )}
-            </Form.List>
-          </Form.Item>
-        </Col>
-      </Row>
-      <Title level={4} className="register-card__title">
-        Lesson Info
-      </Title>
-      <Row gutter={24} justify="space-between">
-        <Col span={24} md={12}>
-          <Form.Item className="form__input-field form__input-field--input" name="lesson_1" label="Form 1 lesson">
-            <Input id="lesson-1" name="lesson_1" type="text" className="form__input" />
-          </Form.Item>
-        </Col>
-        <Col span={24} md={12}>
-          <Form.Item className="form__input-field form__input-field--input" name="lesson_5" label="Form 5 lesson">
-            <Input id="lesson-5" name="lesson_5" type="text" className="form__input" />
-          </Form.Item>
-        </Col>
-        <Col span={24} md={12}>
-          <Form.Item className="form__input-field form__input-field--input" name="lesson_10" label="Form 10 lesson">
-            <Input id="lesson-10" name="lesson_10" type="text" className="form__input" />
-          </Form.Item>
-        </Col>
-        <Col span={24} md={12}>
-          <Form.Item className="form__input-field form__input-field--input" name="lesson_20" label="Form 20 lesson">
-            <Input id="lesson-20" name="lesson_20" type="text" className="form__input" />
-          </Form.Item>
-        </Col>
-        <Col span={24} md={12}>
-          <Form.Item
-            className="form__input-field form__input-field--select"
-            name="lesson_duration"
-            label="Lessons duration"
-          >
-            <Select id="lesson_duration" className="form__select" showSearch optionFilterProp="children">
+              )} */}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <h4 className="register-card__title">Lesson Info</h4>
+      <div>
+        <div>
+          <div className="form__input-field form__input-field--input">
+            <input id="lesson-1" name="lesson_1" type="text" className="form__input" />
+          </div>
+        </div>
+        <div>
+          <div className="form__input-field form__input-field--input">
+            <input id="lesson-5" name="lesson_5" type="text" className="form__input" />
+          </div>
+        </div>
+        <div>
+          <div className="form__input-field form__input-field--input">
+            <input id="lesson-10" name="lesson_10" type="text" className="form__input" />
+          </div>
+        </div>
+        <div>
+          <div className="form__input-field form__input-field--input">
+            <input id="lesson-20" name="lesson_20" type="text" className="form__input" />
+          </div>
+        </div>
+        <div>
+          <div className="form__input-field form__input-field--select">
+            <select id="lesson_duration" className="form__select">
               {lesson_duration &&
                 lesson_duration.length &&
                 lesson_duration.map((ld) => (
-                  <Select.Option key={ld.id} value={ld.value}>
+                  <li key={ld.id} value={ld.value}>
                     {ld.label}
-                  </Select.Option>
+                  </li>
                 ))}
-            </Select>
-          </Form.Item>
-        </Col>
-      </Row>
-      <Row gutter={24} justify="space-between">
-        <Col span={24} md={12}>
-          <Form.Item label="Levels studying" className="form__input-field form__input-field--select">
-            <Form.List name="levels_studying">
+            </select>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div>
+          {/* <div label="Levels studying" className="form__input-field form__input-field--select">
+            <ul name="levels_studying">
               {(fields_levels_studying, { add, remove }) => (
                 <>
                   {fields_levels_studying.map(({ key, name, ...restField }) => (
-                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
-                      <Form.Item
+                    <div key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
+                      <div
                         {...restField}
                         name={[name, 'levels_studying']}
                         className="form__input-field form__input-field--input"
                       >
-                        <Select id="levels_studying" className="form__select" showSearch optionFilterProp="children">
+                        <select id="levels_studying" className="form__select" showSearch optionFilterProp="children">
                           {levelEducation &&
                             levelEducation.length &&
                             levelEducation.map((le) => (
                               <React.Fragment key={le.id}>
                                 {le.value !== '' ? (
-                                  <Select.Option key={le.id} value={le.value}>
+                                  <li key={le.id} value={le.value}>
                                     {le.label}
-                                  </Select.Option>
+                                  </li>
                                 ) : null}
                               </React.Fragment>
                             ))}
-                        </Select>
-                      </Form.Item>
+                        </select>
+                      </div>
                       {name !== 0 ? (
                         <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
                       ) : null}
                       <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
-                    </Space>
+                    </div>
                   ))}
                 </>
               )}
-            </Form.List>
-          </Form.Item>
-          <Form.Item label="Speaking accent" className="form__input-field form__input-field--select">
-            <Form.List name="speaking_accent">
+            </ul>
+          </div>
+          <div label="Speaking accent" className="form__input-field form__input-field--select">
+            <ul name="speaking_accent">
               {(fields_speaking_accent, { add, remove }) => (
                 <>
                   {fields_speaking_accent.map(({ key, name, ...restField }) => (
-                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
-                      <Form.Item
+                    <div key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
+                      <div
                         {...restField}
                         name={[name, 'speaking_accent']}
                         className="form__input-field form__input-field--input"
                       >
-                        <Select id="speaking_accent" className="form__select" showSearch optionFilterProp="children">
+                        <select id="speaking_accent" className="form__select" showSearch optionFilterProp="children">
                           {speakingAccent &&
                             speakingAccent.length &&
                             speakingAccent.map((sa) => (
                               <React.Fragment key={sa.id}>
                                 {sa.value !== '' ? (
-                                  <Select.Option key={sa.id} value={sa.value}>
+                                  <li key={sa.id} value={sa.value}>
                                     {sa.label}
-                                  </Select.Option>
+                                  </li>
                                 ) : null}
                               </React.Fragment>
                             ))}
-                        </Select>
-                      </Form.Item>
+                        </select>
+                      </div>
                       {name !== 0 ? (
                         <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
                       ) : null}
                       <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
-                    </Space>
+                    </div>
                   ))}
                 </>
               )}
-            </Form.List>
-          </Form.Item>
-          <Form.Item label="Lesson content" className="form__input-field form__input-field--input">
-            <Form.List name="lesson_content">
+            </ul>
+          </div>
+          <div label="Lesson content" className="form__input-field form__input-field--input">
+            <ul name="lesson_content">
               {(fields_lesson_content, { add, remove }) => (
                 <>
                   {fields_lesson_content.map(({ key, name, ...restField }) => (
-                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
-                      <Form.Item
+                    <div key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
+                      <div
                         {...restField}
                         name={[name, 'lesson_content']}
                         className="form__input-field form__input-field--input"
                       >
-                        <Input id="lesson_content" name="lesson_content" type="text" className="form__input" />
-                      </Form.Item>
+                        <input id="lesson_content" name="lesson_content" type="text" className="form__input" />
+                      </div>
                       {name !== 0 ? (
                         <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
                       ) : null}
                       <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
-                    </Space>
+                    </div>
                   ))}
                 </>
               )}
-            </Form.List>
-          </Form.Item>
-          <Form.Item label="Tests" className="form__input-field form__input-field--input">
-            <Form.List name="tests">
+            </ul>
+          </div>
+          <div label="Tests" className="form__input-field form__input-field--input">
+            <ul name="tests">
               {(fields_tests, { add, remove }) => (
                 <>
                   {fields_tests.map(({ key, name, ...restField }) => (
-                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
-                      <Form.Item
-                        {...restField}
-                        name={[name, 'tests']}
-                        className="form__input-field form__input-field--input"
-                      >
-                        <Input id="tests" name="tests" type="text" className="form__input" />
-                      </Form.Item>
+                    <div key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
+                      <div {...restField} name={[name, 'tests']} className="form__input-field form__input-field--input">
+                        <input id="tests" name="tests" type="text" className="form__input" />
+                      </div>
                       {name !== 0 ? (
                         <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
                       ) : null}
                       <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
-                    </Space>
+                    </div>
                   ))}
                 </>
               )}
-            </Form.List>
-          </Form.Item>
-        </Col>
-        <Col span={24} md={12}>
-          <Form.Item label="Education" className="form__input-field form__input-field--input">
-            <Form.List name="education">
+            </ul>
+          </div> */}
+        </div>
+        <div>
+          {/* <div label="Education" className="form__input-field form__input-field--input">
+            <ul name="education">
               {(fields_education, { add, remove }) => (
                 <>
                   {fields_education.map(({ key, name, ...restField }) => (
-                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
-                      <Form.Item
+                    <div key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
+                      <div
                         {...restField}
                         name={[name, 'education']}
                         className="form__input-field form__input-field--input"
                       >
-                        <Input id="education" name="education" type="text" className="form__input" />
-                      </Form.Item>
+                        <input id="education" name="education" type="text" className="form__input" />
+                      </div>
                       {name !== 0 ? (
                         <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
                       ) : null}
                       <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
-                    </Space>
+                    </div>
                   ))}
                 </>
               )}
-            </Form.List>
-          </Form.Item>
-          <Form.Item label="Work experience" className="form__input-field form__input-field--input">
-            <Form.List name="work_experience">
+            </ul>
+          </div>
+          <div label="Work experience" className="form__input-field form__input-field--input">
+            <ul name="work_experience">
               {(fields_work_experience, { add, remove }) => (
                 <>
                   {fields_work_experience.map(({ key, name, ...restField }) => (
-                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
-                      <Form.Item
+                    <div key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
+                      <div
                         {...restField}
                         name={[name, 'work_experience']}
                         className="form__input-field form__input-field--input"
                       >
-                        <Input id="work_experience" name="work_experience" type="text" className="form__input" />
-                      </Form.Item>
+                        <input id="work_experience" name="work_experience" type="text" className="form__input" />
+                      </div>
                       {name !== 0 ? (
                         <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
                       ) : null}
                       <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
-                    </Space>
+                    </div>
                   ))}
                 </>
               )}
-            </Form.List>
-          </Form.Item>
-          <Form.Item label="Certificates" className="form__input-field form__input-field--input">
-            <Form.List name="certificates">
+            </ul>
+          </div>
+          <div label="Certificates" className="form__input-field form__input-field--input">
+            <ul name="certificates">
               {(fields_certificates, { add, remove }) => (
                 <>
                   {fields_certificates.map(({ key, name, ...restField }) => (
-                    <Space key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
-                      <Form.Item
+                    <div key={key} style={{ display: 'flex' }} align="baseline" className="space-select">
+                      <div
                         {...restField}
                         name={[name, 'certificates']}
                         className="form__input-field form__input-field--input"
                       >
-                        <Input id="certificates" name="certificates" type="text" className="form__input" />
-                      </Form.Item>
+                        <input id="certificates" name="certificates" type="text" className="form__input" />
+                      </div>
                       {name !== 0 ? (
                         <MinusCircleOutlined className="form__add-field-btn" onClick={() => remove(name)} />
                       ) : null}
                       <PlusCircleOutlined className="form__add-field-btn" onClick={() => add()} />
-                    </Space>
+                    </div>
                   ))}
                 </>
               )}
-            </Form.List>
-          </Form.Item>
-        </Col>
-      </Row>
-      <Form.Item wrapperCol={{ span: 24 }} className="form__input-field form__input-field--button">
-        <Button type="primary" htmlType="submit" loading={isLoadingSubmit}>
-          Save changes
-        </Button>
-      </Form.Item>
-    </Form>
+            </ul>
+          </div> */}
+        </div>
+      </div>
+      <div className="form__input-field form__input-field--button">
+        <button>Save changes</button>
+      </div>
+    </form>
   )
 }
 

@@ -1,8 +1,5 @@
 import React from 'react'
 import { RoleType } from '../../types/common'
-import Typography from 'antd/lib/typography'
-
-const { Title } = Typography
 
 interface IRegisterCard {
   type: RoleType
@@ -27,9 +24,7 @@ function RegisterCard({ type, title }: IRegisterCard) {
     <div className="register-card">
       <div className="register-card__circle"></div>
       <div className="register-card___logo">{getImageByRegisterType(type)}</div>
-      <Title level={5} className="register-card__title">
-        {title}
-      </Title>
+      <h5 className="register-card__title">{title}</h5>
     </div>
   )
 }

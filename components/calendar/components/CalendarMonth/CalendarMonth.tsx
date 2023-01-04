@@ -1,12 +1,7 @@
 import React, { useState } from 'react'
 import cn from 'classnames'
 
-import Row from 'antd/lib/row'
-import Col from 'antd/lib/col'
-import Button from 'antd/lib/button'
-import Space from 'antd/lib/space'
 import Icon from 'components/Icon'
-import Typography from 'antd/lib/typography'
 
 import CalendarEvent from '../CalendarEvent/CalendarEvent'
 import { ICalendarEvent, CalendarEventType } from '../CalendarEvent/CalendarEvent.type'
@@ -18,8 +13,6 @@ import CalendarDayClass from '../CalendarDay/CalendarDay.class'
 import { ICalendarMonthProps } from './CalendarMonth.type'
 import { IDay } from '../CalendarDay/CalendarDay.type'
 import { formatDate } from '../../utilities/date'
-
-const { Paragraph } = Typography
 
 export default function CalendarMonth({ date, events, today = new Date(), locale = 'en-En' }: ICalendarMonthProps) {
   const todayDay = new CalendarDayClass({ date: today, locale }).getDay()
@@ -89,27 +82,27 @@ export default function CalendarMonth({ date, events, today = new Date(), locale
 
   return (
     <div className="calendar-month">
-      <Row className="calendar-month__controls" justify="center">
-        <Col span={18} className="d-flex d-flex-justify-center">
-          <Space size={[30, 30]} direction="horizontal">
-            <Button onClick={prevMonth} className="calendar-month__control-button">
+      <div className="calendar-month__controls">
+        <div className="d-flex d-flex-justify-center">
+          <div>
+            <button onClick={prevMonth} className="calendar-month__control-button">
               <Icon icon="chevron-left" size={20} />
-            </Button>
-            <Paragraph className="calendar-month__month font-bold color-black">
-              <Space>
+            </button>
+            <div className="calendar-month__month font-bold color-black">
+              <div>
                 {monthName}
                 {year}
-              </Space>
-            </Paragraph>
-            <Button onClick={nextMonth} className="calendar-month__control-button">
+              </div>
+            </div>
+            <button onClick={nextMonth} className="calendar-month__control-button">
               <Icon icon="chevron-right" size={20} />
-            </Button>
-          </Space>
-        </Col>
-      </Row>
-      <Paragraph className="calendar-month__today-info text-center font-semibold color-grey">
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="calendar-month__today-info text-center font-semibold color-grey">
         {`Today is ${todayDay.day} ${formatDate(todayDay.date, 'DD MMMM YYYY')}`}
-      </Paragraph>
+      </div>
       <div className="calendar-week-days">
         {weekInst.getWeekNames().map((week, key) => (
           <div

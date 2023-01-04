@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import cn from 'classnames'
-import Row from 'antd/lib/row'
-import Button from 'antd/lib/button'
-import Space from 'antd/lib/space'
 
 import { CalendarModeView } from '../../calendar.type'
 import { ICalendarViewSwitchersProps } from './CalendarViewSwitchers.type'
@@ -21,10 +18,10 @@ function CalendarViewSwitchers({ selectedView = CalendarModeView.DAY, onClick }:
   }
 
   return (
-    <Row className="calendar-view-switchers" justify="end">
-      <Space size={20}>
+    <div className="calendar-view-switchers">
+      <div>
         {dateTypeViews.map((dateType, index) => (
-          <Button
+          <button
             key={index}
             className={cn('calendar-view-switchers__button', {
               'calendar-view-switchers__button--active': calendarView === dateType.type,
@@ -32,10 +29,10 @@ function CalendarViewSwitchers({ selectedView = CalendarModeView.DAY, onClick }:
             onClick={() => onHandleSwitchView(dateType.type as CalendarModeView)}
           >
             {dateType.title}
-          </Button>
+          </button>
         ))}
-      </Space>
-    </Row>
+      </div>
+    </div>
   )
 }
 

@@ -1,13 +1,11 @@
 import React from 'react'
-import Typography from 'antd/lib/typography'
-import AdminLayout from 'layouts/AdminLayout'
 
-const { Title } = Typography
+import AdminLayout from 'layouts/AdminLayout'
 
 const Services = () => {
   return (
     <div>
-      <Title level={3}>Services</Title>
+      <h3>Services</h3>
     </div>
   )
 }

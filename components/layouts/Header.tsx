@@ -1,10 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Header as HeaderAnt } from 'antd/lib/layout/layout'
-import Row from 'antd/lib/row'
-import Col from 'antd/lib/col'
-import { Divider } from 'antd'
 import Icon from 'components/Icon'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
@@ -27,16 +23,16 @@ function Header() {
   }
 
   return (
-    <HeaderAnt className="header">
+    <div className="header">
       <div className="container">
-        <Row justify="space-between">
-          <Col span={10} md={3} className="header__logo-col">
+        <div>
+          <div className="header__logo-col">
             <Link href="/">
               <a className="header__logo">LearnPlatform</a>
             </Link>
-          </Col>
-          <Col span={14} className="header__navigation-col"></Col>
-          <Col span={14} md={6} className="header__navigation-auth-buttons">
+          </div>
+          <div className="header__navigation-col"></div>
+          <div className="header__navigation-auth-buttons">
             {authState ? (
               <ul className="header__auth-list">
                 <li className="header__auth-item">
@@ -45,7 +41,7 @@ function Header() {
                   </Link>
                 </li>
                 <li className="header__auth-item">
-                  <Divider type="vertical" />
+                  <div />
                 </li>
                 <li className="header__auth-item">
                   <Link href="/">
@@ -64,7 +60,7 @@ function Header() {
                   </Link>
                 </li>
                 <li className="header__auth-item">
-                  <Divider type="vertical" />
+                  <div></div>
                 </li>
                 <li className="header__auth-item">
                   <Link href="/registration">
@@ -73,10 +69,10 @@ function Header() {
                 </li>
               </ul>
             )}
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
-    </HeaderAnt>
+    </div>
   )
 }
 

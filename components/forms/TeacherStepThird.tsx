@@ -1,9 +1,4 @@
 import React from 'react'
-import Form from 'antd/lib/form'
-import Input from 'antd/lib/input/Input'
-import Space from 'antd/lib/space'
-import { Button } from 'antd'
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 
 import { IFormEducation } from '../../intefaces/auth'
 
@@ -41,85 +36,74 @@ function TeacherStepThird({
   }
 
   return (
-    <Form
-      name="sign-up-teacher"
-      labelCol={{ span: 24 }}
-      wrapperCol={{ span: 24 }}
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-      className="form form-auth form-auth--register"
-    >
-      <Form.Item
+    <form name="sign-up-teacher" autoComplete="off" className="form form-auth form-auth--register">
+      <div
         className="form__input-field form__input-field--input"
-        label="Education"
-        name="education"
-        rules={[{ required: true, message: 'Please input your education!' }]}
+        // label="Education"
+        // name="education"
+        // rules={[{ required: true, message: 'Please input your education!' }]}
       >
-        <Input id="education" name="education" className="form__input" />
-      </Form.Item>
-      <Form.List name="education_rest">
-        {(fields, { add, remove }) => (
+        <input id="education" name="education" className="form__input" />
+      </div>
+      <ul>
+        {/* {(fields, { add, remove }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
-              <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                <Form.Item
+              <div key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                <div
                   {...restField}
                   name={[name, 'education_rest']}
                   className="form__input-field form__input-field--input"
                 >
-                  <Input placeholder="Education" />
-                </Form.Item>
+                  <input placeholder="Education" />
+                </div>
                 <MinusCircleOutlined onClick={() => remove(name)} />
-              </Space>
+              </div>
             ))}
-            <Form.Item>
-              <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />} className="form__add-field-btn">
+            <div>
+              <button type="dashed" onClick={() => add()} icon={<PlusOutlined />} className="form__add-field-btn">
                 Add education
-              </Button>
-            </Form.Item>
+              </button>
+            </div>
           </>
-        )}
-      </Form.List>
-      <Form.Item
+        )} */}
+      </ul>
+      <div
         className="form__input-field form__input-field--input"
-        label="Work experience"
-        name="work_experience"
-        rules={[{ required: true, message: 'Please input your work-experience!' }]}
+        // label="Work experience"
+        // name="work_experience"
+        // rules={[{ required: true, message: 'Please input your work-experience!' }]}
       >
-        <Input id="work-experience" name="work_experience" className="form__input" />
-      </Form.Item>
-      <Form.List name="work_experience_rest">
+        <input id="work-experience" name="work_experience" className="form__input" />
+      </div>
+      {/* <ul name="work_experience_rest">
         {(fields, { add, remove }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
-              <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                <Form.Item
+              <div key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                <div
                   {...restField}
                   name={[name, 'work_experience_rest']}
                   className="form__input-field form__input-field--input"
                 >
-                  <Input placeholder="Work experience" />
-                </Form.Item>
+                  <input placeholder="Work experience" />
+                </div>
                 <MinusCircleOutlined onClick={() => remove(name)} />
-              </Space>
+              </div>
             ))}
-            <Form.Item>
-              <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />} className="form__add-field-btn">
+            <div>
+              <button type="dashed" onClick={() => add()} icon={<PlusOutlined />} className="form__add-field-btn">
                 Add work experience
-              </Button>
-            </Form.Item>
+              </button>
+            </div>
           </>
         )}
-      </Form.List>
-      <Form.Item wrapperCol={{ span: 24 }} className="form__input-field form__input-field--button">
-        <Button type="primary" htmlType="submit" loading={isLoading}>
-          Create account{' '}
-        </Button>
-      </Form.Item>
+      </ul> */}
+      <div className="form__input-field form__input-field--button">
+        <button>Create account </button>
+      </div>
       {validationMessage && <p>{validationMessage}</p>}
-    </Form>
+    </form>
   )
 }
 

@@ -1,12 +1,7 @@
 import React, { useState } from 'react'
 import cn from 'classnames'
 
-import Row from 'antd/lib/row'
-import Col from 'antd/lib/col'
-import Space from 'antd/lib/space'
-import Button from 'antd/lib/button'
 import Icon from 'components/Icon'
-import Typography from 'antd/lib/typography'
 
 import { IDay } from '../CalendarDay/CalendarDay.type'
 
@@ -23,8 +18,6 @@ import { ICalendarWeekProps } from './CalendarWeek.type'
 import { formatDate } from '../../utilities/date'
 import { weekDaysCount, calendarStartHourFrom, calendarStartHourTo } from '../../constants'
 import { getFilteredEventByDate } from '../../utilities/custom'
-
-const { Paragraph } = Typography
 
 export default function CalendarWeek({ date, today = new Date(), events, locale = 'en-En' }: ICalendarWeekProps) {
   const todayDay = new CalendarDayClass({ date: today, locale }).getDay()
@@ -67,35 +60,35 @@ export default function CalendarWeek({ date, today = new Date(), events, locale 
   return (
     <div className="calendar-week">
       <div className="calendar-week__top-info">
-        <Row justify="center">
-          <Col span={24}>
-            <Paragraph className="calendar-week__date font-bold color-black">
-              <Space>
+        <div>
+          <div>
+            <div className="calendar-week__date font-bold color-black">
+              <div>
                 {CalendarMonthClass.getMonthNameByIndex(day.monthIndex).month}
                 {day.year}
-              </Space>
-            </Paragraph>
-            <Paragraph className="calendar-week__today-info font-semibold color-grey">
+              </div>
+            </div>
+            <div className="calendar-week__today-info font-semibold color-grey">
               {`Today is ${todayDay.day} ${formatDate(todayDay.date, 'DD MMMM YYYY')}`}
-            </Paragraph>
-            <Row className="calendar-week__controls">
-              <Space size={8}>
-                <Button onClick={prevWeek} className="calendar-week__control-button">
+            </div>
+            <div className="calendar-week__controls">
+              <div>
+                <button onClick={prevWeek} className="calendar-week__control-button">
                   <Icon icon="chevron-left" size={20} />
-                </Button>
-                <Button onClick={nextWeek} className="calendar-week__control-button">
+                </button>
+                <button onClick={nextWeek} className="calendar-week__control-button">
                   <Icon icon="chevron-right" size={20} />
-                </Button>
-              </Space>
-            </Row>
-          </Col>
-        </Row>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <Row className="calendar-week__body">
-        <Col className="calendar-week__body-left">
+      <div className="calendar-week__body">
+        <div className="calendar-week__body-left">
           <CalendarHours from={calendarStartHourFrom} to={calendarStartHourTo} />
-        </Col>
-        <Col className="calendar-week__body-right">
+        </div>
+        <div className="calendar-week__body-right">
           <div className="calendar-week-days">
             {weekNames.map((weekName, key) => (
               <div
@@ -124,8 +117,8 @@ export default function CalendarWeek({ date, today = new Date(), events, locale 
               </div>
             ))}
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,4 +1,4 @@
 export interface IAsideComponentContainerProps {
-  children: React.React
+  children: React.ReactNode
   className?: string
 }

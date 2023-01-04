@@ -1,10 +1,4 @@
 import React, { useEffect } from 'react'
-import Form from 'antd/lib/form'
-import Select from 'antd/lib/select'
-import Input from 'antd/lib/input/Input'
-import { Button } from 'antd'
-import Checkbox from 'antd/lib/checkbox'
-import type { CheckboxChangeEvent } from 'antd/es/checkbox'
 
 import { IFormAddress, IFormDataCompany } from '../../intefaces/auth'
 import useCountriesAndCities, { IUseCountriesAndCities } from '../../hooks/useCountriesAndCities'
@@ -26,14 +20,14 @@ function CompanyStepSecond({
   isLoading?: boolean
   validationMessage?: string | null
 }) {
-  const [form] = Form.useForm()
+  // const [form] = Form.useForm()
   const [countries, states, cities, isLoadingStates, isLoadingCities, getCounties, selectCountry, selectState] =
     useCountriesAndCities(initialValue)
 
   useEffect(() => {
     async function setCountries() {
       const countries = await getCounties()
-      form.setFieldsValue({ countries: countries })
+      // form.setFieldsValue({ countries: countries })
     }
     setCountries()
   }, [])
@@ -46,45 +40,45 @@ function CompanyStepSecond({
     console.log('Failed:', errorInfo)
   }
 
-  const onChangeCheckbox = (e: CheckboxChangeEvent) => {
-    form.setFieldsValue({ mailing_address: form.getFieldValue('legal_address') })
+  const onChangeCheckbox = (e: any) => {
+    // form.setFieldsValue({ mailing_address: form.getFieldValue('legal_address') })
   }
 
   return (
-    <Form
-      form={form}
+    <form
+      // form={form}
       name="sign-up-company"
-      labelCol={{ span: 24 }}
-      wrapperCol={{ span: 24 }}
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
+      // labelCol={{ span: 24 }}
+      //
+      // initialValues={{ remember: true }}
+      // onFinish={onFinish}
+      // onFinishFailed={onFinishFailed}
       autoComplete="off"
       className="form form-auth form-auth--register"
     >
-      <Form.Item
+      <div
         className="form__input-field form__input-field--input"
-        label="Company name"
-        name="company_name"
-        rules={[{ required: true, message: 'Please input your Company name!' }]}
+        // label="Company name"
+        // name="company_name"
+        // rules={[{ required: true, message: 'Please input your Company name!' }]}
       >
-        <Input id="company-name" name="company_name" className="form__input" />
-      </Form.Item>
-      <Form.Item
+        <input id="company-name" name="company_name" className="form__input" />
+      </div>
+      <div
         className="form__input-field form__input-field--input"
-        label="Identification code"
-        name="inn_code"
-        rules={[{ required: true, message: 'Please input your inn code!' }]}
+        // label="Identification code"
+        // name="inn_code"
+        // rules={[{ required: true, message: 'Please input your inn code!' }]}
       >
-        <Input id="inn-code" name="inn_code" className="form__input" />
-      </Form.Item>
-      <Form.Item
-        label="Country"
-        name="country"
-        className="form__input-field form__input-field--select"
-        rules={[{ required: true, message: 'Please input your country!' }]}
+        <input id="inn-code" name="inn_code" className="form__input" />
+      </div>
+      <div
+      // label="Country"
+      // name="country"
+      // className="form__input-field form__input-field--select"
+      // rules={[{ required: true, message: 'Please input your country!' }]}
       >
-        <Select
+        {/* <select
           onSelect={(value) => {
             selectCountry(value)
           }}
@@ -102,19 +96,19 @@ function CompanyStepSecond({
           {countries &&
             countries.length &&
             countries.map((country, index) => (
-              <Select.Option key={index} value={country.country_name}>
+              <li key={index} value={country.country_name}>
                 {country.country_name}
-              </Select.Option>
+              </li>
             ))}
-        </Select>
-      </Form.Item>
-      <Form.Item
-        label="State"
-        name="state"
-        className="form__input-field form__input-field--select"
-        rules={[{ required: true, message: 'Please input your state!' }]}
+        </select> */}
+      </div>
+      <div
+      // label="State"
+      // name="state"
+      // className="form__input-field form__input-field--select"
+      // rules={[{ required: true, message: 'Please input your state!' }]}
       >
-        <Select
+        {/* <select
           loading={isLoadingStates}
           disabled={isLoadingStates}
           onSelect={(value) => selectState(value)}
@@ -132,19 +126,19 @@ function CompanyStepSecond({
           {states &&
             states.length &&
             states.map((state, index) => (
-              <Select.Option key={index} value={state.state_name}>
+              <li key={index} value={state.state_name}>
                 {state.state_name}
-              </Select.Option>
+              </li>
             ))}
-        </Select>
-      </Form.Item>
-      <Form.Item
-        label="City"
-        name="city"
-        className="form__input-field form__input-field--select"
-        rules={[{ required: true, message: 'Please input your city!' }]}
+        </select> */}
+      </div>
+      <div
+      // label="City"
+      // name="city"
+      // className="form__input-field form__input-field--select"
+      // rules={[{ required: true, message: 'Please input your city!' }]}
       >
-        <Select
+        {/* <select
           loading={isLoadingCities}
           disabled={isLoadingCities}
           id="city"
@@ -161,36 +155,34 @@ function CompanyStepSecond({
           {cities &&
             cities.length &&
             cities.map((city, index) => (
-              <Select.Option key={index} value={city.city_name}>
+              <li key={index} value={city.city_name}>
                 {city.city_name}
-              </Select.Option>
+              </li>
             ))}
-        </Select>
-      </Form.Item>
-      <Form.Item
+        </select> */}
+      </div>
+      <div
         className="form__input-field form__input-field--input"
-        label="Legal address"
-        name="legal_address"
-        rules={[{ required: true, message: 'Please input your Legal address!' }]}
+        // label="Legal address"
+        // name="legal_address"
+        // rules={[{ required: true, message: 'Please input your Legal address!' }]}
       >
-        <Input id="legal-address" name="legal_address" className="form__input" />
-      </Form.Item>
-      <Form.Item
+        <input id="legal-address" name="legal_address" className="form__input" />
+      </div>
+      <div
         className="form__input-field form__input-field--input"
-        label="Mailing address"
-        name="mailing_address"
-        rules={[{ required: true, message: 'Please input your Mailing address!' }]}
+        // label="Mailing address"
+        // name="mailing_address"
+        // rules={[{ required: true, message: 'Please input your Mailing address!' }]}
       >
-        <Input id="mailing-address" name="mailing_address" className="form__input" />
-      </Form.Item>
-      <Checkbox onChange={onChangeCheckbox}>Matches legal address</Checkbox>
-      <Form.Item wrapperCol={{ span: 24 }} className="form__input-field form__input-field--button">
-        <Button type="primary" htmlType="submit" loading={isLoading}>
-          Create account
-        </Button>
-      </Form.Item>
+        <input id="mailing-address" name="mailing_address" className="form__input" />
+      </div>
+      {/* <Checkbox onChange={onChangeCheckbox}>Matches legal address</Checkbox> */}
+      <div className="form__input-field form__input-field--button">
+        <button>Create account</button>
+      </div>
       {validationMessage && <p>{validationMessage}</p>}
-    </Form>
+    </form>
   )
 }
 

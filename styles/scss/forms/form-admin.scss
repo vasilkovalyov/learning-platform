@@ -1,0 +1,51 @@
+.form-admin {
+  .space-select {
+    width: 100%;
+
+    .ant-space-item {
+      &:nth-child(1) {
+        width: 100%;
+      }
+
+      &:not(:first-child) {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: -8px;
+      }
+    }
+  }
+
+  .ant-btn {
+    min-width: auto;
+  }
+
+  &__additional-btn {
+    padding: 0;
+    height: auto;
+
+    span {
+      text-decoration: underline;
+    }
+  }
+
+  .form__input {
+    @media (min-width: 1024px) {
+      width: 100%;
+    }
+  }
+
+  .ant-form-item-control-input {
+    + div {
+      @media (min-width: 1024px) {
+        max-width: 300px;
+        width: 100%;
+      }
+    }
+  }
+
+  .ant-form-item-control-input-content {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}

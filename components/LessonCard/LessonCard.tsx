@@ -1,61 +1,54 @@
 import React from 'react'
 
-import Row from 'antd/lib/row'
-import Col from 'antd/lib/col'
-import Typography from 'antd/lib/typography'
 import Icon from 'components/Icon'
 
 import { ILessonCardProps } from './LessonCard.type'
 
 import colors from '../../constants/colors'
 
-const { Text, Title, Paragraph } = Typography
-
 function LessonCard({ dateTimestamp, eventStart, eventEnd, heading, registeredCount, maxPersons }: ILessonCardProps) {
-  const getPersonText = (personsNum: number) => (personsNum > 2 ? 'persons' : 'person')
+  const getPersonspan = (personsNum: number) => (personsNum > 2 ? 'persons' : 'person')
   return (
     <div className="lesson-card">
-      <Row>
-        <Col span={24} xs={12}>
-          <Text className="lesson-card__badge lesson-card__badge--date color-black font-semibold">
+      <div>
+        <div>
+          <span className="lesson-card__badge lesson-card__badge--date color-black font-semibold">
             <Icon icon="calendar" size={14} color={colors.GREEN_COLOR} />
             {dateTimestamp}
-          </Text>
-        </Col>
-        <Col span={24} xs={12}>
-          <Text className="lesson-card__badge lesson-card__badge--time color-black font-semibold">
+          </span>
+        </div>
+        <div>
+          <span className="lesson-card__badge lesson-card__badge--time color-black font-semibold">
             <Icon icon="clock-circular-outline" size={14} color={colors.PRIMARY_COLOR} />
             {eventStart}
             <span> - </span>
             {eventEnd}
-          </Text>
-        </Col>
-        <Col>
-          <Title level={5} className="lesson-card__heading color-black font-bold">
-            {heading}
-          </Title>
-        </Col>
+          </span>
+        </div>
+        <div>
+          <h5 className="lesson-card__heading color-black font-bold">{heading}</h5>
+        </div>
         {registeredCount ? (
-          <Col span={24} sm={12}>
-            <Paragraph className="lesson-card__info-heading">
-              <Text className="color-grey">Registered</Text>
-            </Paragraph>
-            <Text>
-              {registeredCount} {getPersonText(registeredCount)}
-            </Text>
-          </Col>
+          <div>
+            <p className="lesson-card__info-heading">
+              <span className="color-grey">Registered</span>
+            </p>
+            <span>
+              {registeredCount} {getPersonspan(registeredCount)}
+            </span>
+          </div>
         ) : null}
         {maxPersons ? (
-          <Col span={24} sm={12}>
-            <Paragraph className="lesson-card__info-heading">
-              <Text className="color-grey">Max Persons:</Text>
-            </Paragraph>
-            <Text>
-              {maxPersons} {getPersonText(maxPersons)}
-            </Text>
-          </Col>
+          <div>
+            <p className="lesson-card__info-heading">
+              <span className="color-grey">Max Persons:</span>
+            </p>
+            <span>
+              {maxPersons} {getPersonspan(maxPersons)}
+            </span>
+          </div>
         ) : null}
-      </Row>
+      </div>
     </div>
   )
 }

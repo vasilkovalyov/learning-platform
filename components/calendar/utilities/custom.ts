@@ -1,5 +1,4 @@
 import { ICalendarEvent, CalendarEventType } from '../components/CalendarEvent/CalendarEvent.type'
-import { scheduleCalendarCellHeight } from '../constants'
 
 export interface IEventsArrayForDay {
   id: string
