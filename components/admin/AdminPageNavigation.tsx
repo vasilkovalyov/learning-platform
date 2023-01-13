@@ -14,7 +14,7 @@ interface INavigation {
   role: RoleType | string
 }
 
-export default function AdminPageNavigation({ role = 'student' }: { role: RoleType }) {
+function AdminPageNavigation({ role = 'student' }: { role: RoleType }) {
   const router = useRouter()
   const page = router.pathname.split('/')[2] ? router.pathname.split('/')[2] : 'account'
   const [activeNav, setActiveNav] = useState<string>(page)
@@ -117,3 +117,5 @@ export default function AdminPageNavigation({ role = 'student' }: { role: RoleTy
     </div>
   )
 }
+
+export default AdminPageNavigation
