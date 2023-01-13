@@ -6,7 +6,7 @@ import PublicLayout from './PublicLayout'
 import { useSelector } from 'react-redux'
 import { selectAuthState } from 'redux/slices/auth'
 
-import AdminPageNavigation from '../components/AdminPageNavigation/AdminPageNavigation'
+import AdminPageNavigation from '../components/AdminPageNavigation'
 
 function AdminLayout({ children }: { children: React.ReactNode }) {
   const authState = useSelector(selectAuthState)
