@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 import PublicLayout from 'layouts/PublicLayout'
 
-import RegisterCard from 'components/client/RegisterCard'
+import RegisterCard from 'components/Public/RegisterCard'
 
 const Registration: NextPage = () => {
   return (
@@ -31,13 +31,6 @@ const Registration: NextPage = () => {
                 <Link href="/registration/teacher">
                   <a className="section-registration__card-link">
                     <RegisterCard title="Teacher" type="teacher" />
-                  </a>
-                </Link>
-              </div>
-              <div>
-                <Link href="/registration/company">
-                  <a className="section-registration__card-link">
-                    <RegisterCard title="Company" type="company" />
                   </a>
                 </Link>
               </div>

@@ -76,14 +76,6 @@ export default function AdminPageNavigation({ role = 'student' }: { role: RoleTy
       role: '',
     },
     {
-      id: 8,
-      path: '/admin/company-team',
-      name: 'company-team',
-      title: 'Company team',
-      icon: 'company',
-      role: 'company' as RoleType,
-    },
-    {
       id: 9,
       path: '/admin/chats',
       name: 'chats',

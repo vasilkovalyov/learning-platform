@@ -1,41 +1,33 @@
-import React from 'react'
-import Link from 'next/link'
+import React, { useState } from 'react'
 import type { NextPage } from 'next'
+import Link from 'next/link'
 import Head from 'next/head'
 
 import PublicLayout from 'layouts/PublicLayout'
-import { IFormData } from '../../../intefaces/auth'
 
-import StudentForm from '../../../components/forms/StudentForm'
+import RegistrationStudent from 'components/Forms/Registration/RegistrationStudent/RegistrationStudent'
+import { RegistrationStudentFormProps } from 'components/Forms/Registration/RegistrationStudent/RegistrationStudent.type'
 
-import AuthService from '../../../services/auth'
+import RegistrationService from 'services/registration.service'
 
-import { useFormAction, useFormSteps, IUseFormAction, IUserFormSteps } from '../../../hooks/useFormAction'
+const RegistrationStudentPage: NextPage = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [validationMessage, setValidationMessage] = useState<string | null>(null)
+  const [isSuccessForm, setIsSuccessForm] = useState<boolean>(false)
 
-const initialStateFormAction: IUseFormAction = {
-  isLoading: false,
-  validationMessage: '',
-}
+  function addValidationMessage(value) {
+    setValidationMessage(value)
+  }
 
-const initialStateFormSteps: IUserFormSteps<IFormData, null> = {
-  isSuccessForms: false,
-  formDataFirst: null,
-}
-
-const RegistrationStudent: NextPage = () => {
-  const [isLoading, validationMessage, toggleLoading, addValidationMessage] = useFormAction(initialStateFormAction)
-  const [isSuccessForm, successForm] = useFormSteps<IFormData, null>(initialStateFormSteps)
-  async function successSignUpForm(isSuccess: boolean, data: IFormData) {
-    if (!isSuccess) return
-
+  async function successSignUpForm(data: RegistrationStudentFormProps) {
     try {
-      toggleLoading(true)
-      const response = await AuthService.signUpStudent(data)
-      toggleLoading(false)
+      setIsLoading(true)
+      const response = await RegistrationService.signUpStudent(data)
+      setIsLoading(false)
       addValidationMessage(response.message || '')
-      successForm()
+      setIsSuccessForm(true)
     } catch (e) {
-      toggleLoading(false)
+      setIsLoading(false)
       addValidationMessage((e.response.data && e.response.data.message) || e.message)
     }
   }
@@ -66,7 +58,8 @@ const RegistrationStudent: NextPage = () => {
             <div>
               <div>
                 {!isSuccessForm ? (
-                  <StudentForm
+                  <RegistrationStudent
+                    inputFields={['fullname', 'login', 'email', 'password', 'confirm_password']}
                     onSuccess={successSignUpForm}
                     isLoading={isLoading}
                     validationMessage={validationMessage}
@@ -88,4 +81,4 @@ const RegistrationStudent: NextPage = () => {
   )
 }
 
-export default RegistrationStudent
+export default RegistrationStudentPage

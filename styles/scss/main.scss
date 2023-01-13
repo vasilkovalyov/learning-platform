@@ -1,28 +1,16 @@
-@import 'variables';
-@import 'mixins';
-@import 'icons';
-@import 'fonts';
+@import '1-settings/_settings';
+@import '2-tools/_tools';
+@import '3-generic/_generic';
+@import '4-components/_components';
+@import '5-forms/_forms';
+@import '6-calendar/_calendar';
+@import '7-lessons-calendar/_lessons-calendar';
+@import '8-schedule-calendar/_schedule-calendar';
+@import '9-layouts/_layouts';
+@import '10-sections/_sections';
 
-@import 'utilities/utilities';
-
-@import 'calendar/calendar';
-@import 'schedule-calendar/schedule-calendar';
-@import 'lessons-calendar/lessons-calendar';
-
-@import 'common';
-
-@import 'components/header';
-@import 'components/register-card';
-@import 'components/btn';
-@import 'components/admin-page-navigation';
-@import 'components/lesson-card';
-@import 'components/lesson-schedule-card';
-@import 'components/booking-test-lesson';
-@import 'components/booking-private-lesson';
-@import 'components/aside-component-container';
-
-@import 'forms/form-auth';
-@import 'forms/form-admin';
-
-@import 'sections/section-registration';
-@import 'sections/section-admin';
+.form-step {
+  &--hide {
+    display: none;
+  }
+}

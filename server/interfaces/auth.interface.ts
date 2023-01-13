@@ -1,5 +1,5 @@
-import { RoleType } from '../../types/common';
-import { IPlaceLiving } from './common';
+import { RoleType } from '../../types/common'
+import { IPlaceLiving } from './common'
 
 export interface IFormUser {
   _id?: string
@@ -16,14 +16,6 @@ export interface IFormTeacher extends IFormUser, IPlaceLiving {
   phone: string
   work_experience: string[]
   address: string
-}
-
-export interface IFormCompany extends Omit<IFormUser, 'fullname'>, IPlaceLiving {
-  company_name: string
-  inn_code: string
-  legal_address: string
-  mailing_address: string
-  phone: string
 }
 
 export interface IAuthUserResponse<T> {

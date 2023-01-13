@@ -1,15 +1,23 @@
 import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+
+import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
+import Stack from '@mui/material/Stack'
+import Divider from '@mui/material/Divider'
+
 import Icon from 'components/Icon'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { selectAuthState, clearAuthState } from 'redux/slices/auth'
 
-function Header() {
-  const authState = useSelector(selectAuthState)
-  const dispatch = useDispatch()
+import colors from '../../constants/colors'
+import pages from '../../constants/pages'
+
+function AdminNavList() {
   const router = useRouter()
+  const dispatch = useDispatch()
 
   function signOut(e) {
     e.preventDefault()
@@ -23,55 +31,74 @@ function Header() {
   }
 
   return (
+    <Stack
+      direction={'row'}
+      spacing={1}
+      divider={<Divider orientation="horizontal" flexItem />}
+      className="header__auth-list"
+    >
+      <div className="header__auth-item">
+        <Link href={pages.admin}>
+          <a className="header__auth-link">Admin</a>
+        </Link>
+      </div>
+      <div className="header__auth-item">
+        <div />
+      </div>
+      <div className="header__auth-item">
+        <Link href={pages.home}>
+          <a className="header__auth-link" onClick={(e) => signOut(e)}>
+            Sign out
+          </a>
+        </Link>
+      </div>
+    </Stack>
+  )
+}
+
+function PublicNavList() {
+  return (
+    <Stack
+      direction={'row'}
+      spacing={1}
+      divider={<Divider orientation="horizontal" flexItem />}
+      className="header__auth-list"
+    >
+      <div className="header__auth-item">
+        <Icon icon="user" size={20} color={colors.primary_color} className="header__auth-icon" />
+        <Link href={pages.login}>
+          <a className="header__auth-link">Sign in</a>
+        </Link>
+      </div>
+      <div className="header__auth-item">
+        <div>/</div>
+      </div>
+      <div className="header__auth-item">
+        <Link href={pages.registration}>
+          <a className="header__auth-link">Sign up</a>
+        </Link>
+      </div>
+    </Stack>
+  )
+}
+
+function Header() {
+  const authState = useSelector(selectAuthState)
+
+  return (
     <div className="header">
-      <div className="container">
-        <div>
-          <div className="header__logo-col">
+      <Container className="container">
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
             <Link href="/">
               <a className="header__logo">LearnPlatform</a>
             </Link>
-          </div>
-          <div className="header__navigation-col"></div>
-          <div className="header__navigation-auth-buttons">
-            {authState ? (
-              <ul className="header__auth-list">
-                <li className="header__auth-item">
-                  <Link href="/admin">
-                    <a className="header__auth-link">Admin</a>
-                  </Link>
-                </li>
-                <li className="header__auth-item">
-                  <div />
-                </li>
-                <li className="header__auth-item">
-                  <Link href="/">
-                    <a className="header__auth-link" onClick={(e) => signOut(e)}>
-                      Sign out
-                    </a>
-                  </Link>
-                </li>
-              </ul>
-            ) : (
-              <ul className="header__auth-list">
-                <li className="header__auth-item">
-                  <Icon icon="user" size={20} color="#FA6655" className="header__auth-icon" />
-                  <Link href="/auth">
-                    <a className="header__auth-link">Sign in</a>
-                  </Link>
-                </li>
-                <li className="header__auth-item">
-                  <div></div>
-                </li>
-                <li className="header__auth-item">
-                  <Link href="/registration">
-                    <a className="header__auth-link">Sign up</a>
-                  </Link>
-                </li>
-              </ul>
-            )}
-          </div>
-        </div>
-      </div>
+          </Grid>
+          <Grid item xs={8}>
+            <div className="header__navigation-auth-buttons">{authState ? <AdminNavList /> : <PublicNavList />}</div>
+          </Grid>
+        </Grid>
+      </Container>
     </div>
   )
 }

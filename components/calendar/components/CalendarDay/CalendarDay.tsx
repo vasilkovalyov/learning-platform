@@ -8,9 +8,9 @@ import CalendarEvents from '../CalendarEvents/CalendarEvents'
 import { ICalendarEvent } from '../CalendarEvent/CalendarEvent.type'
 
 import CalendarMonthClass from '../CalendarMonth/CalendarMonth.class'
-import CalendarDayClass from '../CalendarDay/CalendarDay.class'
+import CalendarDayClass from './CalendarDay.class'
 
-import { IDay } from '../CalendarDay/CalendarDay.type'
+import { IDay } from './CalendarDay.type'
 
 import { ICalendarDayProps } from './CalendarDay.type'
 import { getCurrentTime } from '../../utilities/time'

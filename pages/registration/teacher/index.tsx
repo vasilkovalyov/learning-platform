@@ -1,66 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
 import PublicLayout from 'layouts/PublicLayout'
 
-import BaseFormStepFirst, { BaseFormStepFirstType } from 'components/forms/BaseFormStepFirst'
-import TeacherStepSecond, { IBaseFormTeacherStepSecond } from 'components/forms/TeacherStepSecond'
-import TeacherStepThird from 'components/forms/TeacherStepThird'
-
-import { IFormEducation } from '../../../intefaces/auth'
-
-import { useFormAction, useFormSteps, IUseFormAction, IUserFormSteps } from '../../../hooks/useFormAction'
-import AuthService from '../../../services/auth'
-
-const initialStateFormAction: IUseFormAction = {
-  isLoading: false,
-  validationMessage: '',
-}
-
-const initialStateFormSteps: IUserFormSteps<BaseFormStepFirstType, IBaseFormTeacherStepSecond> = {
-  isSuccessForms: false,
-  formDataFirst: null,
-  formDataSecond: null,
-  isSuccessFormFirst: false,
-  isSuccessFormSecond: false,
-}
+import { RegistrationTeacherFullProps } from 'components/Forms/Registration/RegistrationTeacher/RegistrationTeacher.type'
+import RegistrationTeacherForm from 'components/Forms/Registration/RegistrationTeacher'
+import RegistrationService from 'services/registration.service'
 
 const RegistrationTeacher: NextPage = () => {
-  const [isLoading, validationMessage, toggleLoading, addValidationMessage] = useFormAction(initialStateFormAction)
-  const [
-    isSuccessForm,
-    successForm,
-    setFormStepFirst,
-    setFormStepSecond,
-    formDataFirst,
-    isSuccessFormFirst,
-    formDataSecond,
-    isSuccessFormSecond,
-  ] = useFormSteps<BaseFormStepFirstType, IBaseFormTeacherStepSecond>(initialStateFormSteps)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [validationMessage, setValidationMessage] = useState<string | null>(null)
+  const [isSuccessForm, setIsSuccessForm] = useState<boolean>(false)
 
-  function successFormFirst(isSuccess: boolean, data: BaseFormStepFirstType) {
-    if (!isSuccess) return
-    setFormStepFirst(data)
+  function addValidationMessage(value) {
+    setValidationMessage(value)
   }
 
-  function successFormSecond(isSuccess: boolean, data: IBaseFormTeacherStepSecond) {
-    if (!isSuccess) return
-    setFormStepSecond(data)
-  }
-
-  async function successFormThird(isSuccess: boolean, data: IFormEducation) {
-    if (!isSuccess) return
+  async function onSubmit(data: RegistrationTeacherFullProps) {
     try {
-      toggleLoading(true)
-      const userData = { ...formDataFirst, ...formDataSecond, ...data }
-      const response = await AuthService.signUpTeacher(userData)
-      toggleLoading(false)
-      successForm()
+      setIsLoading(true)
+      const response = await RegistrationService.signUpTeacher(data)
+      setIsLoading(false)
       addValidationMessage(response.message || '')
+      setIsSuccessForm(true)
     } catch (e) {
-      toggleLoading(false)
+      setIsLoading(false)
       addValidationMessage(e.response.data.message || e.message)
     }
   }
@@ -89,25 +55,11 @@ const RegistrationTeacher: NextPage = () => {
           <div className="container">
             <h3 className="section-registration__heading">Registration Teacher</h3>
             {!isSuccessForm ? (
-              <div>
-                <div>
-                  <BaseFormStepFirst onSuccess={successFormFirst} type="teacher" />
-                </div>
-                {isSuccessFormFirst ? (
-                  <div>
-                    <TeacherStepSecond onSuccess={successFormSecond} />
-                  </div>
-                ) : null}
-                {isSuccessFormSecond ? (
-                  <div>
-                    <TeacherStepThird
-                      onSuccess={successFormThird}
-                      isLoading={isLoading}
-                      validationMessage={validationMessage}
-                    />
-                  </div>
-                ) : null}
-              </div>
+              <RegistrationTeacherForm
+                isLoading={isLoading}
+                onSubmit={onSubmit}
+                validationMessage={validationMessage}
+              />
             ) : (
               <div className="text-center">
                 <div>

@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   stories: [
     '../stories/**/*.stories.mdx',
@@ -13,10 +15,13 @@ module.exports = {
     '@storybook/addon-a11y',
     'storybook-addon-jsx',
     'storybook-source-code-addon',
+    'storybook-addon-sass-postcss',
   ],
   staticDirs: ['../public/'],
-  framework: '@storybook/react',
+  // framework: '@storybook/react',
   core: {
     builder: '@storybook/builder-webpack5',
   },
+  staticDirs: [path.resolve(__dirname, '../public')],
+  presets: [path.resolve(__dirname, './next-preset.js')],
 }

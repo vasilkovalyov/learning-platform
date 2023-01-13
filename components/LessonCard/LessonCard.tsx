@@ -13,13 +13,13 @@ function LessonCard({ dateTimestamp, eventStart, eventEnd, heading, registeredCo
       <div>
         <div>
           <span className="lesson-card__badge lesson-card__badge--date color-black font-semibold">
-            <Icon icon="calendar" size={14} color={colors.GREEN_COLOR} />
+            <Icon icon="calendar" size={14} color={colors.green_color} />
             {dateTimestamp}
           </span>
         </div>
         <div>
           <span className="lesson-card__badge lesson-card__badge--time color-black font-semibold">
-            <Icon icon="clock-circular-outline" size={14} color={colors.PRIMARY_COLOR} />
+            <Icon icon="clock-circular-outline" size={14} color={colors.primary_color} />
             {eventStart}
             <span> - </span>
             {eventEnd}

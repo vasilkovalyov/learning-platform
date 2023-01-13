@@ -1,5 +1,5 @@
-const JoiValidation = require('joi');
-import { IFormUser, IFormTeacher, IFormCompany } from "../interfaces/auth.interface";
+const JoiValidation = require('joi')
+import { IFormUser, IFormTeacher } from '../interfaces/auth.interface'
 
 export const signInValidation = (data: Pick<IFormUser, 'email' | 'password'>) => {
   const schema = JoiValidation.object({
@@ -17,7 +17,7 @@ export const signUpStudentValidation = (data: IFormUser) => {
     email: JoiValidation.string().required().email(),
     password: JoiValidation.string().min(6).required(),
     confirm_password: JoiValidation.string().required().valid(JoiValidation.ref('password')),
-    role: JoiValidation.string().valid('student')
+    role: JoiValidation.string().valid('student'),
   })
 
   return schema.validate(data)
@@ -42,24 +42,3 @@ export const signUpTeacherValidation = (data: IFormTeacher) => {
 
   return schema.validate(data)
 }
-
-export const signUpCompanyValidation = (data: IFormCompany) => {
-  const schema = JoiValidation.object({
-    login: JoiValidation.string().required(),
-    email: JoiValidation.string().required().email(),
-    password: JoiValidation.string().min(6).required(),
-    confirm_password: JoiValidation.string().required().valid(JoiValidation.ref('password')),
-    phone: JoiValidation.string().required(),
-    company_name: JoiValidation.string().required(),
-    inn_code: JoiValidation.string().required(),
-    city: JoiValidation.string().required(),
-    state: JoiValidation.string().required(),
-    country: JoiValidation.string().required(),
-    legal_address: JoiValidation.string().required(),
-    mailing_address: JoiValidation.string().required(),
-    role: JoiValidation.string().valid('company'),
-  })
-
-  return schema.validate(data)
-}
-

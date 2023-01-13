@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import AdminLayout from 'layouts/AdminLayout'
-import AccountForm from '../../components/forms/AccountForm'
 
 import UserService from 'services/user'
 import { useDispatch } from 'react-redux'
-import { IUserStudent } from 'intefaces/user'
+import { IUserStudent } from 'interfaces/user'
 import { setAuthState, selectAuthState } from 'redux/slices/auth'
 import { useSelector } from 'react-redux'
 
-import { useFormAction, IUseFormAction } from '../../hooks/useFormAction'
 import { RoleType } from 'types/common'
 
 import TeacherService from 'services/teacher.service'
@@ -20,13 +18,10 @@ const initialProps = {
   },
 }
 
-const initialStateFormAction: IUseFormAction = {
-  isLoading: false,
-  validationMessage: '',
-}
-
 function Account(props: { user: IUserStudent | null }) {
-  const [isLoading, validationMessage, toggleLoading] = useFormAction(initialStateFormAction)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [validationMessage, setValidationMessage] = useState<string | null>(null)
+  // const [isLoading, validationMessage, toggleLoading] = useFormAction(initialStateFormAction)
   const authState = useSelector(selectAuthState)
 
   const dispatch = useDispatch()
@@ -36,16 +31,20 @@ function Account(props: { user: IUserStudent | null }) {
   })
 
   function successSaveChanges(isSuccess, data) {
-    toggleLoading(true)
+    setIsLoading(true)
     if (authState?.role === 'teacher') {
       TeacherService.saveAccountData({
         ...data,
         _id: authState._id,
-      }).then((res) => {
-        console.log(res)
-        toggleLoading(false)
-        // openNotification('bottomRight')
       })
+        .then((res) => {
+          console.log(res)
+          setIsLoading(false)
+          // openNotification('bottomRight')
+        })
+        .catch((e) => {
+          setValidationMessage(e.response.message)
+        })
     }
   }
 
@@ -53,13 +52,6 @@ function Account(props: { user: IUserStudent | null }) {
     <div>
       <div>
         <h3>Account</h3>
-        <AccountForm
-          role={authState?.role as RoleType}
-          formData={authState}
-          onSuccess={successSaveChanges}
-          isLoading={isLoading}
-          validationMessage={validationMessage}
-        />
       </div>
     </div>
   )

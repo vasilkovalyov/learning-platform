@@ -1,1 +1,1 @@
-export type UserAccountType = 'student' | 'teacher' | 'company'
+export type UserAccountType = 'student' | 'teacher'

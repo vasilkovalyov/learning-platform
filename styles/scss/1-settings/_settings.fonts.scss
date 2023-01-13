@@ -1,0 +1,40 @@
+/* ==========================================================================
+   #FONTS
+   ========================================================================== */
+
+/* Font */
+$base-font: 'Montserrat', Arial, Helvetica, sans-serif !default;
+$heading-font: 'EBGaramond', Arial, Helvetica, sans-serif !default;
+$brand-font: $base-font;
+
+/* Size | Line height */
+$body-font-size: 16px !default;
+$body-line-height: 1.2 !default;
+
+$small-font-size: 12px !default;
+$small-line-height: 1.2 !default;
+
+$h1-font-size: 50px !default;
+$h1-line-heght: 1.2 !default;
+
+$h2-font-size: 50px !default;
+$h2-line-heght: 1.2 !default;
+
+$h3-font-size: 30px !default;
+$h3-line-heght: 1.2 !default;
+
+$h4-font-size: 20px !default;
+$h4-line-heght: 1.2 !default;
+
+$h5-font-size: 18px !default;
+$h5-line-heght: 1.2px !default;
+
+$h6-font-size: 16px !default;
+$h6-line-heght: 1.2 !default;
+
+/* Weight */
+$weight-normal: 400 !default;
+$weight-medium: 500 !default;
+$weight-semibold: 600 !default;
+$weight-bold: 700 !default;
+$weight-black: 900 !default;

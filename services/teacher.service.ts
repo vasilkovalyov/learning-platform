@@ -1,4 +1,4 @@
-import { ITeacherPrivateData, ITeacherAuthInfo } from 'intefaces/teacher.interface'
+import { ITeacherPrivateData, ITeacherAuthInfo } from 'interfaces/teacher.interface'
 import $api from 'common/ajax-config'
 import { PRIVATE_REQUESTS } from 'constants/api-requests'
 import getCookie from 'common/getCookie'

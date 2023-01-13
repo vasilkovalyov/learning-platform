@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { IUserStudent } from 'intefaces/user'
+import { IUserStudent } from 'interfaces/user'
 
 import { AppState } from '../store'
 import { RoleType } from 'types/common'
