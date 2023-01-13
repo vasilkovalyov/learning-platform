@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 import PublicLayout from 'layouts/PublicLayout'
 
-import RegisterCard from 'components/Public/RegisterCard'
+import RegisterCard from 'components/RegisterCard'
 
 const Registration: NextPage = () => {
   return (
