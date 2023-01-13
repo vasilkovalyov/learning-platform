@@ -34,6 +34,12 @@ function App({ Component, ...rest }: ComponentWithPageLayout) {
 App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ ctx, Component }) => {
   const { token, userId, role } = parseCookies(ctx)
 
+  if (!token) {
+    return {
+      pageProps: {},
+    }
+  }
+
   const user = await UserService.isAuthUser(role as RoleType, userId, token || '')
   if (user) {
     store.dispatch(setAuthState(user))
