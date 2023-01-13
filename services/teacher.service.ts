@@ -1,4 +1,5 @@
-import { ITeacherPrivateData, ITeacherAuthInfo } from 'interfaces/teacher.interface'
+import { ITeacherPrivateData } from 'interfaces/teacher.interface'
+import { UserAuthProps } from 'interfaces/user.interface'
 import $api from 'common/ajax-config'
 import { PRIVATE_REQUESTS } from 'constants/api-requests'
 import getCookie from 'common/getCookie'
@@ -28,7 +29,7 @@ class TeacherService {
     }
   }
 
-  async saveAccountData(props: Omit<ITeacherAuthInfo, 'password' | 'role'>) {
+  async saveAccountData(props: Omit<UserAuthProps, 'role'>) {
     try {
       const token = getCookie('token')
       const { email, fullname, login, phone, _id } = props

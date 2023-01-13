@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Header from '../components/Layouts/Header'
-import Footer from '../components/Layouts/Footer'
+import Header from 'components/Layouts/Header'
+import Footer from 'components/Layouts/Footer'
 
 function PublicLayout({ children }: { children: React.ReactNode }) {
   return (

@@ -1,18 +1,9 @@
 import { PUBLIC_REQUESTS } from 'constants/api-requests'
 import $api from 'common/ajax-config'
-import { RoleType } from 'types/common'
-
-export interface UserResponseProps {
-  _id: string
-  email: string
-  fullname: string
-  login: string
-  phone: string
-  role: RoleType
-}
+import { UserAuthProps } from 'interfaces/user.interface'
 
 export interface AuthenticationUserResponse {
-  data: UserResponseProps
+  data: UserAuthProps
   token: string
   message: string
 }

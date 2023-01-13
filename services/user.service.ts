@@ -1,11 +1,10 @@
-import $api from '../common/ajax-config'
-import { RoleType } from '../types/common'
-import axios from 'axios'
+import $api from 'common/ajax-config'
+import { RoleType } from 'types/common'
 
 class UserService {
   async isAuthUser(role: RoleType, userId: string, token: string) {
     try {
-      const response = await axios.get(`${process.env.API_URL}api/${role}/${userId}`, {
+      const response = await $api().get(`/${role}/${userId}`, {
         headers: { Authorization: `${token}` },
       })
       return response.data

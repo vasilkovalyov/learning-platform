@@ -1,14 +1,3 @@
-import { RoleType } from 'types/common'
-
-export interface ITeacherAuthInfo {
-  _id?: string
-  fullname: string
-  email: string
-  login: string
-  role: RoleType
-  phone: string
-}
-
 export interface ITeacherPrivateData {
   _id: string
   private_data: Partial<ITeacherPrivateInfo>

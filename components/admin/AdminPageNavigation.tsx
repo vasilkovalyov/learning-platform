@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Icon from 'components/Icon'
 import cn from 'classnames'
-import { RoleType } from '../../types/common'
+import { RoleType } from 'types/common'
 
 interface INavigation {
   id: number

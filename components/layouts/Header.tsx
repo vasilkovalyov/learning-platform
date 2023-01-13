@@ -12,8 +12,8 @@ import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { selectAuthState, clearAuthState } from 'redux/slices/auth'
 
-import colors from '../../constants/colors'
-import pages from '../../constants/pages'
+import colors from 'constants/colors'
+import pages from 'constants/pages'
 
 function AdminNavList() {
   const router = useRouter()

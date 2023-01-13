@@ -3,8 +3,8 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 import TextField from '@mui/material/TextField/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 
-import Icon from '../../Generic/Icon/Icon'
-import { IconEnum } from '../../Generic/Icon/Icon.type'
+import Icon from 'components/Generic/Icon/Icon'
+import { IconEnum } from 'components/Generic/Icon/Icon.type'
 
 export default {
   title: 'Forms/TextField',

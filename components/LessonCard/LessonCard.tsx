@@ -4,7 +4,7 @@ import Icon from 'components/Icon'
 
 import { ILessonCardProps } from './LessonCard.type'
 
-import colors from '../../constants/colors'
+import colors from 'constants/colors'
 
 function LessonCard({ dateTimestamp, eventStart, eventEnd, heading, registeredCount, maxPersons }: ILessonCardProps) {
   const getPersonspan = (personsNum: number) => (personsNum > 2 ? 'persons' : 'person')

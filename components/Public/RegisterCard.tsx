@@ -1,5 +1,5 @@
 import React from 'react'
-import { RoleType } from '../../types/common'
+import { RoleType } from 'types/common'
 
 interface IRegisterCard {
   type: RoleType

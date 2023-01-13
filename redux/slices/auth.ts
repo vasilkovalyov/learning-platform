@@ -1,38 +1,41 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { IUserStudent } from 'interfaces/user'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { AppState } from '../store'
-import { RoleType } from 'types/common'
+import { HYDRATE } from 'next-redux-wrapper'
+
+import { UserAuthProps } from 'interfaces/user.interface'
 
 export interface IAuthState {
-  authState: {
-    fullname: string
-    email: string
-    login: string
-    role: RoleType
-    _id: string
-  } | null
+  data: UserAuthProps | null
 }
 
 const initialState: IAuthState = {
-  authState: null,
+  data: null,
 }
 
 export const authSlice = createSlice({
-  name: 'auth',
+  name: 'user',
   initialState,
   reducers: {
-    setAuthState(state, action) {
-      state.authState = action.payload
+    setAuthState(state, action: PayloadAction<UserAuthProps>) {
+      state.data = action.payload
     },
     clearAuthState(state) {
-      state.authState = null
+      state.data = null
+    },
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action) => {
+      return {
+        ...state,
+        ...action.payload.user,
+      }
     },
   },
 })
 
 export const { setAuthState, clearAuthState } = authSlice.actions
 
-export const selectAuthState = (state: AppState): IUserStudent | null => state.auth.authState
+export const selectAuthState = (state: AppState): UserAuthProps | null => state.user.data
 
 export default authSlice.reducer

@@ -1,5 +1,5 @@
 import { PUBLIC_REQUESTS } from 'constants/api-requests'
-import $api from '../common/ajax-config'
+import $api from 'common/ajax-config'
 import { RoleType } from 'types/common'
 import { RegistrationStudentFormProps } from 'components/Forms/Registration/RegistrationStudent/RegistrationStudent.type'
 import { RegistrationTeacherFullProps } from 'components/Forms/Registration/RegistrationTeacher/RegistrationTeacher.type'
