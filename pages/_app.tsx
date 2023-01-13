@@ -1,5 +1,4 @@
 import React from 'react'
-import '../styles/scss/main.scss'
 import type { AppProps } from 'next/app'
 import { wrapper } from 'redux/store'
 import { Provider } from 'react-redux'
@@ -8,6 +7,8 @@ import { setAuthState } from 'redux/slices/auth'
 import { parseCookies } from 'nookies'
 import UserService from 'services/user.service'
 import { RoleType } from 'types/common'
+
+import '../styles/scss/main.scss'
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps['Component'] & {
