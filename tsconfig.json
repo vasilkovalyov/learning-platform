@@ -14,8 +14,14 @@
       "resolveJsonModule": true,
       "isolatedModules": false,
       "downlevelIteration": true,
+      "incremental": true,
+      "alwaysStrict": true,
+      "noImplicitAny": true,
       "strictNullChecks": true,
-      "incremental": true
+      "strictPropertyInitialization": true,
+      "strictFunctionTypes": true,
+      "noImplicitThis": true,
+      "strictBindCallApply": true
     }
   },
   "compilerOptions": {
@@ -23,7 +29,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -34,8 +40,14 @@
     "downlevelIteration": true,
     "jsx": "preserve",
     "baseUrl": "./",
+    "incremental": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
     "strictNullChecks": true,
-    "incremental": true
+    "strictPropertyInitialization": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true
   },
   "exclude": ["node_modules", "dist", "server"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.json", "**/*.tsx"]

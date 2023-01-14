@@ -24,15 +24,18 @@ export type RegistrationTeacherFullProps = RegistrationTeacherFormFirst &
   UserLocationProps &
   RegistrationTeacherFormThirdProps
 
-export interface RegistationTeacherFormStepProps<T> {
-  inputFields?: string[]
+export interface RegistationTeacherFormStepProps<FormParams, InputFieldType> {
+  inputFields?: InputFieldType[]
   nextStep: () => void
   handleFormData: (name: string, value: string) => void
-  values: T
+  values: FormParams
 }
 
 export interface RegistationTeacherFormFinalStepProps
-  extends Omit<RegistationTeacherFormStepProps<RegistrationTeacherFormThirdProps>, 'nextStep'> {
+  extends Omit<
+    RegistationTeacherFormStepProps<RegistrationTeacherFormThirdProps, TextFieldStepSecondType>,
+    'nextStep'
+  > {
   finalStep: (params: RegistrationTeacherFormThirdProps) => void
   validationMessage?: string | null
   isLoading: boolean

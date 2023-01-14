@@ -9,7 +9,7 @@ export interface AuthenticationUserResponse {
 }
 
 class AuthService {
-  async signIn(email, password): Promise<AuthenticationUserResponse> {
+  async signIn(email: string, password: string): Promise<AuthenticationUserResponse> {
     const response = await $api().post(`/${PUBLIC_REQUESTS.SIGN_IN}`, {
       params: { email, password },
     })

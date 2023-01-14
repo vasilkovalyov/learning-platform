@@ -10,5 +10,5 @@ export interface RegistrationStudentProps {
   onSuccess: (data: RegistrationStudentFormProps) => void
   isLoading: boolean
   validationMessage?: string | null
-  inputFields: string[]
+  inputFields: TextFieldType[]
 }

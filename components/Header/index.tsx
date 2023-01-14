@@ -6,6 +6,7 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Stack from '@mui/material/Stack'
 import Divider from '@mui/material/Divider'
+import Button from '@mui/material/Button'
 
 import Icon from 'components/Icon'
 import { useDispatch } from 'react-redux'
@@ -19,9 +20,7 @@ function AdminNavList() {
   const router = useRouter()
   const dispatch = useDispatch()
 
-  function signOut(e) {
-    e.preventDefault()
-
+  function signOut() {
     router.push('/')
     dispatch(clearAuthState())
     document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:01 GTM;'
@@ -46,11 +45,9 @@ function AdminNavList() {
         <div />
       </div>
       <div className="header__auth-item">
-        <Link href={pages.home}>
-          <a className="header__auth-link" onClick={(e) => signOut(e)}>
-            Sign out
-          </a>
-        </Link>
+        <Button className="header__auth-link" href={pages.home} onClick={() => signOut()}>
+          Sign out
+        </Button>
       </div>
     </Stack>
   )

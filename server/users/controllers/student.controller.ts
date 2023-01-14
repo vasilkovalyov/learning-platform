@@ -1,10 +1,10 @@
-import StudentService from "../services/student.service";
+import StudentService from '../services/student.service'
 
 class StudentController {
   async signUp(req, res) {
     try {
       let userData: unknown = null
-      userData = await StudentService.signUp(req.body.params); // for prod
+      userData = await StudentService.signUp(req.body.params) // for prod
       // userData = await StudentService.signUp(req.query); // for postman
 
       // temp don`t remove!!!
@@ -12,8 +12,8 @@ class StudentController {
       //   email: userData.data.email,
       //   hash: userData.data._id
       // })
-      res.json(userData);
-    } catch(e) {
+      res.json(userData)
+    } catch (e: any) {
       console.error(e)
       res.status(e.status).json(e)
     }
@@ -22,8 +22,8 @@ class StudentController {
   async getUserById(req, res) {
     try {
       const userData = await StudentService.getUserById(req.params.id)
-      res.json(userData);
-    } catch(e) {
+      res.json(userData)
+    } catch (e: any) {
       console.error(e)
       res.status(e.status).json(e)
     }

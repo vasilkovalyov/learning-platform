@@ -28,7 +28,7 @@ function Calendar({ date = new Date(), events = [], locale = 'en-En' }: ICalenda
     'calendar-events--day-view': calendarView === 'day',
   })
 
-  function onHandleClickViewSwitcher(type) {
+  function onHandleClickViewSwitcher(type: CalendarModeView) {
     if (
       calendarView === CalendarModeView.MONTH &&
       type === CalendarModeView.DAY &&

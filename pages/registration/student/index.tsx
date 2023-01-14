@@ -15,7 +15,7 @@ const RegistrationStudentPage: NextPage = () => {
   const [validationMessage, setValidationMessage] = useState<string | null>(null)
   const [isSuccessForm, setIsSuccessForm] = useState<boolean>(false)
 
-  function addValidationMessage(value) {
+  function addValidationMessage(value: string) {
     setValidationMessage(value)
   }
 
@@ -26,7 +26,7 @@ const RegistrationStudentPage: NextPage = () => {
       setIsLoading(false)
       addValidationMessage(response.message || '')
       setIsSuccessForm(true)
-    } catch (e) {
+    } catch (e: any) {
       setIsLoading(false)
       addValidationMessage((e.response.data && e.response.data.message) || e.message)
     }

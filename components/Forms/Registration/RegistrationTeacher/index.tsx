@@ -2,7 +2,14 @@ import React, { useState } from 'react'
 
 import cn from 'classnames'
 
-import { RegistrationTeacherFullProps, RegistrationTeacherProps } from './RegistrationTeacher.type'
+import {
+  RegistrationTeacherFullProps,
+  RegistrationTeacherProps,
+  TextFieldStepFirstType,
+  TextFieldStepSecondType,
+} from './RegistrationTeacher.type'
+
+import { RegistrationTeacherFormThirdProps } from './RegistrationTeacher.type'
 
 import RegistrationTeacherStepFirst, { initialData as stepFirstInitialData } from './RegistrationTeacherStepFirst'
 import RegistrationTeacherStepSecond, { initialData as stepSecondInitialData } from './RegistrationTeacherStepSecond'
@@ -23,8 +30,15 @@ function RegistrationTeacher({ isLoading, validationMessage, onSubmit }: Registr
 
   const [formData, setFormData] = useState<RegistrationTeacherFullProps>(initialData)
 
-  const formInputStepOne = ['fullname', 'login', 'email', 'password', 'confirm_password', 'phone']
-  const formInputStepTwo = ['country', 'state', 'city', 'address']
+  const formInputStepOne: TextFieldStepFirstType[] = [
+    'fullname',
+    'login',
+    'email',
+    'password',
+    'confirm_password',
+    'phone',
+  ]
+  const formInputStepTwo: TextFieldStepSecondType[] = ['country', 'state', 'city', 'address']
 
   function nextStep() {
     if (step < totalSteps) {
@@ -38,7 +52,7 @@ function RegistrationTeacher({ isLoading, validationMessage, onSubmit }: Registr
     }
   }
 
-  function finalStep(data) {
+  function finalStep(data: RegistrationTeacherFormThirdProps) {
     setFormData((prevState) => ({
       ...prevState,
       ...data,
@@ -50,7 +64,7 @@ function RegistrationTeacher({ isLoading, validationMessage, onSubmit }: Registr
     })
   }
 
-  const handleInputData = (name, value) => {
+  const handleInputData = (name: string, value: string) => {
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,

@@ -26,7 +26,7 @@ function RegistrationTeacherStepTwo({
   inputFields,
   nextStep,
   handleFormData,
-}: RegistationTeacherFormStepProps<RegistrationTeacherFormSecondProps>) {
+}: RegistationTeacherFormStepProps<RegistrationTeacherFormSecondProps, TextFieldStepSecondType>) {
   const {
     handleSubmit,
     register,

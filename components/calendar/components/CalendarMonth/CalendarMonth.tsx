@@ -34,8 +34,8 @@ export default function CalendarMonth({ date, events, today = new Date(), locale
 
     if (!filteredEvents.length) return null
 
-    const uniqEvents = { personal: 0, group: 0 }
-    filteredEvents.forEach((event) => (uniqEvents[event.type] += 1))
+    const uniqEvents = { personal: 0, group: 0, course: 0 }
+    filteredEvents.forEach((event: ICalendarEvent) => (uniqEvents[event.type] += 1))
     return Object.entries(uniqEvents).map((item, index) => {
       const [key, count] = item
       if (!count) return null

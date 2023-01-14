@@ -20,6 +20,8 @@ import { UserLoginProps } from 'interfaces/user.interface'
 import FormLogin from 'components/Forms/Login/Login'
 import { setAuthState } from 'redux/slices/auth'
 
+// import { Error } from 'interfaces/common.interface'
+
 const Auth: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [validationMessage, setValidationMessage] = useState<string | null>(null)
@@ -39,10 +41,10 @@ const Auth: NextPage = () => {
       localStorage.setItem('userId', response.data._id || '')
       dispatch(setAuthState(response.data))
       router.push('/admin')
-    } catch (e) {
+    } catch (e: any) {
       console.log(e)
       setIsLoading(false)
-      setValidationMessage(e.response.data.message || e.message)
+      setValidationMessage(e.response?.data.message || e?.message)
     }
   }
 

@@ -31,7 +31,7 @@ function RegistrationTeacherStepOne({
   inputFields,
   nextStep,
   handleFormData,
-}: RegistationTeacherFormStepProps<RegistrationTeacherFormFirst>) {
+}: RegistationTeacherFormStepProps<RegistrationTeacherFormFirst, TextFieldStepFirstType>) {
   const [showPassword, setShowPassword] = React.useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false)
 
