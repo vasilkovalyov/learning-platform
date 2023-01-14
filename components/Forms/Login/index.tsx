@@ -13,7 +13,7 @@ import { FormLoginProps } from './Login.type'
 import { UserLoginProps } from 'interfaces/user.interface'
 import { LoginFormSchema } from 'utils/schemas/authentication'
 
-import Icon from 'components/Generic/Icon/Icon'
+import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
 
 function FormLogin({ onSuccess, isLoading, validationMessage }: FormLoginProps) {

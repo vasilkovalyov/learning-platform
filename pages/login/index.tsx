@@ -13,14 +13,12 @@ import Container from '@mui/material/Container'
 
 import PublicLayout from 'layouts/BaseLayout'
 
-import ContainerWithShadow from 'components/Generic/ContainerWithShadow/ContainerWithShadow'
+import ContainerWithShadow from 'components/Generic/ContainerWithShadow'
 
 import AuthService from 'services/authentication.service'
 import { UserLoginProps } from 'interfaces/user.interface'
-import FormLogin from 'components/Forms/Login/Login'
+import FormLogin from 'components/Forms/Login'
 import { setAuthState } from 'redux/slices/auth'
-
-// import { Error } from 'interfaces/common.interface'
 
 const Auth: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)

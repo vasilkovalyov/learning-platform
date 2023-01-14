@@ -5,7 +5,7 @@ import Head from 'next/head'
 
 import PublicLayout from 'layouts/BaseLayout'
 
-import RegistrationStudent from 'components/Forms/Registration/RegistrationStudent/RegistrationStudent'
+import RegistrationStudent from 'components/Forms/Registration/RegistrationStudent'
 import { RegistrationStudentFormProps } from 'components/Forms/Registration/RegistrationStudent/RegistrationStudent.type'
 
 import RegistrationService from 'services/registration.service'

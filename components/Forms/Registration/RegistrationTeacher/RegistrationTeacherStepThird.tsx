@@ -14,7 +14,7 @@ import {
 
 import { RegistrationTeacherFormThirdSchema } from 'utils/schemas/registration/teacher'
 
-import Icon from 'components/Icon'
+import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
 
 const defaultValues: RegistationTeacherFormDynamicListProps = {

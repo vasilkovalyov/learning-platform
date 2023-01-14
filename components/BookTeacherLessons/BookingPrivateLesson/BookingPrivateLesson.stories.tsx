@@ -1,7 +1,7 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
-import BookingPrivateLesson from './BookingPrivateLesson'
+import BookingPrivateLesson from '.'
 import { model } from './BookingPrivateLesson.model'
 
 export default {

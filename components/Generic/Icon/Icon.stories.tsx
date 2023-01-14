@@ -1,6 +1,6 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import Icon from './Icon'
+import Icon from '.'
 import { IconEnum } from './Icon.type'
 export default {
   title: 'Generic/Icon',

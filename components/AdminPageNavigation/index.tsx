@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import Icon from 'components/Icon'
+import Icon from 'components/Generic/Icon'
 import cn from 'classnames'
 import { RoleType } from 'types/common'
 

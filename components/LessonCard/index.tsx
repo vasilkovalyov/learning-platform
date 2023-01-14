@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Icon from 'components/Icon'
+import Icon from 'components/Generic/Icon'
 
 import { ILessonCardProps } from './LessonCard.type'
 

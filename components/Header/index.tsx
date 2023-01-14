@@ -8,7 +8,7 @@ import Stack from '@mui/material/Stack'
 import Divider from '@mui/material/Divider'
 import Button from '@mui/material/Button'
 
-import Icon from 'components/Icon'
+import Icon from 'components/Generic/Icon'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { selectAuthState, clearAuthState } from 'redux/slices/auth'

@@ -11,7 +11,7 @@ import CalendarDayClass from './components/CalendarDay/CalendarDay.class'
 import CalendarHours from './components/CalendarHours/CalendarHours'
 import CalendarEventsTypes from './components/CalendarEventsTypes/CalendarEventsTypes'
 
-import Icon from 'components/Icon'
+import Icon from 'components/Generic/Icon'
 
 import { calendarStartHourFrom, calendarStartHourTo, lessonsCalendarCellHeight, hourMinutes } from './constants'
 

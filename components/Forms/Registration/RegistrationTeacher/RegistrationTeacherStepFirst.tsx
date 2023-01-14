@@ -15,7 +15,7 @@ import {
 
 import { RegistrationTeacherFormFirstSchema } from 'utils/schemas/registration/teacher'
 
-import Icon from 'components/Generic/Icon/Icon'
+import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
 
 export const initialData = {

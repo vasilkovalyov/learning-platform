@@ -1,11 +1,13 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import Button from '@mui/material/Button/Button'
+import Button from '@mui/material/Button'
 
 export default {
   title: 'Generic/Button',
   component: Button,
-  argTypes: {},
+  argTypes: {
+    disabled: { control: 'boolean', defaultValue: false },
+  },
 } as ComponentMeta<typeof Button>
 
 const Template: ComponentStory<typeof Button> = (args) => <Button {...args}>Button</Button>
@@ -20,6 +22,5 @@ Secondary.args = {
 }
 export const Link = Template.bind({})
 Link.args = {
-  disabled: false,
   href: '/',
 }

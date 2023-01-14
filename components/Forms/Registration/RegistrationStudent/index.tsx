@@ -12,7 +12,7 @@ import { RegistrationStudentFormProps, TextFieldType, RegistrationStudentProps }
 
 import { RegistrationStudentFormSchema } from 'utils/schemas/registration/student'
 
-import Icon from 'components/Generic/Icon/Icon'
+import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
 
 function RegistrationStudent({ onSuccess, isLoading, validationMessage, inputFields }: RegistrationStudentProps) {

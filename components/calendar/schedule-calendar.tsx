@@ -10,8 +10,8 @@ import CalendarDayClass from './components/CalendarDay/CalendarDay.class'
 
 import CalendarHours from './components/CalendarHours/CalendarHours'
 
-import Icon from 'components/Icon'
-import LessonScheduleCard from '../LessonScheduleCard/LessonScheduleCard'
+import Icon from 'components/Generic/Icon'
+import LessonScheduleCard from '../LessonScheduleCard'
 import { ILessonScheduleCardProps } from '../LessonScheduleCard/LessonScheduleCard.type'
 
 import { getCurrentTime } from './utilities/time'

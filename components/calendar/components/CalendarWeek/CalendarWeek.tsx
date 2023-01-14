@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import cn from 'classnames'
 
-import Icon from 'components/Icon'
+import Icon from 'components/Generic/Icon'
 
 import { IDay } from '../CalendarDay/CalendarDay.type'
 
