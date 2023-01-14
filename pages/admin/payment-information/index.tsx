@@ -1,6 +1,6 @@
 import React from 'react'
 
-import AdminLayout from 'layouts/AdminLayout'
+import { PrivateLayout } from '../../page-layouts'
 
 const PaymentInformation = () => {
   return (
@@ -10,6 +10,6 @@ const PaymentInformation = () => {
   )
 }
 
-PaymentInformation.PageLayout = AdminLayout
+PaymentInformation.getLayout = PrivateLayout
 
 export default PaymentInformation

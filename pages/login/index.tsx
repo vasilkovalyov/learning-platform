@@ -11,7 +11,7 @@ import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 
-import PublicLayout from 'layouts/PublicLayout'
+import PublicLayout from 'layouts/BaseLayout'
 
 import ContainerWithShadow from 'components/Generic/ContainerWithShadow/ContainerWithShadow'
 

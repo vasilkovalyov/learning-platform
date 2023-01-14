@@ -1,6 +1,6 @@
 import React from 'react'
 
-import AdminLayout from 'layouts/AdminLayout'
+import { PrivateLayout } from '../../page-layouts'
 
 const Chats = () => {
   return (
@@ -10,6 +10,6 @@ const Chats = () => {
   )
 }
 
-Chats.PageLayout = AdminLayout
+Chats.getLayout = PrivateLayout
 
 export default Chats

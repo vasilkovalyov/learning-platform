@@ -1,6 +1,6 @@
 import React from 'react'
 
-import AdminLayout from 'layouts/AdminLayout'
+import { PrivateLayout } from '../../page-layouts'
 
 const Services = () => {
   return (
@@ -10,6 +10,6 @@ const Services = () => {
   )
 }
 
-Services.PageLayout = AdminLayout
+Services.getLayout = PrivateLayout
 
 export default Services

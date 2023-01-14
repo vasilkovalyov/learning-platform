@@ -1,6 +1,6 @@
 import React from 'react'
 
-import AdminLayout from 'layouts/AdminLayout'
+import { PrivateLayout } from '../../page-layouts'
 
 const Statistics = () => {
   return (
@@ -10,6 +10,6 @@ const Statistics = () => {
   )
 }
 
-Statistics.PageLayout = AdminLayout
+Statistics.getLayout = PrivateLayout
 
 export default Statistics

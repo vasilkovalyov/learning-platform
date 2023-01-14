@@ -1,6 +1,6 @@
 import React from 'react'
 
-import AdminLayout from 'layouts/AdminLayout'
+import { PrivateLayout } from '../../page-layouts'
 
 const PrivateCard = () => {
   return (
@@ -10,6 +10,6 @@ const PrivateCard = () => {
   )
 }
 
-PrivateCard.PageLayout = AdminLayout
+PrivateCard.getLayout = PrivateLayout
 
 export default PrivateCard

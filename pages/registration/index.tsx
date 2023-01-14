@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 
-import PublicLayout from 'layouts/PublicLayout'
+import PublicLayout from 'layouts/BaseLayout'
 
 import RegisterCard from 'components/RegisterCard'
 

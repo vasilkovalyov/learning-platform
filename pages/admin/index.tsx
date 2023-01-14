@@ -1,5 +1,7 @@
 import React from 'react'
-import AdminLayout from 'layouts/AdminLayout'
+import Head from 'next/head'
+
+import { PrivateLayout } from '../page-layouts'
 
 function Account() {
   return (
@@ -11,6 +13,6 @@ function Account() {
   )
 }
 
-Account.PageLayout = AdminLayout
+Account.getLayout = PrivateLayout
 
 export default Account

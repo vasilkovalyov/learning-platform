@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
 
-import PublicLayout from './PublicLayout'
+import PublicLayout from './BaseLayout'
 import { useSelector } from 'react-redux'
 import { selectAuthState } from 'redux/slices/auth'
 
@@ -12,12 +12,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
   const authState = useSelector(selectAuthState)
 
   return (
-    <div>
-      <Head>
-        <title>LearnLangPlatform - Admin</title>
-        <meta name="description" content="The platform for learning languages" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <>
       <PublicLayout>
         <div className="breadcrumb-block">
           <div className="container">
@@ -49,7 +44,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </PublicLayout>
-    </div>
+    </>
   )
 }
 

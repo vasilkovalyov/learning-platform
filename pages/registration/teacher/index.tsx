@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
-import PublicLayout from 'layouts/PublicLayout'
+import PublicLayout from 'layouts/BaseLayout'
 
 import { RegistrationTeacherFullProps } from 'components/Forms/Registration/RegistrationTeacher/RegistrationTeacher.type'
 import RegistrationTeacherForm from 'components/Forms/Registration/RegistrationTeacher'

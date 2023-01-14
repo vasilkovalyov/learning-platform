@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { ReactElement, ReactNode } from 'react'
 import type { AppProps } from 'next/app'
+import type { NextPage } from 'next'
 import { wrapper } from 'redux/store'
 import { Provider } from 'react-redux'
 import { setAuthState } from 'redux/slices/auth'
@@ -10,26 +11,20 @@ import { RoleType } from 'types/common'
 
 import '../styles/scss/main.scss'
 
-type ComponentWithPageLayout = AppProps & {
-  Component: AppProps['Component'] & {
-    PageLayout?: React.ComponentType | any
-  }
+export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode
 }
 
-function App({ Component, ...rest }: ComponentWithPageLayout) {
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+function App({ Component, ...rest }: AppPropsWithLayout) {
   const { store, props } = wrapper.useWrappedStore(rest)
   const { pageProps } = props
-  return (
-    <Provider store={store}>
-      {Component.PageLayout ? (
-        <Component.PageLayout>
-          <Component {...pageProps} />
-        </Component.PageLayout>
-      ) : (
-        <Component {...pageProps} />
-      )}
-    </Provider>
-  )
+  const getLayout = Component.getLayout ?? ((page) => page)
+
+  return <Provider store={store}>{getLayout(<Component {...pageProps} />)}</Provider>
 }
 
 App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ ctx, Component }) => {
