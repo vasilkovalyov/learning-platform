@@ -1,7 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 
-import { PrivateLayout } from '../page-layouts'
+import PrivateLayoutPage from 'pages/privateLayoutPage'
 
 function Account() {
   return (
@@ -13,6 +13,6 @@ function Account() {
   )
 }
 
-Account.getLayout = PrivateLayout
+Account.getLayout = PrivateLayoutPage
 
 export default Account

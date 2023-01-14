@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { PrivateLayout } from '../../page-layouts'
+import PrivateLayoutPage from 'pages/privateLayoutPage'
 
 const Statistics = () => {
   return (
@@ -10,6 +10,6 @@ const Statistics = () => {
   )
 }
 
-Statistics.getLayout = PrivateLayout
+Statistics.getLayout = PrivateLayoutPage
 
 export default Statistics

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { PrivateLayout } from '../../page-layouts'
+import PrivateLayoutPage from 'pages/privateLayoutPage'
 
 const PrivateCard = () => {
   return (
@@ -10,6 +10,6 @@ const PrivateCard = () => {
   )
 }
 
-PrivateCard.getLayout = PrivateLayout
+PrivateCard.getLayout = PrivateLayoutPage
 
 export default PrivateCard

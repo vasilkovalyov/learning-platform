@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { PrivateLayout } from '../../page-layouts'
+import PrivateLayoutPage from 'pages/privateLayoutPage'
 
 const MyLessons = () => {
   return (
@@ -10,6 +10,6 @@ const MyLessons = () => {
   )
 }
 
-MyLessons.getLayout = PrivateLayout
+MyLessons.getLayout = PrivateLayoutPage
 
 export default MyLessons

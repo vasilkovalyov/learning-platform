@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { PrivateLayout } from '../../page-layouts'
+import PrivateLayoutPage from 'pages/privateLayoutPage'
 
 const PaymentInformation = () => {
   return (
@@ -10,6 +10,6 @@ const PaymentInformation = () => {
   )
 }
 
-PaymentInformation.getLayout = PrivateLayout
+PaymentInformation.getLayout = PrivateLayoutPage
 
 export default PaymentInformation
