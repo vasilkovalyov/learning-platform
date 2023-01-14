@@ -12,7 +12,15 @@ export default {
   argTypes: {},
 } as ComponentMeta<typeof TextField>
 
-const Template: ComponentStory<typeof TextField> = (args) => <TextField {...args} className="form-field" />
+const Template: ComponentStory<typeof TextField> = (args) => (
+  <TextField
+    {...args}
+    InputLabelProps={{
+      shrink: true,
+    }}
+    className="form-field"
+  />
+)
 const TemplateWithIcon: ComponentStory<typeof TextField> = (args) => (
   <TextField
     {...args}
@@ -30,7 +38,7 @@ const TemplateWithIcon: ComponentStory<typeof TextField> = (args) => (
 export const Default = Template.bind({})
 Default.args = {
   label: 'Label text',
-  defaultValue: 'Text',
+  defaultValue: '',
   variant: 'standard',
 }
 

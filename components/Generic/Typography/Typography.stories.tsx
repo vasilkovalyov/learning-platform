@@ -13,7 +13,11 @@ export default {
   },
 } as ComponentMeta<typeof Typography>
 
-const Template: ComponentStory<typeof Typography> = (args) => <Typography {...args}>Typography</Typography>
+const Template: ComponentStory<typeof Typography> = (args) => (
+  <Typography {...args} className="MuiTypography">
+    Typography
+  </Typography>
+)
 
 export const Default = Template.bind({})
 Default.args = {

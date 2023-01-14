@@ -5,7 +5,7 @@
 
 html,
 body {
-  font-family: $brand-font;
+  font-family: $base-font;
   font-size: $body-font-size;
   line-height: $body-line-height;
 }
@@ -13,7 +13,7 @@ body {
 input,
 textarea,
 button {
-  font-family: $brand-font;
+  font-family: $base-font;
   line-height: $body-line-height;
 }
 

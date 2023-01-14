@@ -1,0 +1,72 @@
+@import '../1-settings/settings.colors';
+@import '../1-settings/settings.sizes';
+@import '../1-settings/settings.fonts';
+@import '../1-settings/settings.radius';
+@import '../1-settings/settings.spacing';
+
+.MuiTextField-root {
+  .MuiInputLabel-standard {
+    color: $grey-3;
+    font-weight: $weight-medium;
+    font-size: $size-1-m;
+    line-height: $base-lh;
+    font-family: $base-font;
+
+    &.Mui-focused {
+      color: $grey-3;
+    }
+
+    &.Mui-error {
+      color: $grey-3;
+    }
+  }
+
+  .MuiFormHelperText-root {
+    &.Mui-error {
+      color: $primary-color;
+      text-align: right;
+    }
+  }
+
+  .MuiInput-root {
+    background-color: $grey-2;
+    border-radius: $radius-xxl;
+    padding: $spacing-0-l $spacing-1-m;
+    overflow: hidden;
+
+    &.Mui-error {
+      border: 1px solid $primary-color;
+    }
+
+    &::before,
+    &:after {
+      display: none;
+    }
+
+    input {
+      color: $dark-blue-1;
+      font-weight: $weight-medium;
+      font-size: $size-1-m;
+      line-height: $base-lh;
+      font-family: $base-font;
+    }
+  }
+}
+
+.MuiFormControlRadio {
+  &.MuiFormControlLabel-root {
+    .MuiRadio-root {
+      &:hover {
+        background-color: transparent;
+      }
+    }
+    .MuiSvgIcon-root {
+      &:nth-child(1) {
+        fill: $grey-1;
+      }
+      &:nth-child(2) {
+        fill: $primary-color;
+      }
+    }
+  }
+}

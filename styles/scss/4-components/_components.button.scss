@@ -1,2 +1,27 @@
-.button {
+@import '../1-settings/settings.colors';
+@import '../1-settings/settings.radius';
+
+.MuiButtonBase-root {
+  border-radius: $radius-md !important;
+
+  &.MuiButton-containedPrimary {
+    background: $primary-gradient;
+
+    &:hover {
+      color: $white;
+      background: $secondary-gradient;
+      border-color: $primary-color;
+    }
+  }
+
+  &.MuiButton-outlinedPrimary {
+    color: $primary-color;
+    border: 1px solid $primary-color;
+
+    &:hover {
+      color: $white;
+      background: $primary-gradient;
+      border-color: $primary-color;
+    }
+  }
 }
