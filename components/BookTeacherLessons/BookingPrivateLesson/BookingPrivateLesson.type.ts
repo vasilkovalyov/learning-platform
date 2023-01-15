@@ -3,4 +3,5 @@ export interface IBookingPrivateLessonProps {
   heading: string
   price: number
   buttonText: string
+  lessonDays: number[]
 }

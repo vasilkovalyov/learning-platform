@@ -4,4 +4,5 @@ export const model: IBookingPrivateLessonProps = {
   heading: 'Private Lesson',
   price: 10,
   buttonText: 'Book Lesson',
+  lessonDays: [1, 2, 4, 6, 8, 10, 12],
 }
