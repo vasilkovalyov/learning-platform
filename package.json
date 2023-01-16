@@ -11,7 +11,7 @@
     "build:next": "next build",
     "build": "npm run build:next && npm run build:server",
     "start": "NODE_ENV=production node dist/server/app.js",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook ./public -p 6006",
     "build-storybook": "build-storybook"
   },
   "dependencies": {

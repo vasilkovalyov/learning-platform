@@ -1,5 +1,12 @@
-// import '!style-loader!css-loader!sass-loader!../styles/scss/main.scss'
 import '../styles/scss/main.scss'
+
+import * as nextImage from 'next/image';
+
+Object.defineProperty(nextImage, 'default', {
+  configurable: true,
+  value: props => <img {...props} />
+});
+
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
