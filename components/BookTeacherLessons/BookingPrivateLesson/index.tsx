@@ -13,10 +13,9 @@ import ListItemText from '@mui/material/ListItemText'
 
 import { IBookingPrivateLessonProps } from './BookingPrivateLesson.type'
 
-function BookingTestLesson({ id, heading, price, buttonText }: IBookingPrivateLessonProps) {
+function BookingTestLesson({ id, heading, price, lessonDays, buttonText }: IBookingPrivateLessonProps) {
   const [calculatePrice, setCalculatePrice] = useState<number>(price)
   const [radioValue, setRadioValue] = useState<number>(1)
-  const lessonsData = [1, 2, 4, 6, 8, 10, 12]
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value)
@@ -25,7 +24,7 @@ function BookingTestLesson({ id, heading, price, buttonText }: IBookingPrivateLe
   }
 
   return (
-    <Box id={`booking-private-lesson-${id}`} className="booking-private-lesson">
+    <Box id={id} className="booking-private-lesson">
       <Box className="booking-private-lesson__body">
         <Typography variant="h4" className="MuiTypography booking-private-lesson__heading font-bold">
           {heading}
@@ -41,7 +40,7 @@ function BookingTestLesson({ id, heading, price, buttonText }: IBookingPrivateLe
             value={radioValue}
             onChange={handleChange}
           >
-            {lessonsData.map((lesson, index) => (
+            {lessonDays.map((lesson, index) => (
               <FormControlLabel
                 className="MuiFormControlRadio"
                 key={index}

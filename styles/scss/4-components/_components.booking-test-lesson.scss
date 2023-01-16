@@ -1,5 +1,5 @@
 .booking-test-lesson {
-  // background: @white;
+  width: 600px;
 
   &__body {
     width: 100%;
@@ -16,10 +16,8 @@
   }
 
   &__info {
-    padding: 0;
-
-    &:not(:last-child) {
-      margin-bottom: 10px;
+    &.MuiListItem-root {
+      padding: 0;
     }
   }
 
