@@ -1,54 +1,82 @@
 import React from 'react'
 
-import Icon from 'components/Generic/Icon'
+import Icon from '../../components/Generic/Icon'
+import Stack from '@mui/material/Stack'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
 
-import { ILessonCardProps } from './LessonCard.type'
+import { LessonCardProps } from './LessonCard.type'
 
-import colors from 'constants/colors'
+import colors from '../../constants/colors'
 
-function LessonCard({ dateTimestamp, eventStart, eventEnd, heading, registeredCount, maxPersons }: ILessonCardProps) {
+function LessonCard({ dateTimestamp, eventStart, eventEnd, heading, registeredCount, maxPersons }: LessonCardProps) {
   const getPersonspan = (personsNum: number) => (personsNum > 2 ? 'persons' : 'person')
   return (
     <div className="lesson-card">
-      <div>
-        <div>
-          <span className="lesson-card__badge lesson-card__badge--date color-black font-semibold">
+      <Stack direction="row" spacing={2} marginBottom={2} alignContent="baseline">
+        {dateTimestamp ? (
+          <Box className="lesson-card__badge lesson-card__badge--date color-black font-semibold">
             <Icon icon="calendar" size={14} color={colors.green_color} />
             {dateTimestamp}
-          </span>
-        </div>
-        <div>
-          <span className="lesson-card__badge lesson-card__badge--time color-black font-semibold">
+          </Box>
+        ) : null}
+        {eventStart && eventEnd ? (
+          <Box className="lesson-card__badge lesson-card__badge--time color-black font-semibold">
             <Icon icon="clock-circular-outline" size={14} color={colors.primary_color} />
             {eventStart}
             <span> - </span>
             {eventEnd}
-          </span>
-        </div>
-        <div>
-          <h5 className="lesson-card__heading color-black font-bold">{heading}</h5>
-        </div>
+          </Box>
+        ) : null}
+      </Stack>
+      <Typography variant="h6" className="MuiTypography lesson-card__heading color-black font-bold">
+        {heading}
+      </Typography>
+      <Stack direction="row" justifyContent="space-between" spacing={2}>
         {registeredCount ? (
-          <div>
-            <p className="lesson-card__info-heading">
-              <span className="color-grey">Registered</span>
-            </p>
-            <span>
+          <Box>
+            <Typography variant="subtitle2" className="MuiTypography color-grey-3">
+              Registered
+            </Typography>
+            <Typography variant="subtitle2" className="MuiTypography">
               {registeredCount} {getPersonspan(registeredCount)}
-            </span>
-          </div>
+            </Typography>
+          </Box>
         ) : null}
         {maxPersons ? (
-          <div>
-            <p className="lesson-card__info-heading">
-              <span className="color-grey">Max Persons:</span>
-            </p>
-            <span>
+          <Box className="ta-r">
+            <Typography variant="subtitle2" className="MuiTypography color-grey-3 ta-r">
+              Max Persons:
+            </Typography>
+            <Typography variant="subtitle2" className="MuiTypography ta-r">
               {maxPersons} {getPersonspan(maxPersons)}
-            </span>
-          </div>
+            </Typography>
+          </Box>
         ) : null}
-      </div>
+      </Stack>
+      {/* {registeredCount ? (
+        <div>
+          <p className="lesson-card__info-heading">
+            <span className="color-grey">Registered</span>
+          </p>
+          <span>
+            {registeredCount} {getPersonspan(registeredCount)}
+          </span>
+        </div>
+      ) : null}
+      {maxPersons ? (
+        <div>
+          <p className="lesson-card__info-heading">
+            <span className="color-grey">Max Persons:</span>
+          </p>
+          <span>
+            {maxPersons} {getPersonspan(maxPersons)}
+          </span>
+        </div>
+      ) : null} */}
     </div>
   )
 }

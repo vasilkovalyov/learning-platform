@@ -27,7 +27,7 @@ function About({ heading, text }: AboutProps) {
           </svg>
         </Box>
         <Box className="about__content">
-          <Typography variant="body2" className="about__text color-dark-blue-1">
+          <Typography variant="body2" className="MuiTypography about__text color-dark-blue-1">
             {text}
           </Typography>
         </Box>

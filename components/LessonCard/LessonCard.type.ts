@@ -1,4 +1,4 @@
-export interface ILessonCardProps {
+export interface LessonCardProps {
   id: string
   dateTimestamp: string
   eventStart: string
