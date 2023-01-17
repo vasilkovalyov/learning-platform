@@ -18,6 +18,20 @@
     }
   }
 
+  .badge {
+    margin-bottom: 8px;
+
+    @media (max-width: $screen-sm-max) {
+      margin-left: 0;
+    }
+
+    &:not(:last-child) {
+      @media (max-width: $screen-sm-max) {
+        margin-right: 12px;
+      }
+    }
+  }
+
   &__teacher {
     display: flex;
   }

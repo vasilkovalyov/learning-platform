@@ -7,18 +7,7 @@
   border-radius: $radius-xxl;
   padding: $spacing-0-s $spacing-1-s$spacing-0-s $spacing-1-m;
   font-size: $size-1-s;
-  margin-bottom: 12px;
   display: inline-flex;
-
-  @media (max-width: $screen-sm-max) {
-    margin-left: 0;
-  }
-
-  &:not(:last-child) {
-    @media (max-width: $screen-sm-max) {
-      margin-right: 12px;
-    }
-  }
 
   svg {
     vertical-align: middle;
