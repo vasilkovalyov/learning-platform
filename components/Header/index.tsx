@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { MouseEvent } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
+
+import logoImage from '../../public/images/logo.png'
 
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Stack from '@mui/material/Stack'
 import Divider from '@mui/material/Divider'
 import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
 
 import Icon from 'components/Generic/Icon'
 import { useDispatch } from 'react-redux'
@@ -16,65 +20,103 @@ import { selectAuthState, clearAuthState } from 'redux/slices/auth'
 import colors from 'constants/colors'
 import pages from 'constants/pages'
 
-function AdminNavList() {
+const navigationData = [
+  {
+    path: '/',
+    text: 'Teachers',
+  },
+  {
+    path: '/',
+    text: 'Group Classes',
+  },
+  {
+    path: '/',
+    text: 'Courses',
+  },
+  {
+    path: '/',
+    text: 'Companies',
+  },
+  {
+    path: '/',
+    text: 'About the project',
+  },
+  {
+    path: '/',
+    text: 'Articles',
+  },
+]
+
+function AdminList() {
   const router = useRouter()
   const dispatch = useDispatch()
 
-  function signOut() {
-    router.push('/')
+  function signOut(e: MouseEvent<HTMLElement>) {
+    e.preventDefault()
     dispatch(clearAuthState())
     document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:01 GTM;'
     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GTM;'
     document.cookie = 'role=; expires=Thu, 01 Jan 1970 00:00:01 GTM;'
     localStorage.removeItem('userId')
+    router.push('/')
   }
 
   return (
     <Stack
-      direction={'row'}
+      direction="row"
+      divider={<Divider orientation="vertical" flexItem />}
       spacing={1}
-      divider={<Divider orientation="horizontal" flexItem />}
       className="header__auth-list"
     >
-      <div className="header__auth-item">
+      <Box className="header__auth-list-item">
         <Link href={pages.admin}>
-          <a className="header__auth-link">Admin</a>
+          <a className="header__auth-button font-semibold color-dark-blue-1">Admin</a>
         </Link>
-      </div>
-      <div className="header__auth-item">
-        <div />
-      </div>
-      <div className="header__auth-item">
-        <Button className="header__auth-link" href={pages.home} onClick={() => signOut()}>
-          Sign out
-        </Button>
-      </div>
+      </Box>
+      <Box className="header__auth-list-item">
+        <Link href={pages.home}>
+          <a className="header__auth-button font-semibold color-dark-blue-1" onClick={(e) => signOut(e)}>
+            Sign out
+          </a>
+        </Link>
+      </Box>
     </Stack>
   )
 }
 
-function PublicNavList() {
+function AuthList() {
   return (
     <Stack
-      direction={'row'}
+      direction="row"
+      divider={<Divider orientation="vertical" flexItem />}
       spacing={1}
-      divider={<Divider orientation="horizontal" flexItem />}
       className="header__auth-list"
     >
-      <div className="header__auth-item">
-        <Icon icon="user" size={20} color={colors.primary_color} className="header__auth-icon" />
+      <Box className="header__auth-list-item">
+        <Icon icon="user" size={20} color={colors.primary_color} />
         <Link href={pages.login}>
-          <a className="header__auth-link">Sign in</a>
+          <a className="header__auth-button font-semibold color-dark-blue-1">Sign in</a>
         </Link>
-      </div>
-      <div className="header__auth-item">
-        <div>/</div>
-      </div>
-      <div className="header__auth-item">
+      </Box>
+      <Box className="header__auth-list-item">
         <Link href={pages.registration}>
-          <a className="header__auth-link">Sign up</a>
+          <a className="header__auth-button font-semibold color-dark-blue-1">Sign up</a>
         </Link>
-      </div>
+      </Box>
+    </Stack>
+  )
+}
+
+function MainNavigation() {
+  return (
+    <Stack direction="row" spacing={2} className="header__nav">
+      {navigationData.map((item, index) => (
+        <Box key={index} className="header__nav-item">
+          <Link href={item.path}>
+            <a className="header__nav-link color-dark-blue-1 font-medium">{item.text}</a>
+          </Link>
+        </Box>
+      ))}
     </Stack>
   )
 }
@@ -83,20 +125,17 @@ function Header() {
   const authState = useSelector(selectAuthState)
 
   return (
-    <div className="header">
-      <Container className="container">
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
-            <Link href="/">
-              <a className="header__logo">LearnPlatform</a>
-            </Link>
-          </Grid>
-          <Grid item xs={8}>
-            <div className="header__navigation-auth-buttons">{authState ? <AdminNavList /> : <PublicNavList />}</div>
-          </Grid>
-        </Grid>
+    <header className="header">
+      <Container className="header__container">
+        <Link href="/">
+          <a className="header__logo">
+            <Image src={logoImage} alt="learn platform" />
+          </a>
+        </Link>
+        <MainNavigation />
+        <>{authState ? <AdminList /> : <AuthList />}</>
       </Container>
-    </div>
+    </header>
   )
 }
 
