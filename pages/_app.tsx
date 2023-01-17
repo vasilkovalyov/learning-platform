@@ -29,7 +29,16 @@ function App({ Component, ...rest }: AppPropsWithLayout) {
 
 App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ ctx, Component }) => {
   const { token, userId, role } = parseCookies(ctx)
-
+  const url = ctx.asPath
+  if (url) {
+    const res = url.split('/').find((item) => item === 'admin')
+    if (res && !token) {
+      ctx.res?.writeHead(302, {
+        Location: '/404',
+      })
+      ctx.res?.end()
+    }
+  }
   if (!token) {
     return {
       pageProps: {},
@@ -39,6 +48,7 @@ App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ ctx, Compon
   const user = await UserService.isAuthUser(role as RoleType, userId, token || '')
   if (user) {
     store.dispatch(setAuthState(user))
+  } else {
   }
 
   return {
