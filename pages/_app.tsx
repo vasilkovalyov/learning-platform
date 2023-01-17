@@ -9,6 +9,8 @@ import { parseCookies } from 'nookies'
 import UserService from 'services/user.service'
 import { RoleType } from 'types/common'
 
+import { NextResponse, NextRequest } from 'next/server'
+
 import '../styles/scss/main.scss'
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
@@ -29,21 +31,10 @@ function App({ Component, ...rest }: AppPropsWithLayout) {
 
 App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ ctx, Component }) => {
   const { token, userId, role } = parseCookies(ctx)
-  if (ctx.asPath === '/admin') {
-    ctx.res?.writeHead(302, {
-      Location: '/404',
-    })
+  if (!token && ctx.asPath?.startsWith('/admin')) {
+    ctx.res?.writeHead(302, { Location: '/404' })
     ctx.res?.end()
   }
-  // if (url) {
-  //   const res = url.split('/').find((item) => item === 'admin')
-  //   if (res && !token) {
-  //     ctx.res?.writeHead(302, {
-  //       Location: '/404',
-  //     })
-  //     ctx.res?.end()
-  //   }
-  // }
   if (!token) {
     return {
       pageProps: {},
@@ -53,7 +44,6 @@ App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ ctx, Compon
   const user = await UserService.isAuthUser(role as RoleType, userId, token || '')
   if (user) {
     store.dispatch(setAuthState(user))
-  } else {
   }
 
   return {
