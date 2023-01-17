@@ -29,16 +29,21 @@ function App({ Component, ...rest }: AppPropsWithLayout) {
 
 App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ ctx, Component }) => {
   const { token, userId, role } = parseCookies(ctx)
-  const url = ctx.asPath
-  if (url) {
-    const res = url.split('/').find((item) => item === 'admin')
-    if (res && !token) {
-      ctx.res?.writeHead(302, {
-        Location: '/404',
-      })
-      ctx.res?.end()
-    }
+  if (ctx.asPath === '/admin') {
+    ctx.res?.writeHead(302, {
+      Location: '/404',
+    })
+    ctx.res?.end()
   }
+  // if (url) {
+  //   const res = url.split('/').find((item) => item === 'admin')
+  //   if (res && !token) {
+  //     ctx.res?.writeHead(302, {
+  //       Location: '/404',
+  //     })
+  //     ctx.res?.end()
+  //   }
+  // }
   if (!token) {
     return {
       pageProps: {},
