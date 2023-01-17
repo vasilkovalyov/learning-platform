@@ -1,5 +1,6 @@
 @import '../1-settings/settings.colors';
 @import '../1-settings/settings.spacing';
+@import '../1-settings/settings.sizes';
 @import '../1-settings/settings.responsive';
 
 .teacher-group-lesson-card {
@@ -15,6 +16,12 @@
   &__badges-list {
     @media (max-width: $screen-sm-max) {
       flex-wrap: wrap;
+    }
+  }
+
+  &__start-date {
+    &.MuiTypography-subtitle2 {
+      font-size: calc($size-1-s + 1px);
     }
   }
 

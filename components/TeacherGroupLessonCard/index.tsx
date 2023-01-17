@@ -28,14 +28,25 @@ function TeacherGroupLessonCard({
   registeredCount,
   maxPersons,
   price,
+  startDate,
 }: TeacherGroupLessonCardProps) {
   const getPersons = (personsNum: number) => (personsNum > 2 ? 'persons' : 'person')
-
   return (
     <Box className="teacher-group-lesson-card">
-      <Typography marginBottom={1} variant="subtitle2" className="MuiTypography color-grey-3">
-        {formatDate(new Date(date), 'DD MMM YYYY')}
-      </Typography>
+      {startDate ? (
+        <Typography
+          marginBottom={1}
+          variant="subtitle2"
+          className="MuiTypography teacher-group-lesson-card__start-date color-grey-3"
+        >
+          <span className="font-semibold color-black">Start:</span> {formatDate(new Date(startDate), 'DD MMM YYYY')}
+        </Typography>
+      ) : null}
+      {date ? (
+        <Typography marginBottom={1} variant="subtitle2" className="MuiTypography color-grey-3">
+          {formatDate(new Date(date), 'DD MMM YYYY')}
+        </Typography>
+      ) : null}
       <Typography marginBottom={2} variant="h6" className="MuiTypography teacher-group-lesson-card__heading">
         {heading}
       </Typography>

@@ -4,6 +4,7 @@ import avatar from '../../public/images/teacher-image.jpg'
 export const model: TeacherGroupLessonCardProps = {
   id: '1',
   date: '2023-10-25',
+  startDate: '',
   heading: 'Basic English skills',
   image: {
     src: avatar,

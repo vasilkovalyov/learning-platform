@@ -2,7 +2,8 @@ import { ImageProps } from 'next/image'
 
 export interface TeacherGroupLessonCardProps {
   id: string
-  date: string
+  date?: string
+  startDate?: string
   heading: string
   image: ImageProps
   fullname: string
