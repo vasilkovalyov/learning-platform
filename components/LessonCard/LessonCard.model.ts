@@ -5,7 +5,7 @@ export const model: LessonCardProps = {
   eventStart: '13:00',
   eventEnd: '14:30',
   heading: 'Basic English skills',
-  dateTimestamp: '28 June 2023',
+  date: '2023-10-25',
   maxPersons: 10,
   registeredCount: 15,
 }

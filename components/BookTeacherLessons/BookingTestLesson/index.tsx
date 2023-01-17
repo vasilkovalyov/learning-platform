@@ -16,7 +16,7 @@ function BookingTestLesson({ id, heading, duration, price, buttonText }: IBookin
   return (
     <Box id={id} className="booking-test-lesson">
       <Box className="booking-test-lesson__body">
-        <Typography variant="h4" className="MuiTypography booking-test-lesson__heading font-bold">
+        <Typography marginBottom={2} variant="h4" className="MuiTypography booking-test-lesson__heading font-bold">
           {heading}
         </Typography>
         <List className="booking-test-lesson__info-list">

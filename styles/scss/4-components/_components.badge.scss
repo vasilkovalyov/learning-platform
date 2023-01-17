@@ -1,0 +1,22 @@
+@import '../1-settings/settings.colors';
+@import '../1-settings/settings.spacing';
+@import '../1-settings/settings.radius';
+@import '../1-settings/settings.sizes';
+
+.badge {
+  border-radius: $radius-xxl;
+  padding: $spacing-0-s $spacing-1-s$spacing-0-s $spacing-1-m;
+  font-size: $size-1-s;
+
+  svg {
+    vertical-align: middle;
+    margin-bottom: 2px;
+    margin-right: 6px;
+  }
+
+  &--date {
+  }
+
+  &--time {
+  }
+}

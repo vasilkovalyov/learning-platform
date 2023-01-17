@@ -1,12 +1,6 @@
 @import '../1-settings/settings.fonts';
 
 .about {
-  &__heading {
-    &.MuiTypography {
-      margin-bottom: 26px;
-    }
-  }
-
   &__body {
     display: flex;
   }

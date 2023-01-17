@@ -26,7 +26,7 @@ function BookingTestLesson({ id, heading, price, lessonDays, buttonText }: IBook
   return (
     <Box id={id} className="booking-private-lesson">
       <Box className="booking-private-lesson__body">
-        <Typography variant="h4" className="MuiTypography booking-private-lesson__heading font-bold">
+        <Typography marginBottom={2} variant="h4" className="MuiTypography booking-private-lesson__heading font-bold">
           {heading}
         </Typography>
         <Box className="booking-private-lesson__count-lessons-info">

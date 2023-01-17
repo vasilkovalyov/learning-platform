@@ -1,6 +1,6 @@
 export interface LessonCardProps {
   id: string
-  dateTimestamp: string
+  date: string
   eventStart: string
   eventEnd: string
   heading: string

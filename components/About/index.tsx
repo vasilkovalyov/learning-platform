@@ -8,7 +8,7 @@ import { AboutProps } from './About.type'
 function About({ heading, text }: AboutProps) {
   return (
     <Box className="about">
-      <Typography variant="h4" className="MuiTypography about__heading font-bold">
+      <Typography marginBottom={3} variant="h4" className="MuiTypography about__heading font-bold">
         {heading}
       </Typography>
       <Box className="about__body">
