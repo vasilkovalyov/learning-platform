@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+
 import Icon from 'components/Generic/Icon'
 import cn from 'classnames'
 import { RoleType } from 'types/common'
+import colors from '../../constants/colors'
 
 interface INavigation {
   id: number
@@ -95,26 +100,28 @@ function AdminPageNavigation({ role = 'student' }: { role: RoleType }) {
   }
 
   return (
-    <div className="admin-page-navigation">
-      <ul className="admin-page-navigation__navigation-list">
-        {getFilteredNav().map((item) => (
-          <li
-            key={item.id}
-            className={cn('admin-page-navigation__navigation-item', {
-              'admin-page-navigation__navigation-item--active': activeNav === item.name,
+    <Stack className="admin-page-navigation">
+      {getFilteredNav().map((item) => (
+        <Link href={item.path} key={item.id}>
+          <a
+            className={cn('admin-page-navigation__link', {
+              'admin-page-navigation__link--active': activeNav === item.name,
             })}
             onClick={() => setActiveNav(item.name)}
           >
-            <Link href={item.path}>
-              <a className="admin-page-navigation__navigation-link">
-                <Icon icon={item.icon} size={20} className="admin-page-navigation__navigation-icon" />
-                <span>{item.title}</span>
-              </a>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+            <Icon
+              icon={item.icon}
+              size={20}
+              color={activeNav === item.name ? colors.primary_color : colors.dark_blue_color}
+              className="admin-page-navigation__link-icon"
+            />
+            <Typography className="MuiTypography" variant="body2">
+              {item.title}
+            </Typography>
+          </a>
+        </Link>
+      ))}
+    </Stack>
   )
 }
 

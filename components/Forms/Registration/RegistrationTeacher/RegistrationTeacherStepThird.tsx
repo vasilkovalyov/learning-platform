@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import { useForm, useFieldArray, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import TextField from '@mui/material/TextField'
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import LinearProgress from '@mui/material/LinearProgress'
 
@@ -16,6 +17,8 @@ import { RegistrationTeacherFormThirdSchema } from 'utils/schemas/registration/t
 
 import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
+
+import colors from '../../../../constants/colors'
 
 const defaultValues: RegistationTeacherFormDynamicListProps = {
   education: [{ value: '' }],
@@ -66,7 +69,7 @@ function RegistrationTeacherStepThird({
   return (
     <form name="form-registration-teacher-step-3" autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
       {fieldsEducation.map(({ id, value }, index) => (
-        <div key={id}>
+        <Fragment key={id}>
           <TextField
             {...register(`education.${index}.value`)}
             defaultValue={value}
@@ -79,13 +82,28 @@ function RegistrationTeacherStepThird({
             InputLabelProps={{ shrink: true }}
             error={!!errors.education?.[index]?.value?.message}
             helperText={errors.education?.[index]?.value?.message}
+            InputProps={{
+              endAdornment: (
+                <>
+                  {index >= 1 ? (
+                    <Button
+                      type="button"
+                      onClick={() => removeEducation(index)}
+                      className="form-button-field form-button-field--remove"
+                    >
+                      <span className="form-button-field__icon">
+                        <Icon icon={IconEnum.MINUS} color={colors.primary_color} size={10} />
+                      </span>
+                    </Button>
+                  ) : null}
+                </>
+              ),
+            }}
           />
-          <button type="button" onClick={() => removeEducation(index)}>
-            Remove
-          </button>
-        </div>
+        </Fragment>
       ))}
-      <button
+      <Button
+        className="form-button-field"
         type="button"
         onClick={() =>
           appendEducation({
@@ -93,10 +111,13 @@ function RegistrationTeacherStepThird({
           })
         }
       >
-        Add education
-      </button>
+        <span className="form-button-field__icon">
+          <Icon icon={IconEnum.PLUS} color={colors.primary_color} size={10} />
+        </span>
+        <span className="form-button-field__text font-medium color-primary text-capitalize">Add field</span>
+      </Button>
       {fieldsJobs.map(({ id, value }, index) => (
-        <div key={id}>
+        <Fragment key={index}>
           <TextField
             {...register(`work_experience.${index}.value`)}
             defaultValue={value}
@@ -109,13 +130,28 @@ function RegistrationTeacherStepThird({
             InputLabelProps={{ shrink: true }}
             error={!!errors.work_experience?.[index]?.value?.message}
             helperText={errors.work_experience?.[index]?.value?.message}
+            InputProps={{
+              endAdornment: (
+                <>
+                  {index >= 1 ? (
+                    <Button
+                      type="button"
+                      onClick={() => removeJob(index)}
+                      className="form-button-field form-button-field--remove"
+                    >
+                      <span className="form-button-field__icon">
+                        <Icon icon={IconEnum.MINUS} color={colors.primary_color} size={10} />
+                      </span>
+                    </Button>
+                  ) : null}
+                </>
+              ),
+            }}
           />
-          <button type="button" onClick={() => removeJob(index)}>
-            Remove
-          </button>
-        </div>
+        </Fragment>
       ))}
-      <button
+      <Button
+        className="form-button-field"
         type="button"
         onClick={() =>
           appendJob({
@@ -123,8 +159,11 @@ function RegistrationTeacherStepThird({
           })
         }
       >
-        Add work experience
-      </button>
+        <span className="form-button-field__icon">
+          <Icon icon={IconEnum.PLUS} color={colors.primary_color} size={10} />
+        </span>
+        <span className="form-button-field__text font-medium color-primary text-capitalize">Add field</span>
+      </Button>
       <Button type="submit" variant="contained" fullWidth>
         Create account
       </Button>

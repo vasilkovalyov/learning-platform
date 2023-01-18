@@ -3,7 +3,12 @@ import type { NextPage } from 'next'
 import Link from 'next/link'
 import Head from 'next/head'
 
+import Container from '@mui/material/Container'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
+import Typography from '@mui/material/Typography'
+
 import PublicLayout from 'layouts/BaseLayout'
+import ContainerWithShadow from 'components/Generic/ContainerWithShadow'
 
 import RegistrationStudent from 'components/Forms/Registration/RegistrationStudent'
 import { RegistrationStudentFormProps } from 'components/Forms/Registration/RegistrationStudent/RegistrationStudent.type'
@@ -39,43 +44,42 @@ const RegistrationStudentPage: NextPage = () => {
         <meta name="description" content="The platform for learning languages" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PublicLayout>
-        <div className="breadcrumb-block">
-          <div className="container">
-            <ul>
-              <li>
-                <Link href="/">
-                  <a>Home</a>
-                </Link>
-              </li>
-              <li>Student</li>
-            </ul>
-          </div>
-        </div>
-        <div className="section-registration">
-          <div className="container">
-            <h2 className="section-registration__heading">Registration Student</h2>
-            <div>
-              <div>
-                {!isSuccessForm ? (
-                  <RegistrationStudent
-                    inputFields={['fullname', 'login', 'email', 'password', 'confirm_password']}
-                    onSuccess={successSignUpForm}
-                    isLoading={isLoading}
-                    validationMessage={validationMessage}
-                  />
-                ) : (
-                  <div className="text-center">
-                    <span>{validationMessage && validationMessage}</span>
-                    <Link href="/">
-                      <a>Ok</a>
-                    </Link>
-                  </div>
-                )}
-              </div>
+      <PublicLayout className="page-registration">
+        <Container className="container">
+          <Breadcrumbs aria-label="breadcrumb" className="breadcrumbs">
+            <Link href="/">
+              <a className="breadcrumbs__item">Home</a>
+            </Link>
+            <Typography variant="body2" className="MuiTypography breadcrumbs__item">
+              Student
+            </Typography>
+          </Breadcrumbs>
+        </Container>
+        <Typography
+          component="h1"
+          variant="h2"
+          className="MuiTypography section-registration__heading ta-c"
+          marginBottom={3}
+        >
+          Registration Student
+        </Typography>
+        <ContainerWithShadow className="container--registration">
+          {!isSuccessForm ? (
+            <RegistrationStudent
+              inputFields={['fullname', 'login', 'email', 'password', 'confirm_password']}
+              onSuccess={successSignUpForm}
+              isLoading={isLoading}
+              validationMessage={validationMessage}
+            />
+          ) : (
+            <div className="text-center">
+              <span>{validationMessage && validationMessage}</span>
+              <Link href="/">
+                <a>Ok</a>
+              </Link>
             </div>
-          </div>
-        </div>
+          )}
+        </ContainerWithShadow>
       </PublicLayout>
     </div>
   )

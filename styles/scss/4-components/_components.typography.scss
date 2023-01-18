@@ -28,14 +28,14 @@
   }
 
   &.MuiTypography-h1 {
-    font-size: $h1-font-size;
+    font-size: $h1-font-size-small;
 
     @media (min-width: $screen-lg) {
       font-size: $h1-font-size;
     }
   }
   &.MuiTypography-h2 {
-    font-size: $h2-font-size;
+    font-size: $h2-font-size-small;
 
     @media (min-width: $screen-lg) {
       font-size: $h2-font-size;

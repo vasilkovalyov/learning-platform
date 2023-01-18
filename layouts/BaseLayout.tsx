@@ -3,11 +3,11 @@ import React from 'react'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 
-function BaseLayout({ children }: { children: React.ReactNode }) {
+function BaseLayout({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className={className}>{children}</main>
       <Footer />
     </>
   )

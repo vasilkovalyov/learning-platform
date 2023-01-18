@@ -1,5 +1,12 @@
 import React from 'react'
+import Image from 'next/image'
 import { RoleType } from 'types/common'
+
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+
+import studentImg from '../../public/svg/working-1.svg'
+import teacherImg from '../../public/svg/teacher-1.svg'
 
 interface IRegisterCard {
   type: RoleType
@@ -8,21 +15,25 @@ interface IRegisterCard {
 
 function getImageByRegisterType(type: RoleType) {
   if (type === 'student') {
-    return <img src="./svg/working-1.svg" alt="student" />
+    return <Image src={studentImg} alt="student" />
   }
   if (type === 'teacher') {
-    return <img src="./svg/teacher-1.svg" alt="teacher" />
+    return <Image src={teacherImg} alt="teacher" />
   }
   return null
 }
 
 function RegisterCard({ type, title }: IRegisterCard) {
   return (
-    <div className="register-card">
-      <div className="register-card__circle"></div>
-      <div className="register-card___logo">{getImageByRegisterType(type)}</div>
-      <h5 className="register-card__title">{title}</h5>
-    </div>
+    <Box className="register-card">
+      <Box className="register-card__circle"></Box>
+      <Box className="register-card___logo" marginBottom={5}>
+        {getImageByRegisterType(type)}
+      </Box>
+      <Typography variant="h5" className="MuiTypography register-card__title">
+        {title}
+      </Typography>
+    </Box>
   )
 }
 

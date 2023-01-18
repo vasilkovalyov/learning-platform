@@ -3,7 +3,9 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
+import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 import InputAdornment from '@mui/material/InputAdornment'
 import Button from '@mui/material/Button'
 import LinearProgress from '@mui/material/LinearProgress'
@@ -34,40 +36,50 @@ function FormLogin({ onSuccess, isLoading, validationMessage }: FormLoginProps) 
 
   return (
     <form name="form-login" autoComplete="off" onSubmit={handleSubmit(onSuccess)} className="form form-login">
-      <TextField
-        {...register('email')}
-        id="email"
-        name="email"
-        type="email"
-        label="Email"
-        variant="standard"
-        className="form-field"
-        fullWidth
-        InputLabelProps={{ shrink: true }}
-        error={!!errors.email?.message}
-        helperText={errors.email?.message}
-      />
-      <TextField
-        {...register('password')}
-        id="password"
-        name="password"
-        type={showPassword ? 'text' : 'password'}
-        label="Password"
-        variant="standard"
-        className="form-field"
-        fullWidth
-        InputLabelProps={{ shrink: true }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end" onClick={handleClickShowPassword}>
-              <Icon size={20} icon={showPassword ? IconEnum.EYE_ACCESS : IconEnum.EYE_DENIED} />
-            </InputAdornment>
-          ),
-        }}
-        error={!!errors.password?.message}
-        helperText={errors.password?.message}
-      />
-      {validationMessage && <p>{validationMessage}</p>}
+      <Box marginBottom={2}>
+        <TextField
+          {...register('email')}
+          id="email"
+          name="email"
+          type="email"
+          label="Email"
+          variant="standard"
+          className="form-field"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          error={!!errors.email?.message}
+          helperText={errors.email?.message}
+        />
+      </Box>
+      <Box marginBottom={2}>
+        <TextField
+          {...register('password')}
+          id="password"
+          name="password"
+          type={showPassword ? 'text' : 'password'}
+          label="Password"
+          variant="standard"
+          className="form-field"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end" onClick={handleClickShowPassword}>
+                <Icon size={20} icon={showPassword ? IconEnum.EYE_ACCESS : IconEnum.EYE_DENIED} />
+              </InputAdornment>
+            ),
+          }}
+          error={!!errors.password?.message}
+          helperText={errors.password?.message}
+        />
+      </Box>
+      {validationMessage && (
+        <Box marginBottom={2}>
+          <Typography variant="body2" className="MuiTypography">
+            {validationMessage}
+          </Typography>
+        </Box>
+      )}
       <Button type="submit" variant="contained">
         Sign in
       </Button>

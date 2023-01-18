@@ -1,29 +1,34 @@
+@import '../1-settings/settings.colors';
+@import '../1-settings/settings.fonts';
+@import '../1-settings/settings.spacing';
+@import '../1-settings/settings.radius';
+
 .register-card {
   position: relative;
-  // background-color: @white;
-  // box-shadow: 0px 10px 60px rgba(@blue-light, 0.15);
-  border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px 20px;
+  padding: $spacing-4-s $spacing-2-s $spacing-2-s;
+  background-color: $white;
+  border-radius: $radius-lg;
   min-height: 200px;
   border: 1px solid transparent;
+  box-shadow: 0px 10px 60px rgba(#dfe8f6, 0.15);
   transition: border-color 0.3s linear, box-shadow 0.3s linear;
 
   @media (min-width: 768px) {
-    padding: 52px 20px 20px;
+    padding: $spacing-5-m $spacing-2-s $spacing-2-s;
     min-height: 280px;
   }
 
   &:hover {
-    // border-color: @red;
-    // box-shadow: 0px 10px 60px rgba(@blue-light, 0);
+    border-color: $primary-color;
+    box-shadow: 0px 10px 60px rgba(#dfe8f6, 0);
 
     .register-card__circle {
       border-width: 2px;
-      // border-color: @red;
+      border-color: $primary-color;
 
       &::before {
         opacity: 1;
@@ -39,7 +44,7 @@
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    // border: 1px solid @grey;
+    border: 1px solid $grey-1;
     transition: border 0.3s linear;
 
     &::before {
@@ -51,22 +56,10 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      // background: @red;
+      background: $primary-color;
       visibility: hidden;
       opacity: 0;
       transition: visibility 0.3s linear, opacity 0.3s linear;
-    }
-  }
-
-  &___logo {
-    margin-bottom: 50px;
-  }
-
-  h5 {
-    &.register-card__title {
-      font-size: 18px;
-      // color: @black-2;
-      font-weight: 700;
     }
   }
 }

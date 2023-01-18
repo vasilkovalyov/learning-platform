@@ -3,6 +3,10 @@ import Link from 'next/link'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
+import Container from '@mui/material/Container'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
+import Typography from '@mui/material/Typography'
+
 import PublicLayout from 'layouts/BaseLayout'
 
 import { RegistrationTeacherFullProps } from 'components/Forms/Registration/RegistrationTeacher/RegistrationTeacher.type'
@@ -32,50 +36,47 @@ const RegistrationTeacher: NextPage = () => {
   }
 
   return (
-    <div>
+    <>
       <Head>
         <title>LearnLangPlatform - Registration teacher</title>
         <meta name="description" content="The platform for learning languages" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PublicLayout>
-        <div className="breadcrumb-block">
-          <div className="container">
-            <div>
+      <PublicLayout className="page-registration">
+        <Container className="container">
+          <Breadcrumbs aria-label="breadcrumb" className="breadcrumbs">
+            <Link href="/">
+              <a className="breadcrumbs__item">Home</a>
+            </Link>
+            <Typography variant="body2" className="MuiTypography breadcrumbs__item">
+              Teacher
+            </Typography>
+          </Breadcrumbs>
+          <Typography
+            component="h1"
+            variant="h2"
+            className="MuiTypography section-registration__heading ta-c"
+            marginBottom={3}
+          >
+            Registration Teacher
+          </Typography>
+          {!isSuccessForm ? (
+            <RegistrationTeacherForm isLoading={isLoading} onSubmit={onSubmit} validationMessage={validationMessage} />
+          ) : (
+            <div className="text-center">
               <div>
+                <p>
+                  <span>{validationMessage && validationMessage}</span>
+                </p>
                 <Link href="/">
-                  <a>Home</a>
+                  <a>Ok</a>
                 </Link>
               </div>
-              <div>Teacher</div>
             </div>
-          </div>
-        </div>
-        <div className="section-registration">
-          <div className="container">
-            <h3 className="section-registration__heading">Registration Teacher</h3>
-            {!isSuccessForm ? (
-              <RegistrationTeacherForm
-                isLoading={isLoading}
-                onSubmit={onSubmit}
-                validationMessage={validationMessage}
-              />
-            ) : (
-              <div className="text-center">
-                <div>
-                  <p>
-                    <span>{validationMessage && validationMessage}</span>
-                  </p>
-                  <Link href="/">
-                    <a>Ok</a>
-                  </Link>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+          )}
+        </Container>
       </PublicLayout>
-    </div>
+    </>
   )
 }
 

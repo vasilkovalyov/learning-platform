@@ -2,6 +2,12 @@ import React from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
 
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+
 import PublicLayout from './BaseLayout'
 import { useSelector } from 'react-redux'
 import { selectAuthState } from 'redux/slices/auth'
@@ -13,36 +19,40 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
+      <Head>
+        <title>LearnLangPlatform - Admin</title>
+        <meta name="description" content="The platform for learning languages" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <PublicLayout>
-        <div className="breadcrumb-block">
-          <div className="container">
-            <div>
-              <div>
-                <Link href="/">
-                  <a>Home</a>
-                </Link>
-              </div>
-              <div>Admin page</div>
+        <Container>
+          <Breadcrumbs aria-label="breadcrumb" className="breadcrumbs">
+            <Link href="/">
+              <a className="breadcrumbs__item">Home</a>
+            </Link>
+            <Typography variant="body2" className="MuiTypography breadcrumbs__item">
+              Admin
+            </Typography>
+          </Breadcrumbs>
+          <div className="section-admin">
+            <div className="container">
+              <Typography marginBottom={3} variant="h2" className="MuiTypography section-admin__heading">
+                Personal Area
+              </Typography>
+              <Grid container spacing={4}>
+                <Grid item xs={12} md={4}>
+                  <Box marginBottom={3}>
+                    <Typography variant="body1">{authState?.fullname}</Typography>
+                  </Box>
+                  {authState ? <AdminPageNavigation role={authState?.role} /> : null}
+                </Grid>
+                <Grid item xs={12} md={8}>
+                  <div className="gutter-row">{children}</div>
+                </Grid>
+              </Grid>
             </div>
           </div>
-        </div>
-        <div className="section-admin">
-          <div className="container">
-            <h3 className="section-admin__heading">
-              <span className="section-admin__heading-role">{authState?.role}</span> - Personal Area
-            </h3>
-            <div>
-              <div className="gutter-row">
-                <div className="section-admin__avatar-wrapper">
-                  <img src="/images/avatar-default.jpg" />
-                </div>
-                <h4>{authState?.login}</h4>
-                <AdminPageNavigation role="student" />
-              </div>
-              <div className="gutter-row">{children}</div>
-            </div>
-          </div>
-        </div>
+        </Container>
       </PublicLayout>
     </>
   )

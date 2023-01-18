@@ -53,29 +53,28 @@ const Auth: NextPage = () => {
         <meta name="description" content="The platform for learning languages" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PublicLayout>
-        <div className="breadcrumb-block">
-          <Container className="container">
-            <Breadcrumbs aria-label="breadcrumb">
-              <Link href="/">
-                <a>Home</a>
-              </Link>
-              <Typography>Sign in</Typography>
-            </Breadcrumbs>
-          </Container>
-        </div>
-        <ContainerWithShadow className="section-registration">
-          <Container className="container">
-            <Typography variant="h2" className="section-registration__heading">
+      <PublicLayout className="page-login">
+        <Container className="container">
+          <Breadcrumbs aria-label="breadcrumb" className="breadcrumbs">
+            <Link href="/">
+              <a className="breadcrumbs__item">Home</a>
+            </Link>
+            <Typography variant="body2" className="MuiTypography breadcrumbs__item">
               Sign in
             </Typography>
-            <div>
-              <div>
-                <FormLogin onSuccess={successSignUpForm} isLoading={isLoading} validationMessage={validationMessage} />
-              </div>
-            </div>
-          </Container>
-        </ContainerWithShadow>
+          </Breadcrumbs>
+          <Typography
+            component="h1"
+            variant="h2"
+            className="MuiTypography section-registration__heading ta-c"
+            marginBottom={3}
+          >
+            Sign in
+          </Typography>
+          <ContainerWithShadow className="container--login">
+            <FormLogin onSuccess={successSignUpForm} isLoading={isLoading} validationMessage={validationMessage} />
+          </ContainerWithShadow>
+        </Container>
       </PublicLayout>
     </div>
   )

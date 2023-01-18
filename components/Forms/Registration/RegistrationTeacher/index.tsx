@@ -2,12 +2,16 @@ import React, { useState } from 'react'
 
 import cn from 'classnames'
 
+import Grid from '@mui/material/Grid'
+
 import {
   RegistrationTeacherFullProps,
   RegistrationTeacherProps,
   TextFieldStepFirstType,
   TextFieldStepSecondType,
 } from './RegistrationTeacher.type'
+
+import ContainerWithShadow from 'components/Generic/ContainerWithShadow'
 
 import { RegistrationTeacherFormThirdProps } from './RegistrationTeacher.type'
 
@@ -72,33 +76,39 @@ function RegistrationTeacher({ isLoading, validationMessage, onSubmit }: Registr
   }
 
   return (
-    <div>
-      <div className="form-step">
-        <RegistrationTeacherStepFirst
-          inputFields={formInputStepOne}
-          nextStep={nextStep}
-          handleFormData={handleInputData}
-          values={formData}
-        />
-      </div>
-      <div className={cn('form-step', { 'form-step--hide': !isStepTwo })}>
-        <RegistrationTeacherStepSecond
-          inputFields={formInputStepTwo}
-          nextStep={nextStep}
-          handleFormData={handleInputData}
-          values={formData}
-        />
-      </div>
-      <div className={cn('form-step', { 'form-step--hide': !isStepThree })}>
-        <RegistrationTeacherStepThird
-          handleFormData={handleInputData}
-          validationMessage={validationMessage}
-          isLoading={isLoading}
-          finalStep={finalStep}
-          values={formData}
-        />
-      </div>
-    </div>
+    <Grid container spacing={3} justifyContent="center">
+      <Grid item xs={12} md={4}>
+        <ContainerWithShadow className="container--registration form-step">
+          <RegistrationTeacherStepFirst
+            inputFields={formInputStepOne}
+            nextStep={nextStep}
+            handleFormData={handleInputData}
+            values={formData}
+          />
+        </ContainerWithShadow>
+      </Grid>
+      <Grid item xs={12} md={4} className={cn({ 'form-step--hide': !isStepTwo })}>
+        <ContainerWithShadow className={cn('container--registration orm-step')}>
+          <RegistrationTeacherStepSecond
+            inputFields={formInputStepTwo}
+            nextStep={nextStep}
+            handleFormData={handleInputData}
+            values={formData}
+          />
+        </ContainerWithShadow>
+      </Grid>
+      <Grid item xs={12} md={4} className={cn({ 'form-step--hide': !isStepThree })}>
+        <ContainerWithShadow className={cn('container--registration form-step')}>
+          <RegistrationTeacherStepThird
+            handleFormData={handleInputData}
+            validationMessage={validationMessage}
+            isLoading={isLoading}
+            finalStep={finalStep}
+            values={formData}
+          />
+        </ContainerWithShadow>
+      </Grid>
+    </Grid>
   )
 }
 

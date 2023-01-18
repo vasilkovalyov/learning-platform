@@ -6,6 +6,7 @@ const colors = {
   grey_color3: '#8B919E',
   yellow_color: '#F9A502',
   yellow_light_color: '#FDECC8',
+  dark_blue_color: '#454b58',
 }
 
 export default colors

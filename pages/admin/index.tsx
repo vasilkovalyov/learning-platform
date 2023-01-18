@@ -1,14 +1,15 @@
 import React from 'react'
-import Head from 'next/head'
+
+import Typography from '@mui/material/Typography'
 
 import PrivateLayoutPage from 'pages/privateLayoutPage'
 
 function Account() {
   return (
     <div>
-      <div>
-        <h3>Account</h3>
-      </div>
+      <Typography variant="h5" className="MuiTypography">
+        Account
+      </Typography>
     </div>
   )
 }

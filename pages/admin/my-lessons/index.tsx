@@ -1,11 +1,15 @@
 import React from 'react'
 
+import Typography from '@mui/material/Typography'
+
 import PrivateLayoutPage from 'pages/privateLayoutPage'
 
 const MyLessons = () => {
   return (
     <div>
-      <h3>My Lessons</h3>
+      <Typography variant="h5" className="MuiTypography">
+        My Lessons
+      </Typography>
     </div>
   )
 }

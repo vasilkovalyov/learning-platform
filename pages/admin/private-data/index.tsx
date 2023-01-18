@@ -1,11 +1,15 @@
 import React from 'react'
 
+import Typography from '@mui/material/Typography'
+
 import PrivateLayoutPage from 'pages/privateLayoutPage'
 
 const PrivateCard = () => {
   return (
     <div>
-      <h3>Private Data</h3>
+      <Typography variant="h5" className="MuiTypography">
+        Private Data
+      </Typography>
     </div>
   )
 }
