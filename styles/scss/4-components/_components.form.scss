@@ -3,6 +3,7 @@
 @import '../1-settings/settings.fonts';
 @import '../1-settings/settings.radius';
 @import '../1-settings/settings.spacing';
+@import '../1-settings/settings.responsive';
 
 .MuiTextField-root {
   .MuiInputLabel-standard {
@@ -102,5 +103,35 @@
   }
 
   &__text {
+  }
+}
+
+.form-account {
+  .MuiFormControl-root {
+    width: 100%;
+
+    @media (min-width: $screen-sm) {
+      max-width: 330px;
+    }
+  }
+
+  &__additional-button {
+    color: $grey-3;
+    padding: 0;
+    text-decoration: underline;
+    text-transform: initial;
+    padding-top: 10px;
+
+    @media (min-width: $screen-sm) {
+      margin-left: 10px;
+      margin-bottom: 8px;
+    }
+
+    @media (min-width: $screen-md) {
+    }
+
+    &:hover {
+      background-color: transparent;
+    }
   }
 }

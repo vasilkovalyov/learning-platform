@@ -40,13 +40,13 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                 Personal Area
               </Typography>
               <Grid container spacing={4}>
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} sm={4} md={3}>
                   <Box marginBottom={3}>
                     <Typography variant="body1">{authState?.fullname}</Typography>
                   </Box>
                   {authState ? <AdminPageNavigation role={authState?.role} /> : null}
                 </Grid>
-                <Grid item xs={12} md={8}>
+                <Grid item xs={12} sm={8} md={9}>
                   <div className="gutter-row">{children}</div>
                 </Grid>
               </Grid>
