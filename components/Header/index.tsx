@@ -109,15 +109,17 @@ function AuthList() {
 
 function MainNavigation() {
   return (
-    <Stack direction="row" spacing={2} className="header__nav">
-      {navigationData.map((item, index) => (
-        <Box key={index} className="header__nav-item">
-          <Link href={item.path}>
-            <a className="header__nav-link color-dark-blue-1 font-medium">{item.text}</a>
-          </Link>
-        </Box>
-      ))}
-    </Stack>
+    <div className="header__nav">
+      <Stack direction="row" spacing={2}>
+        {navigationData.map((item, index) => (
+          <Box key={index} className="header__nav-item">
+            <Link href={item.path}>
+              <a className="header__nav-link color-dark-blue-1 font-medium">{item.text}</a>
+            </Link>
+          </Box>
+        ))}
+      </Stack>
+    </div>
   )
 }
 
