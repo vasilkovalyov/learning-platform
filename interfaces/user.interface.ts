@@ -18,6 +18,11 @@ export interface UserInfoProps extends UserLoginProps {
   phone: string
 }
 
+export interface UserInfoStoreProps extends UserInfoProps {
+  _id: string
+  role: RoleType
+}
+
 export interface UserAuthProps extends Omit<UserInfoProps, 'password'> {
   _id: string
   role: RoleType

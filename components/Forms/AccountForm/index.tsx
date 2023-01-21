@@ -13,27 +13,23 @@ import { IconEnum } from 'components/Generic/Icon/Icon.type'
 
 import { EditUserAccountFormSchema } from 'utils/schemas/account/user'
 
-import { EditAccountStudentFormProps } from './AccountForm.type'
+import { UserInfoStoreProps } from 'interfaces/user.interface'
 
-function AccountForm() {
+import { AccountFormProps } from './AccountForm.type'
+
+function AccountForm({ onHandleRemoveAccount, initialData }: AccountFormProps) {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<EditAccountStudentFormProps>({
+  } = useForm<UserInfoStoreProps>({
     mode: 'onSubmit',
     // resolver: yupResolver(EditUserAccountFormSchema),
-    defaultValues: {
-      fullname: '',
-      login: '',
-      email: '',
-      password: '',
-      phone: '',
-    },
+    defaultValues: initialData,
   })
 
-  function onSubmit(data: EditAccountStudentFormProps) {
+  function onSubmit(data: UserInfoStoreProps) {
     console.log('data', data)
   }
 
@@ -68,7 +64,9 @@ function AccountForm() {
           error={!!errors['login']?.message}
           helperText={errors['login']?.message}
         />
-        <Button className="form-account__additional-button">Remove account</Button>
+        <Button className="form-account__additional-button" onClick={onHandleRemoveAccount}>
+          Remove account
+        </Button>
       </Box>
       <Box marginBottom={2}>
         <TextField

@@ -1,9 +1,9 @@
 import { PUBLIC_REQUESTS } from 'constants/api-requests'
 import $api from 'common/ajax-config'
-import { UserAuthProps } from 'interfaces/user.interface'
+import { UserInfoStoreProps } from 'interfaces/user.interface'
 
 export interface AuthenticationUserResponse {
-  data: UserAuthProps
+  data: UserInfoStoreProps
   token: string
   message: string
 }

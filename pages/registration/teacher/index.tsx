@@ -3,6 +3,8 @@ import Link from 'next/link'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Typography from '@mui/material/Typography'
@@ -63,16 +65,16 @@ const RegistrationTeacher: NextPage = () => {
           {!isSuccessForm ? (
             <RegistrationTeacherForm isLoading={isLoading} onSubmit={onSubmit} validationMessage={validationMessage} />
           ) : (
-            <div className="text-center">
-              <div>
-                <p>
-                  <span>{validationMessage && validationMessage}</span>
-                </p>
-                <Link href="/">
+            <Box justifyContent="center">
+              <Typography variant="body1" className="MuiTypography ta-c">
+                {validationMessage && validationMessage}
+              </Typography>
+              <Box marginTop={2} className="ta-c">
+                <Button href="/" variant="contained">
                   <a>Ok</a>
-                </Link>
-              </div>
-            </div>
+                </Button>
+              </Box>
+            </Box>
           )}
         </Container>
       </PublicLayout>

@@ -3,10 +3,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AppState } from '../store'
 import { HYDRATE } from 'next-redux-wrapper'
 
-import { UserAuthProps } from 'interfaces/user.interface'
+import { UserInfoStoreProps } from 'interfaces/user.interface'
 
 export interface IAuthState {
-  data: UserAuthProps | null
+  data: UserInfoStoreProps | null
 }
 
 const initialState: IAuthState = {
@@ -17,7 +17,7 @@ export const authSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setAuthState(state, action: PayloadAction<UserAuthProps>) {
+    setAuthState(state, action: PayloadAction<UserInfoStoreProps>) {
       state.data = action.payload
     },
     clearAuthState(state) {
@@ -36,6 +36,6 @@ export const authSlice = createSlice({
 
 export const { setAuthState, clearAuthState } = authSlice.actions
 
-export const selectAuthState = (state: AppState): UserAuthProps | null => state.user.data
+export const selectAuthState = (state: AppState): UserInfoStoreProps | null => state.user.data
 
 export default authSlice.reducer
