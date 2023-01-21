@@ -35,6 +35,22 @@ function PrivateData() {
         value: '',
       },
     ],
+    lesson_duration: '',
+    levels_studying: [
+      {
+        value: '',
+      },
+    ],
+    work_experience: [
+      {
+        value: '',
+      },
+    ],
+    education: [
+      {
+        value: '',
+      },
+    ],
   }
 
   return (

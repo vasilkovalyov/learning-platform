@@ -18,6 +18,20 @@ import langSpeacking from 'static-data/lang-speaking.json'
 import subjectList from 'static-data/subjects.json'
 import colors from 'constants/colors'
 
+import getFormatDurationTime from 'common/formatDurationTime'
+
+const durationTimeList = [
+  {
+    value: '30',
+  },
+  {
+    value: '60',
+  },
+  {
+    value: '90',
+  },
+]
+
 function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
   const {
     handleSubmit,
@@ -47,8 +61,39 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
     name: 'subjects',
   })
 
+  const {
+    fields: work_experience,
+    remove: removeWorkExperience,
+    append: appendWorkExperience,
+  } = useFieldArray({
+    control,
+    name: 'work_experience',
+  })
+
+  const {
+    fields: levels_studying,
+    remove: removeLevelsStudying,
+    append: appendLevelsStudying,
+  } = useFieldArray({
+    control,
+    name: 'levels_studying',
+  })
+
+  const {
+    fields: education,
+    remove: removeEducation,
+    append: appendEducation,
+  } = useFieldArray({
+    control,
+    name: 'education',
+  })
+
+  function onSuccess(data: TeacherPrivateFormProps) {
+    console.log('data', data)
+  }
+
   return (
-    <form className="form-account">
+    <form className="form-account" onSubmit={handleSubmit(onSuccess)}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Box marginBottom={2}>
@@ -56,7 +101,7 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
               {...register('country')}
               id={'country'}
               name={'country'}
-              type={'country'}
+              type="text"
               label={'country'}
               variant="standard"
               className="form-field"
@@ -69,7 +114,7 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
               {...register('state')}
               id={'state'}
               name={'state'}
-              type={'state'}
+              type="text"
               label={'state'}
               variant="standard"
               className="form-field"
@@ -82,7 +127,7 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
               {...register('city')}
               id={'city'}
               name={'city'}
-              type={'city'}
+              type="text"
               label={'city'}
               variant="standard"
               className="form-field"
@@ -92,14 +137,14 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
           </Box>
           <Box marginBottom={2}>
             {languagesSpeacking.map(({ id, value }, index) => (
-              <Fragment key={index}>
+              <Fragment key={id}>
                 <TextField
                   {...register(`lang_speacking.${index}.value`)}
                   defaultValue={value}
-                  select
-                  variant="standard"
-                  label="Language speaking"
+                  id={`languages_speacking-${index}`}
                   type="text"
+                  label="Languages speacking"
+                  variant="standard"
                   className="form-field"
                   fullWidth
                   InputLabelProps={{ shrink: true }}
@@ -137,26 +182,20 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
                       </>
                     ),
                   }}
-                >
-                  {langSpeacking.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                />
               </Fragment>
             ))}
           </Box>
           <Box marginBottom={2}>
             {subjects.map(({ id, value }, index) => (
-              <Fragment key={index}>
+              <Fragment key={id}>
                 <TextField
                   {...register(`subjects.${index}.value`)}
                   defaultValue={value}
-                  select
-                  variant="standard"
-                  label="Subjects"
+                  id={`subjects-${index}`}
                   type="text"
+                  label="Subjects"
+                  variant="standard"
                   className="form-field"
                   fullWidth
                   InputLabelProps={{ shrink: true }}
@@ -194,13 +233,7 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
                       </>
                     ),
                   }}
-                >
-                  {subjectList.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                />
               </Fragment>
             ))}
           </Box>
@@ -211,7 +244,7 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
               {...register('about')}
               id={'about'}
               name={'about'}
-              type={'about'}
+              type="text"
               label={'about'}
               className="form-field"
               fullWidth
@@ -235,7 +268,7 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
               {...register('lesson_1')}
               id={'lesson_1'}
               name={'lesson_1'}
-              type={'lesson_1'}
+              type="text"
               label={'Lesson 1'}
               variant="standard"
               className="form-field"
@@ -248,7 +281,7 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
               {...register('lesson_5')}
               id={'lesson_5'}
               name={'lesson_5'}
-              type={'lesson_5'}
+              type="text"
               label={'Lesson 5'}
               variant="standard"
               className="form-field"
@@ -283,6 +316,185 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
               fullWidth
               InputLabelProps={{ shrink: true }}
             />
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Box marginBottom={2}></Box>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Box marginBottom={2}>
+            <TextField
+              {...register(`lesson_duration`)}
+              select
+              variant="standard"
+              label="Lesson duration"
+              type="text"
+              className="form-field"
+              fullWidth
+              defaultValue=""
+              InputLabelProps={{ shrink: true }}
+            >
+              {durationTimeList.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {getFormatDurationTime(+option.value, 'long')}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Box>
+          <Box marginBottom={2}>
+            {levels_studying.map(({ id, value }, index) => (
+              <Fragment key={id}>
+                <TextField
+                  {...register(`levels_studying.${index}.value`)}
+                  defaultValue={value}
+                  id={`levels_studying-${index}`}
+                  type="text"
+                  label="levels_studying"
+                  variant="standard"
+                  className="form-field"
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                    endAdornment: (
+                      <>
+                        {levels_studying[index]?.id === id ? (
+                          <Button
+                            className="form-button-field"
+                            type="button"
+                            onClick={() =>
+                              appendLevelsStudying({
+                                value: '',
+                              })
+                            }
+                          >
+                            <span className="form-button-field__icon">
+                              <Icon icon={IconEnum.PLUS} color={colors.primary_color} size={10} />
+                            </span>
+                          </Button>
+                        ) : null}
+                        {index >= 1 ? (
+                          <>
+                            <Button
+                              type="button"
+                              onClick={() => removeLevelsStudying(index)}
+                              className="form-button-field form-button-field--remove"
+                            >
+                              <span className="form-button-field__icon">
+                                <Icon icon={IconEnum.MINUS} color={colors.primary_color} size={10} />
+                              </span>
+                            </Button>
+                          </>
+                        ) : null}
+                      </>
+                    ),
+                  }}
+                />
+              </Fragment>
+            ))}
+          </Box>
+          <Box marginBottom={2}>
+            {work_experience.map(({ id, value }, index) => (
+              <Fragment key={id}>
+                <TextField
+                  {...register(`work_experience.${index}.value`)}
+                  defaultValue={value}
+                  id={`work_experience-${index}`}
+                  type="text"
+                  label="Work experience"
+                  variant="standard"
+                  className="form-field"
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                    endAdornment: (
+                      <>
+                        {work_experience[index]?.id === id ? (
+                          <Button
+                            className="form-button-field"
+                            type="button"
+                            onClick={() =>
+                              appendWorkExperience({
+                                value: '',
+                              })
+                            }
+                          >
+                            <span className="form-button-field__icon">
+                              <Icon icon={IconEnum.PLUS} color={colors.primary_color} size={10} />
+                            </span>
+                          </Button>
+                        ) : null}
+                        {index >= 1 ? (
+                          <>
+                            <Button
+                              type="button"
+                              onClick={() => removeWorkExperience(index)}
+                              className="form-button-field form-button-field--remove"
+                            >
+                              <span className="form-button-field__icon">
+                                <Icon icon={IconEnum.MINUS} color={colors.primary_color} size={10} />
+                              </span>
+                            </Button>
+                          </>
+                        ) : null}
+                      </>
+                    ),
+                  }}
+                />
+              </Fragment>
+            ))}
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Box marginBottom={2}>
+            {education.map(({ id, value }, index) => (
+              <Fragment key={id}>
+                <TextField
+                  {...register(`education.${index}.value`)}
+                  defaultValue={value}
+                  id={`education-${index}`}
+                  type="text"
+                  label="Work experience"
+                  variant="standard"
+                  className="form-field"
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                    endAdornment: (
+                      <>
+                        {education[index]?.id === id ? (
+                          <Button
+                            className="form-button-field"
+                            type="button"
+                            onClick={() =>
+                              appendEducation({
+                                value: '',
+                              })
+                            }
+                          >
+                            <span className="form-button-field__icon">
+                              <Icon icon={IconEnum.PLUS} color={colors.primary_color} size={10} />
+                            </span>
+                          </Button>
+                        ) : null}
+                        {index >= 1 ? (
+                          <>
+                            <Button
+                              type="button"
+                              onClick={() => removeEducation(index)}
+                              className="form-button-field form-button-field--remove"
+                            >
+                              <span className="form-button-field__icon">
+                                <Icon icon={IconEnum.MINUS} color={colors.primary_color} size={10} />
+                              </span>
+                            </Button>
+                          </>
+                        ) : null}
+                      </>
+                    ),
+                  }}
+                />
+              </Fragment>
+            ))}
           </Box>
         </Grid>
         <Grid item xs={12}>

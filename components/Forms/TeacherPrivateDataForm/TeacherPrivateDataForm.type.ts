@@ -20,4 +20,20 @@ export interface TeacherPrivateFormProps extends Omit<UserLocationProps, 'addres
         value: string
       }[]
     | []
+  lesson_duration: string
+  levels_studying:
+    | {
+        value: string
+      }[]
+    | []
+  work_experience:
+    | {
+        value: string
+      }[]
+    | []
+  education:
+    | {
+        value: string
+      }[]
+    | []
 }

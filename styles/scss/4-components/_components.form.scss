@@ -108,7 +108,9 @@
 
 .form-account {
   .MuiFormControl-root {
-    width: 100%;
+    @media (min-width: $screen-sm) {
+      max-width: 330px;
+    }
   }
 
   &__additional-button {

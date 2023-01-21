@@ -35,7 +35,7 @@ function FormLogin({ onSuccess, isLoading, validationMessage }: FormLoginProps) 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
   return (
-    <form name="form-login" autoComplete="off" onSubmit={handleSubmit(onSuccess)} className="form form-login">
+    <form name="form-login" onSubmit={handleSubmit(onSuccess)} className="form form-login">
       <Box marginBottom={2}>
         <TextField
           {...register('email')}

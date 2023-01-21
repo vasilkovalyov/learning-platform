@@ -29,7 +29,7 @@ function StudentPrivateDataForm({ initialData }: StudentPrivateDataFormProps) {
               {...register('country')}
               id={'country'}
               name={'country'}
-              type={'country'}
+              type="text"
               label={'country'}
               variant="standard"
               className="form-field"
@@ -42,7 +42,7 @@ function StudentPrivateDataForm({ initialData }: StudentPrivateDataFormProps) {
               {...register('state')}
               id={'state'}
               name={'state'}
-              type={'state'}
+              type="text"
               label={'state'}
               variant="standard"
               className="form-field"
@@ -55,7 +55,7 @@ function StudentPrivateDataForm({ initialData }: StudentPrivateDataFormProps) {
               {...register('city')}
               id={'city'}
               name={'city'}
-              type={'city'}
+              type="text"
               label={'city'}
               variant="standard"
               className="form-field"
@@ -70,7 +70,7 @@ function StudentPrivateDataForm({ initialData }: StudentPrivateDataFormProps) {
               {...register('about')}
               id={'about'}
               name={'about'}
-              type={'about'}
+              type="text"
               label={'about'}
               className="form-field"
               fullWidth
