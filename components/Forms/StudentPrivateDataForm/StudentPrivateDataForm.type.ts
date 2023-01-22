@@ -1,3 +1,8 @@
+import { UserLocationProps } from 'interfaces/user.interface'
 export interface StudentPrivateDataFormProps {
-  initialData: any
+  initialData: StudentPrivateFormProps
+}
+
+export interface StudentPrivateFormProps extends UserLocationProps {
+  about: string
 }

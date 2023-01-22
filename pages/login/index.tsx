@@ -36,7 +36,6 @@ const Auth: NextPage = () => {
       setCookie(null, 'userId', response.data._id, { maxAge: 30 * 24 * 60 * 60 })
       setCookie(null, 'role', response.data.role, { maxAge: 30 * 24 * 60 * 60 })
 
-      localStorage.setItem('userId', response.data._id || '')
       dispatch(setAuthState(response.data))
       router.push('/admin')
     } catch (e: any) {

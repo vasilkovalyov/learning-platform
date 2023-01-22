@@ -1,36 +1,35 @@
 import React from 'react'
 
 import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
 
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 
-import { StudentPrivateDataFormProps } from './StudentPrivateDataForm.type'
+import { StudentPrivateDataFormProps, StudentPrivateFormProps } from './StudentPrivateDataForm.type'
 
 function StudentPrivateDataForm({ initialData }: StudentPrivateDataFormProps) {
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm<any>({
+  const { handleSubmit, register } = useForm<StudentPrivateFormProps>({
     mode: 'onSubmit',
-    // resolver: yupResolver(EditUserAccountFormSchema),
     defaultValues: initialData,
   })
+
+  function onSubmit(data: StudentPrivateFormProps) {
+    console.log('data', data)
+  }
+
   return (
-    <form className="form-account">
+    <form className="form-private-data form-private-data-teacher" onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={2}>
         <Grid item sm={12} md={5}>
           <Box marginBottom={2}>
             <TextField
               {...register('country')}
-              id={'country'}
-              name={'country'}
+              id="country"
+              name="country"
               type="text"
-              label={'country'}
+              label="Country"
               variant="standard"
               className="form-field"
               fullWidth
@@ -40,10 +39,10 @@ function StudentPrivateDataForm({ initialData }: StudentPrivateDataFormProps) {
           <Box marginBottom={2}>
             <TextField
               {...register('state')}
-              id={'state'}
-              name={'state'}
+              id="state"
+              name="state"
               type="text"
-              label={'state'}
+              label="State"
               variant="standard"
               className="form-field"
               fullWidth
@@ -53,10 +52,23 @@ function StudentPrivateDataForm({ initialData }: StudentPrivateDataFormProps) {
           <Box marginBottom={2}>
             <TextField
               {...register('city')}
-              id={'city'}
-              name={'city'}
+              id="city"
+              name="city"
               type="text"
-              label={'city'}
+              label="City"
+              variant="standard"
+              className="form-field"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+            />
+          </Box>
+          <Box marginBottom={2}>
+            <TextField
+              {...register('address')}
+              id="address"
+              name="address"
+              type="text"
+              label="Address"
               variant="standard"
               className="form-field"
               fullWidth

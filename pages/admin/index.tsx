@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 
 import PrivateLayoutPage from 'pages/privateLayoutPage'
-import ModalPopupBoxFull from '../../components/ModalPopupBoxFull'
+import ModalPopupBox from '../../components/ModalPopupBox'
 
 import AccountForm from '../../components/Forms/AccountForm'
 
@@ -36,17 +36,11 @@ function Account() {
       {authState && (
         <AccountForm onHandleRemoveAccount={onHandleRemoveAccount} initialData={authState} role={authState.role} />
       )}
-      <Modal
-        keepMounted
-        open={modalOpen}
-        onClose={handleCloseModal}
-        aria-labelledby="keep-mounted-modal-title"
-        aria-describedby="keep-mounted-modal-description"
-      >
+      <Modal open={modalOpen} onClose={handleCloseModal}>
         <>
-          <ModalPopupBoxFull onHandleClose={handleCloseModal}>
+          <ModalPopupBox type="full" onHandleClose={handleCloseModal}>
             <Box>
-              <Typography variant="h2" className="MuiTypography">
+              <Typography variant="h2" className="MuiTypography ta-c">
                 Do you really want to remove your account?
               </Typography>
               <Stack direction="row" justifyContent="center" marginTop={2} marginBottom={2} spacing={3}>
@@ -58,7 +52,7 @@ function Account() {
                 </Button>
               </Stack>
             </Box>
-          </ModalPopupBoxFull>
+          </ModalPopupBox>
         </>
       </Modal>
     </div>

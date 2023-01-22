@@ -10,6 +10,8 @@ import PrivateLayoutPage from 'pages/privateLayoutPage'
 
 import StudentPrivateDataForm from 'components/Forms/StudentPrivateDataForm'
 import TeacherPrivateDataForm from 'components/Forms/TeacherPrivateDataForm'
+import { defaultInitialDate as initialDateEducationForm } from 'components/Forms/EducationForm'
+import { defaultInitialDate as initialDateWorkExperienceForm } from 'components/Forms/WorkExperienceForm'
 import { TeacherPrivateFormProps } from 'components/Forms/TeacherPrivateDataForm/TeacherPrivateDataForm.type'
 
 function PrivateData() {
@@ -41,16 +43,8 @@ function PrivateData() {
         value: '',
       },
     ],
-    work_experience: [
-      {
-        value: '',
-      },
-    ],
-    education: [
-      {
-        value: '',
-      },
-    ],
+    work_experience: [initialDateWorkExperienceForm],
+    education: [initialDateEducationForm],
   }
 
   return (
