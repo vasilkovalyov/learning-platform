@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography'
 import PrivateLayoutPage from 'pages/privateLayoutPage'
 
 import StudentPrivateDataForm from 'components/Forms/StudentPrivateDataForm'
+import { StudentPrivateFormProps } from 'components/Forms/StudentPrivateDataForm/StudentPrivateDataForm.type'
 import TeacherPrivateDataForm from 'components/Forms/TeacherPrivateDataForm'
 import { defaultInitialDate as initialDateEducationForm } from 'components/Forms/EducationForm'
 import { defaultInitialDate as initialDateWorkExperienceForm } from 'components/Forms/WorkExperienceForm'
@@ -17,7 +18,13 @@ import { TeacherPrivateFormProps } from 'components/Forms/TeacherPrivateDataForm
 function PrivateData() {
   const authState = useSelector(selectAuthState)
 
-  const initialData: any = null
+  const initialData: StudentPrivateFormProps = {
+    country: '',
+    state: '',
+    city: '',
+    address: '',
+    about: '',
+  }
   const initialDataTeacher: TeacherPrivateFormProps = {
     lesson_1: '',
     lesson_5: '',
@@ -27,7 +34,12 @@ function PrivateData() {
     city: '',
     country: '',
     state: '',
-    lang_speacking: [
+    lang_speaking: [
+      {
+        value: '',
+      },
+    ],
+    lang_teaching: [
       {
         value: '',
       },
@@ -39,6 +51,11 @@ function PrivateData() {
     ],
     lesson_duration: '',
     levels_studying: [
+      {
+        value: '',
+      },
+    ],
+    students_ages: [
       {
         value: '',
       },

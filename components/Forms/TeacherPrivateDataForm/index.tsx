@@ -24,6 +24,7 @@ import { TeacherPrivateDataFormProps, TeacherPrivateFormProps } from './TeacherP
 import colors from 'constants/colors'
 
 import getFormatDurationTime from 'common/formatDurationTime'
+import studentAges from 'static-data/students-ages.json'
 
 const durationTimeList = [
   {
@@ -50,12 +51,21 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
   })
 
   const {
-    fields: languagesSpeacking,
-    remove: removeLanguageSpeacking,
-    append: appendLanguageSpeacking,
+    fields: languagesSpeaking,
+    remove: removeLanguageSpeaking,
+    append: appendLanguageSpeaking,
   } = useFieldArray({
     control,
-    name: 'lang_speacking',
+    name: 'lang_speaking',
+  })
+
+  const {
+    fields: languagesTeaching,
+    remove: removeLanguageTeaching,
+    append: appendLanguageTeaching,
+  } = useFieldArray({
+    control,
+    name: 'lang_teaching',
   })
 
   const {
@@ -74,6 +84,15 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
   } = useFieldArray({
     control,
     name: 'work_experience',
+  })
+
+  const {
+    fields: studentsAges,
+    remove: removeStudentsAges,
+    append: appendStudentsAges,
+  } = useFieldArray({
+    control,
+    name: 'students_ages',
   })
 
   const {
@@ -203,14 +222,14 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
               />
             </Box>
             <Box marginBottom={2}>
-              {languagesSpeacking.map(({ id, value }, index) => (
+              {languagesSpeaking.map(({ id, value }, index) => (
                 <Fragment key={id}>
                   <TextField
-                    {...register(`lang_speacking.${index}.value`)}
+                    {...register(`lang_speaking.${index}.value`)}
                     defaultValue={value}
-                    id={`languages_speacking-${index}`}
+                    id={`languages_speaking-${index}`}
                     type="text"
-                    label="Languages speacking"
+                    label="Languages speaking"
                     variant="standard"
                     className="form-field"
                     fullWidth
@@ -218,12 +237,12 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
                     InputProps={{
                       endAdornment: (
                         <>
-                          {languagesSpeacking[index]?.id === id ? (
+                          {languagesSpeaking[index]?.id === id ? (
                             <Button
                               className="form-button-field"
                               type="button"
                               onClick={() =>
-                                appendLanguageSpeacking({
+                                appendLanguageSpeaking({
                                   value: '',
                                 })
                               }
@@ -237,7 +256,7 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
                             <>
                               <Button
                                 type="button"
-                                onClick={() => removeLanguageSpeacking(index)}
+                                onClick={() => removeLanguageSpeaking(index)}
                                 className="form-button-field form-button-field--remove"
                               >
                                 <span className="form-button-field__icon">
@@ -252,6 +271,74 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
                   />
                 </Fragment>
               ))}
+            </Box>
+            <Box marginBottom={2}>
+              {languagesTeaching.map(({ id, value }, index) => (
+                <Fragment key={id}>
+                  <TextField
+                    {...register(`lang_teaching.${index}.value`)}
+                    defaultValue={value}
+                    id={`lang_teaching-${index}`}
+                    type="text"
+                    label="Languages teaching"
+                    variant="standard"
+                    className="form-field"
+                    fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                      endAdornment: (
+                        <>
+                          {languagesTeaching[index]?.id === id ? (
+                            <Button
+                              className="form-button-field"
+                              type="button"
+                              onClick={() =>
+                                appendLanguageTeaching({
+                                  value: '',
+                                })
+                              }
+                            >
+                              <span className="form-button-field__icon">
+                                <Icon icon={IconEnum.PLUS} color={colors.primary_color} size={10} />
+                              </span>
+                            </Button>
+                          ) : null}
+                          {index >= 1 ? (
+                            <>
+                              <Button
+                                type="button"
+                                onClick={() => removeLanguageTeaching(index)}
+                                className="form-button-field form-button-field--remove"
+                              >
+                                <span className="form-button-field__icon">
+                                  <Icon icon={IconEnum.MINUS} color={colors.primary_color} size={10} />
+                                </span>
+                              </Button>
+                            </>
+                          ) : null}
+                        </>
+                      ),
+                    }}
+                  />
+                </Fragment>
+              ))}
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Box marginBottom={2}>
+              <TextField
+                {...register('about')}
+                id={'about'}
+                name={'about'}
+                type="text"
+                label={'about'}
+                className="form-field"
+                fullWidth
+                InputLabelProps={{ shrink: true }}
+                multiline
+                rows={7}
+                variant="standard"
+              />
             </Box>
             <Box marginBottom={2}>
               {subjects.map(({ id, value }, index) => (
@@ -302,22 +389,63 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
                 </Fragment>
               ))}
             </Box>
-          </Grid>
-          <Grid item xs={12} md={6}>
             <Box marginBottom={2}>
-              <TextField
-                {...register('about')}
-                id={'about'}
-                name={'about'}
-                type="text"
-                label={'about'}
-                className="form-field"
-                fullWidth
-                InputLabelProps={{ shrink: true }}
-                multiline
-                rows={7}
-                variant="standard"
-              />
+              {studentsAges.map(({ id }, index) => (
+                <Fragment key={id}>
+                  <TextField
+                    {...register(`students_ages.${index}.value`)}
+                    id={`students_ages-${index}`}
+                    type="text"
+                    select
+                    label="Students ages"
+                    variant="standard"
+                    className="form-field"
+                    fullWidth
+                    defaultValue=""
+                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                      endAdornment: (
+                        <>
+                          {studentsAges[index]?.id === id ? (
+                            <Button
+                              className="form-button-field"
+                              type="button"
+                              onClick={() =>
+                                appendStudentsAges({
+                                  value: '',
+                                })
+                              }
+                            >
+                              <span className="form-button-field__icon">
+                                <Icon icon={IconEnum.PLUS} color={colors.primary_color} size={10} />
+                              </span>
+                            </Button>
+                          ) : null}
+                          {index >= 1 ? (
+                            <>
+                              <Button
+                                type="button"
+                                onClick={() => removeStudentsAges(index)}
+                                className="form-button-field form-button-field--remove"
+                              >
+                                <span className="form-button-field__icon">
+                                  <Icon icon={IconEnum.MINUS} color={colors.primary_color} size={10} />
+                                </span>
+                              </Button>
+                            </>
+                          ) : null}
+                        </>
+                      ),
+                    }}
+                  >
+                    {studentAges.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.value}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Fragment>
+              ))}
             </Box>
           </Grid>
           <Grid item xs={12} md={12}>
@@ -354,25 +482,6 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
                 InputLabelProps={{ shrink: true }}
               />
             </Box>
-            <Box marginBottom={2}>
-              <TextField
-                {...register(`lesson_duration`)}
-                select
-                variant="standard"
-                label="Lesson duration"
-                type="text"
-                className="form-field"
-                fullWidth
-                defaultValue=""
-                InputLabelProps={{ shrink: true }}
-              >
-                {durationTimeList.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {getFormatDurationTime(+option.value, 'long')}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Box>
           </Grid>
           <Grid item xs={12} md={6}>
             <Box marginBottom={2}>
@@ -400,6 +509,27 @@ function TeacherPrivateDataForm({ initialData }: TeacherPrivateDataFormProps) {
                 fullWidth
                 InputLabelProps={{ shrink: true }}
               />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Box marginBottom={2}>
+              <TextField
+                {...register(`lesson_duration`)}
+                select
+                variant="standard"
+                label="Lesson duration"
+                type="text"
+                className="form-field"
+                fullWidth
+                defaultValue=""
+                InputLabelProps={{ shrink: true }}
+              >
+                {durationTimeList.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {getFormatDurationTime(+option.value, 'long')}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Box>
           </Grid>
           <Grid item xs={12}>

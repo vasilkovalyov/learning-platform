@@ -12,7 +12,12 @@ export interface TeacherPrivateFormProps extends Omit<UserLocationProps, 'addres
   lesson_5: string
   lesson_10: string
   lesson_20: string
-  lang_speacking:
+  lang_speaking:
+    | {
+        value: string
+      }[]
+    | []
+  lang_teaching:
     | {
         value: string
       }[]
@@ -24,6 +29,11 @@ export interface TeacherPrivateFormProps extends Omit<UserLocationProps, 'addres
     | []
   lesson_duration: string
   levels_studying:
+    | {
+        value: string
+      }[]
+    | []
+  students_ages:
     | {
         value: string
       }[]
