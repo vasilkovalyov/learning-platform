@@ -2,16 +2,14 @@ import { UserLocationProps } from 'interfaces/user.interface'
 import { WorkExperienceProps } from 'components/Forms/WorkExperienceForm/WorkExperienceForm.type'
 import { EducationProps } from 'components/Forms/EducationForm/EducationForm.type'
 
-export interface TeacherPrivateDataFormProps {
-  initialData: TeacherPrivateFormProps
-}
-
 export interface TeacherPrivateFormProps extends Omit<UserLocationProps, 'address'> {
   about: string
-  lesson_1: string
-  lesson_5: string
-  lesson_10: string
-  lesson_20: string
+  lessons_prices:
+    | {
+        count: string
+        price: string
+      }[]
+    | []
   lang_speaking:
     | {
         value: string

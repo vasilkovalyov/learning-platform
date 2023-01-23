@@ -59,6 +59,7 @@ function AdminList() {
     destroyCookie(null, 'role')
     destroyCookie(null, 'userId')
     destroyCookie(null, 'token')
+    console.log(1)
     dispatch(clearAuthState())
     router.push('/')
   }
