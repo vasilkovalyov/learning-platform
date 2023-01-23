@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import cn from 'classnames'
 
-import Icon from 'components/Generic/Icon'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
 
-import CalendarEvent from '../CalendarEvent/CalendarEvent'
+import Icon from '../../../Generic/Icon'
+
+import CalendarEvent from '../CalendarEvent'
 import { ICalendarEvent, CalendarEventType } from '../CalendarEvent/CalendarEvent.type'
 
 import CalendarMonthClass from './CalendarMonth.class'
@@ -14,9 +19,14 @@ import { ICalendarMonthProps } from './CalendarMonth.type'
 import { IDay } from '../CalendarDay/CalendarDay.type'
 import { formatDate } from '../../utilities/date'
 
-export default function CalendarMonth({ date, events, today = new Date(), locale = 'en-En' }: ICalendarMonthProps) {
+export default function CalendarMonth({
+  date = new Date(),
+  events,
+  today = new Date(),
+  locale = 'en-En',
+}: ICalendarMonthProps) {
   const todayDay = new CalendarDayClass({ date: today, locale }).getDay()
-  const weekInst = new CalendarWeekClass()
+  const weekInst = new CalendarWeekClass({ locale: locale })
   const monthInst = new CalendarMonthClass({ date: date, locale: locale })
 
   const [monthDays, setMonthDays] = useState<IDay[]>(monthInst.getMonthDaysFullView())
@@ -81,43 +91,43 @@ export default function CalendarMonth({ date, events, today = new Date(), locale
   }
 
   return (
-    <div className="calendar-month">
-      <div className="calendar-month__controls">
-        <div className="d-flex d-flex-justify-center">
-          <div>
-            <button onClick={prevMonth} className="calendar-month__control-button">
-              <Icon icon="chevron-left" size={20} />
-            </button>
-            <div className="calendar-month__month font-bold color-black">
-              <div>
-                {monthName}
-                {year}
-              </div>
-            </div>
-            <button onClick={nextMonth} className="calendar-month__control-button">
-              <Icon icon="chevron-right" size={20} />
-            </button>
-          </div>
-        </div>
-      </div>
-      <div className="calendar-month__today-info text-center font-semibold color-grey">
-        {`Today is ${todayDay.day} ${formatDate(todayDay.date, 'DD MMMM YYYY')}`}
-      </div>
-      <div className="calendar-week-days">
+    <Box className="calendar-month">
+      <Box className="calendar-month__controls" marginBottom={2}>
+        <Stack spacing={2} direction="row" alignItems="center" justifyContent="center">
+          <Button variant="text" onClick={prevMonth} className="calendar-month__control-button">
+            <Icon icon="chevron-left" size={20} />
+          </Button>
+          <Typography variant="h4" className="MuiTypography calendar-month__month font-bold color-black">
+            <span>{monthName}</span>
+            <span>{year}</span>
+          </Typography>
+          <Button variant="text" onClick={nextMonth} className="calendar-month__control-button">
+            <Icon icon="chevron-right" size={20} />
+          </Button>
+        </Stack>
+      </Box>
+      <Box marginBottom={1}>
+        <Typography variant="body2" className="MuiTypography calendar-month__today-info font-semibold color-grey-3">
+          {`Today is ${todayDay.day} ${formatDate(todayDay.date, 'DD MMMM YYYY')}`}
+        </Typography>
+      </Box>
+      <Box className="calendar-week-days">
         {weekInst.getWeekNames().map((week, key) => (
-          <div
+          <Box
             key={key}
             className={cn('calendar-week-days__cell ', {
               active: todayDay.day === week && todayDay.monthIndex === monthIndex && todayDay.year === year,
             })}
           >
-            {week}
-          </div>
+            <Typography variant="body2" className="MuiTypography font-semibold">
+              {week}
+            </Typography>
+          </Box>
         ))}
-      </div>
-      <div className="calendar-month__days">
+      </Box>
+      <Box className="calendar-month__days">
         {monthDays.map((day, key) => (
-          <div
+          <Box
             key={key}
             className={cn(
               'calendar-month__day-cell font-semibold',
@@ -127,11 +137,13 @@ export default function CalendarMonth({ date, events, today = new Date(), locale
               { 'calendar-month__day-cell--weekend': day.isWeekend },
             )}
           >
-            <span className="calendar-month__day-cell-day-number">{day.dayNumber}</span>
-            <div className="calendar-month__day-cell-events">{renderEvents(day.date, events)}</div>
-          </div>
+            <Typography variant="h4" className="MuiTypography calendar-month__day-cell-day-number">
+              {day.dayNumber}
+            </Typography>
+            <Box className="calendar-month__day-cell-events">{renderEvents(day.date, events)}</Box>
+          </Box>
         ))}
-      </div>
-    </div>
+      </Box>
+    </Box>
   )
 }

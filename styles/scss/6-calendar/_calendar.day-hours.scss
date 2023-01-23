@@ -1,8 +1,10 @@
+@import '../1-settings/settings.sizes';
+
 .calendar-day-hours {
   &__item {
     display: block;
     padding: 0;
-    font-size: 16px;
+    font-size: $size-1-l;
     text-align: center;
     height: 100px;
   }

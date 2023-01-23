@@ -4,7 +4,9 @@ import Typography from '@mui/material/Typography'
 
 import PrivateLayoutPage from 'pages/privateLayoutPage'
 
-const MyLessons = () => {
+import F from 'components/Calendar'
+
+function MyLessons() {
   return (
     <div>
       <Typography variant="h5" className="MuiTypography">

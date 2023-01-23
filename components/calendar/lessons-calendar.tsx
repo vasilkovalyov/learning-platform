@@ -8,10 +8,10 @@ import { CalendarLessonTypeColor } from './components/CalendarEventsTypes/Calend
 import CalendarMonthClass from './components/CalendarMonth/CalendarMonth.class'
 import CalendarDayClass from './components/CalendarDay/CalendarDay.class'
 
-import CalendarHours from './components/CalendarHours/CalendarHours'
-import CalendarEventsTypes from './components/CalendarEventsTypes/CalendarEventsTypes'
+import CalendarHours from './components/CalendarHours'
+import CalendarEventsTypes from './components/CalendarEventsTypes'
 
-import Icon from 'components/Generic/Icon'
+import Icon from '../../components/Generic/Icon'
 
 import { calendarStartHourFrom, calendarStartHourTo, lessonsCalendarCellHeight, hourMinutes } from './constants'
 
@@ -19,7 +19,7 @@ import { getFilteredEventByDate } from './utilities/custom'
 
 import { lessonsTypes } from './components/CalendarEventsTypes/CalendarEventsTypes.data'
 
-function LessonsCalendar({ date, events, locale = 'en-En' }: ICalendar) {
+function LessonsCalendar({ date = new Date(), events, locale = 'en-En' }: ICalendar) {
   const dayHours = CalendarDayClass.getDayHours(calendarStartHourFrom, calendarStartHourTo)
 
   const monthInst = new CalendarMonthClass({ date: date, locale: locale })

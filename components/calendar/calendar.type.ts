@@ -9,4 +9,7 @@ export interface ICalendar {
   date: Date
   events?: ICalendarEvent[]
   locale?: string
+  view: CalendarModeView
 }
+
+export type ICalendarSchedule = Omit<ICalendar, 'view'>

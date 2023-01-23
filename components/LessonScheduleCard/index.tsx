@@ -1,43 +1,52 @@
 import React from 'react'
 
-import { formatDate } from '../calendar/utilities/date'
-import { getTimeFormatTimestamp } from '../calendar/utilities/custom'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+
+import { formatDate } from '../Calendar/utilities/date'
+import { getTimeFormatTimestamp } from '../Calendar/utilities/custom'
 
 import { ILessonScheduleCardProps } from './LessonScheduleCard.type'
 
-function LessonScheduleCard({ id, dateStart, dateEnd, price, onClick }: ILessonScheduleCardProps) {
-  const timeStart = getTimeFormatTimestamp(dateStart)
-  const timeEng = getTimeFormatTimestamp(dateEnd)
+function LessonScheduleCard({ id, eventStart, eventEnd, price, onClick }: ILessonScheduleCardProps) {
+  const timeStart = getTimeFormatTimestamp(eventStart)
+  const timeEng = getTimeFormatTimestamp(eventEnd)
   return (
-    <div id={`lesson-schedule-card-${id}`} className="lesson-schedule-card">
-      <div className="lesson-schedule-card__body">
-        <ul className="lesson-schedule-card__list-info">
-          <li className="lesson-schedule-card__list-info-item d-flex-justify-start">
-            <span>Date:</span>
-            <p>
-              <strong>{formatDate(new Date(dateStart), 'DD MMMM')}</strong>
-            </p>
-          </li>
-          <li className="lesson-schedule-card__list-info-item d-flex-justify-start">
-            <span>Time:</span>
-            <p>
-              <strong>
-                {timeStart} - {timeEng}
-              </strong>
-            </p>
-          </li>
-          <li className="lesson-schedule-card__list-info-item d-flex-justify-start">
-            <span>Price:</span>
-            <p>
-              <strong>{price} $</strong>
-            </p>
-          </li>
-        </ul>
-        <button className="lesson-schedule-card__button" onClick={() => onClick(id)}>
+    <Box id={`lesson-schedule-card-${id}`} className="lesson-schedule-card">
+      <Box className="lesson-schedule-card__body">
+        <Box marginBottom={1}>
+          <Stack className="lesson-schedule-card__list-info">
+            <Box className="lesson-schedule-card__list-info-item d-flex-justify-start" marginBottom={1}>
+              <Stack direction="row" spacing={1}>
+                <Typography className="MuiTypography">Date:</Typography>
+                <Typography className="MuiTypography font-semibold">
+                  {formatDate(new Date(eventStart), 'DD MMMM')}
+                </Typography>
+              </Stack>
+            </Box>
+            <Box className="lesson-schedule-card__list-info-item d-flex-justify-start" marginBottom={1}>
+              <Stack direction="row" spacing={1}>
+                <Typography className="MuiTypography">Time:</Typography>
+                <Typography className="MuiTypography font-semibold">
+                  {timeStart} - {timeEng}
+                </Typography>
+              </Stack>
+            </Box>
+            <Box className="lesson-schedule-card__list-info-item d-flex-justify-start" marginBottom={1}>
+              <Stack direction="row" spacing={1}>
+                <Typography className="MuiTypography">Price:</Typography>
+                <Typography className="MuiTypography font-semibold">{price} $</Typography>
+              </Stack>
+            </Box>
+          </Stack>
+        </Box>
+        <Button variant="contained" fullWidth className="lesson-schedule-card__button" onClick={() => onClick(id)}>
           Book a lesson
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Box>
+    </Box>
   )
 }
 

@@ -1,3 +1,7 @@
+@import '../1-settings/settings.colors';
+@import '../1-settings/settings.spacing';
+@import '../1-settings/settings.fonts';
+
 .calendar-week-days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -9,13 +13,18 @@
   z-index: 2;
 
   &__cell {
-    // color: @grey-2;
-    // background-color: @grey-3;
-    font-weight: 600;
-    // font-size: @font-size-base;
-    padding: 20px;
+    background-color: #e0e5eb;
+    padding: $spacing-2-s $spacing-0-l;
+
+    .MuiTypography-root {
+      color: $grey-3;
+      color: $grey-3;
+    }
+
     &.active {
-      // color: @red;
+      .MuiTypography-root {
+        color: $primary-color;
+      }
     }
   }
 }

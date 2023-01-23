@@ -1,23 +1,32 @@
-.calendar-month {
-  &__controls {
-    margin-bottom: 20px;
-  }
+@import '../1-settings/settings.colors';
+@import '../1-settings/settings.spacing';
+@import '../1-settings/settings.sizes';
+@import '../1-settings/settings.fonts';
 
+.calendar-month {
   &__control-button {
-    padding-left: 10px;
-    padding-right: 10px;
+    &.MuiButtonBase-root {
+      padding: $spacing-0-xs $spacing-0-m;
+      min-width: auto;
+      color: $black;
+
+      &:hover {
+        color: $white;
+        background: $primary-color;
+      }
+    }
   }
 
   &__month {
-    font-size: 20px;
+    font-size: $size-2-xs;
 
-    &.ant-typography {
-      margin-bottom: 0;
+    > span {
+      margin: 0 4px;
     }
   }
 
   &__today-info {
-    font-size: 16px;
+    font-size: $size-1-l;
   }
 
   &__days {
@@ -26,40 +35,36 @@
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     overflow: hidden;
-    margin-bottom: 20px;
   }
 
   &__day-cell {
     position: relative;
-    // font-size: @font-size-base;
-    padding: 8px;
+    padding: $spacing-0-m;
     height: 108px;
-    // border: 1px solid @grey-4;
-    font-size: 22px;
-    // background-color: @event-available-lesson-color;
-
-    &--current-month {
-      // color: @black-2;
-    }
+    border: 1px solid #e1e7ed;
 
     &--weekend {
-      background-color: #f2f5fa;
+      background-color: $grey-2;
     }
 
     &--weekend &--current-month {
-      background-color: #f2f5fa;
+      background-color: $grey-2;
     }
 
     &--another-month {
-      // color: @grey-2;
+      .MuiTypography-root {
+        color: $grey-3;
+      }
     }
 
     &--unavailable-day {
-      background-color: #f2f5fa;
+      background-color: $grey-2;
     }
 
-    &--today {
-      // color: @red;
+    &--today .calendar-month__day-cell-day-number {
+      &.MuiTypography-root {
+        color: $primary-color;
+      }
     }
   }
 

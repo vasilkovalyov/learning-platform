@@ -1,13 +1,18 @@
 import React, { useState } from 'react'
 import cn from 'classnames'
 
-import Icon from 'components/Generic/Icon'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+
+import Icon from '../../../Generic/Icon'
 
 import { IDay } from '../CalendarDay/CalendarDay.type'
 
-import CalendarHours from '../CalendarHours/CalendarHours'
+import CalendarHours from '../CalendarHours'
 
-import CalendarEvents from '../CalendarEvents/CalendarEvents'
+import CalendarEvents from '../CalendarEvents'
 import { ICalendarEvent } from '../CalendarEvent/CalendarEvent.type'
 
 import CalendarWeekClass from './CalendarWeek.class'
@@ -19,7 +24,12 @@ import { formatDate } from '../../utilities/date'
 import { weekDaysCount, calendarStartHourFrom, calendarStartHourTo } from '../../constants'
 import { getFilteredEventByDate } from '../../utilities/custom'
 
-export default function CalendarWeek({ date, today = new Date(), events, locale = 'en-En' }: ICalendarWeekProps) {
+export default function CalendarWeek({
+  date = new Date(),
+  today = new Date(),
+  events,
+  locale = 'en-En',
+}: ICalendarWeekProps) {
   const todayDay = new CalendarDayClass({ date: today, locale }).getDay()
   const weekInst = new CalendarWeekClass()
   const dayHours = CalendarDayClass.getDayHours(calendarStartHourFrom, calendarStartHourTo)
@@ -59,31 +69,27 @@ export default function CalendarWeek({ date, today = new Date(), events, locale 
 
   return (
     <div className="calendar-week">
-      <div className="calendar-week__top-info">
-        <div>
-          <div>
-            <div className="calendar-week__date font-bold color-black">
-              <div>
-                {CalendarMonthClass.getMonthNameByIndex(day.monthIndex).month}
-                {day.year}
-              </div>
-            </div>
-            <div className="calendar-week__today-info font-semibold color-grey">
-              {`Today is ${todayDay.day} ${formatDate(todayDay.date, 'DD MMMM YYYY')}`}
-            </div>
-            <div className="calendar-week__controls">
-              <div>
-                <button onClick={prevWeek} className="calendar-week__control-button">
-                  <Icon icon="chevron-left" size={20} />
-                </button>
-                <button onClick={nextWeek} className="calendar-week__control-button">
-                  <Icon icon="chevron-right" size={20} />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Box className="calendar-week__top-info">
+        <Box marginBottom={1}>
+          <Typography variant="h4" className="MuiTypography calendar-week__date font-bold color-black">
+            <span>{CalendarMonthClass.getMonthNameByIndex(day.monthIndex).month}</span>
+            <span>{day.year}</span>
+          </Typography>
+        </Box>
+        <Box marginBottom={2}>
+          <Typography variant="body2" className="MuiTypography calendar-week__today-info font-semibold color-grey-3">
+            {`Today is ${todayDay.day} ${formatDate(todayDay.date, 'DD MMMM YYYY')}`}
+          </Typography>
+        </Box>
+        <Stack direction="row" spacing={2} marginBottom={2} className="calendar-week__controls">
+          <Button variant="text" onClick={prevWeek} className="calendar-week__control-button">
+            <Icon icon="chevron-left" size={20} />
+          </Button>
+          <Button variant="text" onClick={nextWeek} className="calendar-week__control-button">
+            <Icon icon="chevron-right" size={20} />
+          </Button>
+        </Stack>
+      </Box>
       <div className="calendar-week__body">
         <div className="calendar-week__body-left">
           <CalendarHours from={calendarStartHourFrom} to={calendarStartHourTo} />
@@ -93,12 +99,16 @@ export default function CalendarWeek({ date, today = new Date(), events, locale 
             {weekNames.map((weekName, key) => (
               <div
                 key={key}
-                className={cn('calendar-week-days__cell', {
+                className={cn('calendar-week-days__cell ta-c', {
                   active: week[key].isToday,
                 })}
               >
-                <div>{weekName}</div>
-                <div>{week[key].dayNumber < 10 ? `0${week[key].dayNumber}` : week[key].dayNumber}</div>
+                <Typography variant="h4" className="MuiTypography calendar-week-days__cell-day-number font-semibold">
+                  {week[key].dayNumber < 10 ? `0${week[key].dayNumber}` : week[key].dayNumber}
+                </Typography>
+                <Typography variant="body2" className="MuiTypography calendar-week-days__cell-weekname font-semibold">
+                  {weekName}
+                </Typography>
               </div>
             ))}
           </div>
