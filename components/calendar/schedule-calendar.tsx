@@ -165,10 +165,7 @@ function ScheduleCalendar({ date = new Date(), events, locale = 'en-En' }: ICale
                   const topPosition =
                     scheduleCalendarCellHeight *
                     (hourStartWithTimeZone - calendarStartHourFrom + dateStart.getMinutes() / hourMinutes)
-                  // const height =
-                  //   (hourEndWithTimeZone - hourStartWithTimeZone + dateEnd.getMinutes() / hourMinutes) *
-                  //     scheduleCalendarCellHeight -
-                  //   (dateEnd.getMinutes() / hourMinutes) * scheduleCalendarCellHeight
+
                   const startMin = hourStartWithTimeZone * hourMinutes + dateStart.getMinutes()
                   const endMin = hourEndWithTimeZone * hourMinutes + dateEnd.getMinutes()
                   const height = ((endMin - startMin) / hourMinutes) * scheduleCalendarCellHeight

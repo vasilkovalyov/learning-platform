@@ -1,6 +1,18 @@
+@import '../1-settings/settings.colors';
+@import '../1-settings/settings.spacing';
+
 .schedule-calendar {
   &__control-button {
-    padding: 10px;
+    &.MuiButtonBase-root {
+      padding: $spacing-0-xs $spacing-0-m;
+      color: $black;
+      min-width: auto;
+
+      &:hover {
+        color: $white;
+        background-color: $primary-color;
+      }
+    }
   }
 
   &__body {
