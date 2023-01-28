@@ -26,6 +26,12 @@
   background-position: center;
 }
 
+.fillCover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .absoluteCover {
   position: absolute;
   top: 0;

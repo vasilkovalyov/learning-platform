@@ -24,7 +24,7 @@ import pages from 'constants/pages'
 
 const navigationData = [
   {
-    path: '/',
+    path: '/teachers',
     text: 'Teachers',
   },
   {

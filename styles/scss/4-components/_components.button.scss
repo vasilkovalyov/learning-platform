@@ -24,4 +24,12 @@
       border-color: $primary-color;
     }
   }
+
+  &.MuiButton-containedSuccess {
+    background-color: $green;
+
+    &:hover {
+      background-color: darken($green, 10%);
+    }
+  }
 }
