@@ -3,6 +3,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
+import { destroyCookie } from 'nookies'
+
 import logoImage from '../../public/images/logo.png'
 
 import Container from '@mui/material/Container'
@@ -22,7 +24,7 @@ import pages from 'constants/pages'
 
 const navigationData = [
   {
-    path: '/',
+    path: '/teachers',
     text: 'Teachers',
   },
   {
@@ -53,11 +55,12 @@ function AdminList() {
 
   function signOut(e: MouseEvent<HTMLElement>) {
     e.preventDefault()
+
+    destroyCookie(null, 'role')
+    destroyCookie(null, 'userId')
+    destroyCookie(null, 'token')
+    console.log(1)
     dispatch(clearAuthState())
-    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:01 GTM;'
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GTM;'
-    document.cookie = 'role=; expires=Thu, 01 Jan 1970 00:00:01 GTM;'
-    localStorage.removeItem('userId')
     router.push('/')
   }
 

@@ -1,3 +1,7 @@
+@import '../1-settings/settings.colors';
+@import '../1-settings/settings.radius';
+@import '../1-settings/settings.spacing';
+
 .lesson-schedule-card-position-container {
   position: absolute;
   top: 0;
@@ -14,27 +18,10 @@
 }
 
 .lesson-schedule-card {
-  // background: @white;
+  background: $white;
   box-shadow: 0px 10px 60px #dfe8f6;
-  border-radius: 10px;
-  padding: 24px;
+  border-radius: $radius-lg;
+  padding: $spacing-2-l;
   max-width: 270px;
   width: 100%;
-
-  &__body {
-    width: 100%;
-  }
-
-  &__list-info-item {
-    padding-top: 0;
-    padding-bottom: 0;
-
-    &:not(:last-child) {
-      margin-bottom: 2px;
-    }
-  }
-
-  &__button {
-    width: 100%;
-  }
 }

@@ -1,10 +1,17 @@
 import React, { useState } from 'react'
 import cn from 'classnames'
 
-import Icon from 'components/Generic/Icon'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
 
-import CalendarHours from '../CalendarHours/CalendarHours'
-import CalendarEvents from '../CalendarEvents/CalendarEvents'
+import Icon from '../../../Generic/Icon'
+
+import CalendarHours from '../CalendarHours'
+import CalendarEvents from '../CalendarEvents'
 import { ICalendarEvent } from '../CalendarEvent/CalendarEvent.type'
 
 import CalendarMonthClass from '../CalendarMonth/CalendarMonth.class'
@@ -18,7 +25,7 @@ import { formatDate } from '../../utilities/date'
 import { getFilteredEventByDate } from '../../utilities/custom'
 import { calendarStartHourFrom, calendarStartHourTo, calendarCellHeight } from '../../constants'
 
-export default function CalendarDay({ date, events = [], locale = 'en-En' }: ICalendarDayProps) {
+export default function CalendarDay({ date = new Date(), events = [], locale = 'en-En' }: ICalendarDayProps) {
   const dayHours = CalendarDayClass.getDayHours(calendarStartHourFrom, calendarStartHourTo)
   const currentHour = parseInt(getCurrentTime(new Date()).split(':')[0])
 
@@ -80,51 +87,52 @@ export default function CalendarDay({ date, events = [], locale = 'en-En' }: ICa
   }
 
   return (
-    <div className="calendar-day">
-      <div className="calendar-day__top-info">
-        <div
-          className={cn('calendar-day__date font-bold', {
-            'calendar-day__date--active': CalendarDayClass.isToday(day.date),
-          })}
-        >
-          <div>
-            {formatDate(day.date, 'DD')}
-            {CalendarMonthClass.getMonthNameByIndex(monthIndex).month}
-            {year}
-          </div>
-        </div>
-        <div className="calendar-day__today-info font-semibold color-grey">
-          {`${day.day} ${getCurrentTime(new Date())}`}
-        </div>
-        <div className="calendar-day__controls">
-          <div>
-            <button onClick={prevDay} className="calendar-day__control-button">
-              <Icon icon="chevron-left" size={20} />
-            </button>
-            <button onClick={nextDay} className="calendar-day__control-button">
-              <Icon icon="chevron-right" size={20} />
-            </button>
-          </div>
-        </div>
-      </div>
-      <div className="calendar-day__body">
-        <div className="calendar-day__body-left">
+    <Box className="calendar-day">
+      <Box className="calendar-day__top-info">
+        <Box marginBottom={1}>
+          <Typography
+            variant="h4"
+            className={cn('MuiTypography calendar-day__date font-bold', {
+              'calendar-day__date--active': CalendarDayClass.isToday(day.date),
+            })}
+          >
+            <span>{formatDate(day.date, 'DD')}</span>
+            <span>{CalendarMonthClass.getMonthNameByIndex(monthIndex).month}</span>
+            <span>{year}</span>
+          </Typography>
+        </Box>
+        <Box marginBottom={2}>
+          <Typography variant="body2" className="MuiTypography calendar-day__today-info font-semibold color-grey-3">
+            {`${day.day} ${getCurrentTime(new Date())}`}
+          </Typography>
+        </Box>
+        <Stack direction="row" spacing={2} marginBottom={2} className="calendar-day__controls">
+          <Button variant="text" onClick={prevDay} className="calendar-day__control-button">
+            <Icon icon="chevron-left" size={20} />
+          </Button>
+          <Button variant="text" onClick={nextDay} className="calendar-day__control-button">
+            <Icon icon="chevron-right" size={20} />
+          </Button>
+        </Stack>
+      </Box>
+      <Box className="calendar-day__body">
+        <Box className="calendar-day__body-left">
           <CalendarHours from={calendarStartHourFrom} to={calendarStartHourTo} />
-        </div>
-        <div className="calendar-day__body-right">
-          <div className="calendar-day-times calendar-day-times--day">
+        </Box>
+        <Box className="calendar-day__body-right">
+          <Box className="calendar-day-times calendar-day-times--day">
             {currentHour < calendarStartHourFrom || currentHour < calendarStartHourTo ? (
-              <div className="calendar-day-times__timeline" style={{ top: getCurrentTimePosition() + 'px' }}></div>
+              <Box className="calendar-day-times__timeline" style={{ top: getCurrentTimePosition() + 'px' }}></Box>
             ) : null}
             {renderEvents(day.date, events)}
-            <ul className="calendar-day__cell-list">
+            <List className="calendar-day__cell-list">
               {dayHours.map((item, key) => (
-                <li key={key} className="calendar-day__cell"></li>
+                <ListItem key={key} className="calendar-day__cell"></ListItem>
               ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+            </List>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   )
 }

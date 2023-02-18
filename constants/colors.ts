@@ -7,6 +7,7 @@ const colors = {
   yellow_color: '#F9A502',
   yellow_light_color: '#FDECC8',
   dark_blue_color: '#454b58',
+  black_color: '#292C32',
 }
 
 export default colors

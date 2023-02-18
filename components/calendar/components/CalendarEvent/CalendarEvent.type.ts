@@ -3,6 +3,7 @@ export type CalendarEventType = 'personal' | 'group' | 'course'
 export interface ICalendarEventProps {
   id: string
   title: string
+  subtitle?: string
   eventStart?: string
   eventEnd?: string
   isCompact?: boolean
@@ -13,6 +14,7 @@ export interface ICalendarEventProps {
 export interface ICalendarEvent {
   id: string
   title: string
+  subtitle?: string
   eventStart: string
   eventEnd: string
   type: CalendarEventType

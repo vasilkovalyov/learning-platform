@@ -2,7 +2,7 @@
    #RESPONSIVE
    ========================================================================== */
 
-$screen-xs: 480px;
+$screen-xs: 580px;
 $screen-sm: 768px;
 $screen-md: 992px;
 $screen-lg: 1200px;
@@ -14,9 +14,3 @@ $screen-sm-max: ($screen-md - 1);
 $screen-md-max: ($screen-lg - 1);
 $screen-lg-max: ($screen-xl - 1);
 $screen-xl-max: ($screen-xxl - 1);
-
-$mobile: 520px;
-$tablet: 720px;
-$desktop: 960px;
-$desktop-wide: 1224px;
-$desktop-wide-extended: 1920px;

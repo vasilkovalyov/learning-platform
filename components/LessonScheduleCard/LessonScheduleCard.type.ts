@@ -1,7 +1,7 @@
 export interface ILessonScheduleCardProps {
   id: string
-  dateStart: string
-  dateEnd: string
+  eventStart: string
+  eventEnd: string
   price: number
   onClick: (id: string) => void
 }

@@ -1,0 +1,22 @@
+[
+  {
+    "id": 0,
+    "value": "ukraine",
+    "label": "Ukraine"
+  },
+  {
+    "id": 1,
+    "value": "usa",
+    "label": "USA"
+  },
+  {
+    "id": 2,
+    "value": "england",
+    "label": "England"
+  },
+  {
+    "id": 3,
+    "value": "france",
+    "label": "France"
+  }
+]

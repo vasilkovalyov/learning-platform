@@ -1,9 +1,14 @@
+@import '../1-settings/settings.colors';
+@import '../1-settings/settings.sizes';
+@import '../1-settings/settings.radius';
+@import '../1-settings/settings.spacing';
+
 .calendar-event {
   position: absolute;
   left: 4px;
   right: 4px;
   z-index: 1;
-  padding: 14px;
+  padding: $spacing-1-m;
   border-radius: 6px;
 
   &::before {
@@ -13,12 +18,12 @@
     left: 4px;
     bottom: 14px;
     width: 4px;
-    border-radius: 11px;
+    border-radius: $radius-lg;
   }
 
   &--compact {
     position: relative;
-    padding: 14px 12px 6px;
+    padding: $spacing-1-m $spacing-1-s $spacing-0-s;
     min-height: 54px;
 
     &::before {
@@ -38,32 +43,35 @@
     text-align: center;
   }
 
-  &--personal {
-    // background-color: @event-personal-lesson-color;
+  &--course {
+    background-color: #c9e4ff;
+    &::before {
+      background-color: #79a9d9;
+    }
   }
 
   &--personal {
+    background-color: #d1eae7;
+
     &::before {
       background-color: #629d9e;
     }
   }
 
   &--group {
-    // background-color: @event-group-lesson-color;
-  }
-
-  &--group {
+    background-color: #faeedf;
     &::before {
       background-color: #d99754;
     }
   }
 
   &__title {
-    font-size: 12px;
-    color: #1a1a1a;
+    font-size: $size-1-s;
   }
 
   &__time {
-    font-size: 12px;
+    &.MuiTypography-root {
+      font-size: $size-1-s;
+    }
   }
 }

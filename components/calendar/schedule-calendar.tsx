@@ -1,16 +1,23 @@
 import React, { useState, MouseEvent, useRef } from 'react'
 import cn from 'classnames'
 
-import { ICalendar } from './calendar.type'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+
+import { ICalendarSchedule } from './calendar.type'
 import { IDay } from './components/CalendarDay/CalendarDay.type'
 import { ICalendarEvent } from './components/CalendarEvent/CalendarEvent.type'
 
 import CalendarWeekClass from './components/CalendarWeek/CalendarWeek.class'
 import CalendarDayClass from './components/CalendarDay/CalendarDay.class'
 
-import CalendarHours from './components/CalendarHours/CalendarHours'
+import CalendarHours from './components/CalendarHours'
 
-import Icon from 'components/Generic/Icon'
+import Icon from '../../components/Generic/Icon'
 import LessonScheduleCard from '../LessonScheduleCard'
 import { ILessonScheduleCardProps } from '../LessonScheduleCard/LessonScheduleCard.type'
 
@@ -26,7 +33,7 @@ import {
 
 import { getFilteredEventByDate } from './utilities/custom'
 
-function ScheduleCalendar({ date, events, locale = 'en-En' }: ICalendar) {
+function ScheduleCalendar({ date = new Date(), events, locale = 'en-En' }: ICalendarSchedule) {
   const dayTimesRef = useRef<HTMLDivElement | null>(null)
   const lessonScheduleCardContainerRef = useRef<HTMLDivElement | null>(null)
 
@@ -89,8 +96,8 @@ function ScheduleCalendar({ date, events, locale = 'en-En' }: ICalendar) {
 
     setSelectedLessonSchedule({
       id,
-      dateStart: event.eventStart,
-      dateEnd: event.eventEnd,
+      eventStart: event.eventStart,
+      eventEnd: event.eventEnd,
       price,
     })
   }
@@ -100,55 +107,51 @@ function ScheduleCalendar({ date, events, locale = 'en-En' }: ICalendar) {
   }
 
   return (
-    <div className="schedule-calendar">
-      <h2 className="schedule-calendar__heading font-bold color-black">Schedule</h2>
-      <div className="calendar-week__controls">
-        <div>
-          <div className="schedule-calendar__current-time">
-            <Icon icon="clock-circular-outline" size={15} />
-            <span className="schedule-calendar__current-time-text font-semibold">{getCurrentTime(new Date())}</span>
-          </div>
-        </div>
-        <div className="d-flex d-flex-justify-center">
-          <div className="schedule-calendar__controls">
-            <button onClick={prevWeek} className="schedule-calendar__control-button">
-              <Icon icon="chevron-left" size={20} />
-            </button>
-            <div className="schedule-calendar__week-dates">
-              <span className="font-bold color-black">{formatDate(week[0].date, 'DD MMMM YYYY')}</span>
-              <span>-</span>
-              <span className="font-bold color-black">{formatDate(week[weekDaysCount - 1].date, 'DD MMMM YYYY')}</span>
-            </div>
-            <button onClick={nextWeek} className="schedule-calendar__control-button">
-              <Icon icon="chevron-right" size={20} />
-            </button>
-          </div>
-        </div>
-        <div></div>
-      </div>
-      <div className="schedule-calendar__body">
-        <div className="schedule-calendar__body-left">
+    <Box className="schedule-calendar">
+      <Box marginBottom={2}>
+        <Stack
+          direction="row"
+          spacing={2}
+          alignItems="center"
+          justifyContent="center"
+          className="schedule-calendar__controls"
+        >
+          <Button variant="text" onClick={prevWeek} className="schedule-calendar__control-button">
+            <Icon icon="chevron-left" size={20} />
+          </Button>
+          <Stack direction="row" spacing={2} className="schedule-calendar__week-dates">
+            <span className="font-bold color-black">{formatDate(week[0].date, 'DD MMMM YYYY')}</span>
+            <span>-</span>
+            <span className="font-bold color-black">{formatDate(week[weekDaysCount - 1].date, 'DD MMMM YYYY')}</span>
+          </Stack>
+          <Button variant="text" onClick={nextWeek} className="schedule-calendar__control-button">
+            <Icon icon="chevron-right" size={20} />
+          </Button>
+        </Stack>
+      </Box>
+      <Box className="schedule-calendar__body">
+        <Box className="schedule-calendar__body-left">
           <CalendarHours from={calendarStartHourFrom} to={calendarStartHourTo} className="schedule-calendar-hours" />
-        </div>
-        <div className="schedule-calendar__body-right">
-          <div className="schedule-calendar-week-days">
+        </Box>
+        <Box className="schedule-calendar__body-right">
+          <Box className="schedule-calendar-week-days">
             {weekNames.map((weekName, key) => (
-              <div
+              <Box
                 key={key}
                 className={cn('schedule-calendar-week-days__cell text-center font-bold color-black', {
                   active: week[key].isToday,
                 })}
               >
-                <div>
-                  {weekName}
-                  {week[key].dayNumber < 10 ? `0${week[key].dayNumber}` : week[key].dayNumber}
-                </div>
-              </div>
+                <Stack direction="row" spacing={1}>
+                  <span>{week[key].dayNumber < 10 ? `0${week[key].dayNumber}` : week[key].dayNumber}</span>
+                  <span>{weekName}</span>
+                </Stack>
+              </Box>
             ))}
-          </div>
-          <div ref={dayTimesRef} className="schedule-calendar-day-times">
+          </Box>
+          <Box ref={dayTimesRef} className="schedule-calendar-day-times">
             {weekNames.map((weekName, key) => (
-              <div
+              <Box
                 key={key}
                 className={cn('schedule-calendar-day-times__item', {
                   weekend: weekName === 'Saturday' || weekName === 'Sunday',
@@ -162,10 +165,11 @@ function ScheduleCalendar({ date, events, locale = 'en-En' }: ICalendar) {
                   const topPosition =
                     scheduleCalendarCellHeight *
                     (hourStartWithTimeZone - calendarStartHourFrom + dateStart.getMinutes() / hourMinutes)
-                  const height =
-                    (hourEndWithTimeZone - hourStartWithTimeZone + dateEnd.getMinutes() / hourMinutes) *
-                      scheduleCalendarCellHeight -
-                    (dateEnd.getMinutes() / hourMinutes) * scheduleCalendarCellHeight
+
+                  const startMin = hourStartWithTimeZone * hourMinutes + dateStart.getMinutes()
+                  const endMin = hourEndWithTimeZone * hourMinutes + dateEnd.getMinutes()
+                  const height = ((endMin - startMin) / hourMinutes) * scheduleCalendarCellHeight
+
                   return (
                     <button
                       key={event.id}
@@ -185,10 +189,10 @@ function ScheduleCalendar({ date, events, locale = 'en-En' }: ICalendar) {
                 {dayHours.map((_, key) => (
                   <div key={key} className="schedule-calendar-day-times__cell"></div>
                 ))}
-              </div>
+              </Box>
             ))}
-          </div>
-          <div
+          </Box>
+          <Box
             ref={lessonScheduleCardContainerRef}
             className={cn('lesson-schedule-card-position-container', {
               'lesson-schedule-card-position-container--show': selectedLessonSchedule !== null,
@@ -205,10 +209,10 @@ function ScheduleCalendar({ date, events, locale = 'en-En' }: ICalendar) {
             {selectedLessonSchedule ? (
               <LessonScheduleCard {...selectedLessonSchedule} onClick={(id) => onClickSelectedLesson(id)} />
             ) : null}
-          </div>
-        </div>
-      </div>
-    </div>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   )
 }
 

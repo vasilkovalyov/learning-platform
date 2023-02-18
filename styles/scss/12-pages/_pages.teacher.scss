@@ -1,0 +1,18 @@
+.page-teacher {
+  &__body {
+    display: flex;
+  }
+
+  &__aside {
+    flex: 1 0 280px;
+    margin-right: 50px;
+
+    .aside-component-container {
+      padding: 30px 30px 10px;
+    }
+  }
+
+  &__content {
+    flex: 0 1 1030px;
+  }
+}

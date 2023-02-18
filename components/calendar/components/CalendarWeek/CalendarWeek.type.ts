@@ -8,7 +8,7 @@ export interface ICalendarWeekProps {
 }
 
 export interface ICalendarWeekClassOptions {
-  date: Date
+  date?: Date
   locale?: string
   weekStartNumber?: number
 }

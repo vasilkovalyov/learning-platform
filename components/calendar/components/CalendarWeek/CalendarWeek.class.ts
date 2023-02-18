@@ -5,8 +5,8 @@ import { ICalendarWeekClassOptions } from './CalendarWeek.type'
 import { localeDefault, weekDaysCount } from '../../constants'
 
 class CalendarWeek {
-  date: Date
-  locale: string
+  private date: Date
+  private locale: string
   private _weekStartNumber: number
 
   constructor(options?: ICalendarWeekClassOptions) {

@@ -1,22 +1,30 @@
+@import '../1-settings/settings.colors';
+@import '../1-settings/settings.sizes';
+@import '../1-settings/settings.fonts';
+
 .calendar-view-switchers {
   &__button {
-    font-size: 16px;
-    // color: @grey-2;
-    font-weight: 600;
-    text-decoration: underline;
-    padding: 0;
-    outline: none;
-    border: none;
-    background-color: transparent;
-    text-transform: capitalize;
-    cursor: pointer;
+    &.MuiButtonBase-root {
+      font-size: $size-1-m;
+      color: $grey-3;
+      font-weight: $weight-semibold;
+      padding: 0;
+      outline: none;
+      border: none;
+      background-color: transparent;
+      text-transform: lowercase;
+      text-decoration: underline;
+      cursor: pointer;
 
-    &:not(:first-child) {
-      margin-left: 20px;
+      &:hover {
+        background-color: transparent;
+      }
     }
 
     &--active {
-      // color: @red;
+      &.MuiButtonBase-root {
+        color: $primary-color;
+      }
     }
   }
 }

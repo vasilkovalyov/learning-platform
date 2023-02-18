@@ -22,6 +22,8 @@ function AccountForm({ onHandleRemoveAccount, initialData }: AccountFormProps) {
   const {
     handleSubmit,
     register,
+    getValues,
+    setValue,
     formState: { errors },
   } = useForm<UserInfoStoreProps>({
     mode: 'onSubmit',
@@ -104,7 +106,15 @@ function AccountForm({ onHandleRemoveAccount, initialData }: AccountFormProps) {
           error={!!errors.password?.message}
           helperText={errors.password?.message}
         />
-        <Button className="form-account__additional-button">Change password</Button>
+        <Button
+          className="form-account__additional-button"
+          onClick={() => {
+            console.log(getValues('password'))
+            setValue('password', '')
+          }}
+        >
+          Change password
+        </Button>
       </Box>
       <Box marginBottom={2}>
         <TextField
