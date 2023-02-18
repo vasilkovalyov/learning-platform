@@ -25,7 +25,7 @@
     }
 
     @media (min-width: $screen-lg) {
-      margin-right: 60px;
+      margin-right: 30px;
       margin-bottom: 0;
     }
   }
@@ -131,6 +131,7 @@
         text-transform: capitalize;
         color: $dark-blue-1;
         min-height: initial;
+        margin-bottom: 4px;
 
         &:not(:last-child) {
           margin-right: 2px;

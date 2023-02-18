@@ -18,7 +18,7 @@ const TemplateWithShadowContainer: ComponentStory<typeof TeacherCard> = (args) =
   </ShadowContainer>
 )
 
-const model = {
+export const model = {
   id: '1',
   fullname: 'Name Surname',
   country: 'Ukraine',

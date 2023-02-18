@@ -83,7 +83,10 @@ function TeacherCard({
   lang_speaking,
   lang_teaching,
   description,
-}: TeacherCardProps) {
+  onClickTrialLesson,
+}: TeacherCardProps & {
+  onClickTrialLesson?: (id: string) => void
+}) {
   const [activeTab, setActiveTab] = useState<number>(0)
 
   const handleChange = (event: React.SyntheticEvent, tabNumber: number) => {
@@ -149,7 +152,11 @@ function TeacherCard({
           Item Three
         </TabPanel>
         <Stack direction="row" spacing={2} marginTop="auto" flexWrap="wrap">
-          <Button className="teacher-card__button" variant="contained">
+          <Button
+            className="teacher-card__button"
+            variant="contained"
+            onClick={() => onClickTrialLesson && onClickTrialLesson(id)}
+          >
             Trial lesson
           </Button>
           <Button className="teacher-card__button" variant="outlined">
