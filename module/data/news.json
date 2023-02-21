@@ -113,7 +113,10 @@
         "level": 5,
         "metaDescription": "Today, Diageo announces it has reached an agreement to acquire Don Papa Rum, a super-premium, dark rum from the Philippines.",
         "pageId": 10085,
-        "pageListingImage": { "_id": "4b3824501720d941ad807f78", "url": "/media/ju2ciuax/image-1.jpg" },
+        "pageListingImage": {
+          "_id": "4b3824501720d941ad807f78",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/ju2ciuax/image-1.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "366edf4c790ae24caccb4e84", "pageId": 10041 },
@@ -171,7 +174,7 @@
         "pageId": 8235,
         "pageListingImage": {
           "_id": "16aa8ad64957ba4d9079d481",
-          "url": "/media/ccvivvsj/encircs-hydrogen-powered-furnace-that-will-create-net-zero-glass-bottles-by-2030.png"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/ccvivvsj/encircs-hydrogen-powered-furnace-that-will-create-net-zero-glass-bottles-by-2030.png"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -200,7 +203,10 @@
         "level": 5,
         "metaDescription": "Diageo and the world’s number one vodka Smirnoff, have today launched a new global campaign ‘Drops of Advice’ encouraging people to drink responsibly during the holidays while also enjoying the best of the season’s festivities.",
         "pageId": 8167,
-        "pageListingImage": { "_id": "4f9e1de3cef8514f98ac8c88", "url": "/media/jgpb1y4o/doa-thumbnail.png" },
+        "pageListingImage": {
+          "_id": "4f9e1de3cef8514f98ac8c88",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/jgpb1y4o/doa-thumbnail.png"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "f6c2cc4bc4fcce4ba6912592", "pageId": 1681 },
@@ -234,7 +240,10 @@
         "level": 5,
         "metaDescription": "Diageo announces it has acquired Balcones Distilling (‘Balcones’), a Texas craft distiller and one of the leading producers of American Single Malt Whisky in the United States.",
         "pageId": 8117,
-        "pageListingImage": { "_id": "4081e8d7ead49348a01dd419", "url": "/media/i0aprv5k/texas-1-single-malt.png" },
+        "pageListingImage": {
+          "_id": "4081e8d7ead49348a01dd419",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/i0aprv5k/texas-1-single-malt.png"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "f6c2cc4bc4fcce4ba6912592", "pageId": 1681 },
@@ -285,7 +294,7 @@
         "pageId": 8090,
         "pageListingImage": {
           "_id": "ba03e99322b303479f9010af",
-          "url": "/media/xqbptezc/jeremy-lindley-global-design-director-diageo.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/xqbptezc/jeremy-lindley-global-design-director-diageo.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -428,7 +437,10 @@
         "level": 5,
         "metaDescription": "B Corp certification latest milestone for Baileys on Diageo’s action plan Society 2030: Spirit of Progress.",
         "pageId": 8057,
-        "pageListingImage": { "_id": "9b8f9a0ca2cc5246a1c7d364", "url": "/media/twhjudfc/baileys-office.jpg" },
+        "pageListingImage": {
+          "_id": "9b8f9a0ca2cc5246a1c7d364",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/twhjudfc/baileys-office.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "f6c2cc4bc4fcce4ba6912592", "pageId": 1681 },
@@ -458,7 +470,7 @@
         "pageId": 8043,
         "pageListingImage": {
           "_id": "6e58840ed8ab434fb2a358ae",
-          "url": "/media/nbmiidwy/diageo-colleagues-together.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/nbmiidwy/diageo-colleagues-together.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -501,7 +513,7 @@
         "pageId": 8019,
         "pageListingImage": {
           "_id": "615d5de4dee5cb499cde1204",
-          "url": "/media/m3of1zg4/guinness-back-to-the-pub.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/m3of1zg4/guinness-back-to-the-pub.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -542,7 +554,10 @@
         "level": 5,
         "metaDescription": "The Miami Dade College (MDC) Foundation will receive $1 million from Diageo North America to create a permanent endowment fund and provide financial aid to talented students in underrepresented communities across various disciplines and majors. Learn more here.",
         "pageId": 8016,
-        "pageListingImage": { "_id": "31078c3f080e40458c1a6831", "url": "/media/g2djypyi/miami-dade-thumbnail.jpg" },
+        "pageListingImage": {
+          "_id": "31078c3f080e40458c1a6831",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/g2djypyi/miami-dade-thumbnail.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "f6c2cc4bc4fcce4ba6912592", "pageId": 1681 },
@@ -652,7 +667,10 @@
         "level": 5,
         "metaDescription": "Today, Diageo announces that it has acquired Mr Black, the Australian premium cold brew coffee liqueur.  Find out more.",
         "pageId": 7933,
-        "pageListingImage": { "_id": "46122b8e5c24b745acd33dfd", "url": "/media/iajcxds2/mr-black-x-diageo-1-min.jpg" },
+        "pageListingImage": {
+          "_id": "46122b8e5c24b745acd33dfd",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/iajcxds2/mr-black-x-diageo-1-min.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "f6c2cc4bc4fcce4ba6912592", "pageId": 1681 },
@@ -740,7 +758,7 @@
         "pageId": 7925,
         "pageListingImage": {
           "_id": "ff5dc0c5734bae40ad55578c",
-          "url": "/media/5fonbrlt/responsible-drinking-campaign.png"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/5fonbrlt/responsible-drinking-campaign.png"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -771,7 +789,7 @@
         "pageId": 7920,
         "pageListingImage": {
           "_id": "421195c51f2fb84aac2c656b",
-          "url": "/media/iqijlri5/diageo-bar-academy-launches-unique-virtual-bar-experience-for-the-bar-industry.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/iqijlri5/diageo-bar-academy-launches-unique-virtual-bar-experience-for-the-bar-industry.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -824,7 +842,10 @@
         "level": 5,
         "metaDescription": "The highly anticipated distillery and visitor center offers guests a behind the scenes look at the gin’s unique distillation process and more. Find out more here.",
         "pageId": 7917,
-        "pageListingImage": { "_id": "edf59154b79d6040afc8185d", "url": "/media/3p0jcvfx/aviation-gin-center.jpg" },
+        "pageListingImage": {
+          "_id": "edf59154b79d6040afc8185d",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/3p0jcvfx/aviation-gin-center.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "f6c2cc4bc4fcce4ba6912592", "pageId": 1681 },
@@ -852,7 +873,10 @@
         "level": 5,
         "metaDescription": "Seramount (formerly Working Mother Media), part of EAB, announced its list of 2022 100 Best Companies, including Diageo North America in its Top 10. This is Diageo’s 13th year to be included in this list.",
         "pageId": 7906,
-        "pageListingImage": { "_id": "fc0cdde7592b4041bb2d49c6", "url": "/media/5ign1z0z/dsc02204.jpg" },
+        "pageListingImage": {
+          "_id": "fc0cdde7592b4041bb2d49c6",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/5ign1z0z/dsc02204.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "f6c2cc4bc4fcce4ba6912592", "pageId": 1681 },
@@ -956,7 +980,7 @@
         "pageId": 7860,
         "pageListingImage": {
           "_id": "06bb8dbdf25645459ee61f82",
-          "url": "/media/ac3j1pps/launch-of-smallholder-farmer-challenges-for-diageo-sustainable-solutions.png"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/ac3j1pps/launch-of-smallholder-farmer-challenges-for-diageo-sustainable-solutions.png"
         },
         "pageListingImage2": null,
         "pageTheme": { "_id": "23e463ad6ef05246975a43d8", "theme": "theme-brown" },
@@ -985,7 +1009,10 @@
         "level": 5,
         "metaDescription": "The 2022 Annual General Meeting of Diageo plc will be held at 2.30 pm on Thursday, 6 October 2022 at etc.venues St Paul’s, 200 Aldersgate, London EC1A 4DH.",
         "pageId": 7850,
-        "pageListingImage": { "_id": "25c48d22c4d0fb4295e61c55", "url": "/media/epci0iwe/agm-thumbnail.png" },
+        "pageListingImage": {
+          "_id": "25c48d22c4d0fb4295e61c55",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/epci0iwe/agm-thumbnail.png"
+        },
         "pageListingImage2": null,
         "pageTheme": { "_id": "b4ac7f9fdbd31d4da3139f1b", "theme": "theme-purple" },
         "parent": { "_id": "f6c2cc4bc4fcce4ba6912592", "pageId": 1681 },
@@ -1033,7 +1060,7 @@
         "pageId": 7845,
         "pageListingImage": {
           "_id": "3b2f51a1ca7cef4f8855f825",
-          "url": "/media/huxfdiok/caol-ila-distillery-listing.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/huxfdiok/caol-ila-distillery-listing.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -1098,7 +1125,7 @@
         "pageId": 7709,
         "pageListingImage": {
           "_id": "3fa5d88f2eef0f4cb4d19769",
-          "url": "/media/hgsnrdzo/captain-morgan-and-cola-thumbnail.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/hgsnrdzo/captain-morgan-and-cola-thumbnail.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -1147,7 +1174,7 @@
         "pageId": 7690,
         "pageListingImage": {
           "_id": "680985c28adcc846aea1622a",
-          "url": "/media/nyejlquk/talisker-campfire_bar-2022.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/nyejlquk/talisker-campfire_bar-2022.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -1236,7 +1263,7 @@
         "pageId": 7436,
         "pageListingImage": {
           "_id": "ab86d5fd149f214db0e3667b",
-          "url": "/media/vwdnl5iu/diageo-carbon-neutral-brwery-kildare-release.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/vwdnl5iu/diageo-carbon-neutral-brwery-kildare-release.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -1371,7 +1398,7 @@
         "pageId": 7400,
         "pageListingImage": {
           "_id": "2490198b744a184f9d52deaa",
-          "url": "/media/ekibtc1u/vita-coco-captain-morgan.png"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/ekibtc1u/vita-coco-captain-morgan.png"
         },
         "pageListingImage2": null,
         "pageTheme": { "_id": "3bd3de35fc338b4192bf112b", "theme": "theme-blue" },
@@ -1496,7 +1523,10 @@
         "level": 5,
         "metaDescription": "Today, GUINNESS has been awarded the prestigious Red Dot Award for Product Design for GUINNESS NITROSURGE and GUINNESS MICRODRAUGHT. Learn more here.",
         "pageId": 7135,
-        "pageListingImage": { "_id": "e3b919c90234a64d9d7c2c32", "url": "/media/2w2btsic/guinness-microdraft.jpg" },
+        "pageListingImage": {
+          "_id": "e3b919c90234a64d9d7c2c32",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/2w2btsic/guinness-microdraft.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "f6c2cc4bc4fcce4ba6912592", "pageId": 1681 },
@@ -1584,11 +1614,11 @@
         "pageId": 5770,
         "pageListingImage": {
           "_id": "7e2067c4b672d146a33423ed",
-          "url": "/media/paqgprfw/queer-britain-credit-john-sturrock-kings-cross-1200px.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/paqgprfw/queer-britain-credit-john-sturrock-kings-cross-1200px.jpg"
         },
         "pageListingImage2": {
           "_id": "7e2067c4b672d146a33423ed",
-          "url": "/media/paqgprfw/queer-britain-credit-john-sturrock-kings-cross-1200px.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/paqgprfw/queer-britain-credit-john-sturrock-kings-cross-1200px.jpg"
         },
         "pageTheme": null,
         "parent": { "_id": "f6c2cc4bc4fcce4ba6912592", "pageId": 1681 },
@@ -1880,7 +1910,7 @@
         "pageId": 5830,
         "pageListingImage": {
           "_id": "f676a57326cda14bacb222f7",
-          "url": "/media/4b1kk2zg/diageo-announces-40-5m-investment-in-its-beer-packaging-facilities-1200px.png"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/4b1kk2zg/diageo-announces-40-5m-investment-in-its-beer-packaging-facilities-1200px.png"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -1921,7 +1951,10 @@
         "level": 5,
         "metaDescription": "21Seeds is one of the fastest-growing brands in the increasingly popular flavoured tequila segment and we are delighted to welcome it into our tequila portfolio. ",
         "pageId": 5835,
-        "pageListingImage": { "_id": "6b8aab22a8a5fb498f4939ba", "url": "/media/nwfkwivi/21seeds.jpg" },
+        "pageListingImage": {
+          "_id": "6b8aab22a8a5fb498f4939ba",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/nwfkwivi/21seeds.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "f6c2cc4bc4fcce4ba6912592", "pageId": 1681 },
@@ -2003,7 +2036,7 @@
         "pageId": 2164,
         "pageListingImage": {
           "_id": "d5c513c95c13f64297d94e6e",
-          "url": "/media/0pcbhsk2/1_crown-royal-distillery-vehicle-and-barrels.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/0pcbhsk2/1_crown-royal-distillery-vehicle-and-barrels.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -2124,7 +2157,10 @@
         "level": 5,
         "metaDescription": "Investment strengthens Diageo’s manufacturing footprint in Illinois",
         "pageId": 2166,
-        "pageListingImage": { "_id": "30569c8a34575f45bc0ceb47", "url": "/media/gzljzcru/7_lincolnway-still-3.png" },
+        "pageListingImage": {
+          "_id": "30569c8a34575f45bc0ceb47",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/gzljzcru/7_lincolnway-still-3.png"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "f6c2cc4bc4fcce4ba6912592", "pageId": 1681 },
@@ -2240,7 +2276,7 @@
         "pageId": 2169,
         "pageListingImage": {
           "_id": "0e85744ecdc7db448f66467e",
-          "url": "/media/bcchitwn/13_human-rights-campaign-1200x675.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/bcchitwn/13_human-rights-campaign-1200x675.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -2642,7 +2678,7 @@
         "pageId": 3210,
         "pageListingImage": {
           "_id": "b98bfd9314523a49bc24265c",
-          "url": "/media/x4fp1eyu/diageo-lebanon-distillery.png"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/x4fp1eyu/diageo-lebanon-distillery.png"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -2689,7 +2725,10 @@
         "level": 5,
         "metaDescription": "Legendary Irish brewer’s new West Loop location to open early 2023, celebrate spirit of the city",
         "pageId": 3211,
-        "pageListingImage": { "_id": "8a02cb0f991ffa4789ffab2f", "url": "/media/rqbmwd2z/38_e_6i5esviaisasa.jpg" },
+        "pageListingImage": {
+          "_id": "8a02cb0f991ffa4789ffab2f",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/rqbmwd2z/38_e_6i5esviaisasa.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "dbb3cd9a4e5281498f6152b1", "pageId": 1742 },
@@ -2849,7 +2888,10 @@
         "level": 5,
         "metaDescription": "",
         "pageId": 3215,
-        "pageListingImage": { "_id": "2a7dd8d03bd43d4f9dfcfdf3", "url": "/media/fr4nrub1/wsor-image-1.png" },
+        "pageListingImage": {
+          "_id": "2a7dd8d03bd43d4f9dfcfdf3",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/fr4nrub1/wsor-image-1.png"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "dbb3cd9a4e5281498f6152b1", "pageId": 1742 },
@@ -3034,7 +3076,7 @@
         "pageId": 3221,
         "pageListingImage": {
           "_id": "97baa0b66facae4d86c5d282",
-          "url": "/media/sg3kbntp/61_diageo-nfl-lockup_final.png"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/sg3kbntp/61_diageo-nfl-lockup_final.png"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -3126,7 +3168,7 @@
         "pageId": 3224,
         "pageListingImage": {
           "_id": "e118e597c775ae4d898131ee",
-          "url": "/media/22molf4h/68_pronghorn-announcement.png"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/22molf4h/68_pronghorn-announcement.png"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -3280,7 +3322,7 @@
         "pageId": 3230,
         "pageListingImage": {
           "_id": "d97881dcf4103346a32c37e4",
-          "url": "/media/132idxhu/79_loyal-9-cocktails-main-3-beach-wall_1200.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/132idxhu/79_loyal-9-cocktails-main-3-beach-wall_1200.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -3329,7 +3371,7 @@
         "pageId": 3231,
         "pageListingImage": {
           "_id": "07e2bcc5cbfa5749a7bf9695",
-          "url": "/media/ahrlzrol/diageo-trial-sustainable-glass-scotch-whisky-bottles.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/ahrlzrol/diageo-trial-sustainable-glass-scotch-whisky-bottles.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -3353,7 +3395,7 @@
         "pageId": 3232,
         "pageListingImage": {
           "_id": "50549dbfdcd4294d9c1b4130",
-          "url": "/media/kzkj1p42/86_diageo-lincolnway-site-2.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/kzkj1p42/86_diageo-lincolnway-site-2.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -3421,7 +3463,10 @@
         "level": 5,
         "metaDescription": "",
         "pageId": 3234,
-        "pageListingImage": { "_id": "9e2929977fb52643be97e293", "url": "/media/taudtf15/91_ivan-menezes.jpg" },
+        "pageListingImage": {
+          "_id": "9e2929977fb52643be97e293",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/taudtf15/91_ivan-menezes.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "dbb3cd9a4e5281498f6152b1", "pageId": 1742 },
@@ -3451,7 +3496,7 @@
         "pageId": 3235,
         "pageListingImage": {
           "_id": "ab8b4eedb9c9c14582aaded8",
-          "url": "/media/vwff31nz/diageo-introduces-global-menopause-awareness-guidelines.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/vwff31nz/diageo-introduces-global-menopause-awareness-guidelines.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -3555,7 +3600,7 @@
         "pageId": 3238,
         "pageListingImage": {
           "_id": "df6a2a4712de9c40acf84510",
-          "url": "/media/1fvcurys/102_screen-shot-2021-02-02-at-3-17-14-pm.png"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/1fvcurys/102_screen-shot-2021-02-02-at-3-17-14-pm.png"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -3584,7 +3629,10 @@
         "level": 5,
         "metaDescription": "Diageo North America’s commitment to inclusion and diversity has again earned a perfect score on the 2021 Corporate Equality Index from the Human Rights Campaign",
         "pageId": 3239,
-        "pageListingImage": { "_id": "fa2b63244f21e74985ae1d95", "url": "/media/5qvhgjcp/104_smirnoff_pride.jpg" },
+        "pageListingImage": {
+          "_id": "fa2b63244f21e74985ae1d95",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/5qvhgjcp/104_smirnoff_pride.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "dbb3cd9a4e5281498f6152b1", "pageId": 1742 },
@@ -3666,7 +3714,10 @@
         "level": 5,
         "metaDescription": "",
         "pageId": 3242,
-        "pageListingImage": { "_id": "76c497a34cb96e44931623a8", "url": "/media/odcjpi0m/111_labels.jpg" },
+        "pageListingImage": {
+          "_id": "76c497a34cb96e44931623a8",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/odcjpi0m/111_labels.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "3d096df38b9b994fbb130ebe", "pageId": 1743 },
@@ -3696,7 +3747,7 @@
         "pageId": 3243,
         "pageListingImage": {
           "_id": "f82572da3ac39047ad45b089",
-          "url": "/media/5yshfwr0/in49_wateraid_-prashanth-vishwanathan_600-px.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/5yshfwr0/in49_wateraid_-prashanth-vishwanathan_600-px.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -3739,7 +3790,10 @@
         "level": 5,
         "metaDescription": "To honor Veterans Day this year, Diageo North America employees assembled 10,000 care packages from their homes for American military heroes serving overseas. Learn more here.",
         "pageId": 3245,
-        "pageListingImage": { "_id": "8e03802d4c9481438a8bf80b", "url": "/media/rabjalkm/120_msad-2020-5.png" },
+        "pageListingImage": {
+          "_id": "8e03802d4c9481438a8bf80b",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/rabjalkm/120_msad-2020-5.png"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "3d096df38b9b994fbb130ebe", "pageId": 1743 },
@@ -4130,7 +4184,10 @@
         "level": 5,
         "metaDescription": "Join Football Legend Joe Montana and Raise a Guinness, Official Beer of Fighting Irish Alumni and Fans, in a Toast to Traditions Old and New – and to the Promise That We Will Play Again",
         "pageId": 3260,
-        "pageListingImage": { "_id": "135cebb7e11cea438bcdffd3", "url": "/media/cvooxn5b/151_guinness-nd.png" },
+        "pageListingImage": {
+          "_id": "135cebb7e11cea438bcdffd3",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/cvooxn5b/151_guinness-nd.png"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "3d096df38b9b994fbb130ebe", "pageId": 1743 },
@@ -4233,7 +4290,10 @@
         "level": 5,
         "metaDescription": "As companies all around the world are exploring and testing new ways to engage their customers, partners and employees, Diageo, a global leader in beverage alcohol, is proud to announce that its North America business has been recognized by Fast Company’s",
         "pageId": 3264,
-        "pageListingImage": { "_id": "9cc392ec0b74924aa012c602", "url": "/media/tlbjf1al/158_bardeco_women.jpg" },
+        "pageListingImage": {
+          "_id": "9cc392ec0b74924aa012c602",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/tlbjf1al/158_bardeco_women.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "3d096df38b9b994fbb130ebe", "pageId": 1743 },
@@ -4302,7 +4362,7 @@
         "pageId": 3266,
         "pageListingImage": {
           "_id": "f7ee8fe4ac32024185e922e2",
-          "url": "/media/4hxi5zfm/164_diageo-lebanon_electrode-boilers-rendering.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/4hxi5zfm/164_diageo-lebanon_electrode-boilers-rendering.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -4429,7 +4489,7 @@
         "pageId": 3271,
         "pageListingImage": {
           "_id": "fe616c194e186e46bdd19578",
-          "url": "/media/5bqhygko/177_1-75l-seagram-s-pcr-3.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/5bqhygko/177_1-75l-seagram-s-pcr-3.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -4818,7 +4878,7 @@
         "pageId": 3995,
         "pageListingImage": {
           "_id": "13064a96f4881d4287845530",
-          "url": "/media/cudevfxu/212_diageo-north-america-nyc-bar-deco-evening-socializing-min.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/cudevfxu/212_diageo-north-america-nyc-bar-deco-evening-socializing-min.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -4903,7 +4963,7 @@
         "pageId": 3998,
         "pageListingImage": {
           "_id": "fd10b1f1148a014ea56d19e1",
-          "url": "/media/5mild2iu/225_talisker-whisky-atlantic-challenge-win-2-min.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/5mild2iu/225_talisker-whisky-atlantic-challenge-win-2-min.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -4977,7 +5037,10 @@
         "level": 5,
         "metaDescription": "",
         "pageId": 4000,
-        "pageListingImage": { "_id": "2e68be61962f674994e2ec29", "url": "/media/fbul2ymw/229_ritual_press_13-min.jpg" },
+        "pageListingImage": {
+          "_id": "2e68be61962f674994e2ec29",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/fbul2ymw/229_ritual_press_13-min.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "3d096df38b9b994fbb130ebe", "pageId": 1743 },
@@ -5000,7 +5063,7 @@
         "pageId": 4001,
         "pageListingImage": {
           "_id": "7958e84e8a0ba64086faf4d8",
-          "url": "/media/p3moqtuk/232_greensupplylogo_2019_2.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/p3moqtuk/232_greensupplylogo_2019_2.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -5022,7 +5085,10 @@
         "level": 5,
         "metaDescription": "",
         "pageId": 4002,
-        "pageListingImage": { "_id": "7a37220dfedc524eba47f2bb", "url": "/media/pq1dedp4/234_front-image-2.jpg" },
+        "pageListingImage": {
+          "_id": "7a37220dfedc524eba47f2bb",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/pq1dedp4/234_front-image-2.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "ba68c4e58416004c96dd3897", "pageId": 1744 },
@@ -5066,7 +5132,7 @@
         "pageId": 4004,
         "pageListingImage": {
           "_id": "30f65cf49fb34649b90afe03",
-          "url": "/media/g11fz3e5/239_cheers-3-logo-1-min-2.png"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/g11fz3e5/239_cheers-3-logo-1-min-2.png"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -5090,7 +5156,7 @@
         "pageId": 4005,
         "pageListingImage": {
           "_id": "cef7d12afdb60446aea9dc94",
-          "url": "/media/zd1nckx3/243_military-service-appreciation-day-1-min.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/zd1nckx3/243_military-service-appreciation-day-1-min.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -5156,7 +5222,7 @@
         "pageId": 4008,
         "pageListingImage": {
           "_id": "f202ab3f8f9c004c91930d49",
-          "url": "/media/4qbkwp2p/252_diageo-supplier-awards-2019.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/4qbkwp2p/252_diageo-supplier-awards-2019.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -5285,7 +5351,7 @@
         "pageId": 4014,
         "pageListingImage": {
           "_id": "a6dec5392b06e946bb41395e",
-          "url": "/media/udpmkojl/264_fullsizeoutput_12-min.jpeg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/udpmkojl/264_fullsizeoutput_12-min.jpeg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -5307,7 +5373,10 @@
         "level": 5,
         "metaDescription": "",
         "pageId": 4015,
-        "pageListingImage": { "_id": "fa077d0757e67c41ab3dc891", "url": "/media/5qdh0b0x/267_ben-branson-min.jpg" },
+        "pageListingImage": {
+          "_id": "fa077d0757e67c41ab3dc891",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/5qdh0b0x/267_ben-branson-min.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "ba68c4e58416004c96dd3897", "pageId": 1744 },
@@ -5410,7 +5479,10 @@
         "level": 5,
         "metaDescription": "",
         "pageId": 4019,
-        "pageListingImage": { "_id": "46f988691acaad43b77b0314", "url": "/media/id2jq0i0/277_shovels-down-min-2.jpg" },
+        "pageListingImage": {
+          "_id": "46f988691acaad43b77b0314",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/id2jq0i0/277_shovels-down-min-2.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "ba68c4e58416004c96dd3897", "pageId": 1744 },
@@ -5454,7 +5526,7 @@
         "pageId": 4021,
         "pageListingImage": {
           "_id": "78c616945e66fc42a42fef0e",
-          "url": "/media/p1dbnfc4/284_the-new-bulleit-distilling-co-visitor-experience-opens-in-shelbyville-ky-min.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/p1dbnfc4/284_the-new-bulleit-distilling-co-visitor-experience-opens-in-shelbyville-ky-min.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -5518,7 +5590,10 @@
         "level": 5,
         "metaDescription": "Furthers Diageo and Guinness’s continued commitment to the reduction of plastics in packaging",
         "pageId": 4024,
-        "pageListingImage": { "_id": "922c42e7e116b9408ebb7e53", "url": "/media/sqwefz5b/293_guinness_maryland_1.jpg" },
+        "pageListingImage": {
+          "_id": "922c42e7e116b9408ebb7e53",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/sqwefz5b/293_guinness_maryland_1.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "ba68c4e58416004c96dd3897", "pageId": 1744 },
@@ -5541,7 +5616,7 @@
         "pageId": 4025,
         "pageListingImage": {
           "_id": "51ba6dba70ceb94084ee7b31",
-          "url": "/media/k43g1otq/298_zhong-shi-ji-new-to-world-whisky-001.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/k43g1otq/298_zhong-shi-ji-new-to-world-whisky-001.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -6130,7 +6205,7 @@
         "pageId": 4052,
         "pageListingImage": {
           "_id": "4edebfe2e9a37f49a905efe7",
-          "url": "/media/jdpl5yxj/351_westward-whiskey-min.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/jdpl5yxj/351_westward-whiskey-min.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -6516,7 +6591,7 @@
         "pageId": 4069,
         "pageListingImage": {
           "_id": "76b9579614327c4f9c8b7398",
-          "url": "/media/oc2fpfqu/384_johnnie-walker-investment-art-of-whisky-alchemy.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/oc2fpfqu/384_johnnie-walker-investment-art-of-whisky-alchemy.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -6540,7 +6615,7 @@
         "pageId": 4070,
         "pageListingImage": {
           "_id": "ccc0523207e939449da890b2",
-          "url": "/media/zlafemqh/396_summer_colada_bottle.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/zlafemqh/396_summer_colada_bottle.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -6562,7 +6637,10 @@
         "level": 5,
         "metaDescription": "Diageo announces the appointment of Susan Kilsby as a Non-Executive Director, effective immediately. Susan will join the Audit, Nomination and Remuneration Committees on appointment.",
         "pageId": 4071,
-        "pageListingImage": { "_id": "6ca6da4853ba0d4f99929133", "url": "/media/nktnusct/403_susan_kilsby.jpg" },
+        "pageListingImage": {
+          "_id": "6ca6da4853ba0d4f99929133",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/nktnusct/403_susan_kilsby.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "9507fd110ba9b04a956cbef0", "pageId": 1746 },
@@ -6648,7 +6726,7 @@
         "pageId": 4075,
         "pageListingImage": {
           "_id": "1e99c545cc2b7645a7e2dde3",
-          "url": "/media/dcmnkrom/412_diageo-introduces-happy-hour-amazon-alexa-skill.png"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/dcmnkrom/412_diageo-introduces-happy-hour-amazon-alexa-skill.png"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -6840,7 +6918,7 @@
         "pageId": 4084,
         "pageListingImage": {
           "_id": "6b82bd9cf6f3e84a88213522",
-          "url": "/media/nwbl1hhw/429_janewalkereditionlto.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/nwbl1hhw/429_janewalkereditionlto.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -6927,7 +7005,7 @@
         "pageId": 4088,
         "pageListingImage": {
           "_id": "62b23e858579a54ea47db55d",
-          "url": "/media/mszd3bmf/435_johnnie_walker_blue_label-lny.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/mszd3bmf/435_johnnie_walker_blue_label-lny.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -6951,7 +7029,7 @@
         "pageId": 4089,
         "pageListingImage": {
           "_id": "69d51a102bfecf4aa53fbe69",
-          "url": "/media/n5kbuebl/438_775110870_tr_1409_ef2053eb9d95ecd8babdcea335ef580c-min.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/n5kbuebl/438_775110870_tr_1409_ef2053eb9d95ecd8babdcea335ef580c-min.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -7309,7 +7387,7 @@
         "pageId": 4105,
         "pageListingImage": {
           "_id": "c1e6d7f4ab05c345b151e55f",
-          "url": "/media/y5tnp3fl/466_sam-fischer-signing-join-the-pact-wall-min.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/y5tnp3fl/466_sam-fischer-signing-join-the-pact-wall-min.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -7354,7 +7432,7 @@
         "pageId": 4107,
         "pageListingImage": {
           "_id": "1dc2c6ead5046d49baa7e6c7",
-          "url": "/media/dpbmn0wv/477_port_ellen_191114_0043-sl-902594-1-min.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/dpbmn0wv/477_port_ellen_191114_0043-sl-902594-1-min.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -7504,7 +7582,7 @@
         "pageId": 4114,
         "pageListingImage": {
           "_id": "619303516bb7174198837fb5",
-          "url": "/media/m4jbgull/492_drinkiq-ivan-at-guinness-storehouse.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/m4jbgull/492_drinkiq-ivan-at-guinness-storehouse.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -7526,7 +7604,10 @@
         "level": 5,
         "metaDescription": "",
         "pageId": 4115,
-        "pageListingImage": { "_id": "385a607eece7a042971c130d", "url": "/media/hznga5xm/495_carolyn-panzer-min.jpg" },
+        "pageListingImage": {
+          "_id": "385a607eece7a042971c130d",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/hznga5xm/495_carolyn-panzer-min.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "b4e02330b91f5a4c86d83f3d", "pageId": 1747 },
@@ -7570,7 +7651,7 @@
         "pageId": 4117,
         "pageListingImage": {
           "_id": "0e7c9e9fd8b3a14c8c1f8c0e",
-          "url": "/media/bb4j3h4y/500_george_clooney_casamigos.jpg"
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/bb4j3h4y/500_george_clooney_casamigos.jpg"
         },
         "pageListingImage2": null,
         "pageTheme": null,
@@ -7592,7 +7673,10 @@
         "level": 5,
         "metaDescription": "",
         "pageId": 4118,
-        "pageListingImage": { "_id": "defabb0ef35f574aae6d02e4", "url": "/media/1d3lwdxt/503_philip-scott.jpg" },
+        "pageListingImage": {
+          "_id": "defabb0ef35f574aae6d02e4",
+          "url": "https://media.diageo.com/500x400/filters:quality(85)/diageo-corporate-media/media/1d3lwdxt/503_philip-scott.jpg"
+        },
         "pageListingImage2": null,
         "pageTheme": null,
         "parent": { "_id": "b4e02330b91f5a4c86d83f3d", "pageId": 1747 },

@@ -1,11 +1,19 @@
 export interface FilterCatergoriesProps {
   isOpen?: boolean
   categoryName: string
-  categories: FilterCategoryProps[]
+  selectedCount: number
+  categories: FilterCategoryProps[] | []
 }
 
 export interface FilterCategoryProps {
   id: string
   title: string
-  count: number
+  count?: number
+}
+
+export interface CategoryResponseProps {
+  _id: string
+  parent: { _id: string }
+  sortOrder: number
+  title: string
 }

@@ -4,14 +4,16 @@ import Search from '../Search'
 
 function SearchBlock() {
   return (
-    <div className="searchblock">
-      <Search
-        id={'search'}
-        placeholder="Search by keyword or region"
-        value={''}
-        name="search"
-        label="I'm interested in..."
-      />
+    <div className="search-block">
+      <div className="search-block__container">
+        <Search
+          id={'search'}
+          placeholder="Search by keyword or region"
+          value={''}
+          name="search"
+          label="I'm interested in..."
+        />
+      </div>
     </div>
   )
 }

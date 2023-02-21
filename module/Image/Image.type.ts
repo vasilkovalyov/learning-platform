@@ -4,4 +4,5 @@ export interface ImageProps {
   alt: string
   href?: string
   target?: string
+  className?: string
 }

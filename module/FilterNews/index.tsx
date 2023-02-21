@@ -1,11 +1,28 @@
 import React from 'react'
 
 import FilterCatergories from '../FilterCatergories'
+import { NewsCardProps } from '../NewsCard/NewsCard.type'
+
+import regionCategories from '../data/region.json'
+import topicsCategories from '../data/topics.json'
+import drinksCategories from '../data/drink-categories.json'
+import data from '../data/news.json'
+
+import { getPostsYearsWithStatistics, getUniqCategoriesWithCount } from '../utils/common'
+
+const news = data.data.contents as unknown as NewsCardProps[]
 
 function FilterNews() {
+  const years = getPostsYearsWithStatistics(news)
+  const { drinks, regions, topics } = getUniqCategoriesWithCount(news, {
+    regions: '7f29687ae0aaa141b26c2424',
+    topics: 'cf8eec3db2b7ad4e8faf783b',
+    drinks: 'f0ceba0eaf460647a97e76eb',
+  })
+
   return (
     <div className="filters">
-      <button className="btn">
+      <button className="btn" style={{ display: 'none' }}>
         <span className="btn__inner">
           <svg
             viewBox="0 0 16 16"
@@ -23,15 +40,15 @@ function FilterNews() {
           Filters (0)
         </span>
       </button>
-      <div className="filter-content">
-        <div className="filters-title">
-          Filter by: <button>clear all</button>
+      <div className="filters__content">
+        <div className="filters__title">
+          Filter by: <button className="filters__button-reset">clear all</button>
         </div>
         <div className="filter-groups">
-          <FilterCatergories categoryName="Year" categories={[]} />
-          <FilterCatergories categoryName="Region" categories={[]} />
-          <FilterCatergories categoryName="Topics" categories={[]} />
-          <FilterCatergories categoryName="Drink categories" categories={[]} />
+          <FilterCatergories categoryName="Year" categories={years} selectedCount={0} />
+          <FilterCatergories categoryName="Region" categories={regions} selectedCount={0} />
+          <FilterCatergories categoryName="Topics" categories={topics} selectedCount={0} />
+          <FilterCatergories categoryName="Drink categories" categories={drinks} selectedCount={0} />
         </div>
       </div>
     </div>

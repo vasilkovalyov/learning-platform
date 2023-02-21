@@ -1,0 +1,32 @@
+.filter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: 8px;
+  cursor: pointer;
+  margin-bottom: 36px;
+  margin: 0 0 20px;
+  padding: 0;
+  list-style-type: none;
+}
+
+.filter-tag {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 180%;
+  padding: 6px 8px;
+  background: #f0e8f5;
+  display: inline-block;
+  user-select: none;
+  white-space: nowrap;
+  outline: none;
+  border: none;
+
+  &__icon {
+    display: inline-block;
+    padding-left: 12px;
+
+    svg {
+      width: 8px;
+    }
+  }
+}

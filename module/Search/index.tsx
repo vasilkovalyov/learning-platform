@@ -4,14 +4,14 @@ import { SearchProps } from './Search.type'
 
 function Search({ value, name, placeholder, label, id }: SearchProps) {
   return (
-    <div className="block-search">
+    <div className="search">
       {label && (
-        <label className="block-search__label" htmlFor="search-input">
+        <label className="search__label" htmlFor={id}>
           {label}
         </label>
       )}
-      <div className="search-input">
-        <div className="search-input__box">
+      <div className="search__box">
+        <div className="search-input">
           <input
             type="search"
             id={id}

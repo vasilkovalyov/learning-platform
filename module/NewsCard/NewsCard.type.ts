@@ -1,9 +1,20 @@
-import { ImageProps } from '../Image/Image.type'
-
 export interface NewsCardProps {
+  [x: string]: any
   id: string
-  image: ImageProps
+  pageListingImage?: {
+    url: string
+    _id: string
+  } | null
   articleDate: string
   title: string
-  caterories: string[]
+  categoryPages?: PageCategory[] | null
+}
+
+export interface PageCategory {
+  _id: string
+  parent: {
+    _id: string
+  }
+  title: string
+  urlSegment: string
 }

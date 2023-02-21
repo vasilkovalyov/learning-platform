@@ -1,3 +1,3 @@
 export interface CardsListProps<CardType> {
-  items: CardType[]
+  items: Partial<CardType>[]
 }
