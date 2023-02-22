@@ -13,7 +13,9 @@ import { getPostsYearsWithStatistics, getUniqCategoriesWithCount } from '../util
 const news = data.data.contents as unknown as NewsCardProps[]
 
 function FilterNews() {
+  // console.time('timeStart')
   const years = getPostsYearsWithStatistics(news)
+  // console.timeEnd('timeStart')
   const { drinks, regions, topics } = getUniqCategoriesWithCount(news, {
     regions: '7f29687ae0aaa141b26c2424',
     topics: 'cf8eec3db2b7ad4e8faf783b',

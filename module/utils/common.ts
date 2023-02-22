@@ -40,48 +40,47 @@ export const getUniqCategoriesWithCount = (
       count: number
     }
   } = {}
-
   for (const post of posts) {
-    const topic = post.categoryPages?.find((item) => item.parent._id === categoriesIds.topics)
-    const drink = post.categoryPages?.find((item) => item.parent._id === categoriesIds.drinks)
-    const region = post.categoryPages?.find((item) => item.parent._id === categoriesIds.regions)
-
-    if (topic) {
-      if (topics && topics[topic?.title]) {
-        topics[topic.title] = {
-          ...topics[topic.title],
-          count: (topics[topic.title].count += 1),
+    if (post.categoryPages) {
+      for (const categories of post.categoryPages) {
+        if (categories.parent._id === categoriesIds.topics) {
+          if (topics[categories.title]) {
+            topics[categories.title] = {
+              _id: categories._id,
+              count: (topics[categories.title].count += 1),
+            }
+          } else {
+            topics[categories.title] = {
+              _id: categories._id,
+              count: 1,
+            }
+          }
         }
-      } else {
-        topics[topic.title] = {
-          _id: topic._id,
-          count: 1,
+        if (categories.parent._id === categoriesIds.drinks) {
+          if (drinks[categories.title]) {
+            drinks[categories.title] = {
+              _id: categories._id,
+              count: (drinks[categories.title].count += 1),
+            }
+          } else {
+            drinks[categories.title] = {
+              _id: categories._id,
+              count: 1,
+            }
+          }
         }
-      }
-    }
-    if (drink) {
-      if (drinks && drinks[drink?.title]) {
-        drinks[drink.title] = {
-          ...drinks[drink.title],
-          count: (drinks[drink.title].count += 1),
-        }
-      } else {
-        drinks[drink.title] = {
-          _id: drink._id,
-          count: 1,
-        }
-      }
-    }
-    if (region) {
-      if (regions && regions[region?.title]) {
-        regions[region.title] = {
-          ...regions[region.title],
-          count: (regions[region.title].count += 1),
-        }
-      } else {
-        regions[region.title] = {
-          _id: region._id,
-          count: 1,
+        if (categories.parent._id === categoriesIds.regions) {
+          if (regions[categories.title]) {
+            regions[categories.title] = {
+              _id: categories._id,
+              count: (regions[categories.title].count += 1),
+            }
+          } else {
+            regions[categories.title] = {
+              _id: categories._id,
+              count: 1,
+            }
+          }
         }
       }
     }

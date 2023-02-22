@@ -1,6 +1,5 @@
 export interface NewsCardProps {
-  [x: string]: any
-  id: string
+  _id: string
   pageListingImage?: {
     url: string
     _id: string

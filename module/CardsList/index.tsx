@@ -7,7 +7,7 @@ import { NewsCardProps } from '../NewsCard/NewsCard.type'
 function CardsList<T extends NewsCardProps>({ items }: CardsListProps<T>) {
   return (
     <div className="cards-list">
-      {items.length ? items.map((card, index) => <NewsCard key={index} {...(card as T)} />) : null}
+      {items.length ? items.map((card) => <NewsCard key={card._id} {...(card as T)} />) : null}
     </div>
   )
 }
