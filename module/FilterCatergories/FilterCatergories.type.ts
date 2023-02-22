@@ -1,12 +1,12 @@
 export interface FilterCatergoriesProps {
   isOpen?: boolean
   categoryName: string
-  selectedCount: number
   categories: FilterCategoryProps[] | []
+  onChange?: (categories: { [title: string]: string }, categoryName: string) => void
 }
 
 export interface FilterCategoryProps {
-  id: string
+  _id: string
   title: string
   count?: number
 }

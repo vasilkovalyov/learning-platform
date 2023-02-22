@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import FilterCatergories from '../FilterCatergories'
 import { NewsCardProps } from '../NewsCard/NewsCard.type'
@@ -13,14 +13,24 @@ import { getPostsYearsWithStatistics, getUniqCategoriesWithCount } from '../util
 const news = data.data.contents as unknown as NewsCardProps[]
 
 function FilterNews() {
-  // console.time('timeStart')
+  const [selectedCategoriesMap, setSelectedCategoriesMap] = useState<{ _id: string; title: string }[]>([])
   const years = getPostsYearsWithStatistics(news)
-  // console.timeEnd('timeStart')
   const { drinks, regions, topics } = getUniqCategoriesWithCount(news, {
     regions: '7f29687ae0aaa141b26c2424',
     topics: 'cf8eec3db2b7ad4e8faf783b',
     drinks: 'f0ceba0eaf460647a97e76eb',
   })
+
+  function handleChangeFilter(categories: { [title: string]: string }, categoryName: string) {
+    const setCollection = new Set()
+    for (const key in categories) {
+      setCollection.add({
+        id: key,
+        title: categories[key],
+      })
+    }
+    const arr = [Array.from(setCollection)]
+  }
 
   return (
     <div className="filters">
@@ -47,10 +57,10 @@ function FilterNews() {
           Filter by: <button className="filters__button-reset">clear all</button>
         </div>
         <div className="filter-groups">
-          <FilterCatergories categoryName="Year" categories={years} selectedCount={0} />
-          <FilterCatergories categoryName="Region" categories={regions} selectedCount={0} />
-          <FilterCatergories categoryName="Topics" categories={topics} selectedCount={0} />
-          <FilterCatergories categoryName="Drink categories" categories={drinks} selectedCount={0} />
+          <FilterCatergories categoryName="Year" categories={years} onChange={handleChangeFilter} />
+          <FilterCatergories categoryName="Region" categories={regions} onChange={handleChangeFilter} />
+          <FilterCatergories categoryName="Topics" categories={topics} onChange={handleChangeFilter} />
+          <FilterCatergories categoryName="Drink categories" categories={drinks} onChange={handleChangeFilter} />
         </div>
       </div>
     </div>

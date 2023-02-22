@@ -99,6 +99,7 @@ export const getPostsYearsWithStatistics = (posts: NewsCardProps[]): FilterCateg
   const yearsMap: {
     [key: string]: {
       _id: string
+      title: string
       count: number
     }
   } = {}
@@ -113,6 +114,7 @@ export const getPostsYearsWithStatistics = (posts: NewsCardProps[]): FilterCateg
     } else {
       yearsMap[yearKey] = {
         _id: yearKey.toString(),
+        title: yearKey.toString(),
         count: 1,
       }
     }
@@ -124,7 +126,7 @@ export const getPostsYearsWithStatistics = (posts: NewsCardProps[]): FilterCateg
 export const getCategoriesWithCounters = (categories: UniqCategoriesType): FilterCategoryProps[] => {
   return Object.keys(categories).map((category) => {
     return {
-      id: categories[category]._id,
+      _id: categories[category]._id,
       title: category,
       count: categories[category].count,
     }

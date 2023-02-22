@@ -1,17 +1,39 @@
 import React, { useState } from 'react'
+import cn from 'classnames'
 
-import { FilterCatergoriesProps } from './FilterCatergories.type'
+import { FilterCatergoriesProps, FilterCategoryProps } from './FilterCatergories.type'
 
-function FilterCatergories({ categories, categoryName, selectedCount, isOpen = true }: FilterCatergoriesProps) {
+function FilterCatergories({ categories, categoryName, isOpen = true, onChange }: FilterCatergoriesProps) {
   const [show, setShow] = useState<boolean>(isOpen)
+  const [selectedCategoriesMap, setSelectedCategoriesMap] = useState<{ [title: string]: string }>({})
+
+  function onHandleCategory(category: Omit<FilterCategoryProps, 'count'>) {
+    if (selectedCategoriesMap[category.title]) {
+      setSelectedCategoriesMap((prevState) => {
+        const tempState = { ...prevState }
+        delete tempState[category.title]
+        onChange && onChange(tempState, categoryName)
+        return tempState
+      })
+    } else {
+      setSelectedCategoriesMap((prevState) => {
+        const state = {
+          ...prevState,
+          [category.title]: category._id,
+        }
+        onChange && onChange(state, categoryName)
+        return state
+      })
+    }
+  }
 
   return (
     <div className="filter">
       <button className="filter__title" onClick={() => setShow(!show)}>
         <span className="filter__title-text">{categoryName}</span>
-        {selectedCount ? (
+        {Object.keys(selectedCategoriesMap).length ? (
           <span className="filter__title-count" style={{ margin: '0 4px' }}>
-            ({selectedCount})
+            ({Object.keys(selectedCategoriesMap).length})
           </span>
         ) : null}
         <span className="filter__title-icon">
@@ -38,11 +60,15 @@ function FilterCatergories({ categories, categoryName, selectedCount, isOpen = t
       </button>
       {categories && categories.length ? (
         <div className="filter-options" style={{ display: show ? 'block' : 'none' }}>
-          {categories.map(({ id, count, title }) => (
-            <div key={id} className="filter-option">
+          {categories.map((category) => (
+            <button
+              className={cn('filter-option', { active: selectedCategoriesMap[category.title] })}
+              key={category._id}
+              onClick={() => onHandleCategory(category)}
+            >
               <span className="filter-option__title">
-                {title}
-                {count ? <b style={{ margin: '0 4px' }}>({count})</b> : null}
+                {category.title}
+                {category.count ? <b style={{ margin: '0 4px' }}>({category.count})</b> : null}
               </span>
               <span className="filter-option__icon">
                 <svg
@@ -59,7 +85,7 @@ function FilterCatergories({ categories, categoryName, selectedCount, isOpen = t
                   ></path>
                 </svg>
               </span>
-            </div>
+            </button>
           ))}
         </div>
       ) : null}
