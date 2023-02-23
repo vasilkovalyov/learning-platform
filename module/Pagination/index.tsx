@@ -1,9 +1,9 @@
-import React, { useState, useMemo } from 'react'
+import React from 'react'
 import cn from 'classnames'
 
-import { PaginationControlButtonProps, PaginationPageLinkProps, PaginationProps, PageType } from './Pagination.type'
+import { PaginationControlButtonProps, PaginationPageLinkProps, PaginationProps } from './Pagination.type'
 
-import { usePagination, DOTS, UserPaginationProps } from './usePagination'
+import { usePagination, DOTS } from './usePagination'
 
 function PaginationControlButton({ title, type, disabled, onClick }: PaginationControlButtonProps) {
   return (

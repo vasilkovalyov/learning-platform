@@ -18,4 +18,4 @@ function SearchBlock() {
   )
 }
 
-export default SearchBlock
+export default React.memo(SearchBlock)

@@ -29,7 +29,7 @@ function FilterNews() {
         title: categories[key],
       })
     }
-    const arr = [Array.from(setCollection)]
+    // const arr = [Array.from(setCollection)]
   }
 
   return (
@@ -67,4 +67,4 @@ function FilterNews() {
   )
 }
 
-export default FilterNews
+export default React.memo(FilterNews)
