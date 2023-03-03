@@ -17,27 +17,29 @@ function PaginationWithData<T>({ data, Component, showStatistics, paginationOpti
   const newsData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize
     const lastPageIndex = firstPageIndex + PageSize
-    const posts = data.slice(firstPageIndex, lastPageIndex)
+    const posts = data.length ? data.slice(firstPageIndex, lastPageIndex) : []
     return posts
-  }, [currentPage])
+  }, [data, currentPage])
 
   return (
     <div className="container-with-pagination">
       <div className="container-with-pagination__data">
-        {newsData.length && newsData.map((item, index) => <Component key={index} {...item} />)}
+        {newsData.length ? newsData.map((item, index) => <Component key={index} {...item} />) : null}
       </div>
-      {showStatistics ? (
+      {data.length && showStatistics ? (
         <p className="container-with-pagination__result-message">
           You've viewed {viewedPosts} of {data.length} results
         </p>
       ) : null}
-      <Pagination
-        pageSize={1}
-        {...paginationOptions}
-        currentPage={currentPage}
-        totalCount={data.length}
-        onPageChange={(page) => setCurrentPage(page)}
-      />
+      {data.length ? (
+        <Pagination
+          pageSize={1}
+          {...paginationOptions}
+          currentPage={currentPage}
+          totalCount={data.length}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+      ) : null}
     </div>
   )
 }

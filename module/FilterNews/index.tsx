@@ -1,35 +1,73 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
+import { useNewsContext } from '../context/news-context'
 
 import FilterCatergories from '../FilterCatergories'
+import { FilterCategoryType, FilterCategoryProps } from '../FilterCatergories/FilterCatergories.type'
 import { NewsCardProps } from '../NewsCard/NewsCard.type'
 
-import regionCategories from '../data/region.json'
-import topicsCategories from '../data/topics.json'
-import drinksCategories from '../data/drink-categories.json'
 import data from '../data/news.json'
 
 import { getPostsYearsWithStatistics, getUniqCategoriesWithCount } from '../utils/common'
+import { DynamicObjectType } from 'module/utils/types'
 
 const news = data.data.contents as unknown as NewsCardProps[]
 
-function FilterNews() {
-  const [selectedCategoriesMap, setSelectedCategoriesMap] = useState<{ _id: string; title: string }[]>([])
-  const years = getPostsYearsWithStatistics(news)
-  const { drinks, regions, topics } = getUniqCategoriesWithCount(news, {
-    regions: '7f29687ae0aaa141b26c2424',
-    topics: 'cf8eec3db2b7ad4e8faf783b',
-    drinks: 'f0ceba0eaf460647a97e76eb',
-  })
+const regionsId = '7f29687ae0aaa141b26c2424'
+const topicsId = 'cf8eec3db2b7ad4e8faf783b'
+const drinksId = 'f0ceba0eaf460647a97e76eb'
 
-  function handleChangeFilter(categories: { [title: string]: string }, categoryName: string) {
-    const setCollection = new Set()
-    for (const key in categories) {
-      setCollection.add({
-        id: key,
-        title: categories[key],
-      })
+function FilterNews() {
+  const {
+    yearFilters,
+    setYearFilters,
+    regionFilters,
+    setRegionFilters,
+    topicFilters,
+    setTopicFilters,
+    drinkFilters,
+    setDrinkFilters,
+    searchValue,
+    setSearchValue,
+  } = useNewsContext()
+
+  const [selectedCategoriesMap, setSelectedCategoriesMap] = useState<FilterCategoryProps[]>([])
+
+  const [years, setYears] = useState(getPostsYearsWithStatistics(news))
+  const [categories, setCategories] = useState(
+    getUniqCategoriesWithCount(news, {
+      regions: regionsId,
+      topics: topicsId,
+      drinks: drinksId,
+    }),
+  )
+
+  useEffect(() => {
+    if (!searchValue) return
+  }, [searchValue])
+
+  function handleChangeFilter(categories: FilterCategoryType[], category: string) {
+    const uniqCategories = Array.from([
+      ...new Map([...selectedCategoriesMap, ...categories].map((item) => [item.title, item])).values(),
+    ])
+    setSelectedCategoriesMap(uniqCategories)
+
+    if (category === 'Year') setYearFilters && setYearFilters(categories)
+    if (category === 'Region') setRegionFilters && setRegionFilters(categories)
+    if (category === 'Topics') setTopicFilters && setTopicFilters(categories)
+    if (category === 'Drink categories') setDrinkFilters && setDrinkFilters(categories)
+  }
+
+  function onHandleResetFilter() {
+    // setFilters && setFilters([])
+    // setSearchValue && setSearchValue('')
+  }
+
+  function convertCategoryObjects(categories: FilterCategoryType[]): DynamicObjectType {
+    const categoriesMap: DynamicObjectType = {}
+    for (const category of categories) {
+      categoriesMap[category.title] = category._id
     }
-    // const arr = [Array.from(setCollection)]
+    return categoriesMap
   }
 
   return (
@@ -54,13 +92,36 @@ function FilterNews() {
       </button>
       <div className="filters__content">
         <div className="filters__title">
-          Filter by: <button className="filters__button-reset">clear all</button>
+          Filter by:{' '}
+          <button className="filters__button-reset" onClick={() => onHandleResetFilter()}>
+            clear all
+          </button>
         </div>
         <div className="filter-groups">
-          <FilterCatergories categoryName="Year" categories={years} onChange={handleChangeFilter} />
-          <FilterCatergories categoryName="Region" categories={regions} onChange={handleChangeFilter} />
-          <FilterCatergories categoryName="Topics" categories={topics} onChange={handleChangeFilter} />
-          <FilterCatergories categoryName="Drink categories" categories={drinks} onChange={handleChangeFilter} />
+          <FilterCatergories
+            categoryName="Year"
+            selectedNameCategories={convertCategoryObjects(yearFilters)}
+            categories={years}
+            onChange={handleChangeFilter}
+          />
+          <FilterCatergories
+            categoryName="Region"
+            selectedNameCategories={convertCategoryObjects(regionFilters)}
+            categories={categories.regions}
+            onChange={handleChangeFilter}
+          />
+          <FilterCatergories
+            categoryName="Topics"
+            selectedNameCategories={convertCategoryObjects(topicFilters)}
+            categories={categories.topics}
+            onChange={handleChangeFilter}
+          />
+          <FilterCatergories
+            categoryName="Drink categories"
+            selectedNameCategories={convertCategoryObjects(drinkFilters)}
+            categories={categories.drinks}
+            onChange={handleChangeFilter}
+          />
         </div>
       </div>
     </div>

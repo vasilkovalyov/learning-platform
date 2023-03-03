@@ -1,5 +1,5 @@
 import { NewsCardProps } from 'module/NewsCard/NewsCard.type'
-import { FilterCategoryProps } from '../FilterCatergories/FilterCatergories.type'
+import { FilterCategoryWithCountType, FilterCategoryType } from '../FilterCatergories/FilterCatergories.type'
 
 type UniqCategoriesType = {
   [key: string]: {
@@ -9,9 +9,9 @@ type UniqCategoriesType = {
 }
 
 type UniqCategoriesWithCountType = {
-  regions: FilterCategoryProps[]
-  topics: FilterCategoryProps[]
-  drinks: FilterCategoryProps[]
+  regions: FilterCategoryWithCountType[]
+  topics: FilterCategoryWithCountType[]
+  drinks: FilterCategoryWithCountType[]
 }
 
 export const getUniqCategoriesWithCount = (
@@ -93,7 +93,7 @@ export const getUniqCategoriesWithCount = (
   }
 }
 
-export const getPostsYearsWithStatistics = (posts: NewsCardProps[]): FilterCategoryProps[] | [] => {
+export const getPostsYearsWithStatistics = (posts: NewsCardProps[]): FilterCategoryWithCountType[] | [] => {
   if (!posts.length) return []
 
   const yearsMap: {
@@ -123,7 +123,7 @@ export const getPostsYearsWithStatistics = (posts: NewsCardProps[]): FilterCateg
   return getCategoriesWithCounters(yearsMap).reverse()
 }
 
-export const getCategoriesWithCounters = (categories: UniqCategoriesType): FilterCategoryProps[] => {
+export const getCategoriesWithCounters = (categories: UniqCategoriesType): FilterCategoryWithCountType[] => {
   return Object.keys(categories).map((category) => {
     return {
       _id: categories[category]._id,
@@ -137,4 +137,16 @@ export const getGeneratedYears = (from: number, to: number): string[] | null => 
   if (to < from) return null
   const arrLength = to - from
   return [...Array(arrLength + 1).keys()].map((_, index) => (to - index).toString())
+}
+
+export const removeCategoryTagFromArray = (
+  categories: FilterCategoryType[],
+  id: string,
+): [string, FilterCategoryType[]] => {
+  let categoryName = ''
+  const categoriesTags = categories.filter(({ _id, category }) => {
+    if (_id === id) categoryName = category
+    if (_id !== id) return category
+  })
+  return [categoryName, categoriesTags]
 }

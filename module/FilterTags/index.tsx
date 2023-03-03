@@ -2,12 +2,12 @@ import React from 'react'
 
 import { FilterTagsProps } from './FilterTags.type'
 
-function FilterTags({ tags, onClick }: FilterTagsProps) {
+function FilterTags({ tags, handleChange }: FilterTagsProps) {
   return (
     <ul className="filter-tags">
       {tags.map((tag) => (
-        <li key={tag.id} className="filter-tags__item">
-          <button onClick={() => onClick && onClick(tag.id)} className="filter-tag">
+        <li key={tag._id} className="filter-tags__item">
+          <button onClick={() => handleChange && handleChange(tag._id)} className="filter-tag">
             {tag.title}
             <span className="filter-tag__icon">
               <svg
@@ -30,4 +30,5 @@ function FilterTags({ tags, onClick }: FilterTagsProps) {
     </ul>
   )
 }
+
 export default FilterTags

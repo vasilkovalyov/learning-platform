@@ -2,7 +2,7 @@ import React from 'react'
 
 import { SearchProps } from './Search.type'
 
-function Search({ value, name, placeholder, label, id }: SearchProps) {
+function Search({ value, name, placeholder, label, id, onChange }: SearchProps) {
   return (
     <div className="search">
       {label && (
@@ -19,6 +19,7 @@ function Search({ value, name, placeholder, label, id }: SearchProps) {
             placeholder={placeholder}
             value={value}
             className="search-input__field"
+            onChange={onChange}
           />
         </div>
         <button className="search-input__submit" aria-label="Search" type="submit">

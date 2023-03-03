@@ -1,9 +1,6 @@
+import { FilterCategoryType } from '../FilterCatergories/FilterCatergories.type'
+
 export interface FilterTagsProps {
-  tags:
-    | {
-        id: string
-        title: string
-      }[]
-    | []
-  onClick?: (id: string) => void
+  tags: FilterCategoryType[] | []
+  handleChange?: (_id: string) => void
 }

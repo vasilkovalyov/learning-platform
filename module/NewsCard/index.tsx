@@ -6,9 +6,9 @@ import Image from '../Image'
 
 import { getDateFormat } from '../utils/date-format'
 
-function NewsCard({ id, pageListingImage, articleDate, title, categoryPages }: NewsCardProps) {
+function NewsCard({ _id, pageListingImage, articleDate, title, categoryPages }: NewsCardProps) {
   return (
-    <div id={id} className="news-card">
+    <div id={_id} className="news-card">
       {pageListingImage ? (
         <Image id={pageListingImage._id} url={pageListingImage.url} alt={title} className="news-card__image" />
       ) : null}

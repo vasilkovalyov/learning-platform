@@ -1,7 +1,6 @@
-export interface SearchProps {
-  id: string
-  placeholder: string
-  value: string
-  name: string
+import { InputHTMLAttributes } from 'react'
+
+export interface SearchProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
+  className?: string
 }

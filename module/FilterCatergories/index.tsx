@@ -1,29 +1,52 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import cn from 'classnames'
 
-import { FilterCatergoriesProps, FilterCategoryProps } from './FilterCatergories.type'
+import { FilterCatergoriesProps, FilterCategoryProps, FilterCategoryType } from './FilterCatergories.type'
+import { DynamicObjectType } from 'module/utils/types'
 
-function FilterCatergories({ categories, categoryName, isOpen = true, onChange }: FilterCatergoriesProps) {
+function objectToArray(obj: { [key: string]: string }, category: string): FilterCategoryType[] | [] {
+  if (!Object.keys(obj).length) return []
+
+  const array: FilterCategoryType[] = []
+  for (const key in obj) {
+    const item = {
+      _id: obj[key],
+      title: key,
+      category: category,
+    }
+    array.push(item)
+  }
+
+  return array
+}
+
+function FilterCatergories({
+  categories,
+  categoryName,
+  isOpen = true,
+  selectedNameCategories,
+  onChange,
+}: FilterCatergoriesProps) {
   const [show, setShow] = useState<boolean>(isOpen)
-  const [selectedCategoriesMap, setSelectedCategoriesMap] = useState<{ [title: string]: string }>({})
+  const [selectedCategoriesMap, setSelectedCategoriesMap] = useState<DynamicObjectType>(selectedNameCategories || {})
 
-  function onHandleCategory(category: Omit<FilterCategoryProps, 'count'>) {
+  useEffect(() => {
+    setSelectedCategoriesMap(selectedNameCategories || {})
+  }, [selectedNameCategories])
+
+  function onHandleCategory(category: FilterCategoryProps) {
     if (selectedCategoriesMap[category.title]) {
-      setSelectedCategoriesMap((prevState) => {
-        const tempState = { ...prevState }
-        delete tempState[category.title]
-        onChange && onChange(tempState, categoryName)
-        return tempState
-      })
+      const tempState = { ...selectedCategoriesMap }
+      delete tempState[category.title]
+      setSelectedCategoriesMap(tempState)
+      onChange && onChange(objectToArray(tempState, categoryName), categoryName)
     } else {
-      setSelectedCategoriesMap((prevState) => {
-        const state = {
-          ...prevState,
-          [category.title]: category._id,
-        }
-        onChange && onChange(state, categoryName)
-        return state
-      })
+      const state = {
+        ...selectedCategoriesMap,
+        [category.title]: category._id,
+      }
+      setSelectedCategoriesMap(state)
+      onChange && onChange(objectToArray(state, categoryName), categoryName)
     }
   }
 
