@@ -1,4 +1,4 @@
-import { FilterCategoryType } from '../FilterCatergories/FilterCatergories.type'
+import { FilterCategoryType } from '../FilterCategoryGroup/FilterCategoryGroup.type'
 
 export interface FilterTagsProps {
   tags: FilterCategoryType[] | []

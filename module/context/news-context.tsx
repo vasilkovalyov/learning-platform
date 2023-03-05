@@ -1,5 +1,5 @@
 import React, { ReactNode, createContext, useContext } from 'react'
-import { FilterCategoryType } from '../FilterCatergories/FilterCatergories.type'
+import { FilterCategoryType } from '../FilterCategoryGroup/FilterCategoryGroup.type'
 
 interface NewsContextStateProps {
   yearFilters: FilterCategoryType[] | []
@@ -24,10 +24,6 @@ const initialContextState: NewsContextStateProps = {
   topicFilters: [],
   drinkFilters: [],
   searchValue: '',
-  setYearFilters: () => ({})
-  setRegionFilters: () => ({})
-  setTopicFilters: () => ({})
-  setDrinkFilters: () => ({})
 }
 
 export const NewsStateContext = createContext<NewsContextStateProps>(initialContextState)

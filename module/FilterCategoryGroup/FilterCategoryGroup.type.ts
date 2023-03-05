@@ -1,16 +1,16 @@
 import { DynamicObjectType } from 'module/utils/types'
 
-export interface FilterCatergoriesProps {
+export interface FilterCategory {
   isOpen?: boolean
   categoryName: string
   categories: FilterCategoryWithCountType[] | []
-  selectedNameCategories?: DynamicObjectType
-  onChange?: (categories: { _id: string; title: string; category: string }[], category: string) => void
 }
 
-// export interface FilterCategoryItemProps extends Omit<FilterCategoryProps, 'count'> {
-//   category: string
-// }
+export interface FilterCategoriesProps extends FilterCategory {
+  selectedCategories?: DynamicObjectType
+  onChangeAdd?: (categories: FilterCategoryType[]) => void
+  onChangeRemove?: (clickedCategory: FilterCategoryType) => void
+}
 
 export interface FilterCategoryProps {
   _id: string

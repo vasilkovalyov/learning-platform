@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import cn from 'classnames'
 
-import { FilterCatergoriesProps, FilterCategoryProps, FilterCategoryType } from './FilterCatergories.type'
+import { FilterCategoriesProps, FilterCategoryType, FilterCategoryWithCountType } from './FilterCategoryGroup.type'
 import { DynamicObjectType } from 'module/utils/types'
 
 function objectToArray(obj: { [key: string]: string }, category: string): FilterCategoryType[] | [] {
@@ -20,33 +20,40 @@ function objectToArray(obj: { [key: string]: string }, category: string): Filter
   return array
 }
 
-function FilterCatergories({
+function FilterCategoryGroup({
   categories,
   categoryName,
   isOpen = true,
-  selectedNameCategories,
-  onChange,
-}: FilterCatergoriesProps) {
+  selectedCategories,
+  onChangeAdd,
+  onChangeRemove,
+}: FilterCategoriesProps) {
   const [show, setShow] = useState<boolean>(isOpen)
-  const [selectedCategoriesMap, setSelectedCategoriesMap] = useState<DynamicObjectType>(selectedNameCategories || {})
+  const [selectedCategoriesMap, setSelectedCategoriesMap] = useState<DynamicObjectType>(selectedCategories || {})
 
   useEffect(() => {
-    setSelectedCategoriesMap(selectedNameCategories || {})
-  }, [selectedNameCategories])
+    setSelectedCategoriesMap(selectedCategories || {})
+  }, [selectedCategories])
 
-  function onHandleCategory(category: FilterCategoryProps) {
+  function onHandleCategory(category: FilterCategoryWithCountType) {
+    const selectedCategory: FilterCategoryType = {
+      _id: category._id,
+      title: category.title,
+      category: categoryName,
+    }
+
     if (selectedCategoriesMap[category.title]) {
       const tempState = { ...selectedCategoriesMap }
       delete tempState[category.title]
       setSelectedCategoriesMap(tempState)
-      onChange && onChange(objectToArray(tempState, categoryName), categoryName)
+      onChangeRemove && onChangeRemove(selectedCategory)
     } else {
       const state = {
         ...selectedCategoriesMap,
         [category.title]: category._id,
       }
       setSelectedCategoriesMap(state)
-      onChange && onChange(objectToArray(state, categoryName), categoryName)
+      onChangeAdd && onChangeAdd(objectToArray(state, categoryName))
     }
   }
 
@@ -116,4 +123,4 @@ function FilterCatergories({
   )
 }
 
-export default FilterCatergories
+export default FilterCategoryGroup
