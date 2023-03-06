@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useMemo } from 'react'
-import { useRouter } from 'next/router'
 import { useNewsContext } from '../context/news-context'
 
 import SearchBlock from '../SearchBlock'
@@ -8,7 +7,13 @@ import { FilterCategory, FilterCategoryType } from '../FilterCategoryGroup/Filte
 import NewsCard from 'module/NewsCard'
 import FilterTags from 'module/FilterTags'
 import { NewsCardProps } from 'module/NewsCard/NewsCard.type'
-import { getUniqCategoriesWithCount, setUrlParams, replaceUrlState, getParamsFromUrl } from 'module/utils/common'
+import {
+  getUniqCategoriesWithCount,
+  setUrlParams,
+  replaceUrlState,
+  getParamsFromUrl,
+  getFilterCategoriesFromParsedUrlParams,
+} from 'module/utils/common'
 
 import PaginationWithData from '../PaginationWithData'
 
@@ -36,7 +41,6 @@ function categoriesToObject(categories: FilterCategoryType[]): { [key: string]: 
 }
 
 function PressRelease() {
-  const router = useRouter()
   const { searchValue } = useNewsContext()
   const defaultNews = dataNews.data.contents
   const [news, setNews] = useState<NewsCardProps[] | []>(defaultNews)
@@ -72,6 +76,20 @@ function PressRelease() {
     replaceUrlState(urlWithParams)
   }
 
+  function getParamsFromUrlAndSetToFilters() {
+    if (typeof window !== 'undefined') {
+      const urlParams = getParamsFromUrl(window.location.search)
+      console.time('s')
+      const categories = getFilterCategoriesFromParsedUrlParams(filterCategories, urlParams)
+      console.timeEnd('s')
+      setTags(categories)
+    }
+  }
+
+  useEffect(() => {
+    getParamsFromUrlAndSetToFilters()
+  }, [])
+
   useEffect(() => {
     if (searchValue !== '') {
       setNews(getFilteredNewsByTitle(defaultNews, searchValue))
@@ -79,11 +97,6 @@ function PressRelease() {
       setNews(dataNews.data.contents)
     }
   }, [searchValue])
-
-  // new URLSearchParams(paramsString)
-  if (typeof window !== 'undefined') {
-    getParamsFromUrl(window.location.search)
-  }
 
   return (
     <div className="page-press-release">

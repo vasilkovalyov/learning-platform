@@ -1,5 +1,9 @@
 import { NewsCardProps } from 'module/NewsCard/NewsCard.type'
-import { FilterCategoryWithCountType, FilterCategoryType } from '../FilterCategoryGroup/FilterCategoryGroup.type'
+import {
+  FilterCategoryWithCountType,
+  FilterCategoryType,
+  FilterCategory,
+} from '../FilterCategoryGroup/FilterCategoryGroup.type'
 
 export const getUniqCategoriesWithCount = (
   posts: NewsCardProps[],
@@ -148,4 +152,27 @@ export function replaceUrlState(url: string) {
     const newurl = `${window.location.pathname}?${url}`
     window.history.replaceState({ path: newurl }, '', newurl)
   }
+}
+
+export function getFilterCategoriesFromParsedUrlParams(
+  categories: FilterCategory[],
+  params: { [key: string]: string[] },
+): FilterCategoryType[] | [] {
+  return categories.reduce((accFilterCategories: FilterCategoryType[], category: FilterCategory) => {
+    const paramsCategoryArray = params[category.categoryName]
+    if (paramsCategoryArray && paramsCategoryArray.length) {
+      for (const paramCategory of paramsCategoryArray) {
+        const findedCategory = category.categories.find(
+          (category) => category.title.toLowerCase() === paramCategory.toLowerCase(),
+        )
+        if (!findedCategory) return accFilterCategories
+        accFilterCategories.push({
+          _id: findedCategory._id,
+          title: findedCategory.title,
+          category: category.categoryName,
+        })
+      }
+    }
+    return accFilterCategories
+  }, [] as FilterCategoryType[])
 }
