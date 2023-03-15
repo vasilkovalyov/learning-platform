@@ -9,7 +9,7 @@ import { CalendarModeView } from '../../calendar.type'
 import { ICalendarViewSwitchersProps } from './CalendarViewSwitchers.type'
 import { dateTypeViews } from './CalendarViewSwitchers.data'
 
-function CalendarViewSwitchers({ selectedView = 'day', onClick }: ICalendarViewSwitchersProps) {
+function CalendarViewSwitchers({ selectedView = CalendarModeView.DAY, onClick }: ICalendarViewSwitchersProps) {
   const [calendarView, setCalendarView] = useState<CalendarModeView | null>(selectedView)
 
   useEffect(() => {
