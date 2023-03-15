@@ -4,8 +4,6 @@ import Typography from '@mui/material/Typography'
 
 import PrivateLayoutPage from 'pages/privateLayoutPage'
 
-import F from 'components/Calendar'
-
 function MyLessons() {
   return (
     <div>
