@@ -5,8 +5,8 @@ import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 
-import { formatDate } from '../calendar/utilities/date'
-import { getTimeFormatTimestamp } from '../calendar/utilities/custom'
+import { formatDate } from '../Calendar/utilities/date'
+import { getTimeFormatTimestamp } from '../Calendar/utilities/custom'
 
 import { ILessonScheduleCardProps } from './LessonScheduleCard.type'
 
