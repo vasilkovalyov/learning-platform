@@ -77,11 +77,9 @@ function AdminList() {
         </Link>
       </Box>
       <Box className="header__auth-list-item">
-        <Link href={pages.home}>
-          <a className="header__auth-button font-semibold color-dark-blue-1" onClick={(e) => signOut(e)}>
-            Sign out
-          </a>
-        </Link>
+        <button className="header__auth-button font-semibold color-dark-blue-1" onClick={(e) => signOut(e)}>
+          Sign out
+        </button>
       </Box>
     </Stack>
   )
