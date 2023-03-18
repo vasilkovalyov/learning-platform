@@ -37,7 +37,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
           <div className="section-admin">
             <div className="container">
               <Typography marginBottom={3} variant="h2" className="MuiTypography section-admin__heading">
-                Personal Area
+                Personal Area - {authState?.role}
               </Typography>
               <Grid container spacing={4}>
                 <Grid item xs={12} sm={4} md={3}>
