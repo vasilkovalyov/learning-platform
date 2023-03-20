@@ -27,26 +27,16 @@ import {
 import { getFilteredEventByDate } from '../../utilities/custom'
 
 import { useCalendarScheduleWeek } from './useCalendarScheduleWeek'
-import { ILessonScheduleCardProps } from 'components/LessonScheduleCard/LessonScheduleCard.type'
 
-type LessonCardType = Omit<ILessonScheduleCardProps, 'onClick'>
-
-function ScheduleCalendar<ChildComponentPropsType extends object>({
+function ScheduleCalendar({
   date = new Date(),
   events,
   locale = localeDefault,
   children,
   selectedProps,
   positionComponent,
-}: CalendarScheduleWeekProps<ChildComponentPropsType>) {
+}: CalendarScheduleWeekProps) {
   const dayTimesRef = useRef<HTMLDivElement | null>(null)
-  // const lessonScheduleCardContainerRef = useRef<HTMLDivElement | null>(null)
-
-  // const [lessonScheduleCardPosition, setLessonScheduleCardPosition] = useState<object>({ top: 0, left: 0 })
-  // const [selectedLessonSchedule, setSelectedLessonSchedule] = useState<Omit<
-  //   ILessonScheduleCardProps,
-  //   'onClick'
-  // > | null>(null)
 
   const { week, weekNames, nextWeek, prevWeek } = useCalendarScheduleWeek(date, locale)
 
@@ -75,13 +65,12 @@ function ScheduleCalendar<ChildComponentPropsType extends object>({
         : 0
 
     positionComponent && positionComponent({ top: positionTop, left: positionLeft })
-
     selectedProps &&
       selectedProps({
-        id: '',
-        eventEnd: '',
-        eventStart: '',
-        price: 0,
+        id: id,
+        eventEnd: event.eventEnd,
+        eventStart: event.eventStart,
+        price: price,
       })
   }
 
@@ -153,7 +142,7 @@ function ScheduleCalendar<ChildComponentPropsType extends object>({
                     <button
                       key={event.id}
                       className="schedule-calendar__event-cell"
-                      onClick={(e) => onClickEvent(e, event)}
+                      onMouseEnter={(e) => onClickEvent(e, event)}
                       style={{
                         position: 'absolute',
                         top: topPosition,

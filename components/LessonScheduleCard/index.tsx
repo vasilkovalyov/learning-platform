@@ -8,9 +8,9 @@ import Typography from '@mui/material/Typography'
 import { formatDate } from '../../modules/Calendar/utilities/date'
 import { getTimeFormatTimestamp } from '../../modules/Calendar/utilities/custom'
 
-import { ILessonScheduleCardProps } from './LessonScheduleCard.type'
+import { LessonScheduleCardProps } from './LessonScheduleCard.type'
 
-function LessonScheduleCard({ id, eventStart, eventEnd, price, onClick }: ILessonScheduleCardProps) {
+function LessonScheduleCard({ id, eventStart, eventEnd, price, onClick }: LessonScheduleCardProps) {
   const timeStart = getTimeFormatTimestamp(eventStart)
   const timeEng = getTimeFormatTimestamp(eventEnd)
   return (

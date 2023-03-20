@@ -1,37 +1,30 @@
-import React, { useState, MouseEvent, useRef } from 'react'
+import React, { useState } from 'react'
 import cn from 'classnames'
 
 import Box from '@mui/material/Box'
 
 import { ICalendarSchedule } from './schedule-calendar.type'
-import { CalendarEventType } from '../components/CalendarEvent/CalendarEvent.type'
 
 import LessonScheduleCard from '../../../components/LessonScheduleCard'
-import { ILessonScheduleCardProps } from '../../../components/LessonScheduleCard/LessonScheduleCard.type'
+import { LessonScheduleProps } from '../../../components/LessonScheduleCard/LessonScheduleCard.type'
 
 import { localeDefault } from '../constants'
 
 import CalendarScheduleWeek from '../components/CalendarScheduleWeek'
 
 function ScheduleCalendar({ date = new Date(), events, locale = localeDefault }: ICalendarSchedule) {
-  const dayTimesRef = useRef<HTMLDivElement | null>(null)
-  const lessonScheduleCardContainerRef = useRef<HTMLDivElement | null>(null)
-
-  const [lessonScheduleCardPosition, setLessonScheduleCardPosition] = useState<object>({ top: 0, left: 0 })
-  const [selectedLessonSchedule, setSelectedLessonSchedule] = useState<Omit<
-    ILessonScheduleCardProps,
-    'onClick'
-  > | null>(null)
+  const [lessonScheduleCardPosition, setLessonScheduleCardPosition] = useState<Partial<DOMRect>>({ top: 0, left: 0 })
+  const [selectedLessonSchedule, setSelectedLessonSchedule] = useState<LessonScheduleProps | null>(null)
 
   function onClickSelectedLesson(id: string) {
     console.log('lesson id = ', id)
   }
 
-  function selectedProps(props: any) {
-    console.log('props', props)
+  function selectedProps(props: object) {
+    setSelectedLessonSchedule(props as LessonScheduleProps)
   }
   function positionComponent(props: Partial<DOMRect>) {
-    console.log('props', props)
+    setLessonScheduleCardPosition(props)
   }
 
   return (
@@ -44,7 +37,6 @@ function ScheduleCalendar({ date = new Date(), events, locale = localeDefault }:
         positionComponent={positionComponent}
       >
         <Box
-          ref={lessonScheduleCardContainerRef}
           className={cn('lesson-schedule-card-position-container', {
             'lesson-schedule-card-position-container--show': selectedLessonSchedule !== null,
           })}
