@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 import LessonScheduleCard from './index'
 
 export default {
-  title: 'Components/Calendar/LessonScheduleCard',
+  title: 'Components/LessonScheduleCard',
   component: LessonScheduleCard,
 } as ComponentMeta<typeof LessonScheduleCard>
 
