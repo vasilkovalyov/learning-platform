@@ -56,12 +56,13 @@ function AdminList() {
   function signOut(e: MouseEvent<HTMLElement>) {
     e.preventDefault()
 
+    router.push('/')
+
+    dispatch(clearAuthState())
+
     destroyCookie(null, 'role')
     destroyCookie(null, 'userId')
     destroyCookie(null, 'token')
-    console.log(1)
-    dispatch(clearAuthState())
-    router.push('/')
   }
 
   return (
