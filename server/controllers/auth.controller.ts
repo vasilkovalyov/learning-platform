@@ -13,10 +13,9 @@ class AuthController {
 
   async signIn(req, res) {
     try {
-      const userData = await AuthService.signIn(req.body.params) // for prod
-      // const userData = await AuthService.signIn(req.query); // for postman
+      const userData = await AuthService.signIn(req.body.params || req.body)
       res.json(userData)
-    } catch (e: any) {
+    } catch (e) {
       console.error(e)
       res.status(e.status).json(e)
     }

@@ -1,26 +1,42 @@
-import { IFormTeacher, IAuthUserResponse } from "../../interfaces/auth.interface";
-import { ITeacherPrivateData, ITeacherUser } from "../interfaces/teacher.interface";
-import { signUpTeacherValidation } from "../../validation/auth.validation"
-import ApiError from '../../exeptions/api.exeptions';
-import RoleModel from "../../models/role.model"
-import bcrypt from 'bcryptjs';
-import { TeacherBaseInfoModel, TeacherPrivateDataModel, TeacherServicesModel, TeacherLessonsModel } from "../models/teacher.model"
-import TeacherDto from "../dto/teacher.dto";
+import { IFormTeacher, IAuthUserResponse } from '../../interfaces/auth-user.interface'
+import { ITeacherPrivateData, ITeacherAccount, ITeacherExtended } from '../interfaces/teacher.interface'
+import { signUpTeacherValidation } from '../../validation/auth.validation'
+import ApiError from '../../exeptions/api.exeptions'
+import RoleModel from '../../models/role.model'
+import bcrypt from 'bcryptjs'
+
+import {
+  TeacherBaseInfoModel,
+  TeacherPrivateDataModel,
+  TeacherServicesModel,
+  TeacherLessonsModel,
+} from '../models/teacher'
+
+import TeacherAccountDto from '../dto/teacher/teacher-account.dto'
 
 class TeacherService {
-  async getUserByEmail(email: string): Promise<ITeacherUser | null> {
-    return await TeacherBaseInfoModel.findOne({ email: email });
-  }
-
   async signUp(params: IFormTeacher): Promise<IAuthUserResponse<IFormTeacher>> {
     const { error } = signUpTeacherValidation(params)
-    if (error) throw ApiError.BadRequest(error.details[0].message);
+    if (error) throw ApiError.BadRequest(error.details[0].message)
 
-    const { fullname, login, email, confirm_password, role, address, city, state, country, education, phone, work_experience } = params
-    const userExist = await RoleModel.findOne({ email: email });
+    const {
+      fullname,
+      login,
+      email,
+      confirm_password,
+      role,
+      address,
+      city,
+      state,
+      country,
+      education,
+      phone,
+      work_experience,
+    } = params
+    const userExist = await RoleModel.findOne({ email: email })
 
-    const hashedPassword = await bcrypt.hash(confirm_password, bcrypt.genSaltSync(10));
-    if (userExist) throw ApiError.BadRequest(`User with email - ${email} alreary exist!`);
+    const hashedPassword = await bcrypt.hash(confirm_password, bcrypt.genSaltSync(10))
+    if (userExist) throw ApiError.BadRequest(`User with email - ${email} alreary exist!`)
 
     const teacherBaseInfoModel = new TeacherBaseInfoModel({
       fullname,
@@ -29,9 +45,9 @@ class TeacherService {
       password: hashedPassword,
       phone,
       role,
-    });
+    })
 
-    const savedUser = await teacherBaseInfoModel.save();
+    const savedUser = await teacherBaseInfoModel.save()
 
     const teacherPrivateDataModel = new TeacherPrivateDataModel({
       teacher: savedUser._id,
@@ -40,8 +56,9 @@ class TeacherService {
       state,
       country,
       education,
-      work_experience
+      work_experience,
     })
+
     await teacherPrivateDataModel.save()
 
     const teacherServicesModel = new TeacherServicesModel({ teacher: savedUser._id })
@@ -51,18 +68,22 @@ class TeacherService {
     await teacherLessonsModel.save()
 
     const roleModel = new RoleModel({ _id: savedUser._id, role, email })
-    await roleModel.save();
+    await roleModel.save()
 
     return {
       message: `You have been registered`,
-      data: null
+      user: null,
     }
   }
 
-  async getUserById(id: string): Promise<ITeacherUser | null> {
-    const data: ITeacherUser | null = await TeacherBaseInfoModel.findOne({ _id: id })
+  async getUserByEmail(email: string): Promise<ITeacherExtended | null> {
+    return await TeacherBaseInfoModel.findOne({ email: email })
+  }
+
+  async getUserById(id: string): Promise<ITeacherAccount | null> {
+    const data: ITeacherExtended | null = await TeacherBaseInfoModel.findOne({ _id: id })
     if (data === null) return null
-    return new TeacherDto(data).getAuthDataUser()
+    return new TeacherAccountDto(data).getUserInfo()
   }
 
   async getUserPrivateData(id: string): Promise<ITeacherPrivateData> {
@@ -74,15 +95,15 @@ class TeacherService {
       _id: id,
       lessons: lessonsData,
       private_data: privateData,
-      services: servicesData
+      services: servicesData,
     }
   }
 
   async updateUserPrivateData(params: ITeacherPrivateData) {
     const privateData = await TeacherPrivateDataModel.findOneAndUpdate(
       { teacher: params._id },
-      { 
-        address:  params.private_data?.address,
+      {
+        address: params.private_data?.address,
         city: params.private_data?.city,
         state: params.private_data?.state,
         country: params.private_data?.country,
@@ -92,7 +113,7 @@ class TeacherService {
         local_time: params.private_data?.local_time,
         about_info: params.private_data?.about_info,
       },
-      { useFindAndModify: true }
+      { useFindAndModify: true },
     )
     const lessonsData = await TeacherLessonsModel.findOneAndUpdate(
       { teacher: params._id },
@@ -124,11 +145,11 @@ class TeacherService {
       _id: params._id,
       lessons: lessonsData,
       private_data: privateData,
-      services: servicesData
+      services: servicesData,
     }
   }
 
-  async updateUserAuthData(params: ITeacherUser) {
+  async updateUserAuthData(params: ITeacherAccount) {
     const role = await RoleModel.findById(params._id)
     if (role?.email !== params.email) {
       await RoleModel.findByIdAndUpdate(
@@ -136,26 +157,24 @@ class TeacherService {
         {
           email: params.email,
         },
-        { useFindAndModify: true }
+        { useFindAndModify: true },
       )
     }
     const authData = await TeacherBaseInfoModel.findOneAndUpdate(
       { _id: params._id },
-      { 
+      {
         email: params.email,
         fullname: params.fullname,
         login: params.login,
         phone: params.phone,
         role: params.role,
       },
-      { useFindAndModify: true }
+      { useFindAndModify: true },
     )
-    console.log('authData', authData)
     return {
       data: {
-        ...authData
-        
-      }
+        ...authData,
+      },
     }
   }
 }

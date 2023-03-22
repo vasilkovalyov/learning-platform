@@ -1,9 +1,17 @@
-import { IPlaceLiving } from "../../interfaces/common"
+import { IPlaceLiving } from '../../interfaces/common'
 import { IUser } from './user.interface'
 
-
-export interface IStudent extends IUser {
+export interface IStudentAccount extends IUser {
   fullname: string
+}
+
+export type IStudentExtended = IStudentAccount & {
+  password: string
+}
+
+export type IStudentSignUp = IStudentAccount & {
+  password: string
+  confirm_password: string
 }
 
 export interface IStudentPrivateData extends IPlaceLiving {

@@ -1,9 +1,9 @@
-import { RoleType } from "../../../types/common"
+import { RoleType } from '../../../types/common'
 
 export interface IUser {
   _id: string
   login: string
   email: string
   role: RoleType
-  phone?: string
+  phone?: string | null
 }

@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const model = new Schema({
   _id: {
     type: String,
-    required: true
+    required: true,
   },
   role: {
     type: String,
@@ -16,7 +16,7 @@ const model = new Schema({
   },
   date: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
 })
 

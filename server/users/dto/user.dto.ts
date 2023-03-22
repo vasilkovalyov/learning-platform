@@ -6,17 +6,17 @@ abstract class UserDto implements IUser {
   login: string
   email: string
   role: RoleType
-  phone?: string
-  
+  phone?: string | null
+
   constructor(data: IUser) {
     this._id = data._id
     this.email = data.email
     this.login = data.login
-    this.phone = data.phone || ''
+    this.phone = data.phone || null
     this.role = data.role
   }
 
-  abstract getAuthDataUser()
+  abstract getUserInfo()
 }
 
 export default UserDto

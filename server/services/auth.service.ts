@@ -1,75 +1,61 @@
-import { IStudent } from '../users/interfaces/student.interface'
-import { IFormUser, IFormTeacher, IAuthUserResponse } from '../interfaces/auth.interface'
+import { IAuthUserResponse } from '../interfaces/auth-user.interface'
+
 import RoleModel from '../models/role.model'
-import PendingModel from '../models/pending-user.model'
 import { signInValidation } from '../validation/auth.validation'
 import TokenService from './token.service'
 import ApiError from '../exeptions/api.exeptions'
-import { UserAccountType } from '../types/common'
 import bcrypt from 'bcryptjs'
 
 import StudentService from '../users/services/student.service'
 import TeacherService from '../users/services/teacher.service'
 
-import StudentDto from '../users/dto/student.dto'
-import TeacherDto from '../users/dto/teacher.dto'
+import StudentAccountDto from '../users/dto/student/student-account.dto'
+import TeacherAccountDto from '../users/dto/teacher/teacher-account.dto'
 
-type AuthTypeForm = Pick<IFormUser, 'email' | 'password'>
+import { IStudentAccount, IStudentExtended } from '../users/interfaces/student.interface'
+import { ITeacherAccount, ITeacherExtended } from '../users/interfaces/teacher.interface'
 
 class AuthService {
-  // async activateUser(hash: string) {
-  //     const user = await PendingModel.findOne({ _id: hash });
-  //     if (!user) throw ApiError.BadRequest(`This activation link already enabled`);
-  //     await this.saveRole(user._id, user.role, user.email)
-
-  //     if (user.role as UserAccountType === 'student') {
-  //         const newUser = new StudentModel({
-  //             login: user.login,
-  //             email: user.email,
-  //             password: user.password,
-  //             role: user.role
-  //         });
-  //         await newUser.save()
-  //     }
-  //     if (user.role as UserAccountType === 'teacher') {
-
-  //     }
-  //     if (user.role as UserAccountType === 'company') {
-
-  //     }
-  //     await user.remove();
-
-  //     return {
-  //         message: `User ${hash} has been activated`,
-  //         data: null
-  //     }
-  // }
-
-  async signIn(params: AuthTypeForm): Promise<IAuthUserResponse<IFormUser | IFormTeacher | null>> {
+  validateUserSignIn(params: { email: string; password: string }): void {
     const { error } = signInValidation(params)
     if (error) throw ApiError.BadRequest(error.details[0].message)
+  }
+
+  private async validatePassword(password, userPassword) {
+    const validPass = await bcrypt.compare(password, userPassword)
+    if (!validPass) throw ApiError.BadRequest(`Wrong password!`)
+  }
+
+  async signIn(params: {
+    email: string
+    password: string
+  }): Promise<IAuthUserResponse<IStudentAccount | ITeacherAccount | null>> {
+    this.validateUserSignIn(params)
 
     const { email, password } = params
+
     const findedRole = await RoleModel.findOne({ email: email })
-    const pendingRole = await PendingModel.findOne({ email: email })
-    if (pendingRole === null && findedRole === null) throw ApiError.BadRequest(`User with email - ${email} not exist!`)
-    let userResponse: IStudent | any
-    let userDto: any
-    if (findedRole && (findedRole.role as UserAccountType) === 'student') {
+    if (findedRole === null) throw ApiError.BadRequest(`User with email - ${email} not exist!`)
+
+    let userResponse: IStudentExtended | ITeacherExtended | null = null
+    let userDto: IStudentAccount | ITeacherAccount | null = null
+
+    if (findedRole.role === 'student') {
       userResponse = await StudentService.getUserByEmail(email)
-      userDto = new StudentDto(userResponse).getAuthDataUser()
+      if (userResponse) userDto = new StudentAccountDto(userResponse).getUserInfo()
     }
-    if (findedRole && (findedRole.role as UserAccountType) === 'teacher') {
+    if (findedRole.role === 'teacher') {
       userResponse = await TeacherService.getUserByEmail(email)
-      userDto = new TeacherDto(userResponse).getAuthDataUser()
+      if (userResponse) userDto = new TeacherAccountDto(userResponse).getUserInfo()
     }
 
-    const validPass = await bcrypt.compare(password, userResponse.password)
-    if (!validPass) throw ApiError.BadRequest(`Wrong password!`)
+    if (!userResponse) throw ApiError.BadRequest(`User not found!`)
+    this.validatePassword(password, userResponse.password)
+
     const token = await TokenService.generateTokens({ _id: userResponse._id.valueOf(), role: userResponse.role })
     return {
-      data: userDto,
-      message: `Succsess user signin ${userDto.login}`,
+      user: userDto || null,
+      message: `Succsess user signin ${userDto && userDto.login}`,
       token: token.accessToken,
     }
   }

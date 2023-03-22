@@ -1,6 +1,12 @@
-import { IStudent } from "./student.interface"
+import { IUser } from './user.interface'
 
-export interface ITeacherUser extends IStudent {}
+export interface ITeacherAccount extends IUser {
+  fullname: string
+}
+
+export type ITeacherExtended = ITeacherAccount & {
+  password: string
+}
 
 export interface ITeacherPrivateData {
   _id: string

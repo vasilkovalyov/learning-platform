@@ -1,61 +1,58 @@
-import { IFormUser, IAuthUserResponse } from "../../interfaces/auth.interface";
-import { IStudent } from "../interfaces/student.interface";
-import { signUpStudentValidation } from "../../validation/auth.validation"
-import ApiError from '../../exeptions/api.exeptions';
-import RoleModel from "../../models/role.model"
-import bcrypt from 'bcryptjs';
-import { StudentBaseInfoModel } from "../models/student.model"
-import StudentDto from "../dto/student.dto";
+import { ISignUpUserResponse } from '../../interfaces/auth-user.interface'
+import { IStudentSignUp } from '../interfaces/student.interface'
+import { IStudentAccount, IStudentExtended } from '../interfaces/student.interface'
+import { signUpStudentValidation } from '../../validation/auth.validation'
+import ApiError from '../../exeptions/api.exeptions'
+import RoleModel from '../../models/role.model'
+import bcrypt from 'bcryptjs'
+import { StudentModel } from '../models/student/common.student'
+import StudentSignUpDto from '../dto/student/student-sign-up.dto'
+import StudentAccountDto from '../dto/student/student-account.dto'
+import StudentExtendedDto from '../dto/student/student-extended.dto'
 
 class StudentService {
-  async getUserByEmail(email: string): Promise<IStudent | null> {
-    return await StudentBaseInfoModel.findOne({ email: email });
-  }
-
-  async signUp(params: IFormUser): Promise<IAuthUserResponse<IFormUser>> {
+  async signUp(params: IStudentSignUp): Promise<ISignUpUserResponse> {
     const { error } = signUpStudentValidation(params)
-    if (error) throw ApiError.BadRequest(error.details[0].message);
 
-    const { login, email, confirm_password, role, fullname } = params
-    const userRoleExist = await RoleModel.findOne({ email: email });
-    // const userPendingExist = await PendingModel.findOne({ email: email }); // temp. don`t remove!!!!
+    if (error) throw ApiError.BadRequest(error.details[0].message)
 
-    if (userRoleExist) throw ApiError.BadRequest(`User with email - ${email} alreary exist!`); // temp. should remove later!!!
-    const hashedPassword = await bcrypt.hash(confirm_password, bcrypt.genSaltSync(10));
-    // if (userRoleExist && userPendingExist) throw ApiError.BadRequest(`User with email - ${email} alreary exist!`); // temp. don`t remove!!!!
-    const studentBaseInfoModel = new StudentBaseInfoModel({
-      login,
-      fullname,
-      email,
+    const { email, role, confirm_password } = params
+    const userExist = await StudentModel.findOne({ email: email })
+
+    if (userExist) throw ApiError.BadRequest(`User with email - ${email} alreary exist!`)
+
+    const hashedPassword = await bcrypt.hash(confirm_password, bcrypt.genSaltSync(10))
+
+    const studentDTO = new StudentSignUpDto({
+      ...params,
       password: hashedPassword,
-      role,
-    } as IFormUser);
+    })
 
-    // temp. don`t remove!!!!
-    // const studentBaseInfoModel = new PendingModel({
-    //     login,
-    //     email,
-    //     password: hashedPassword,
-    //     role,
-    // } as IStudent);
+    const studentModel = new StudentModel(studentDTO)
 
-    const savedUser = await studentBaseInfoModel.save();
-    const roleModel = new RoleModel({ _id: savedUser._id, role, email })
-    await roleModel.save();
+    const savedUser = await studentModel.save()
+    const roleModel = new RoleModel({ _id: savedUser._id, role: role, email: email })
+    await roleModel.save()
 
     return {
       message: `You have been registered`,
-      data: {
+      user: {
         _id: savedUser._id.toString(),
-        email: savedUser.email
-      }
+        email: savedUser.email,
+      },
     }
   }
 
-  async getUserById(id: string): Promise<IStudent | null> {
-    const data: IStudent | null = await StudentBaseInfoModel.findOne({ _id: id })
-    if (data === null) return null
-    return new StudentDto(data).getAuthDataUser()
+  async getUserByEmail(email: string): Promise<IStudentExtended> {
+    const data: IStudentExtended | null = await StudentModel.findOne({ email: email })
+    if (!data) throw ApiError.BadRequest(`Student doesn't find by email ${email}!`)
+    return new StudentExtendedDto(data).getUserInfo()
+  }
+
+  async getUserById(id: string): Promise<IStudentAccount> {
+    const data: IStudentExtended | null = await StudentModel.findOne({ _id: id })
+    if (!data) throw ApiError.BadRequest(`Student doesn't find by id ${id}!`)
+    return new StudentAccountDto(data).getUserInfo()
   }
 }
 

@@ -1,5 +1,5 @@
 const JoiValidation = require('joi')
-import { IFormUser, IFormTeacher } from '../interfaces/auth.interface'
+import { IFormUser, IFormTeacher } from '../interfaces/auth-user.interface'
 
 export const signInValidation = (data: Pick<IFormUser, 'email' | 'password'>) => {
   const schema = JoiValidation.object({

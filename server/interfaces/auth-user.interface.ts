@@ -20,6 +20,14 @@ export interface IFormTeacher extends IFormUser, IPlaceLiving {
 
 export interface IAuthUserResponse<T> {
   message?: string
-  data: Partial<T> | null
+  user: Partial<T> | null
   token?: string
+}
+
+export interface ISignUpUserResponse {
+  message: string
+  user: {
+    _id: string
+    email: string
+  }
 }
