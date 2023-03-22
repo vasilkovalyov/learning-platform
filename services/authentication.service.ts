@@ -3,7 +3,7 @@ import $api from 'common/ajax-config'
 import { UserInfoStoreProps } from 'interfaces/user.interface'
 
 export interface AuthenticationUserResponse {
-  data: UserInfoStoreProps
+  user: UserInfoStoreProps
   token: string
   message: string
 }

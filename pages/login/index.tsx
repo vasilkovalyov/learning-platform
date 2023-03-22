@@ -33,10 +33,10 @@ const Auth: NextPage = () => {
       const response = await AuthService.signIn(email, password)
 
       setCookie(null, 'token', response.token, { maxAge: 30 * 24 * 60 * 60 })
-      setCookie(null, 'userId', response.data._id, { maxAge: 30 * 24 * 60 * 60 })
-      setCookie(null, 'role', response.data.role, { maxAge: 30 * 24 * 60 * 60 })
+      setCookie(null, 'userId', response.user._id, { maxAge: 30 * 24 * 60 * 60 })
+      setCookie(null, 'role', response.user.role, { maxAge: 30 * 24 * 60 * 60 })
 
-      dispatch(setAuthState(response.data))
+      dispatch(setAuthState(response.user))
       router.push('/admin')
     } catch (e: any) {
       console.log(e)

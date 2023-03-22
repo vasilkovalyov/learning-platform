@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
 
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
@@ -10,8 +9,6 @@ import Button from '@mui/material/Button'
 
 import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
-
-import { EditUserAccountFormSchema } from 'utils/schemas/account/user'
 
 import { UserInfoStoreProps } from 'interfaces/user.interface'
 
@@ -109,7 +106,6 @@ function AccountForm({ onHandleRemoveAccount, initialData }: AccountFormProps) {
         <Button
           className="form-account__additional-button"
           onClick={() => {
-            console.log(getValues('password'))
             setValue('password', '')
           }}
         >
