@@ -1,16 +1,7 @@
 const JoiValidation = require('joi')
-import { IFormUser, IFormTeacher } from '../interfaces/auth-user.interface'
+import { ITeacherSignUp } from '../interfaces/teacher.interface'
 
-export const signInValidation = (data: Pick<IFormUser, 'email' | 'password'>) => {
-  const schema = JoiValidation.object({
-    email: JoiValidation.string().required().email(),
-    password: JoiValidation.string().min(6).required(),
-  })
-
-  return schema.validate(data)
-}
-
-export const signUpTeacherValidation = (data: IFormTeacher) => {
+export const signUpTeacherValidation = (data: ITeacherSignUp) => {
   const schema = JoiValidation.object({
     fullname: JoiValidation.string().required(),
     login: JoiValidation.string().required(),

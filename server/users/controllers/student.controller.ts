@@ -7,7 +7,7 @@ class StudentController {
       let userData: ISignUpUserResponse
       userData = await StudentService.signUp(req.body.params || req.body)
       res.json(userData)
-    } catch (e) {
+    } catch (e: any) {
       console.error(e)
       res.status(e.status).json(e)
     }
@@ -17,7 +17,7 @@ class StudentController {
     try {
       const userData = await StudentService.getUserById(req.params.id)
       res.json(userData)
-    } catch (e) {
+    } catch (e: any) {
       console.error(e)
       res.status(e.status).json(e)
     }

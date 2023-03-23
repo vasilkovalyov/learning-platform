@@ -1,12 +1,22 @@
 import { IUser } from './user.interface'
+import { IPlaceLiving } from '../../interfaces/common'
 
 export interface ITeacherAccount extends IUser {
+  _id: string
   fullname: string
 }
 
 export type ITeacherExtended = ITeacherAccount & {
   password: string
 }
+
+export type ITeacherSignUp = Omit<ITeacherAccount, '_id'> &
+  IPlaceLiving & {
+    education: string[]
+    work_experience: string[]
+    password: string
+    confirm_password: string
+  }
 
 export interface ITeacherPrivateData {
   _id: string

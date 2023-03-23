@@ -1,6 +1,7 @@
-import { IFormTeacher, IAuthUserResponse } from '../../interfaces/auth-user.interface'
+import { IAuthUserResponse } from '../../interfaces/auth-user.interface'
+import { ITeacherSignUp } from '../interfaces/teacher.interface'
 import { ITeacherPrivateData, ITeacherAccount, ITeacherExtended } from '../interfaces/teacher.interface'
-import { signUpTeacherValidation } from '../../validation/auth.validation'
+import { signUpTeacherValidation } from '../validation/teacher.validation'
 import ApiError from '../../exeptions/api.exeptions'
 import RoleModel from '../../models/role.model'
 import bcrypt from 'bcryptjs'
@@ -12,10 +13,8 @@ import {
   TeacherLessonsModel,
 } from '../models/teacher'
 
-import TeacherAccountDto from '../dto/teacher/teacher-account.dto'
-
 class TeacherService {
-  async signUp(params: IFormTeacher): Promise<IAuthUserResponse<IFormTeacher>> {
+  async signUp(params: ITeacherSignUp): Promise<IAuthUserResponse<ITeacherSignUp>> {
     const { error } = signUpTeacherValidation(params)
     if (error) throw ApiError.BadRequest(error.details[0].message)
 
@@ -83,7 +82,7 @@ class TeacherService {
   async getUserById(id: string): Promise<ITeacherAccount | null> {
     const data: ITeacherExtended | null = await TeacherBaseInfoModel.findOne({ _id: id })
     if (data === null) return null
-    return new TeacherAccountDto(data).getUserInfo()
+    return data
   }
 
   async getUserPrivateData(id: string): Promise<ITeacherPrivateData> {

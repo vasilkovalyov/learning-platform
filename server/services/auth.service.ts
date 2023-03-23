@@ -9,9 +9,6 @@ import bcrypt from 'bcryptjs'
 import StudentService from '../users/services/student.service'
 import TeacherService from '../users/services/teacher.service'
 
-import StudentAccountDto from '../users/dto/student/student-account.dto'
-import TeacherAccountDto from '../users/dto/teacher/teacher-account.dto'
-
 import { IStudentAccount, IStudentExtended } from '../users/interfaces/student.interface'
 import { ITeacherAccount, ITeacherExtended } from '../users/interfaces/teacher.interface'
 
@@ -42,11 +39,28 @@ class AuthService {
 
     if (findedRole.role === 'student') {
       userResponse = await StudentService.getUserByEmail(email)
-      if (userResponse) userDto = new StudentAccountDto(userResponse).getUserInfo()
+      if (userResponse)
+        userDto = {
+          _id: userResponse._id,
+          email: userResponse.email,
+          fullname: userResponse.fullname,
+          login: userResponse.login,
+          role: userResponse.role,
+          phone: userResponse.phone,
+        }
     }
     if (findedRole.role === 'teacher') {
       userResponse = await TeacherService.getUserByEmail(email)
-      if (userResponse) userDto = new TeacherAccountDto(userResponse).getUserInfo()
+      if (userResponse) {
+        userDto = {
+          _id: userResponse._id,
+          email: userResponse.email,
+          fullname: userResponse.fullname,
+          login: userResponse.login,
+          role: userResponse.role,
+          phone: userResponse.phone,
+        }
+      }
     }
 
     if (!userResponse) throw ApiError.BadRequest(`User not found!`)

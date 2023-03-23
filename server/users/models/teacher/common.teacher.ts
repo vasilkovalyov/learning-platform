@@ -19,10 +19,6 @@ export const model = new Schema({
   phone: {
     type: String,
   },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
   role: {
     type: String,
     required: true,

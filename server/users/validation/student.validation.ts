@@ -1,7 +1,7 @@
 const JoiValidation = require('joi')
-import { IFormUser } from '../../interfaces/auth-user.interface'
+import { IStudentSignUp } from '../interfaces/student.interface'
 
-export const signUpStudentValidation = (data: IFormUser) => {
+export const signUpStudentValidation = (data: IStudentSignUp) => {
   const schema = JoiValidation.object({
     login: JoiValidation.string().required(),
     fullname: JoiValidation.string().required(),
