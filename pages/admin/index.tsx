@@ -14,9 +14,17 @@ import ModalPopupBox from '../../components/ModalPopupBox'
 
 import AccountForm from '../../components/Forms/AccountForm'
 
+import userService from 'services/user.service'
+
+import { parseCookies } from 'nookies'
+import { RoleType } from 'types/common'
+
+import { useSignOut } from 'hooks/useSignOut'
+
 function Account() {
   const authState = useSelector(selectAuthState)
   const [modalOpen, setModalOpen] = useState<boolean>(false)
+  const { signOut } = useSignOut()
 
   function onHandleRemoveAccount() {
     setModalOpen(true)
@@ -24,6 +32,15 @@ function Account() {
 
   function handleCloseModal() {
     setModalOpen(false)
+  }
+
+  async function handleRemoveAccount() {
+    if (!authState) return
+    const { token, userId, role } = parseCookies()
+    const response = await userService.removeUser(role as RoleType, userId, token)
+    if (response?.status === 200) {
+      signOut()
+    }
   }
 
   return (
@@ -47,7 +64,7 @@ function Account() {
                 <Button variant="contained" onClick={handleCloseModal}>
                   decline
                 </Button>
-                <Button variant="outlined" disabled>
+                <Button variant="outlined" onClick={handleRemoveAccount}>
                   accept
                 </Button>
               </Stack>

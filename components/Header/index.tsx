@@ -1,26 +1,24 @@
 import React, { MouseEvent } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
-
-import { destroyCookie } from 'nookies'
 
 import logoImage from '../../public/images/logo.png'
 
 import Container from '@mui/material/Container'
-import Grid from '@mui/material/Grid'
+// import Grid from '@mui/material/Grid'
 import Stack from '@mui/material/Stack'
 import Divider from '@mui/material/Divider'
-import Button from '@mui/material/Button'
+// import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 
 import Icon from 'components/Generic/Icon'
-import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import { selectAuthState, clearAuthState } from 'redux/slices/auth'
+import { selectAuthState } from 'redux/slices/auth'
 
 import colors from 'constants/colors'
 import pages from 'constants/pages'
+
+import { useSignOut } from 'hooks/useSignOut'
 
 const navigationData = [
   {
@@ -50,19 +48,11 @@ const navigationData = [
 ]
 
 function AdminList() {
-  const router = useRouter()
-  const dispatch = useDispatch()
+  const { signOut } = useSignOut()
 
-  function signOut(e: MouseEvent<HTMLElement>) {
+  function handleSignOut(e: MouseEvent<HTMLElement>) {
     e.preventDefault()
-
-    router.push('/')
-
-    dispatch(clearAuthState())
-
-    destroyCookie(null, 'role')
-    destroyCookie(null, 'userId')
-    destroyCookie(null, 'token')
+    signOut()
   }
 
   return (
@@ -78,7 +68,7 @@ function AdminList() {
         </Link>
       </Box>
       <Box className="header__auth-list-item">
-        <button className="header__auth-button font-semibold color-dark-blue-1" onClick={(e) => signOut(e)}>
+        <button className="header__auth-button font-semibold color-dark-blue-1" onClick={(e) => handleSignOut(e)}>
           Sign out
         </button>
       </Box>
