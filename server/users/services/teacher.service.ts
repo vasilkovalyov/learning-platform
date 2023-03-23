@@ -82,7 +82,14 @@ class TeacherService {
   async getUserById(id: string): Promise<ITeacherAccount | null> {
     const data: ITeacherExtended | null = await TeacherBaseInfoModel.findOne({ _id: id })
     if (data === null) return null
-    return data
+    return {
+      _id: data._id,
+      email: data.email,
+      fullname: data.email,
+      login: data.login,
+      role: data.role,
+      phone: data.phone,
+    }
   }
 
   async getUserPrivateData(id: string): Promise<ITeacherPrivateData> {
@@ -175,6 +182,15 @@ class TeacherService {
         ...authData,
       },
     }
+  }
+
+  async removeUser(id: string) {
+    const data = await TeacherBaseInfoModel.find({ _id: id }).remove()
+    await TeacherPrivateDataModel.find({ _id: id }).remove()
+    await TeacherServicesModel.find({ _id: id }).remove()
+    await TeacherLessonsModel.find({ _id: id }).remove()
+    await RoleModel.find({ _id: id }).remove()
+    if (!data) throw ApiError.BadRequest(`Teacher doesn't find by id ${id}!`)
   }
 }
 

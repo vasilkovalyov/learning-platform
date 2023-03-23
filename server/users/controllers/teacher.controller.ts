@@ -46,6 +46,19 @@ class TeacherController {
       res.status(e.status).json(e)
     }
   }
+
+  async removeUser(req, res) {
+    try {
+      await TeacherService.removeUser(req.query.id || req.body.id)
+      res
+        .json({
+          message: 'Teacher has been removed success',
+        })
+        .status(200)
+    } catch (e) {
+      res.status(e.status).json(e)
+    }
+  }
 }
 
 export default new TeacherController()
