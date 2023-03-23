@@ -25,7 +25,7 @@ class StudentController {
 
   async removeUser(req, res) {
     try {
-      await StudentService.removeUser(req.body.params || req.body.id)
+      await StudentService.removeUser(req.query.id || req.body.id)
       res
         .json({
           message: 'Student has been removed success',
