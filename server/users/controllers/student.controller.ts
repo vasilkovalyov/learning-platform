@@ -22,6 +22,19 @@ class StudentController {
       res.status(e.status).json(e)
     }
   }
+
+  async removeUser(req, res) {
+    try {
+      await StudentService.removeUser(req.body.params || req.body.id)
+      res
+        .json({
+          message: 'Student has been removed success',
+        })
+        .status(200)
+    } catch (e) {
+      res.status(e.status).json(e)
+    }
+  }
 }
 
 export default new StudentController()

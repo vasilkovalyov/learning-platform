@@ -56,6 +56,12 @@ class StudentService {
       phone: data.phone,
     }
   }
+
+  async removeUser(id: string) {
+    const data = await StudentModel.find({ _id: id }).remove()
+    await RoleModel.find({ _id: id }).remove()
+    if (!data) throw ApiError.BadRequest(`Student doesn't find by id ${id}!`)
+  }
 }
 
 export default new StudentService()
