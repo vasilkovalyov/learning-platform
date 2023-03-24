@@ -13,23 +13,22 @@ import { IconEnum } from 'components/Generic/Icon/Icon.type'
 import { UserInfoStoreProps } from 'interfaces/user.interface'
 
 import { AccountFormProps } from './AccountForm.type'
+import studentSerivce from 'services/student.serivce'
 
 function AccountForm({ onHandleRemoveAccount, initialData }: AccountFormProps) {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const {
     handleSubmit,
     register,
-    getValues,
     setValue,
     formState: { errors },
   } = useForm<UserInfoStoreProps>({
     mode: 'onSubmit',
-    // resolver: yupResolver(EditUserAccountFormSchema),
     defaultValues: initialData,
   })
 
   function onSubmit(data: UserInfoStoreProps) {
-    console.log('data', data)
+    studentSerivce.updateUserAccount(data)
   }
 
   return (

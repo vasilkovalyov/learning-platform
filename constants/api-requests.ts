@@ -9,4 +9,5 @@ export const PRIVATE_REQUESTS = {
   BASE: '',
   TEACHER_SAVE_PRIVATE_DATA: 'teacher/private-data',
   TEACHER_SAVE_AUTH_DATA: 'teacher/auth-data',
+  STUDENT_ACCOUNT_UPDATE: 'student/account/update',
 }
