@@ -55,7 +55,17 @@ class TeacherController {
           message: 'Teacher has been removed success',
         })
         .status(200)
-    } catch (e) {
+    } catch (e: any) {
+      res.status(e.status).json(e)
+    }
+  }
+
+  async updateUserAccount(req, res) {
+    try {
+      const userData = await TeacherService.updateUserAccount(req.body.params || req.body)
+      res.json(userData)
+    } catch (e: any) {
+      console.error(e)
       res.status(e.status).json(e)
     }
   }

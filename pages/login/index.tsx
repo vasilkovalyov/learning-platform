@@ -16,7 +16,7 @@ import PublicLayout from 'layouts/BaseLayout'
 import ContainerWithShadow from 'components/Generic/ContainerWithShadow'
 
 import AuthService from 'services/authentication.service'
-import { UserLoginProps } from 'interfaces/user.interface'
+import { LoginProps } from 'interfaces/user.interface'
 import FormLogin from 'components/Forms/Login'
 import { setAuthState } from 'redux/slices/auth'
 
@@ -27,7 +27,7 @@ const Auth: NextPage = () => {
   const router = useRouter()
   const dispatch = useDispatch()
 
-  async function successSignUpForm({ email, password }: UserLoginProps) {
+  async function onSubmit({ email, password }: LoginProps) {
     try {
       setIsLoading(true)
       const response = await AuthService.signIn(email, password)
@@ -71,7 +71,7 @@ const Auth: NextPage = () => {
             Sign in
           </Typography>
           <ContainerWithShadow className="container--login">
-            <FormLogin onSuccess={successSignUpForm} isLoading={isLoading} validationMessage={validationMessage} />
+            <FormLogin onSubmit={onSubmit} isLoading={isLoading} validationMessage={validationMessage} />
           </ContainerWithShadow>
         </Container>
       </PublicLayout>

@@ -200,6 +200,36 @@ class TeacherService {
     await RoleModel.find({ _id: id }).remove()
     if (!data) throw ApiError.BadRequest(`Teacher doesn't find by id ${id}!`)
   }
+
+  async updateUserAccount({
+    _id,
+    email,
+    fullname,
+    phone,
+  }: Omit<ITeacherAccount, 'password' | 'role' | 'login'>): Promise<ITeacherAccount> {
+    if (!_id) throw ApiError.BadRequest(`_id is empty!`)
+
+    const data: ITeacherAccount | null = await TeacherBaseInfoModel.findOneAndUpdate(
+      { _id: _id },
+      {
+        email: email,
+        fullname: fullname,
+        phone: phone,
+      },
+      { new: true },
+    )
+
+    if (!data) throw ApiError.BadRequest('Teacher doesn`t update')
+
+    return {
+      _id: data?._id,
+      email: data?.email,
+      fullname: data?.fullname,
+      login: data?.login,
+      role: data?.role,
+      phone: data?.phone,
+    }
+  }
 }
 
 export default new TeacherService()

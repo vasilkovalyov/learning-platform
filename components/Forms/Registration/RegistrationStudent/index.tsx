@@ -11,7 +11,7 @@ import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import LinearProgress from '@mui/material/LinearProgress'
 
-import { RegistrationStudentFormProps, TextFieldType, RegistrationStudentProps } from './RegistrationStudent.type'
+import { RegistrationStudentFormData, TextFieldType, RegistrationStudentProps } from './RegistrationStudent.type'
 
 import { RegistrationStudentFormSchema } from 'utils/schemas/registration/student'
 
@@ -23,7 +23,7 @@ function RegistrationStudent({ onSuccess, isLoading, validationMessage, inputFie
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<RegistrationStudentFormProps>({
+  } = useForm<RegistrationStudentFormData>({
     mode: 'onSubmit',
     resolver: yupResolver(RegistrationStudentFormSchema),
     defaultValues: {

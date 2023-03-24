@@ -1,26 +1,22 @@
 import React, { Fragment } from 'react'
 
-import { useForm, useFieldArray, SubmitHandler } from 'react-hook-form'
+import { useForm, useFieldArray } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import TextField from '@mui/material/TextField'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import LinearProgress from '@mui/material/LinearProgress'
 
-import {
-  RegistationTeacherFormFinalStepProps,
-  RegistationTeacherFormDynamicListProps,
-} from './RegistrationTeacher.type'
+import { RegistrationTeacherFormDataStepThree, RegistationTeacherFormStepThreeProps } from './RegistrationTeacher.type'
 
 import { RegistrationTeacherFormThirdSchema } from 'utils/schemas/registration/teacher'
 
 import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
 
-import colors from '../../../../constants/colors'
+import colors from 'constants/colors'
 
-const defaultValues: RegistationTeacherFormDynamicListProps = {
+const defaultValues: RegistrationTeacherFormDataStepThree = {
   education: [{ value: '' }],
   work_experience: [{ value: '' }],
 }
@@ -28,14 +24,14 @@ const defaultValues: RegistationTeacherFormDynamicListProps = {
 function RegistrationTeacherStepThird({
   validationMessage,
   isLoading,
-  finalStep,
-}: RegistationTeacherFormFinalStepProps) {
+  submitForm,
+}: RegistationTeacherFormStepThreeProps) {
   const {
     handleSubmit,
     control,
     register,
     formState: { errors },
-  } = useForm<RegistationTeacherFormDynamicListProps>({
+  } = useForm<RegistrationTeacherFormDataStepThree>({
     mode: 'onSubmit',
     resolver: yupResolver(RegistrationTeacherFormThirdSchema),
     defaultValues: defaultValues,
@@ -59,15 +55,8 @@ function RegistrationTeacherStepThird({
     name: 'work_experience',
   })
 
-  const onSubmit: SubmitHandler<RegistationTeacherFormDynamicListProps> = (data) => {
-    finalStep({
-      education: data.education.map((item) => item.value),
-      work_experience: data.work_experience.map((item) => item.value),
-    })
-  }
-
   return (
-    <form name="form-registration-teacher-step-3" autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+    <form name="form-registration-teacher-step-3" autoComplete="off" onSubmit={handleSubmit(submitForm)}>
       {fieldsEducation.map(({ id, value }, index) => (
         <Fragment key={id}>
           <TextField

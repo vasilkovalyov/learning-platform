@@ -37,7 +37,7 @@ class StudentController {
     try {
       const response = await StudentService.removeUser(req.query.id || req.body.id)
       res.json(response).status(200)
-    } catch (e) {
+    } catch (e: any) {
       res.status(e.status).json(e)
     }
   }

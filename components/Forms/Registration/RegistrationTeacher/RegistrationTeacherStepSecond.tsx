@@ -1,4 +1,5 @@
 import React from 'react'
+import cn from 'classnames'
 
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -8,8 +9,8 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 
 import {
-  RegistationTeacherFormStepProps,
-  RegistrationTeacherFormSecondProps,
+  RegistationTeacherFormStepTwoProps,
+  RegistrationTeacherFormDataStepTwo,
   TextFieldStepSecondType,
 } from './RegistrationTeacher.type'
 
@@ -22,49 +23,50 @@ export const initialData = {
   address: '',
 }
 
-function RegistrationTeacherStepTwo({
-  values,
-  inputFields,
-  nextStep,
-  handleFormData,
-}: RegistationTeacherFormStepProps<RegistrationTeacherFormSecondProps, TextFieldStepSecondType>) {
+function RegistrationTeacherStepTwo({ submitForm, disable, closeDisable }: RegistationTeacherFormStepTwoProps) {
+  const inputFields: TextFieldStepSecondType[] = ['country', 'state', 'city', 'address']
+
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<RegistrationTeacherFormSecondProps>({
+  } = useForm<RegistrationTeacherFormDataStepTwo>({
     mode: 'onChange',
     resolver: yupResolver(RegistrationTeacherFormSecondSchema),
     defaultValues: initialData,
   })
 
   return (
-    <form name="form-registration-teacher-step-2" autoComplete="off" onSubmit={handleSubmit(nextStep)}>
-      {inputFields &&
-        inputFields.map((inputName: TextFieldStepSecondType, index) => (
-          <Box key={index} marginBottom={2}>
-            <TextField
-              {...register(inputName, {
-                onChange: (e) => handleFormData(e.target.name, e.target.value),
-              })}
-              id={inputName}
-              name={inputName}
-              type="text"
-              label={inputName}
-              defaultValue={values[inputName]}
-              variant="standard"
-              className="form-field"
-              fullWidth
-              InputLabelProps={{ shrink: true }}
-              error={!!errors[inputName]?.message}
-              helperText={errors[inputName]?.message}
-            />
-          </Box>
-        ))}
-      <Button type="submit" variant="contained">
-        Next
-      </Button>
-    </form>
+    <Box onClick={closeDisable}>
+      <form
+        name="form-registration-teacher-step-2"
+        autoComplete="off"
+        onSubmit={handleSubmit(submitForm)}
+        className={cn({ 'form-step--disable': disable })}
+      >
+        {inputFields &&
+          inputFields.map((inputName: TextFieldStepSecondType, index) => (
+            <Box key={index} marginBottom={2}>
+              <TextField
+                {...register(inputName)}
+                id={inputName}
+                name={inputName}
+                type="text"
+                label={inputName}
+                variant="standard"
+                className="form-field"
+                fullWidth
+                InputLabelProps={{ shrink: true }}
+                error={!!errors[inputName]?.message}
+                helperText={errors[inputName]?.message}
+              />
+            </Box>
+          ))}
+        <Button type="submit" variant="contained">
+          Next
+        </Button>
+      </form>
+    </Box>
   )
 }
 

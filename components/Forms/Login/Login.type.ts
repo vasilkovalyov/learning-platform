@@ -1,7 +1,7 @@
-import { UserLoginProps } from 'interfaces/user.interface'
+import { LoginProps } from 'interfaces/user.interface'
 
 export interface FormLoginProps {
-  onSuccess: (data: UserLoginProps) => void
+  onSubmit: (props: LoginProps) => void
   isLoading: boolean
   validationMessage?: string | null
 }

@@ -1,12 +1,20 @@
-import { UserLocationProps, UserInfoProps } from 'interfaces/user.interface'
-
-export type RegistrationTeacherFormFirst = UserInfoProps & {
+export interface RegistrationTeacherFormDataStepOne {
+  fullname: string
+  login: string
+  email: string
+  password: string
   confirm_password: string
+  phone: string
 }
 
-export type RegistrationTeacherFormSecondProps = UserLocationProps
+export interface RegistrationTeacherFormDataStepTwo {
+  country: string
+  state: string
+  city: string
+  address: string
+}
 
-export interface RegistationTeacherFormDynamicListProps {
+export interface RegistrationTeacherFormDataStepThree {
   education: {
     value: string
   }[]
@@ -15,36 +23,32 @@ export interface RegistationTeacherFormDynamicListProps {
   }[]
 }
 
-export interface RegistrationTeacherFormThirdProps {
-  education: string[]
-  work_experience: string[]
-}
-
-export type RegistrationTeacherFullProps = RegistrationTeacherFormFirst &
-  UserLocationProps &
-  RegistrationTeacherFormThirdProps
-
-export interface RegistationTeacherFormStepProps<FormParams, InputFieldType> {
-  inputFields?: InputFieldType[]
-  nextStep: () => void
-  handleFormData: (name: string, value: string) => void
-  values: FormParams
-}
-
-export interface RegistationTeacherFormFinalStepProps
-  extends Omit<
-    RegistationTeacherFormStepProps<RegistrationTeacherFormThirdProps, TextFieldStepSecondType>,
-    'nextStep'
-  > {
-  finalStep: (params: RegistrationTeacherFormThirdProps) => void
-  validationMessage?: string | null
-  isLoading: boolean
-}
+export type RegistrationTeacherFullProps = RegistrationTeacherFormDataStepOne &
+  RegistrationTeacherFormDataStepTwo & {
+    education: string[]
+    work_experience: string[]
+  }
 
 export interface RegistrationTeacherProps {
   isLoading: boolean
   validationMessage?: string | null
   onSubmit: (data: RegistrationTeacherFullProps) => void
+}
+
+export interface RegistationTeacherFormStepOneProps {
+  submitForm: (props: RegistrationTeacherFormDataStepOne) => void
+  disable: boolean
+  closeDisable: () => void
+}
+export interface RegistationTeacherFormStepTwoProps {
+  submitForm: (props: RegistrationTeacherFormDataStepTwo) => void
+  disable: boolean
+  closeDisable: () => void
+}
+export interface RegistationTeacherFormStepThreeProps {
+  submitForm: (props: RegistrationTeacherFormDataStepThree) => void
+  validationMessage?: string | null
+  isLoading: boolean
 }
 
 export type TextFieldStepFirstType = 'fullname' | 'login' | 'email' | 'password' | 'confirm_password' | 'phone'

@@ -5,3 +5,10 @@ export interface Error {
     stack?: string
   }
 }
+
+export interface LocationProps {
+  country: string
+  state: string
+  city: string
+  address: string
+}

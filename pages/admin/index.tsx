@@ -21,17 +21,26 @@ import { parseCookies } from 'nookies'
 import { RoleType } from 'types/common'
 
 import { useSignOut } from 'hooks/useSignOut'
-import { UserAccountInfo, UserInfoStoreProps } from 'interfaces/user.interface'
+import { UserAccountFormInnerProps, UserAccountInfo } from 'interfaces/user.interface'
 
-import studentSerivce from 'services/student.serivce'
+import studentSerivce from 'services/student.service'
+import teacherSerivce from 'services/teacher.service'
 
 import { useNotfiicaton } from 'hooks/useNotification'
+
+const defaultState: UserAccountFormInnerProps = {
+  login: '',
+  email: '',
+  fullname: '',
+  password: '',
+  phone: '',
+}
 
 function Account() {
   const authState = useSelector(selectAuthState)
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const { signOut } = useSignOut()
-  const [formState, setFormState] = useState<UserInfoStoreProps>(authState)
+  const [formState, setFormState] = useState<UserAccountFormInnerProps>(authState || defaultState)
   const { isShowAlert, alertColor, message, setStatusResponse } = useNotfiicaton({})
 
   function onHandleRemoveAccount() {
@@ -53,13 +62,29 @@ function Account() {
 
   async function onHandleSubmit(props: UserAccountInfo) {
     if (!authState) return
-    const response = await studentSerivce.updateUserAccount({
+    const data = {
       ...props,
       _id: authState?._id,
       role: authState.role,
-    })
+    }
+    let response = null
+    if (authState.role === 'student') {
+      response = await studentSerivce.updateUserAccount(data)
+    }
+    if (authState.role === 'teacher') {
+      response = await teacherSerivce.updateUserAccount(data)
+    }
+
     setStatusResponse(response?.status)
-    setFormState(response?.data || null)
+    if (!response?.data) return
+
+    setFormState({
+      email: response?.data.email,
+      fullname: response?.data.fullname,
+      phone: response?.data.phone,
+      password: response?.data.password,
+      login: response.data.login,
+    })
   }
 
   return (

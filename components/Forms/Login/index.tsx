@@ -12,18 +12,18 @@ import LinearProgress from '@mui/material/LinearProgress'
 
 import { FormLoginProps } from './Login.type'
 
-import { UserLoginProps } from 'interfaces/user.interface'
+import { LoginProps } from 'interfaces/user.interface'
 import { LoginFormSchema } from 'utils/schemas/authentication'
 
 import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
 
-function FormLogin({ onSuccess, isLoading, validationMessage }: FormLoginProps) {
+function FormLogin({ onSubmit, isLoading, validationMessage }: FormLoginProps) {
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<UserLoginProps>({
+  } = useForm<LoginProps>({
     mode: 'onSubmit',
     resolver: yupResolver(LoginFormSchema),
     defaultValues: {
@@ -35,7 +35,7 @@ function FormLogin({ onSuccess, isLoading, validationMessage }: FormLoginProps) 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
   return (
-    <form name="form-login" onSubmit={handleSubmit(onSuccess)} className="form form-login">
+    <form name="form-login" onSubmit={handleSubmit(onSubmit)} className="form form-login">
       <Box marginBottom={2}>
         <TextField
           {...register('email')}

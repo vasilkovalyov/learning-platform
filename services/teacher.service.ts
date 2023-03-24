@@ -1,8 +1,9 @@
 import { ITeacherPrivateData } from 'interfaces/teacher.interface'
-import { UserAuthProps } from 'interfaces/user.interface'
 import $api from 'common/ajax-config'
 import { PRIVATE_REQUESTS } from 'constants/api-requests'
 import getCookie from 'common/getCookie'
+import { AxiosResponse } from 'axios'
+import { UserAccountPublicUpdateProps, UserAccountProps } from 'interfaces/user.interface'
 
 class TeacherService {
   async loadPrivateData(userId: string) {
@@ -29,7 +30,7 @@ class TeacherService {
     }
   }
 
-  async saveAccountData(props: Omit<UserAuthProps, 'role'>) {
+  async saveAccountData(props: any) {
     try {
       const token = getCookie('token')
       const { email, fullname, login, phone, _id } = props
@@ -43,6 +44,18 @@ class TeacherService {
         },
       })
       return response.data
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  async updateUserAccount(props: UserAccountPublicUpdateProps): Promise<AxiosResponse<UserAccountProps> | undefined> {
+    try {
+      const token = getCookie('token')
+      const response = await $api(token).post(`${PRIVATE_REQUESTS.TEACHER_ACCOUNT_UPDATE}`, {
+        params: props,
+      })
+      return response
     } catch (e) {
       console.log(e)
     }

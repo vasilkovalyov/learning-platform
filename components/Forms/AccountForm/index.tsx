@@ -10,20 +10,20 @@ import Button from '@mui/material/Button'
 import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
 
-import { UserAccountInfo, UserInfoProps, UserInfoStoreProps } from 'interfaces/user.interface'
+import { UserAccountInfo, UserAccountFormInnerProps } from 'interfaces/user.interface'
 
 import { AccountFormProps } from './AccountForm.type'
 
 function AccountForm({ onHandleRemoveAccount, onHandleSubmit, initialData }: AccountFormProps) {
   const [showPassword, setShowPassword] = useState<boolean>(false)
-  const [formData, setFormData] = useState<UserInfoProps | undefined>(initialData)
+  const [formData, setFormData] = useState<UserAccountFormInnerProps>(initialData)
   const [isDisableButtonSubmit, setIsDisableButtonSubmit] = useState<boolean>(true)
   const {
     handleSubmit,
     register,
     setValue,
     formState: { errors },
-  } = useForm<UserInfoStoreProps>({
+  } = useForm<UserAccountFormInnerProps>({
     mode: 'onSubmit',
     defaultValues: initialData,
   })
@@ -31,7 +31,7 @@ function AccountForm({ onHandleRemoveAccount, onHandleSubmit, initialData }: Acc
   function onChange(field: string, value: string) {
     if (!formData) return
 
-    const formDataObject: UserInfoProps = {
+    const formDataObject: UserAccountFormInnerProps = {
       ...formData,
       [field]: value,
     }

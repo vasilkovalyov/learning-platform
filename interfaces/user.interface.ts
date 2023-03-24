@@ -1,33 +1,21 @@
 import { RoleType } from 'types/common'
 
-export interface UserLoginProps {
+export interface LoginProps {
   email: string
   password: string
 }
 
-export interface UserLocationProps {
-  country: string
-  state: string
-  city: string
-  address: string
-}
-
-export interface UserInfoProps extends UserLoginProps {
+export interface UserAccountProps {
+  _id: string
+  email: string
   fullname: string
   login: string
   phone: string
-}
-
-export type UserAccountInfo = Pick<UserInfoProps, 'email' | 'fullname' | 'phone'>
-
-export interface UserInfoStoreProps extends UserInfoProps {
-  _id: string
+  password: string
   role: RoleType
 }
 
-export type UserInfoAccountResponse = Omit<UserInfoStoreProps, 'password'>
-
-export interface UserAuthProps extends Omit<UserInfoProps, 'password'> {
-  _id: string
-  role: RoleType
-}
+export type UserAccountFormInnerProps = Omit<UserAccountProps, '_id' | 'role'>
+export type UserAccountFormOuterProps = Omit<UserAccountProps, '_id' | 'login' | 'password'>
+export type UserAccountPublicUpdateProps = Omit<UserAccountProps, 'password' | 'login'>
+export type UserAccountInfo = Pick<UserAccountProps, 'email' | 'fullname' | 'phone'>

@@ -1,6 +1,6 @@
-import { UserLocationProps } from 'interfaces/user.interface'
+import { LocationProps } from 'interfaces/common.interface'
 
-export interface StudentPrivateFormProps extends UserLocationProps {
+export interface StudentPrivateFormProps extends LocationProps {
   about: string
   subjects_learning:
     | {

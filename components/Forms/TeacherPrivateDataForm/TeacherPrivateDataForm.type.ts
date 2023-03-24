@@ -1,8 +1,8 @@
-import { UserLocationProps } from 'interfaces/user.interface'
+import { LocationProps } from 'interfaces/common.interface'
 import { WorkExperienceProps } from 'components/Forms/WorkExperienceForm/WorkExperienceForm.type'
 import { EducationProps } from 'components/Forms/EducationForm/EducationForm.type'
 
-export interface TeacherPrivateFormProps extends Omit<UserLocationProps, 'address'> {
+export interface TeacherPrivateFormProps extends Omit<LocationProps, 'address'> {
   about: string
   lessons_prices:
     | {

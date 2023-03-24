@@ -20,8 +20,6 @@ import ShadowContainer from 'components/ShadowContainer'
 import FilterLessons from 'components/FilterLessons'
 import { FilterLessonsProps } from 'components/FilterLessons/FilterLessons.type'
 
-import data from './teachers.data'
-
 const Teachers: NextPage = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false)
 
@@ -71,13 +69,13 @@ const Teachers: NextPage = () => {
             </aside>
             <div className="page-teacher__content">
               <div className="page-teacher__content-grid">
-                {data.map((teacherItem: TeacherCardProps) => (
+                {/* {[].map((teacherItem: TeacherCardProps) => (
                   <div key={teacherItem.id} className="page-teacher__content-grid-col">
                     <ShadowContainer>
                       <TeacherCard {...teacherItem} onClickTrialLesson={onClickTrialLesson} />
                     </ShadowContainer>
                   </div>
-                ))}
+                ))} */}
               </div>
             </div>
           </Box>
