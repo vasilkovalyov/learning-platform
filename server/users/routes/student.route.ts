@@ -11,6 +11,9 @@ router.post('/auth/student/signup', StudentController.signUp)
 router.get('/student/:id', authUserMiddleware, StudentController.getUserById)
 
 // remove account
-router.delete('/student/delete', StudentController.removeUser)
+router.delete('/student/delete', authUserMiddleware, StudentController.removeUser)
+
+// update account info student
+router.post('/student/account/update', authUserMiddleware, StudentController.updateUserAccount)
 
 export default router

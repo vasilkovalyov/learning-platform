@@ -1,4 +1,4 @@
-import { IAuthUserResponse } from '../../interfaces/auth-user.interface'
+import { IAuthUserResponse, ISignUpUserResponse } from '../../interfaces/auth-user.interface'
 import { ITeacherSignUp } from '../interfaces/teacher.interface'
 import { ITeacherPrivateData, ITeacherAccount, ITeacherExtended } from '../interfaces/teacher.interface'
 import { signUpTeacherValidation } from '../validation/teacher.validation'
@@ -13,9 +13,13 @@ import {
   TeacherLessonsModel,
 } from '../models/teacher'
 
+import { UserRoleType } from '../../types/common'
+
 class TeacherService {
-  async signUp(params: ITeacherSignUp): Promise<IAuthUserResponse<ITeacherSignUp>> {
+  async signUp(params: ITeacherSignUp): Promise<ISignUpUserResponse> {
+    const role: UserRoleType = 'teacher'
     const { error } = signUpTeacherValidation(params)
+
     if (error) throw ApiError.BadRequest(error.details[0].message)
 
     const {
@@ -23,7 +27,6 @@ class TeacherService {
       login,
       email,
       confirm_password,
-      role,
       address,
       city,
       state,
@@ -46,7 +49,7 @@ class TeacherService {
       role,
     })
 
-    const savedUser = await teacherBaseInfoModel.save()
+    const savedUser: typeof teacherBaseInfoModel = await teacherBaseInfoModel.save()
 
     const teacherPrivateDataModel = new TeacherPrivateDataModel({
       teacher: savedUser._id,
@@ -71,12 +74,17 @@ class TeacherService {
 
     return {
       message: `You have been registered`,
-      user: null,
+      user: {
+        _id: savedUser._id.toString(),
+        email: savedUser.email || '',
+      },
     }
   }
 
   async getUserByEmail(email: string): Promise<ITeacherExtended | null> {
-    return await TeacherBaseInfoModel.findOne({ email: email })
+    const data: ITeacherExtended | null = await TeacherBaseInfoModel.findOne({ email: email })
+    if (!data) throw ApiError.BadRequest(`Teacher doesn't find by email ${email}!`)
+    return data
   }
 
   async getUserById(id: string): Promise<ITeacherAccount | null> {
@@ -119,7 +127,7 @@ class TeacherService {
         local_time: params.private_data?.local_time,
         about_info: params.private_data?.about_info,
       },
-      { useFindAndModify: true },
+      { new: true },
     )
     const lessonsData = await TeacherLessonsModel.findOneAndUpdate(
       { teacher: params._id },
@@ -130,7 +138,7 @@ class TeacherService {
         lesson_20: params.lessons?.lesson_20,
         lesson_duration: params.lessons?.lesson_duration,
       },
-      { useFindAndModify: false },
+      { new: true },
     )
     const servicesData = await TeacherServicesModel.findOneAndUpdate(
       { teacher: params._id },
@@ -144,7 +152,7 @@ class TeacherService {
         lesson_content: params.services?.lesson_content,
         tests: params.services?.tests,
       },
-      { useFindAndModify: false },
+      { new: true },
     )
 
     return {
@@ -163,7 +171,7 @@ class TeacherService {
         {
           email: params.email,
         },
-        { useFindAndModify: true },
+        { new: true },
       )
     }
     const authData = await TeacherBaseInfoModel.findOneAndUpdate(
@@ -175,7 +183,7 @@ class TeacherService {
         phone: params.phone,
         role: params.role,
       },
-      { useFindAndModify: true },
+      { new: true },
     )
     return {
       data: {

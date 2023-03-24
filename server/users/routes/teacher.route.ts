@@ -14,6 +14,6 @@ router.post('/teacher/private-data', authUserMiddleware, TeacherController.updat
 router.post('/teacher/auth-data', authUserMiddleware, TeacherController.updateUserAuthData)
 
 // remove account
-router.delete('/teacher/delete', TeacherController.removeUser)
+router.delete('/teacher/delete', authUserMiddleware, TeacherController.removeUser)
 
 export default router

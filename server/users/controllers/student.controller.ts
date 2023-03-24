@@ -23,14 +23,20 @@ class StudentController {
     }
   }
 
+  async updateUserAccount(req, res) {
+    try {
+      const userData = await StudentService.updateUserAccount(req.body)
+      res.json(userData)
+    } catch (e: any) {
+      console.error(e)
+      res.status(e.status).json(e)
+    }
+  }
+
   async removeUser(req, res) {
     try {
-      await StudentService.removeUser(req.query.id || req.body.id)
-      res
-        .json({
-          message: 'Student has been removed success',
-        })
-        .status(200)
+      const response = await StudentService.removeUser(req.query.id || req.body.id)
+      res.json(response).status(200)
     } catch (e) {
       res.status(e.status).json(e)
     }

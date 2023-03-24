@@ -24,7 +24,7 @@ class UserService {
     token: string,
   ): Promise<AxiosResponse<RemovedUserResponse> | undefined> {
     try {
-      const response: AxiosResponse<RemovedUserResponse> = await $api().delete(`/${role}/delete`, {
+      const response: AxiosResponse<RemovedUserResponse> = await $api(token).delete(`/${role}/delete`, {
         headers: { Authorization: `${token}` },
         params: {
           id: userId,
