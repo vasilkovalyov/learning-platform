@@ -7,6 +7,7 @@ import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
+import Alert from '@mui/material/Alert'
 import Typography from '@mui/material/Typography'
 
 import PrivateLayoutPage from 'pages/privateLayoutPage'
@@ -20,11 +21,18 @@ import { parseCookies } from 'nookies'
 import { RoleType } from 'types/common'
 
 import { useSignOut } from 'hooks/useSignOut'
+import { UserAccountInfo, UserInfoStoreProps } from 'interfaces/user.interface'
+
+import studentSerivce from 'services/student.serivce'
+
+import { useNotfiicaton } from 'hooks/useNotification'
 
 function Account() {
   const authState = useSelector(selectAuthState)
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const { signOut } = useSignOut()
+  const [formState, setFormState] = useState<UserInfoStoreProps>(authState)
+  const { isShowAlert, alertColor, message, setStatusResponse } = useNotfiicaton({})
 
   function onHandleRemoveAccount() {
     setModalOpen(true)
@@ -43,15 +51,36 @@ function Account() {
     }
   }
 
+  async function onHandleSubmit(props: UserAccountInfo) {
+    if (!authState) return
+    const response = await studentSerivce.updateUserAccount({
+      ...props,
+      _id: authState?._id,
+      role: authState.role,
+    })
+    setStatusResponse(response?.status)
+    setFormState(response?.data || null)
+  }
+
   return (
     <div>
+      {isShowAlert ? (
+        <Alert variant="outlined" severity={alertColor}>
+          {authState?.role} updated {message}
+        </Alert>
+      ) : null}
       <Box marginBottom={3}>
         <Typography variant="h5" className="MuiTypography">
           Account
         </Typography>
       </Box>
       {authState && (
-        <AccountForm onHandleRemoveAccount={onHandleRemoveAccount} initialData={authState} role={authState.role} />
+        <AccountForm
+          onHandleRemoveAccount={onHandleRemoveAccount}
+          onHandleSubmit={onHandleSubmit}
+          initialData={formState}
+          role={authState.role}
+        />
       )}
       <Modal open={modalOpen} onClose={handleCloseModal}>
         <>

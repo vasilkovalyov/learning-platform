@@ -18,10 +18,14 @@ export interface UserInfoProps extends UserLoginProps {
   phone: string
 }
 
+export type UserAccountInfo = Pick<UserInfoProps, 'email' | 'fullname' | 'phone'>
+
 export interface UserInfoStoreProps extends UserInfoProps {
   _id: string
   role: RoleType
 }
+
+export type UserInfoAccountResponse = Omit<UserInfoStoreProps, 'password'>
 
 export interface UserAuthProps extends Omit<UserInfoProps, 'password'> {
   _id: string

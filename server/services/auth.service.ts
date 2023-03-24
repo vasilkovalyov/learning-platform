@@ -30,7 +30,6 @@ class AuthService {
     this.validateUserSignIn(params)
 
     const { email, password } = params
-
     const findedRole = await RoleModel.findOne({ email: email })
     if (findedRole === null) throw ApiError.BadRequest(`User with email - ${email} not exist!`)
 

@@ -1,10 +1,9 @@
 import { RoleType } from 'types/common'
-import { UserLoginProps, UserInfoProps } from 'interfaces/user.interface'
-
-// export type AccountProps = UserLoginProps & UserInfoProps
+import { UserInfoProps, UserAccountInfo } from 'interfaces/user.interface'
 
 export interface AccountFormProps {
   role: RoleType
   initialData?: UserInfoProps
+  onHandleSubmit: (props: UserAccountInfo) => void
   onHandleRemoveAccount: () => void
 }

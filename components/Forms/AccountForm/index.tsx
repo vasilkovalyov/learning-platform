@@ -10,13 +10,14 @@ import Button from '@mui/material/Button'
 import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
 
-import { UserInfoStoreProps } from 'interfaces/user.interface'
+import { UserAccountInfo, UserInfoProps, UserInfoStoreProps } from 'interfaces/user.interface'
 
 import { AccountFormProps } from './AccountForm.type'
-import studentSerivce from 'services/student.serivce'
 
-function AccountForm({ onHandleRemoveAccount, initialData }: AccountFormProps) {
+function AccountForm({ onHandleRemoveAccount, onHandleSubmit, initialData }: AccountFormProps) {
   const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [formData, setFormData] = useState<UserInfoProps | undefined>(initialData)
+  const [isDisableButtonSubmit, setIsDisableButtonSubmit] = useState<boolean>(true)
   const {
     handleSubmit,
     register,
@@ -27,8 +28,26 @@ function AccountForm({ onHandleRemoveAccount, initialData }: AccountFormProps) {
     defaultValues: initialData,
   })
 
-  function onSubmit(data: UserInfoStoreProps) {
-    studentSerivce.updateUserAccount(data)
+  function onChange(field: string, value: string) {
+    if (!formData) return
+
+    const formDataObject: UserInfoProps = {
+      ...formData,
+      [field]: value,
+    }
+
+    setFormData(formDataObject)
+
+    if (JSON.stringify(initialData) !== JSON.stringify(formDataObject)) {
+      setIsDisableButtonSubmit(false)
+    } else {
+      setIsDisableButtonSubmit(true)
+    }
+  }
+
+  function onSubmit(data: UserAccountInfo) {
+    onHandleSubmit(data)
+    setIsDisableButtonSubmit(true)
   }
 
   return (
@@ -43,6 +62,7 @@ function AccountForm({ onHandleRemoveAccount, initialData }: AccountFormProps) {
           variant="standard"
           className="form-field"
           fullWidth
+          onChange={(e) => onChange('fullname', e.currentTarget.value)}
           InputLabelProps={{ shrink: true }}
           error={!!errors['fullname']?.message}
           helperText={errors['fullname']?.message}
@@ -58,6 +78,8 @@ function AccountForm({ onHandleRemoveAccount, initialData }: AccountFormProps) {
           variant="standard"
           className="form-field"
           fullWidth
+          onChange={(e) => onChange('login', e.currentTarget.value)}
+          disabled
           InputLabelProps={{ shrink: true }}
           error={!!errors['login']?.message}
           helperText={errors['login']?.message}
@@ -76,6 +98,7 @@ function AccountForm({ onHandleRemoveAccount, initialData }: AccountFormProps) {
           variant="standard"
           className="form-field"
           fullWidth
+          onChange={(e) => onChange('email', e.currentTarget.value)}
           InputLabelProps={{ shrink: true }}
           error={!!errors['email']?.message}
           helperText={errors['email']?.message}
@@ -121,13 +144,14 @@ function AccountForm({ onHandleRemoveAccount, initialData }: AccountFormProps) {
           variant="standard"
           className="form-field"
           fullWidth
+          onChange={(e) => onChange('phone', e.currentTarget.value)}
           InputLabelProps={{ shrink: true }}
           error={!!errors['phone']?.message}
           helperText={errors['phone']?.message}
         />
       </Box>
       <Box marginTop={3}></Box>
-      <Button type="submit" variant="contained">
+      <Button type="submit" variant="contained" disabled={isDisableButtonSubmit}>
         Save
       </Button>
     </form>

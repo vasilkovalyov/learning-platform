@@ -25,7 +25,7 @@ class StudentController {
 
   async updateUserAccount(req, res) {
     try {
-      const userData = await StudentService.updateUserAccount(req.body)
+      const userData = await StudentService.updateUserAccount(req.body.params || req.body)
       res.json(userData)
     } catch (e: any) {
       console.error(e)
