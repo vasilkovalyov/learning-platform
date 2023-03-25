@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import Button from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress'
 
 import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
@@ -14,10 +15,10 @@ import { UserAccountInfo, UserAccountFormInnerProps } from 'interfaces/user.inte
 
 import { AccountFormProps } from './AccountForm.type'
 
-function AccountForm({ onHandleRemoveAccount, onHandleSubmit, initialData }: AccountFormProps) {
+function AccountForm({ onHandleRemoveAccount, onHandleSubmit, initialData, isLoading = false }: AccountFormProps) {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [formData, setFormData] = useState<UserAccountFormInnerProps>(initialData)
-  const [isDisableButtonSubmit, setIsDisableButtonSubmit] = useState<boolean>(true)
+
   const {
     handleSubmit,
     register,
@@ -37,17 +38,10 @@ function AccountForm({ onHandleRemoveAccount, onHandleSubmit, initialData }: Acc
     }
 
     setFormData(formDataObject)
-
-    if (JSON.stringify(initialData) !== JSON.stringify(formDataObject)) {
-      setIsDisableButtonSubmit(false)
-    } else {
-      setIsDisableButtonSubmit(true)
-    }
   }
 
   function onSubmit(data: UserAccountInfo) {
     onHandleSubmit(data)
-    setIsDisableButtonSubmit(true)
   }
 
   return (
@@ -151,9 +145,12 @@ function AccountForm({ onHandleRemoveAccount, onHandleSubmit, initialData }: Acc
         />
       </Box>
       <Box marginTop={3}></Box>
-      <Button type="submit" variant="contained" disabled={isDisableButtonSubmit}>
-        Save
-      </Button>
+      <Box display="flex" alignItems="center">
+        <Button type="submit" variant="contained" disabled={isLoading}>
+          Save
+        </Button>
+        <Box ml={2}>{isLoading ? <CircularProgress size={16} /> : null}</Box>
+      </Box>
     </form>
   )
 }

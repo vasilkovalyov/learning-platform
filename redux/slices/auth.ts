@@ -20,6 +20,12 @@ export const authSlice = createSlice({
     setAuthState(state, action: PayloadAction<UserAccountProps>) {
       state.data = action.payload
     },
+    setUpdateAccountUser(state, action: PayloadAction<Partial<UserAccountProps>>) {
+      state.data = {
+        ...state.data,
+        ...action.payload,
+      } as UserAccountProps
+    },
     clearAuthState(state) {
       state.data = null
     },
@@ -34,7 +40,7 @@ export const authSlice = createSlice({
   },
 })
 
-export const { setAuthState, clearAuthState } = authSlice.actions
+export const { setAuthState, clearAuthState, setUpdateAccountUser } = authSlice.actions
 
 export const selectAuthState = (state: AppState): UserAccountProps | null => state.user.data
 

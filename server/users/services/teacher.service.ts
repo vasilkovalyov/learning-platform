@@ -93,7 +93,7 @@ class TeacherService {
     return {
       _id: data._id,
       email: data.email,
-      fullname: data.email,
+      fullname: data.fullname,
       login: data.login,
       role: data.role,
       phone: data.phone,

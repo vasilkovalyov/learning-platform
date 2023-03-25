@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios'
 import $api from 'common/ajax-config'
 import { RoleType } from 'types/common'
+import { parseCookies } from 'nookies'
 
 interface RemovedUserResponse {
   message: string
@@ -18,11 +19,9 @@ class UserService {
     }
   }
 
-  async removeUser(
-    role: RoleType,
-    userId: string,
-    token: string,
-  ): Promise<AxiosResponse<RemovedUserResponse> | undefined> {
+  async removeUser(): Promise<AxiosResponse<RemovedUserResponse> | undefined> {
+    const { token, userId, role } = parseCookies()
+
     try {
       const response: AxiosResponse<RemovedUserResponse> = await $api(token).delete(`/${role}/delete`, {
         headers: { Authorization: `${token}` },

@@ -1,19 +1,20 @@
 import React, { useState } from 'react'
 
 import { useSelector } from 'react-redux'
-import { selectAuthState } from 'redux/slices/auth'
+import { selectAuthState, setUpdateAccountUser } from 'redux/slices/auth'
+import { wrapper } from 'redux/store'
 
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
-import Alert from '@mui/material/Alert'
 import Typography from '@mui/material/Typography'
 
 import PrivateLayoutPage from 'pages/privateLayoutPage'
-import ModalPopupBox from '../../components/ModalPopupBox'
+import ModalPopupBox from 'components/ModalPopupBox'
+import Notification from 'components/Notification'
 
-import AccountForm from '../../components/Forms/AccountForm'
+import AccountForm from 'components/Forms/AccountForm'
 
 import userService from 'services/user.service'
 
@@ -26,8 +27,6 @@ import { UserAccountFormInnerProps, UserAccountInfo } from 'interfaces/user.inte
 import studentSerivce from 'services/student.service'
 import teacherSerivce from 'services/teacher.service'
 
-import { useNotfiicaton } from 'hooks/useNotification'
-
 const defaultState: UserAccountFormInnerProps = {
   login: '',
   email: '',
@@ -37,11 +36,15 @@ const defaultState: UserAccountFormInnerProps = {
 }
 
 function Account() {
+  const { store } = wrapper.useWrappedStore({})
+  const { signOut } = useSignOut()
+
   const authState = useSelector(selectAuthState)
   const [modalOpen, setModalOpen] = useState<boolean>(false)
-  const { signOut } = useSignOut()
   const [formState, setFormState] = useState<UserAccountFormInnerProps>(authState || defaultState)
-  const { isShowAlert, alertColor, message, setStatusResponse } = useNotfiicaton({})
+
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [showNotificaton, setShowNotificaton] = useState<boolean>(false)
 
   function onHandleRemoveAccount() {
     setModalOpen(true)
@@ -52,31 +55,42 @@ function Account() {
   }
 
   async function handleRemoveAccount() {
-    if (!authState) return
-    const { token, userId, role } = parseCookies()
-    const response = await userService.removeUser(role as RoleType, userId, token)
-    if (response?.status === 200) {
-      signOut()
-    }
+    const response = await userService.removeUser()
+    if (response?.status === 200) signOut()
   }
 
   async function onHandleSubmit(props: UserAccountInfo) {
+    setIsLoading(true)
+
     if (!authState) return
+
     const data = {
       ...props,
       _id: authState?._id,
       role: authState.role,
     }
+
     let response = null
     if (authState.role === 'student') {
       response = await studentSerivce.updateUserAccount(data)
     }
+
     if (authState.role === 'teacher') {
       response = await teacherSerivce.updateUserAccount(data)
     }
 
-    setStatusResponse(response?.status)
     if (!response?.data) return
+
+    store.dispatch(
+      setUpdateAccountUser({
+        fullname: response.data.fullname,
+        email: response.data.email,
+        phone: response.data.phone,
+      }),
+    )
+
+    setIsLoading(false)
+    setShowNotificaton(true)
 
     setFormState({
       email: response?.data.email,
@@ -89,11 +103,6 @@ function Account() {
 
   return (
     <div>
-      {isShowAlert ? (
-        <Alert variant="outlined" severity={alertColor}>
-          {authState?.role} updated {message}
-        </Alert>
-      ) : null}
       <Box marginBottom={3}>
         <Typography variant="h5" className="MuiTypography">
           Account
@@ -101,12 +110,20 @@ function Account() {
       </Box>
       {authState && (
         <AccountForm
+          isLoading={isLoading}
           onHandleRemoveAccount={onHandleRemoveAccount}
           onHandleSubmit={onHandleSubmit}
           initialData={formState}
           role={authState.role}
         />
       )}
+      <Notification
+        open={showNotificaton}
+        setClose={() => setShowNotificaton(false)}
+        direction={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        {authState?.role} updated successfully
+      </Notification>
       <Modal open={modalOpen} onClose={handleCloseModal}>
         <>
           <ModalPopupBox type="full" onHandleClose={handleCloseModal}>

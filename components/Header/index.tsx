@@ -5,10 +5,8 @@ import Image from 'next/image'
 import logoImage from '../../public/images/logo.png'
 
 import Container from '@mui/material/Container'
-// import Grid from '@mui/material/Grid'
 import Stack from '@mui/material/Stack'
 import Divider from '@mui/material/Divider'
-// import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 
 import Icon from 'components/Generic/Icon'

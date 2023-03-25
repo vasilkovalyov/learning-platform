@@ -8,13 +8,13 @@ export function useSignOut() {
   const router = useRouter()
 
   function signOut() {
-    router.push('/')
+    router.push('/').then(() => {
+      destroyCookie(null, 'role')
+      destroyCookie(null, 'userId')
+      destroyCookie(null, 'token')
 
-    dispatch(clearAuthState())
-
-    destroyCookie(null, 'role')
-    destroyCookie(null, 'userId')
-    destroyCookie(null, 'token')
+      dispatch(clearAuthState())
+    })
   }
 
   return {
