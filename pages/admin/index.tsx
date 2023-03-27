@@ -9,6 +9,7 @@ import Modal from '@mui/material/Modal'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
+import CircularProgress from '@mui/material/CircularProgress'
 
 import PrivateLayoutPage from 'pages/privateLayoutPage'
 import ModalPopupBox from 'components/ModalPopupBox'
@@ -33,6 +34,7 @@ function Account() {
   const [formState, setFormState] = useState<UserAccountFormInnerProps>(authState.user)
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoadingRemove, setIsLoadingRemove] = useState<boolean>(false)
   const [showNotificaton, setShowNotificaton] = useState<boolean>(false)
 
   function onHandleRemoveAccount() {
@@ -44,21 +46,21 @@ function Account() {
   }
 
   async function handleRemoveAccount() {
-    const response = await userService.removeUser()
-    if (response?.status === 200) signOut()
+    try {
+      setIsLoadingRemove(true)
+      const response = await userService.removeUser()
+      setIsLoadingRemove(false)
+      if (response?.status === 200) signOut()
+    } catch (e) {
+      console.log(e)
+      setIsLoadingRemove(false)
+    }
   }
 
   async function onHandleSubmit(props: UserEdtableAccountInfo) {
     setIsLoading(true)
 
     if (!authState) return
-
-    // const userAccountData: UserAccountFormInnerProps = {
-    //   email: props.email,
-    //   fullname: props.fullname,
-    //   login: '',
-    //   phone: props.phone,
-    // }
 
     const data: UserReadableAccountInfo = {
       ...props,
@@ -130,6 +132,7 @@ function Account() {
                 </Button>
                 <Button variant="outlined" onClick={handleRemoveAccount}>
                   accept
+                  {isLoadingRemove ? <CircularProgress size={16} /> : null}
                 </Button>
               </Stack>
             </Box>

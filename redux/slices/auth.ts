@@ -44,7 +44,10 @@ export const authSlice = createSlice({
       } as UserAccountProps
     },
     clearAuthState(state) {
-      state.user = defaultAuthState
+      state.user = {
+        ...state.user,
+        ...defaultAuthState,
+      }
       state.isAuth = false
     },
   },

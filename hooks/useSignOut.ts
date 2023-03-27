@@ -9,11 +9,11 @@ export function useSignOut() {
 
   function signOut() {
     router.push('/').then(() => {
+      dispatch(clearAuthState())
+
       destroyCookie(null, 'role')
       destroyCookie(null, 'userId')
       destroyCookie(null, 'token')
-
-      dispatch(clearAuthState())
     })
   }
 

@@ -9,8 +9,6 @@ import { parseCookies } from 'nookies'
 import UserService from 'services/user.service'
 import { RoleType } from 'types/common'
 
-import { NextResponse, NextRequest } from 'next/server'
-
 import '../styles/scss/main.scss'
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
@@ -41,9 +39,14 @@ App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ ctx, Compon
     }
   }
 
-  const user = await UserService.isAuthUser(role as RoleType, userId, token)
-  if (user?.status === 200) {
-    store.dispatch(setAuthState(user.data))
+  try {
+    const response = await UserService.isAuthUser(role as RoleType, userId, token)
+
+    if (response.status === 200 && response.data?._id) {
+      store.dispatch(setAuthState(response.data))
+    }
+  } catch (e) {
+    console.log(e)
   }
 
   return {
