@@ -10,10 +10,8 @@ interface RemovedUserResponse {
 class UserService {
   async isAuthUser(role: RoleType, userId: string, token: string) {
     try {
-      const response = await $api().get(`/${role}/${userId}`, {
-        headers: { Authorization: `${token}` },
-      })
-      return response.data
+      const response = await $api(token).get(`/${role}/account/${userId}`)
+      return response
     } catch (e) {
       console.log(e)
     }

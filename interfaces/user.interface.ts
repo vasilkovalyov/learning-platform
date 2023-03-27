@@ -15,7 +15,8 @@ export interface UserAccountProps {
   role: RoleType
 }
 
-export type UserAccountFormInnerProps = Omit<UserAccountProps, '_id' | 'role'>
+export type UserAccountFormInnerProps = Omit<UserAccountProps, '_id' | 'role' | 'password'>
 export type UserAccountFormOuterProps = Omit<UserAccountProps, '_id' | 'login' | 'password'>
-export type UserAccountPublicUpdateProps = Omit<UserAccountProps, 'password' | 'login'>
-export type UserAccountInfo = Pick<UserAccountProps, 'email' | 'fullname' | 'phone'>
+
+export type UserReadableAccountInfo = Omit<UserAccountProps, 'password' | 'login'>
+export type UserEdtableAccountInfo = Pick<UserAccountProps, 'fullname' | 'email' | 'phone'>

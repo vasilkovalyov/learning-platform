@@ -125,7 +125,7 @@ function Header() {
           </a>
         </Link>
         <MainNavigation />
-        <>{authState ? <AdminList /> : <AuthList />}</>
+        <>{authState.isAuth ? <AdminList /> : <AuthList />}</>
       </Container>
     </header>
   )

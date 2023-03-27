@@ -1,7 +1,7 @@
 import { LocationProps } from 'interfaces/common.interface'
 
-export interface StudentPrivateFormProps extends LocationProps {
-  about: string
+export interface StudentPrivateFormData extends LocationProps {
+  about_info: string
   subjects_learning:
     | {
         subject: string

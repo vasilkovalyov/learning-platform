@@ -11,7 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
 
-import { UserAccountInfo, UserAccountFormInnerProps } from 'interfaces/user.interface'
+import { UserEdtableAccountInfo, UserAccountFormInnerProps } from 'interfaces/user.interface'
 
 import { AccountFormProps } from './AccountForm.type'
 
@@ -29,6 +29,14 @@ function AccountForm({ onHandleRemoveAccount, onHandleSubmit, initialData, isLoa
     defaultValues: initialData,
   })
 
+  const {
+    handleSubmit: handleSubmitPassword,
+    register: registerPassword,
+    formState: formStatePassword,
+  } = useForm<{ password: string }>({
+    mode: 'onSubmit',
+  })
+
   function onChange(field: string, value: string) {
     if (!formData) return
 
@@ -40,7 +48,7 @@ function AccountForm({ onHandleRemoveAccount, onHandleSubmit, initialData, isLoa
     setFormData(formDataObject)
   }
 
-  function onSubmit(data: UserAccountInfo) {
+  function onSubmit(data: UserEdtableAccountInfo) {
     onHandleSubmit(data)
   }
 
@@ -100,7 +108,7 @@ function AccountForm({ onHandleRemoveAccount, onHandleSubmit, initialData, isLoa
       </Box>
       <Box marginBottom={2} display="flex" flexWrap="wrap" alignItems="flex-end">
         <TextField
-          {...register('password')}
+          {...registerPassword('password')}
           id="password"
           name="password"
           type={showPassword ? 'text' : 'password'}
@@ -116,17 +124,10 @@ function AccountForm({ onHandleRemoveAccount, onHandleSubmit, initialData, isLoa
               </InputAdornment>
             ),
           }}
-          error={!!errors.password?.message}
-          helperText={errors.password?.message}
+          error={!!formStatePassword.errors.password?.message}
+          helperText={formStatePassword.errors.password?.message}
         />
-        <Button
-          className="form-account__additional-button"
-          onClick={() => {
-            setValue('password', '')
-          }}
-        >
-          Change password
-        </Button>
+        <Button className="form-account__additional-button">Change password</Button>
       </Box>
       <Box marginBottom={2}>
         <TextField

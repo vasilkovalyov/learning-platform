@@ -2,32 +2,50 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { AppState } from '../store'
 import { HYDRATE } from 'next-redux-wrapper'
+import { RoleType } from 'types/common'
 
 import { UserAccountProps } from 'interfaces/user.interface'
 
+export type IAuthAccountState = Omit<UserAccountProps, 'password'>
+
 export interface IAuthState {
-  data: UserAccountProps | null
+  user: IAuthAccountState
+  isAuth: boolean
 }
 
-const initialState: IAuthState = {
-  data: null,
+export interface IAuthUserStore {
+  user: IAuthState
+}
+
+const defaultAuthState: IAuthAccountState = {
+  _id: '',
+  email: '',
+  fullname: '',
+  login: '',
+  phone: '',
+  role: '',
 }
 
 export const authSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState: {
+    user: defaultAuthState,
+    isAuth: false,
+  },
   reducers: {
     setAuthState(state, action: PayloadAction<UserAccountProps>) {
-      state.data = action.payload
+      state.user = action.payload
+      state.isAuth = true
     },
     setUpdateAccountUser(state, action: PayloadAction<Partial<UserAccountProps>>) {
-      state.data = {
-        ...state.data,
+      state.user = {
+        ...state.user,
         ...action.payload,
       } as UserAccountProps
     },
     clearAuthState(state) {
-      state.data = null
+      state.user = defaultAuthState
+      state.isAuth = false
     },
   },
   extraReducers: {
@@ -42,6 +60,8 @@ export const authSlice = createSlice({
 
 export const { setAuthState, clearAuthState, setUpdateAccountUser } = authSlice.actions
 
-export const selectAuthState = (state: AppState): UserAccountProps | null => state.user.data
+export const selectAuthState = (state: IAuthUserStore): IAuthState => {
+  return state.user
+}
 
 export default authSlice.reducer

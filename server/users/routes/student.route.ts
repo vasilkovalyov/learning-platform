@@ -8,12 +8,18 @@ const router = express.Router()
 router.post('/auth/student/signup', StudentController.signUp)
 
 // get user by id, for checking is auth user
-router.get('/student/:id', authUserMiddleware, StudentController.getUserById)
+router.get('/student/account/:id', authUserMiddleware, StudentController.getUserById)
 
 // remove account
-router.delete('/student/delete', authUserMiddleware, StudentController.removeUser)
+router.delete('/student/delete/:id', authUserMiddleware, StudentController.removeUser)
 
 // update account info student
 router.post('/student/account/update', authUserMiddleware, StudentController.updateUserAccount)
+
+// update private data info student
+router.post('/student/private-data/update', authUserMiddleware, StudentController.updateUserPrivateData)
+
+// get private data info student
+router.get('/student/private-data/:id', authUserMiddleware, StudentController.getUserPrivateData)
 
 export default router

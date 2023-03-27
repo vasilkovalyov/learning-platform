@@ -41,9 +41,9 @@ App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ ctx, Compon
     }
   }
 
-  const user = await UserService.isAuthUser(role as RoleType, userId, token || '')
-  if (user) {
-    store.dispatch(setAuthState(user))
+  const user = await UserService.isAuthUser(role as RoleType, userId, token)
+  if (user?.status === 200) {
+    store.dispatch(setAuthState(user.data))
   }
 
   return {

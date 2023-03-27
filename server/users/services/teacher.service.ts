@@ -193,11 +193,11 @@ class TeacherService {
   }
 
   async removeUser(id: string) {
-    const data = await TeacherBaseInfoModel.find({ _id: id }).remove()
-    await TeacherPrivateDataModel.find({ _id: id }).remove()
-    await TeacherServicesModel.find({ _id: id }).remove()
-    await TeacherLessonsModel.find({ _id: id }).remove()
-    await RoleModel.find({ _id: id }).remove()
+    const data = await TeacherBaseInfoModel.findOneAndDelete({ _id: id })
+    await TeacherPrivateDataModel.findOneAndDelete({ teacher: id })
+    await TeacherServicesModel.findOneAndDelete({ teacher: id })
+    await TeacherLessonsModel.findOneAndDelete({ teacher: id })
+    await RoleModel.findOneAndDelete({ _id: id })
     if (!data) throw ApiError.BadRequest(`Teacher doesn't find by id ${id}!`)
   }
 

@@ -36,4 +36,4 @@ const model = new Schema({
   },
 })
 
-export const TeacherPrivateDataModel = mongoose.model('TeacherPrivateInfo', model)
+export const TeacherPrivateDataModel = mongoose.model('TeacherPrivateData', model)

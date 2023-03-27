@@ -21,8 +21,8 @@ function PrivateData() {
           Private Data
         </Typography>
       </Box>
-      {authState?.role === 'student' ? <StudentPrivateDataForm /> : null}
-      {authState?.role === 'teacher' ? <TeacherPrivateDataForm /> : null}
+      {authState.user.role === 'student' ? <StudentPrivateDataForm /> : null}
+      {authState.user.role === 'teacher' ? <TeacherPrivateDataForm /> : null}
     </>
   )
 }

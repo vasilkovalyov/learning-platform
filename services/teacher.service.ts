@@ -1,14 +1,14 @@
 import { ITeacherPrivateData } from 'interfaces/teacher.interface'
 import $api from 'common/ajax-config'
 import { PRIVATE_REQUESTS } from 'constants/api-requests'
-import getCookie from 'common/getCookie'
+import { parseCookies } from 'nookies'
 import { AxiosResponse } from 'axios'
-import { UserAccountPublicUpdateProps, UserAccountProps } from 'interfaces/user.interface'
+import { UserReadableAccountInfo, UserAccountProps } from 'interfaces/user.interface'
 
 class TeacherService {
   async loadPrivateData(userId: string) {
     try {
-      const token = getCookie('token')
+      const { token } = parseCookies()
       const response = await $api(token).get(`${PRIVATE_REQUESTS.TEACHER_SAVE_PRIVATE_DATA}/${userId}`)
       return response.data
     } catch (e) {
@@ -18,7 +18,7 @@ class TeacherService {
 
   async savePrivateData(props: ITeacherPrivateData) {
     try {
-      const token = getCookie('token')
+      const { token } = parseCookies()
       const response = await $api(token).post(`${PRIVATE_REQUESTS.TEACHER_SAVE_PRIVATE_DATA}`, {
         params: {
           ...props,
@@ -32,7 +32,7 @@ class TeacherService {
 
   async saveAccountData(props: any) {
     try {
-      const token = getCookie('token')
+      const { token } = parseCookies()
       const { email, fullname, login, phone, _id } = props
       const response = await $api(token).post(`${PRIVATE_REQUESTS.TEACHER_SAVE_AUTH_DATA}`, {
         params: {
@@ -49,9 +49,9 @@ class TeacherService {
     }
   }
 
-  async updateUserAccount(props: UserAccountPublicUpdateProps): Promise<AxiosResponse<UserAccountProps> | undefined> {
+  async updateUserAccount(props: UserReadableAccountInfo): Promise<AxiosResponse<UserAccountProps> | undefined> {
     try {
-      const token = getCookie('token')
+      const { token } = parseCookies()
       const response = await $api(token).post(`${PRIVATE_REQUESTS.TEACHER_ACCOUNT_UPDATE}`, {
         params: props,
       })

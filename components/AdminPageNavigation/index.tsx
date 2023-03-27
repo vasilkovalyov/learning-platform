@@ -16,7 +16,7 @@ interface INavigation {
   name: string
   icon: string
   title: string
-  role: RoleType | string
+  role: RoleType
 }
 
 function AdminPageNavigation({ role = 'student' }: { role: RoleType }) {

@@ -1,1 +1,1 @@
-export type RoleType = 'student' | 'teacher'
+export type RoleType = 'student' | 'teacher' | string

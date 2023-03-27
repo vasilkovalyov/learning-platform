@@ -3,7 +3,7 @@ import AuthService from '../services/auth.service'
 class AuthController {
   async signIn(req, res) {
     try {
-      const userData = await AuthService.signIn(req.query || req.body)
+      const userData = await AuthService.signIn(req.query)
       res.json(userData)
     } catch (e: any) {
       console.error(e)

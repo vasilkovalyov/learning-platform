@@ -49,7 +49,8 @@ class TeacherController {
 
   async removeUser(req, res) {
     try {
-      await TeacherService.removeUser(req.query.id || req.body.id)
+      console.log(req)
+      await TeacherService.removeUser(req.params.id)
       res
         .json({
           message: 'Teacher has been removed success',

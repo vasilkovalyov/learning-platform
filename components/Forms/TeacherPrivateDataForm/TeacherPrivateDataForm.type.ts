@@ -3,7 +3,7 @@ import { WorkExperienceProps } from 'components/Forms/WorkExperienceForm/WorkExp
 import { EducationProps } from 'components/Forms/EducationForm/EducationForm.type'
 
 export interface TeacherPrivateFormProps extends Omit<LocationProps, 'address'> {
-  about: string
+  about_info: string
   lessons_prices:
     | {
         count: string

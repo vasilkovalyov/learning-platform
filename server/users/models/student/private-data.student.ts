@@ -11,11 +11,30 @@ const model = new Schema({
   city: {
     type: String,
   },
-  local_time: {
-    type: Number,
+  address: {
+    type: String,
+  },
+  subjects_learning: {
+    require: false,
+    type: [
+      {
+        subject: {
+          type: String,
+        },
+        level: {
+          type: String,
+        },
+      },
+    ],
   },
   about_info: {
+    require: false,
     type: String,
+  },
+  user: {
+    type: String,
+    required: true,
+    ref: 'Student',
   },
 })
 

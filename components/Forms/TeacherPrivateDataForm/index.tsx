@@ -33,7 +33,7 @@ const initialData: TeacherPrivateFormProps = {
       price: '',
     },
   ],
-  about: '',
+  about_info: '',
   city: '',
   country: '',
   state: '',
@@ -365,9 +365,9 @@ function TeacherPrivateDataForm() {
           <Grid item xs={12} md={6}>
             <Box marginBottom={2}>
               <TextField
-                {...register('about')}
-                id="about"
-                name="about"
+                {...register('about_info')}
+                id="about_info"
+                name="about_info"
                 type="text"
                 label="About"
                 className="form-field"

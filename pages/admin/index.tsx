@@ -18,22 +18,11 @@ import AccountForm from 'components/Forms/AccountForm'
 
 import userService from 'services/user.service'
 
-import { parseCookies } from 'nookies'
-import { RoleType } from 'types/common'
-
 import { useSignOut } from 'hooks/useSignOut'
-import { UserAccountFormInnerProps, UserAccountInfo } from 'interfaces/user.interface'
+import { UserAccountFormInnerProps, UserEdtableAccountInfo, UserReadableAccountInfo } from 'interfaces/user.interface'
 
 import studentSerivce from 'services/student.service'
 import teacherSerivce from 'services/teacher.service'
-
-const defaultState: UserAccountFormInnerProps = {
-  login: '',
-  email: '',
-  fullname: '',
-  password: '',
-  phone: '',
-}
 
 function Account() {
   const { store } = wrapper.useWrappedStore({})
@@ -41,7 +30,7 @@ function Account() {
 
   const authState = useSelector(selectAuthState)
   const [modalOpen, setModalOpen] = useState<boolean>(false)
-  const [formState, setFormState] = useState<UserAccountFormInnerProps>(authState || defaultState)
+  const [formState, setFormState] = useState<UserAccountFormInnerProps>(authState.user)
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [showNotificaton, setShowNotificaton] = useState<boolean>(false)
@@ -59,23 +48,30 @@ function Account() {
     if (response?.status === 200) signOut()
   }
 
-  async function onHandleSubmit(props: UserAccountInfo) {
+  async function onHandleSubmit(props: UserEdtableAccountInfo) {
     setIsLoading(true)
 
     if (!authState) return
 
-    const data = {
+    // const userAccountData: UserAccountFormInnerProps = {
+    //   email: props.email,
+    //   fullname: props.fullname,
+    //   login: '',
+    //   phone: props.phone,
+    // }
+
+    const data: UserReadableAccountInfo = {
       ...props,
-      _id: authState?._id,
-      role: authState.role,
+      _id: authState.user._id,
+      role: authState.user.role,
     }
 
     let response = null
-    if (authState.role === 'student') {
+    if (authState.user.role === 'student') {
       response = await studentSerivce.updateUserAccount(data)
     }
 
-    if (authState.role === 'teacher') {
+    if (authState.user.role === 'teacher') {
       response = await teacherSerivce.updateUserAccount(data)
     }
 
@@ -96,7 +92,6 @@ function Account() {
       email: response?.data.email,
       fullname: response?.data.fullname,
       phone: response?.data.phone,
-      password: response?.data.password,
       login: response.data.login,
     })
   }
@@ -108,21 +103,19 @@ function Account() {
           Account
         </Typography>
       </Box>
-      {authState && (
-        <AccountForm
-          isLoading={isLoading}
-          onHandleRemoveAccount={onHandleRemoveAccount}
-          onHandleSubmit={onHandleSubmit}
-          initialData={formState}
-          role={authState.role}
-        />
-      )}
+      <AccountForm
+        isLoading={isLoading}
+        onHandleRemoveAccount={onHandleRemoveAccount}
+        onHandleSubmit={onHandleSubmit}
+        initialData={formState}
+        role={authState.user.role}
+      />
       <Notification
         open={showNotificaton}
         setClose={() => setShowNotificaton(false)}
         direction={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        {authState?.role} updated successfully
+        {authState.user.role} updated successfully
       </Notification>
       <Modal open={modalOpen} onClose={handleCloseModal}>
         <>

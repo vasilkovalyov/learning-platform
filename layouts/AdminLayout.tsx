@@ -37,14 +37,14 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
           <div className="section-admin">
             <div className="container">
               <Typography marginBottom={3} variant="h2" className="MuiTypography section-admin__heading">
-                Personal Area - {authState?.role}
+                Personal Area - {authState.user.role}
               </Typography>
               <Grid container spacing={4}>
                 <Grid item xs={12} sm={4} md={3}>
                   <Box marginBottom={3}>
-                    <Typography variant="body1">{authState?.fullname}</Typography>
+                    <Typography variant="body1">{authState.user.fullname}</Typography>
                   </Box>
-                  {authState ? <AdminPageNavigation role={authState?.role} /> : null}
+                  <AdminPageNavigation role={authState.user.role} />
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
                   <div className="gutter-row">{children}</div>
