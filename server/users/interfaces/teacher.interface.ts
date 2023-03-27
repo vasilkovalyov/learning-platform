@@ -20,32 +20,23 @@ export type ITeacherSignUp = Omit<ITeacherAccount, '_id'> &
 
 export interface ITeacherPrivateData {
   _id: string
-  private_data: Partial<ITeacherPrivate> | null
-  lessons: Partial<ITeacherLessonsInfo> | null
+  private_data: Partial<ITeacherPrivateInfo> | null
   services: Partial<ITeacherServicesData> | null
 }
 
-export interface ITeacherPrivate {
-  address: string
-  city: string
-  state: string
+export interface ITeacherPrivateInfo {
   country: string
-  education: string[]
-  work_experience: string[]
-  certificates: string[]
-  local_time: number
+  state: string
+  city: string
+  address: string
   about_info: string
-}
-
-export interface ITeacherLessonsInfo {
-  lesson_1: string
-  lesson_5: string
-  lesson_10: string
-  lesson_20: string
-  lesson_duration: number
+  education: ITeacherEducation[]
+  work_experience: ITeacherWorkExperience[]
 }
 
 export interface ITeacherServicesData {
+  lessons: ITeacherLessonInfo[] | []
+  lesson_duraton: number
   lang_speaking: {
     id: string
     value: string
@@ -71,19 +62,33 @@ export interface ITeacherServicesData {
     value: string
     label: string
   }[]
-  speaking_accent: {
-    id: string
-    value: string
-    label: string
-  }[]
-  lesson_content: {
-    id: string
-    value: string
-    label: string
-  }[]
-  tests: {
-    id: string
-    value: string
-    label: string
-  }[]
+}
+
+export interface ITeacherEducation extends Partial<ITeacherExperience> {
+  university_name: string
+  faculty?: string
+  specialization?: string
+}
+
+export interface ITeacherWorkExperience extends Partial<ITeacherExperience> {
+  company_name: string
+  position?: string
+  place_destination?: string
+}
+
+export interface ITeacherLessonInfo {
+  id: string
+  count: number
+  price: string
+}
+
+export interface ITeacherExperience {
+  dateStart: {
+    month: string
+    year: number
+  }
+  dateEnd: {
+    month: string
+    year: number
+  }
 }

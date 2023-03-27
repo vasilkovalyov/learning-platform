@@ -11,23 +11,65 @@ const model = new Schema({
   city: {
     type: String,
   },
-  local_time: {
-    type: Number,
+  address: {
+    type: String,
   },
   about_info: {
     type: String,
   },
-  address: {
-    type: String,
+  work_experience: {
+    type: [
+      {
+        company_name: { type: String },
+        position: { required: false, type: String },
+        place_destination: { required: false, type: String },
+        dateStart: {
+          required: false,
+          month: {
+            type: String,
+          },
+          year: {
+            type: String,
+          },
+        },
+        dateEnd: {
+          required: false,
+          month: {
+            type: String,
+          },
+          year: {
+            type: String,
+          },
+        },
+      },
+    ],
   },
   education: {
-    type: [String],
-  },
-  work_experience: {
-    type: [String],
-  },
-  certificates: {
-    type: [String],
+    type: [
+      {
+        university_name: { type: String },
+        faculty: { required: false, type: String },
+        specialization: { required: false, type: String },
+        dateStart: {
+          required: false,
+          month: {
+            type: String,
+          },
+          year: {
+            type: String,
+          },
+        },
+        dateEnd: {
+          required: false,
+          month: {
+            type: String,
+          },
+          year: {
+            type: String,
+          },
+        },
+      },
+    ],
   },
   teacher: {
     type: String,

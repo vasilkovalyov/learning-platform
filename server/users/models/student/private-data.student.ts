@@ -15,7 +15,6 @@ const model = new Schema({
     type: String,
   },
   subjects_learning: {
-    require: false,
     type: [
       {
         subject: {
@@ -28,7 +27,6 @@ const model = new Schema({
     ],
   },
   about_info: {
-    require: false,
     type: String,
   },
   user: {

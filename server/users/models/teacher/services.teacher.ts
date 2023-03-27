@@ -3,28 +3,32 @@ const Schema = mongoose.Schema
 
 const model = new Schema({
   lang_speaking: {
-    type: [Object],
+    type: [String],
   },
   lang_teaching: {
-    type: [Object],
+    type: [String],
   },
   students_ages: {
-    type: [Object],
+    type: [String],
   },
   subjects: {
-    type: [Object],
+    type: [String],
   },
   levels_studying: {
-    type: [Object],
+    type: [String],
   },
-  speaking_accent: {
-    type: [Object],
+  lesson_duration: {
+    type: Number,
   },
-  lesson_content: {
-    type: [Object],
-  },
-  tests: {
-    type: [Object],
+  lessons: {
+    type: {
+      subject: {
+        type: String,
+      },
+      level: {
+        type: String,
+      },
+    },
   },
   teacher: {
     type: String,

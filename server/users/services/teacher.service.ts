@@ -1,17 +1,12 @@
-import { IAuthUserResponse, ISignUpUserResponse } from '../../interfaces/auth-user.interface'
-import { ITeacherSignUp } from '../interfaces/teacher.interface'
+import { ISignUpUserResponse } from '../../interfaces/auth-user.interface'
+import { ITeacherEducation, ITeacherSignUp, ITeacherWorkExperience } from '../interfaces/teacher.interface'
 import { ITeacherPrivateData, ITeacherAccount, ITeacherExtended } from '../interfaces/teacher.interface'
 import { signUpTeacherValidation } from '../validation/teacher.validation'
 import ApiError from '../../exeptions/api.exeptions'
 import RoleModel from '../../models/role.model'
 import bcrypt from 'bcryptjs'
 
-import {
-  TeacherBaseInfoModel,
-  TeacherPrivateDataModel,
-  TeacherServicesModel,
-  TeacherLessonsModel,
-} from '../models/teacher'
+import { TeacherBaseInfoModel, TeacherPrivateDataModel, TeacherServicesModel } from '../models/teacher'
 
 import { UserRoleType } from '../../types/common'
 
@@ -31,8 +26,8 @@ class TeacherService {
       city,
       state,
       country,
-      education,
       phone,
+      education,
       work_experience,
     } = params
     const userExist = await RoleModel.findOne({ email: email })
@@ -51,23 +46,32 @@ class TeacherService {
 
     const savedUser: typeof teacherBaseInfoModel = await teacherBaseInfoModel.save()
 
+    const educationArray = education.map<ITeacherEducation>((item: string) => {
+      return {
+        university_name: item,
+      }
+    })
+    const workExperienceArray = work_experience.map<ITeacherWorkExperience>((item: string) => {
+      return {
+        company_name: item,
+      }
+    })
+
     const teacherPrivateDataModel = new TeacherPrivateDataModel({
       teacher: savedUser._id,
       address,
       city,
       state,
       country,
-      education,
-      work_experience,
+      education: educationArray,
+      work_experience: workExperienceArray,
     })
 
     await teacherPrivateDataModel.save()
 
     const teacherServicesModel = new TeacherServicesModel({ teacher: savedUser._id })
-    const teacherLessonsModel = new TeacherLessonsModel({ teacher: savedUser._id })
 
     await teacherServicesModel.save()
-    await teacherLessonsModel.save()
 
     const roleModel = new RoleModel({ _id: savedUser._id, role, email })
     await roleModel.save()
@@ -100,68 +104,18 @@ class TeacherService {
     }
   }
 
-  async getUserPrivateData(id: string): Promise<ITeacherPrivateData> {
+  async getUserPrivateData(id: string): Promise<ITeacherPrivateData | any> {
     const privateData = await TeacherPrivateDataModel.findOne({ teacher: id })
-    const lessonsData = await TeacherLessonsModel.findOne({ teacher: id })
     const servicesData = await TeacherServicesModel.findOne({ teacher: id })
 
     return {
       _id: id,
-      lessons: lessonsData,
       private_data: privateData,
       services: servicesData,
     }
   }
 
-  async updateUserPrivateData(params: ITeacherPrivateData) {
-    const privateData = await TeacherPrivateDataModel.findOneAndUpdate(
-      { teacher: params._id },
-      {
-        address: params.private_data?.address,
-        city: params.private_data?.city,
-        state: params.private_data?.state,
-        country: params.private_data?.country,
-        education: params.private_data?.education,
-        work_experience: params.private_data?.work_experience,
-        certificates: params.private_data?.certificates,
-        local_time: params.private_data?.local_time,
-        about_info: params.private_data?.about_info,
-      },
-      { new: true },
-    )
-    const lessonsData = await TeacherLessonsModel.findOneAndUpdate(
-      { teacher: params._id },
-      {
-        lesson_1: params.lessons?.lesson_1,
-        lesson_5: params.lessons?.lesson_5,
-        lesson_10: params.lessons?.lesson_10,
-        lesson_20: params.lessons?.lesson_20,
-        lesson_duration: params.lessons?.lesson_duration,
-      },
-      { new: true },
-    )
-    const servicesData = await TeacherServicesModel.findOneAndUpdate(
-      { teacher: params._id },
-      {
-        lang_speaking: params.services?.lang_speaking,
-        students_ages: params.services?.students_ages,
-        lang_teaching: params.services?.lang_teaching,
-        subjects: params.services?.subjects,
-        levels_studying: params.services?.levels_studying,
-        speaking_accent: params.services?.speaking_accent,
-        lesson_content: params.services?.lesson_content,
-        tests: params.services?.tests,
-      },
-      { new: true },
-    )
-
-    return {
-      _id: params._id,
-      lessons: lessonsData,
-      private_data: privateData,
-      services: servicesData,
-    }
-  }
+  async updateUserPrivateData(params: ITeacherPrivateData) {}
 
   async updateUserAuthData(params: ITeacherAccount) {
     const role = await RoleModel.findById(params._id)
@@ -196,7 +150,6 @@ class TeacherService {
     const data = await TeacherBaseInfoModel.findOneAndDelete({ _id: id })
     await TeacherPrivateDataModel.findOneAndDelete({ teacher: id })
     await TeacherServicesModel.findOneAndDelete({ teacher: id })
-    await TeacherLessonsModel.findOneAndDelete({ teacher: id })
     await RoleModel.findOneAndDelete({ _id: id })
     if (!data) throw ApiError.BadRequest(`Teacher doesn't find by id ${id}!`)
   }
