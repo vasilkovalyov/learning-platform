@@ -26,7 +26,7 @@ import colors from 'constants/colors'
 import getFormatDurationTime from 'common/formatDurationTime'
 import studentAges from 'static-data/students-ages.json'
 
-const initialData: TeacherPrivateFormProps = {
+const initialData: TeacherPrivateFormProps | any = {
   lessons_prices: [
     {
       count: '',

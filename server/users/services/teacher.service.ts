@@ -104,12 +104,15 @@ class TeacherService {
     }
   }
 
-  async getUserPrivateData(id: string): Promise<ITeacherPrivateData | any> {
+  async getUserPrivateData(id: string): Promise<ITeacherPrivateData> {
     const privateData = await TeacherPrivateDataModel.findOne({ teacher: id })
+    if (!privateData) throw ApiError.BadRequest(`Teacher private data doesnt find by id - ${id}`)
+
     const servicesData = await TeacherServicesModel.findOne({ teacher: id })
+    if (!servicesData) throw ApiError.BadRequest(`Teacher servces data doesnt find by id - ${id}`)
 
     return {
-      _id: id,
+      _id: privateData.teacher,
       private_data: privateData,
       services: servicesData,
     }

@@ -1,4 +1,7 @@
 import mongoose from 'mongoose'
+
+import { ITeacherPrivateInfo } from '../../interfaces/teacher.interface'
+
 const Schema = mongoose.Schema
 
 const model = new Schema({
@@ -78,4 +81,4 @@ const model = new Schema({
   },
 })
 
-export const TeacherPrivateDataModel = mongoose.model('TeacherPrivateData', model)
+export const TeacherPrivateDataModel = mongoose.model<ITeacherPrivateInfo>('TeacherPrivateData', model)

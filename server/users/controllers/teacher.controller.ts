@@ -22,6 +22,7 @@ class TeacherController {
 
   async getUserPrivateData(req, res) {
     try {
+      console.log(req)
       const userData = await TeacherService.getUserPrivateData(req.params.id)
       res.json(userData)
     } catch (e: any) {

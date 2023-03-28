@@ -20,48 +20,59 @@ export type ITeacherSignUp = Omit<ITeacherAccount, '_id'> &
 
 export interface ITeacherPrivateData {
   _id: string
-  private_data: Partial<ITeacherPrivateInfo> | null
-  services: Partial<ITeacherServicesData> | null
+  private_data: ITeacherPrivateInfo
+  services: Partial<ITeacherServicesData>
 }
 
 export interface ITeacherPrivateInfo {
-  country: string
-  state: string
-  city: string
-  address: string
-  about_info: string
-  education: ITeacherEducation[]
-  work_experience: ITeacherWorkExperience[]
+  teacher: string
+  country?: string | null
+  state?: string | null
+  city?: null
+  address?: string | null
+  about_info?: string | null
+  education?: ITeacherEducation[] | []
+  work_experience?: ITeacherWorkExperience[] | []
 }
 
 export interface ITeacherServicesData {
   lessons: ITeacherLessonInfo[] | []
   lesson_duraton: number
-  lang_speaking: {
-    id: string
-    value: string
-    label: string
-  }[]
-  students_ages: {
-    id: string
-    value: string
-    label: string
-  }[]
-  lang_teaching: {
-    id: string
-    value: string
-    label: string
-  }[]
-  subjects: {
-    id: string
-    value: string
-    label: string
-  }[]
-  levels_studying: {
-    id: string
-    value: string
-    label: string
-  }[]
+  lang_speaking:
+    | {
+        id: string
+        value: string
+        label: string
+      }[]
+    | []
+  students_ages:
+    | {
+        id: string
+        value: string
+        label: string
+      }[]
+    | []
+  lang_teaching:
+    | {
+        id: string
+        value: string
+        label: string
+      }[]
+    | []
+  subjects:
+    | {
+        id: string
+        value: string
+        label: string
+      }[]
+    | []
+  levels_studying:
+    | {
+        id: string
+        value: string
+        label: string
+      }[]
+    | []
 }
 
 export interface ITeacherEducation extends Partial<ITeacherExperience> {

@@ -1,4 +1,6 @@
 import mongoose from 'mongoose'
+import { ITeacherServicesData } from '../../interfaces/teacher.interface'
+
 const Schema = mongoose.Schema
 
 const model = new Schema({
@@ -37,4 +39,4 @@ const model = new Schema({
   },
 })
 
-export const TeacherServicesModel = mongoose.model('TeacherServices', model)
+export const TeacherServicesModel = mongoose.model<ITeacherServicesData>('TeacherServices', model)
