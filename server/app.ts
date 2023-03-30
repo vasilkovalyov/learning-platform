@@ -11,8 +11,8 @@ const handle = app.getRequestHandler()
 const PORT = process.env.PORT || 3000
 
 import authRoute from './routes/auth.route'
-import studentRoute from './users/routes/student.route'
-import teacherRoute from './users/routes/teacher.route'
+import studentRoute from './routes/student.route'
+import teacherRoute from './routes/teacher.route'
 ;(async () => {
   try {
     await app.prepare()

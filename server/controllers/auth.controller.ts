@@ -1,13 +1,16 @@
-import AuthService from '../services/auth.service'
+import { Request, Response } from 'express'
+
+import authService from '../services/auth.service'
 
 class AuthController {
-  async signIn(req, res) {
+  async signIn(req: Request, res: Response) {
     try {
-      const userData = await AuthService.signIn(req.query)
+      const userData = await authService.signIn(req.query)
       res.json(userData)
-    } catch (e: any) {
-      console.error(e)
-      res.status(e.status).json(e)
+    } catch (e) {
+      res.status(400).json({
+        message: e.message,
+      })
     }
   }
 }

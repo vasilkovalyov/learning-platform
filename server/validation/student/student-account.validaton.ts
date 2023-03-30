@@ -1,7 +1,7 @@
 const JoiValidation = require('joi')
-import { IStudentSignUp } from '../interfaces/student.interface'
+import { IStudentSignUpProps } from '../../models/student/student-account.model'
 
-export const signUpStudentValidation = (data: IStudentSignUp) => {
+export const signUpStudentValidation = (data: IStudentSignUpProps) => {
   const schema = JoiValidation.object({
     login: JoiValidation.string().required(),
     fullname: JoiValidation.string().required(),

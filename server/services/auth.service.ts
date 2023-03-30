@@ -1,16 +1,19 @@
 import { IAuthUserResponse } from '../interfaces/auth-user.interface'
 
 import RoleModel from '../models/role.model'
+import {
+  IStudentAccountDataProps,
+  IStudentModel,
+  IStudentAccountDataPropsResponse,
+} from '../models/student/student-account.model'
+import { ITeacherModel, ITeacherAccountDataPropsResponse } from '../models/teacher/teacher-account.model'
 import { signInValidation } from '../validation/auth.validation'
 import TokenService from './token.service'
 import ApiError from '../exeptions/api.exeptions'
 import bcrypt from 'bcryptjs'
 
-import StudentService from '../users/services/student.service'
-import TeacherService from '../users/services/teacher.service'
-
-import { IStudentAccount, IStudentExtended } from '../users/interfaces/student.interface'
-import { ITeacherAccount, ITeacherExtended } from '../users/interfaces/teacher.interface'
+import studentService from '../services/student.service'
+import teacherService from '../services/teacher.service'
 
 class AuthService {
   validateUserSignIn(params: { email: string; password: string }): void {
@@ -23,21 +26,18 @@ class AuthService {
     if (!validPass) throw ApiError.BadRequest(`Wrong password!`)
   }
 
-  async signIn(params: {
-    email: string
-    password: string
-  }): Promise<IAuthUserResponse<IStudentAccount | ITeacherAccount | null>> {
+  async signIn(params): Promise<IAuthUserResponse<IStudentAccountDataProps | null>> {
     this.validateUserSignIn(params)
 
     const { email, password } = params
     const findedRole = await RoleModel.findOne({ email: email })
     if (findedRole === null) throw ApiError.BadRequest(`User with email - ${email} not exist!`)
 
-    let userResponse: IStudentExtended | ITeacherExtended | null = null
-    let userDto: IStudentAccount | ITeacherAccount | null = null
+    let userResponse: IStudentModel | ITeacherModel | null | any = null
+    let userDto: IStudentAccountDataPropsResponse | ITeacherAccountDataPropsResponse | null = null
 
     if (findedRole.role === 'student') {
-      userResponse = await StudentService.getUserByEmail(email)
+      userResponse = await studentService.getUserByEmail(email)
       if (userResponse)
         userDto = {
           _id: userResponse._id,
@@ -46,10 +46,12 @@ class AuthService {
           login: userResponse.login,
           role: userResponse.role,
           phone: userResponse.phone,
+          date: userResponse.date,
         }
     }
+
     if (findedRole.role === 'teacher') {
-      userResponse = await TeacherService.getUserByEmail(email)
+      userResponse = await teacherService.getUserByEmail(email)
       if (userResponse) {
         userDto = {
           _id: userResponse._id,
@@ -58,6 +60,7 @@ class AuthService {
           login: userResponse.login,
           role: userResponse.role,
           phone: userResponse.phone,
+          date: userResponse.date,
         }
       }
     }

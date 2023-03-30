@@ -1,6 +1,15 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
+export type IUserRoleType = 'student' | 'teacher'
+
+export interface IUserRoleModel {
+  _id: string
+  role: string
+  email: string
+  data: IUserRoleType
+}
+
 const model = new Schema({
   _id: {
     type: String,
@@ -20,4 +29,4 @@ const model = new Schema({
   },
 })
 
-export default mongoose.model('Role', model)
+export default mongoose.model<IUserRoleModel>('Role', model)
