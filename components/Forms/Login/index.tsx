@@ -8,10 +8,9 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import InputAdornment from '@mui/material/InputAdornment'
 import Button from '@mui/material/Button'
-import LinearProgress from '@mui/material/LinearProgress'
+import CircularProgress from '@mui/material/CircularProgress'
 
 import { FormLoginProps } from './Login.type'
-
 import { LoginProps } from 'interfaces/user.interface'
 import { LoginFormSchema } from 'utils/schemas/authentication'
 
@@ -80,10 +79,12 @@ function FormLogin({ onSubmit, isLoading, validationMessage }: FormLoginProps) {
           </Typography>
         </Box>
       )}
-      <Button type="submit" variant="contained">
-        Sign in
-      </Button>
-      {isLoading ? <LinearProgress /> : null}
+      <Box display="flex" alignItems="center">
+        <Button type="submit" variant="contained">
+          Sign in
+        </Button>
+        <Box ml={2}>{isLoading ? <CircularProgress size={16} /> : null}</Box>
+      </Box>
     </form>
   )
 }

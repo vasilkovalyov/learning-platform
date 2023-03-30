@@ -1,11 +1,7 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-
-import { setCookie } from 'nookies'
 
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Typography from '@mui/material/Typography'
@@ -15,36 +11,16 @@ import PublicLayout from 'layouts/BaseLayout'
 
 import ContainerWithShadow from 'components/Generic/ContainerWithShadow'
 
-import AuthService from 'services/authentication.service'
 import { LoginProps } from 'interfaces/user.interface'
 import FormLogin from 'components/Forms/Login'
-import { setAuthState } from 'redux/slices/auth'
+
+import { useSignIn } from 'hooks/useSignIn'
 
 const Auth: NextPage = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [validationMessage, setValidationMessage] = useState<string | null>(null)
-
-  const router = useRouter()
-  const dispatch = useDispatch()
+  const { isLoading, validationMessage, signIn } = useSignIn()
 
   async function onSubmit({ email, password }: LoginProps) {
-    try {
-      setIsLoading(true)
-      const response = await AuthService.signIn(email, password)
-
-      if (!response?.data) return
-
-      dispatch(setAuthState(response.data.user))
-      setCookie(null, 'token', response.data.token, { maxAge: 30 * 24 * 60 * 60 })
-      setCookie(null, 'userId', response.data.user._id, { maxAge: 30 * 24 * 60 * 60 })
-      setCookie(null, 'role', response.data.user.role, { maxAge: 30 * 24 * 60 * 60 })
-      router.push('/admin')
-      setIsLoading(false)
-    } catch (e: any) {
-      console.log(e)
-      setIsLoading(false)
-      setValidationMessage(e.response?.data.message || e?.message)
-    }
+    signIn(email, password)
   }
 
   return (

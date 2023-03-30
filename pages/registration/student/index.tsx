@@ -3,6 +3,8 @@ import type { NextPage } from 'next'
 import Link from 'next/link'
 import Head from 'next/head'
 
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Typography from '@mui/material/Typography'
@@ -28,8 +30,9 @@ const RegistrationStudentPage: NextPage = () => {
     try {
       setIsLoading(true)
       const response = await RegistrationService.signUpStudent(data)
+      console.log(response, 'response')
       setIsLoading(false)
-      addValidationMessage(response.message || '')
+      addValidationMessage(response?.data.message || '')
       setIsSuccessForm(true)
     } catch (e: any) {
       setIsLoading(false)
@@ -66,18 +69,21 @@ const RegistrationStudentPage: NextPage = () => {
         <ContainerWithShadow className="container--registration">
           {!isSuccessForm ? (
             <RegistrationStudent
-              inputFields={['fullname', 'login', 'email', 'password', 'confirm_password']}
               onSuccess={successSignUpForm}
               isLoading={isLoading}
               validationMessage={validationMessage}
             />
           ) : (
-            <div className="text-center">
-              <span>{validationMessage && validationMessage}</span>
-              <Link href="/">
-                <a>Ok</a>
-              </Link>
-            </div>
+            <Box justifyContent="center">
+              <Typography variant="body1" className="MuiTypography ta-c">
+                {validationMessage && validationMessage}
+              </Typography>
+              <Box marginTop={2} className="ta-c">
+                <Button href="/" variant="contained">
+                  <a>Ok</a>
+                </Button>
+              </Box>
+            </Box>
           )}
         </ContainerWithShadow>
       </PublicLayout>

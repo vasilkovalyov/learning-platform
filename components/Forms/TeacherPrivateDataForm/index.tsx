@@ -1,4 +1,7 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
+
+import { useSelector } from 'react-redux'
+import { selectAuthState } from 'redux/slices/auth'
 
 import { useForm, useFieldArray, UseFormRegister } from 'react-hook-form'
 
@@ -25,6 +28,8 @@ import colors from 'constants/colors'
 
 import getFormatDurationTime from 'common/formatDurationTime'
 import studentAges from 'static-data/students-ages.json'
+
+import teacherService from 'services/teacher.service'
 
 const initialData: TeacherPrivateFormProps | any = {
   lessons_prices: [
@@ -68,6 +73,8 @@ const initialData: TeacherPrivateFormProps | any = {
 }
 
 function TeacherPrivateDataForm() {
+  const authState = useSelector(selectAuthState)
+
   const [modalEducationOpen, setModalEducationOpen] = useState<boolean>(false)
   const [modalWorkExperienceOpen, setModalWorkExperienceOpen] = useState<boolean>(false)
   const [selectedWorkExperience, setSelectedWorkExperience] = useState<WorkExperienceProps | null>(null)
@@ -214,6 +221,24 @@ function TeacherPrivateDataForm() {
     setSelectedIndex(null)
     handleCloseModal('work_experience')
   }
+
+  async function loadFormData() {
+    try {
+      const response = await teacherService.getUserPrivateData(authState.user._id)
+      if (!response.data) return
+      for (const [key, value] of Object.entries(response.data)) {
+        if (typeof value !== 'object') {
+          setValue(key as any, value)
+        }
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    loadFormData()
+  }, [])
 
   return (
     <>

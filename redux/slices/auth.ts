@@ -13,10 +13,6 @@ export interface IAuthState {
   isAuth: boolean
 }
 
-export interface IAuthUserStore {
-  user: IAuthState
-}
-
 const defaultAuthState: IAuthAccountState = {
   _id: '',
   email: '',
@@ -63,7 +59,7 @@ export const authSlice = createSlice({
 
 export const { setAuthState, clearAuthState, setUpdateAccountUser } = authSlice.actions
 
-export const selectAuthState = (state: IAuthUserStore): IAuthState => {
+export const selectAuthState = (state: AppState): IAuthState => {
   return state.user
 }
 

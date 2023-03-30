@@ -6,11 +6,14 @@ export const PUBLIC_REQUESTS = {
 
 export const PRIVATE_REQUESTS = {
   BASE: '',
-  TEACHER_SAVE_PRIVATE_DATA: 'teacher/private-data',
-  TEACHER_SAVE_AUTH_DATA: 'teacher/auth-data',
-  STUDENT_ACCOUNT_UPDATE: 'student/account/update',
-  STUDENT_PRIVATE_DATA_UPDATE: 'student/private-data/update',
-  STUDENT_PRIVATE_DATA: 'student/private-data',
-  TEACHER_ACCOUNT_UPDATE: 'teacher/account/update',
-  TEACHER_PRIVATE_DATA_UPDATE: 'teacher/private-data/update',
+  STUDENT: {
+    ACCOUNT_UPDATE: 'student/account/update',
+    PRIVATE_DATA_UPDATE: 'student/private-data/update',
+    PRIVATE_DATA: 'student/private-data',
+  },
+  TEACHER: {
+    ACCOUNT_UPDATE: 'teacher/account/update',
+    PRIVATE_DATA_UPDATE: 'teacher/private-data/update',
+    PRIVATE_DATA: 'teacher/private-data',
+  },
 }

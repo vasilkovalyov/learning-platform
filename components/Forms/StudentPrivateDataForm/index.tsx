@@ -78,30 +78,28 @@ function StudentPrivateDataForm() {
 
   async function loadFormData() {
     const response = await studentSerivce.getUserPrivateData(authState.user._id)
-    if (response?.data) {
-      for (const [key, value] of Object.entries(response?.data)) {
-        if (typeof value !== 'object') {
-          setValue(key as keyof Omit<StudentPrivateFormData, 'subjects_learning'>, value)
+    if (!response?.data) return
+    for (const [key, value] of Object.entries(response?.data)) {
+      if (typeof value !== 'object') {
+        setValue(key as keyof Omit<StudentPrivateFormData, 'subjects_learning'>, value)
+      }
+    }
+    if (response.data.subjects_learning.length) {
+      response.data.subjects_learning.forEach((item, index) => {
+        if (index === 0) {
+          setValue(`subjects_learning.${index}.subject`, item.subject)
+          setValue(`subjects_learning.${index}.level`, item.level)
+        } else {
+          updateSubjectsLearning(index, { subject: item.subject, level: item.level })
         }
-      }
-      if (response.data.subjects_learning.length) {
-        response.data.subjects_learning.forEach((item, index) => {
-          if (index === 0) {
-            setValue(`subjects_learning.${index}.subject`, item.subject)
-            setValue(`subjects_learning.${index}.level`, item.level)
-          } else {
-            updateSubjectsLearning(index, { subject: item.subject, level: item.level })
-          }
-        })
-      }
+      })
     }
   }
 
   async function onSubmit(data: StudentPrivateFormData) {
     try {
       setIsLoading(true)
-      const response = await studentSerivce.updateUserPrivateData(authState.user._id, data)
-      if (!response?.data) return
+      await studentSerivce.updateUserPrivateData(authState.user._id, data)
       setIsLoading(false)
       setShowNotificaton(true)
     } catch (e) {

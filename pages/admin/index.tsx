@@ -49,6 +49,7 @@ function Account() {
     try {
       setIsLoadingRemove(true)
       const response = await userService.removeUser()
+      console.log('response', response)
       setIsLoadingRemove(false)
       if (response?.status === 200) signOut()
     } catch (e) {
@@ -58,44 +59,48 @@ function Account() {
   }
 
   async function onHandleSubmit(props: UserEdtableAccountInfo) {
-    setIsLoading(true)
+    try {
+      setIsLoading(true)
 
-    if (!authState) return
+      if (!authState) return
 
-    const data: UserReadableAccountInfo = {
-      ...props,
-      _id: authState.user._id,
-      role: authState.user.role,
-    }
+      const data: UserReadableAccountInfo = {
+        ...props,
+        _id: authState.user._id,
+        role: authState.user.role,
+      }
 
-    let response = null
-    if (authState.user.role === 'student') {
-      response = await studentSerivce.updateUserAccount(data)
-    }
+      let response = null
+      if (authState.user.role === 'student') {
+        response = await studentSerivce.updateUserAccount(data)
+      }
 
-    if (authState.user.role === 'teacher') {
-      response = await teacherSerivce.updateUserAccount(data)
-    }
+      if (authState.user.role === 'teacher') {
+        response = await teacherSerivce.updateUserAccount(data)
+      }
 
-    if (!response?.data) return
+      if (!response?.data) return
 
-    store.dispatch(
-      setUpdateAccountUser({
-        fullname: response.data.fullname,
+      store.dispatch(
+        setUpdateAccountUser({
+          fullname: response.data.fullname,
+          email: response.data.email,
+          phone: response.data.phone,
+        }),
+      )
+      setFormState({
         email: response.data.email,
+        fullname: response.data.fullname,
         phone: response.data.phone,
-      }),
-    )
+        login: response.data.login,
+      })
 
-    setIsLoading(false)
-    setShowNotificaton(true)
-
-    setFormState({
-      email: response?.data.email,
-      fullname: response?.data.fullname,
-      phone: response?.data.phone,
-      login: response.data.login,
-    })
+      setIsLoading(false)
+      setShowNotificaton(true)
+    } catch (e) {
+      console.log(e)
+      setIsLoading(false)
+    }
   }
 
   return (

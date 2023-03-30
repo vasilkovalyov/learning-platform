@@ -9,9 +9,12 @@ export interface AuthenticationUserResponse {
   message: string
 }
 class AuthService {
-  async signIn(email: string, password: string): Promise<AxiosResponse<AuthenticationUserResponse> | undefined> {
+  async signIn(email: string, password: string): Promise<AxiosResponse<AuthenticationUserResponse>> {
     const response = await $api().get(`/${PUBLIC_REQUESTS.SIGN_IN}`, {
-      params: { email, password },
+      params: {
+        email,
+        password,
+      },
     })
     return response
   }
