@@ -18,7 +18,7 @@ import { RegistrationStudentFormSchema } from 'utils/schemas/registration/studen
 import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
 
-function RegistrationStudent({ onSuccess, isLoading, validationMessage, inputFields }: RegistrationStudentProps) {
+function RegistrationStudent({ onSuccess, isLoading, validationMessage }: RegistrationStudentProps) {
   const {
     handleSubmit,
     register,
@@ -36,10 +36,10 @@ function RegistrationStudent({ onSuccess, isLoading, validationMessage, inputFie
   })
   const [showPassword, setShowPassword] = React.useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false)
-
+  const fields: TextFieldType[] = ['fullname', 'login', 'email', 'password', 'confirm_password']
   return (
     <form onSubmit={handleSubmit(onSuccess)}>
-      {inputFields.map((inputName: TextFieldType, index) => {
+      {fields.map((inputName: TextFieldType, index) => {
         if (inputName === 'password') {
           return (
             <Box key={index} marginBottom={2}>

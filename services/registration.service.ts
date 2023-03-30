@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios'
 import { PUBLIC_REQUESTS } from 'constants/api-requests'
 import $api from 'common/ajax-config'
 import { RoleType } from 'types/common'
@@ -13,23 +14,17 @@ interface RegistrationUserResponse {
 }
 
 class RegistrationService {
-  async signUpStudent(data: RegistrationStudentFormData): Promise<RegistrationUserResponse> {
+  async signUpStudent(data: RegistrationStudentFormData): Promise<AxiosResponse<RegistrationUserResponse>> {
     const response = await $api().post(`${PUBLIC_REQUESTS.SIGN_UP_STUDENT}`, {
-      params: {
-        ...data,
-        role: 'student' as RoleType,
-      },
+      ...data,
     })
 
-    return response.data
+    return response
   }
 
   async signUpTeacher(data: RegistrationTeacherFullProps): Promise<RegistrationUserResponse> {
     const response = await $api().post(`/${PUBLIC_REQUESTS.SIGN_UP_TEACHER}`, {
-      params: {
-        ...data,
-        role: 'teacher' as RoleType,
-      },
+      ...data,
     })
 
     return response.data
