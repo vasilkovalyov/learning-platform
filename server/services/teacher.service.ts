@@ -154,7 +154,7 @@ class TeacherService {
 
   async updateUserAccount({
     _id,
-    email,
+    login,
     fullname,
     phone,
   }: ITeacherAccountUpdateProps): Promise<ITeacherAccountUpdateProps> {
@@ -163,7 +163,7 @@ class TeacherService {
     const response: ITeacherAccountUpdateProps | null = await TeacherModel.findOneAndUpdate(
       { _id: _id },
       {
-        email: email,
+        login: login,
         fullname: fullname,
         phone: phone,
       },
@@ -174,7 +174,7 @@ class TeacherService {
 
     return {
       _id: response._id,
-      email: response.email,
+      login: response.login,
       fullname: response.fullname,
       phone: response.phone,
       date: response.date,

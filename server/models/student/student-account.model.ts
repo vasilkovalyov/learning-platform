@@ -20,7 +20,7 @@ export interface IStudentSignUpProps extends Omit<IStudentModel, 'date' | 'phone
 
 export type IStudentAccountDataPropsResponse = Omit<IStudentModel, 'password'>
 export type IStudentAccountDataProps = Omit<IStudentModel, 'password' | '_id'>
-export type IStudentAccountUpdateProps = Omit<IStudentModel, 'password' | 'role' | 'login'>
+export type IStudentAccountUpdateProps = Omit<IStudentModel, 'password' | 'role' | 'email'>
 
 export const model = new Schema({
   fullname: {

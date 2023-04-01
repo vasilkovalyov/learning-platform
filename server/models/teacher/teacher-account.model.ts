@@ -16,7 +16,7 @@ export interface ITeacherModel {
 
 export type ITeacherAccountDataPropsResponse = Omit<ITeacherModel, 'password'>
 export type ITeacherAccountDataProps = Omit<ITeacherModel, 'password' | '_id'>
-export type ITeacherAccountUpdateProps = Omit<ITeacherModel, 'password' | 'role' | 'login'>
+export type ITeacherAccountUpdateProps = Omit<ITeacherModel, 'password' | 'role' | 'email'>
 
 export const model = new Schema({
   fullname: {
