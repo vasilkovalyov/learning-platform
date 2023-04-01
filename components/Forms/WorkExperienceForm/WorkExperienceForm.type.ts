@@ -1,14 +1,6 @@
-export interface WorkExperienceFormProps {
-  onSubmit: (data: WorkExperienceProps) => void
-  initialData: WorkExperienceProps | null
-}
+import { ITeacherWorkExperience } from 'interfaces/teacher.interface'
 
-export interface WorkExperienceProps {
-  company_name: string
-  position: string
-  place_destination: string
-  start_month_working: string
-  start_year_working: string
-  end_month_working: string
-  end_year_working: string
+export interface IWorkExperienceFormProps {
+  onSubmit: (data: ITeacherWorkExperience) => void
+  initialData: ITeacherWorkExperience | null
 }

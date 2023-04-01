@@ -26,7 +26,6 @@ export function useSignIn() {
       router.push('/admin')
       setIsLoading(false)
     } catch (e: any) {
-      console.log(e)
       setIsLoading(false)
       setValidationMessage(e.response?.data.message || e?.message)
     }

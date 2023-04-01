@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography'
 import Icon from '../../components/Generic/Icon'
 import { IconEnum } from '../../components/Generic/Icon/Icon.type'
 
-import { TeacherCardProps } from './TeacherCard.type'
+// import { TeacherCardProps } from './TeacherCard.type'
 
 import colors from '../../constants/colors'
 
@@ -84,7 +84,7 @@ function TeacherCard({
   lang_teaching,
   description,
   onClickTrialLesson,
-}: TeacherCardProps & {
+}: any & {
   onClickTrialLesson?: (id: string) => void
 }) {
   const [activeTab, setActiveTab] = useState<number>(0)

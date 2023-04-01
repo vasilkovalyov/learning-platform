@@ -11,8 +11,6 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import CircularProgress from '@mui/material/CircularProgress'
 
-import { StudentPrivateFormData } from './StudentPrivateDataForm.type'
-
 import Notification from 'components/Notification'
 import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
@@ -20,8 +18,9 @@ import { IconEnum } from 'components/Generic/Icon/Icon.type'
 import colors from 'constants/colors'
 
 import studentSerivce from 'services/student.service'
+import { IStudentPrivateDataEditableProps } from './Student.type'
 
-type FieldType = keyof Omit<StudentPrivateFormData, 'subjects_learning' | 'about_info'>
+type FieldType = keyof Omit<IStudentPrivateDataEditableProps, 'subjects_learning' | 'about_info'>
 
 const locationFields: { label: string; field: FieldType }[] = [
   {
@@ -42,7 +41,7 @@ const locationFields: { label: string; field: FieldType }[] = [
   },
 ]
 
-const initialData: StudentPrivateFormData = {
+const initialData: IStudentPrivateDataEditableProps = {
   country: '',
   state: '',
   city: '',
@@ -61,7 +60,7 @@ function StudentPrivateDataForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [showNotificaton, setShowNotificaton] = useState<boolean>(false)
 
-  const { handleSubmit, register, control, setValue } = useForm<StudentPrivateFormData>({
+  const { handleSubmit, register, control, setValue } = useForm<IStudentPrivateDataEditableProps>({
     mode: 'onSubmit',
     defaultValues: initialData,
   })
@@ -81,7 +80,7 @@ function StudentPrivateDataForm() {
     if (!response?.data) return
     for (const [key, value] of Object.entries(response?.data)) {
       if (typeof value !== 'object') {
-        setValue(key as keyof Omit<StudentPrivateFormData, 'subjects_learning'>, value)
+        setValue(key as keyof Omit<IStudentPrivateDataEditableProps, 'subjects_learning'>, value)
       }
     }
     if (response.data.subjects_learning.length) {
@@ -96,7 +95,7 @@ function StudentPrivateDataForm() {
     }
   }
 
-  async function onSubmit(data: StudentPrivateFormData) {
+  async function onSubmit(data: IStudentPrivateDataEditableProps) {
     try {
       setIsLoading(true)
       await studentSerivce.updateUserPrivateData(authState.user._id, data)

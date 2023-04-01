@@ -13,7 +13,7 @@ import PublicLayout from 'layouts/BaseLayout'
 import ContainerWithShadow from 'components/Generic/ContainerWithShadow'
 
 import RegistrationStudent from 'components/Forms/Registration/RegistrationStudent'
-import { RegistrationStudentFormData } from 'components/Forms/Registration/RegistrationStudent/RegistrationStudent.type'
+import { IRegistrationStudentProps } from 'components/Forms/Registration/RegistrationStudent/RegistrationStudent.type'
 
 import RegistrationService from 'services/registration.service'
 
@@ -26,7 +26,7 @@ const RegistrationStudentPage: NextPage = () => {
     setValidationMessage(value)
   }
 
-  async function successSignUpForm(data: RegistrationStudentFormData) {
+  async function successSignUpForm(data: IRegistrationStudentProps) {
     try {
       setIsLoading(true)
       const response = await RegistrationService.signUpStudent(data)

@@ -15,15 +15,16 @@ import PrivateLayoutPage from 'pages/privateLayoutPage'
 import ModalPopupBox from 'components/ModalPopupBox'
 import Notification from 'components/Notification'
 
-import AccountForm from 'components/Forms/AccountForm'
+import AccountStudentForm from 'components/Forms/Account/Student'
 
 import userService from 'services/user.service'
 
 import { useSignOut } from 'hooks/useSignOut'
-import { UserAccountFormInnerProps, UserEdtableAccountInfo, UserReadableAccountInfo } from 'interfaces/user.interface'
+import { IUserAccountProps } from 'interfaces/user.interface'
 
 import studentSerivce from 'services/student.service'
 import teacherSerivce from 'services/teacher.service'
+import { IStudentAccountEditableProps } from 'components/Forms/Account/Student/Student.type'
 
 function Account() {
   const { store } = wrapper.useWrappedStore({})
@@ -31,7 +32,7 @@ function Account() {
 
   const authState = useSelector(selectAuthState)
   const [modalOpen, setModalOpen] = useState<boolean>(false)
-  const [formState, setFormState] = useState<UserAccountFormInnerProps>(authState.user)
+  const [formState, setFormState] = useState<Partial<IUserAccountProps>>(authState.user)
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isLoadingRemove, setIsLoadingRemove] = useState<boolean>(false)
@@ -49,7 +50,6 @@ function Account() {
     try {
       setIsLoadingRemove(true)
       const response = await userService.removeUser()
-      console.log('response', response)
       setIsLoadingRemove(false)
       if (response?.status === 200) signOut()
     } catch (e) {
@@ -58,13 +58,14 @@ function Account() {
     }
   }
 
-  async function onHandleSubmit(props: UserEdtableAccountInfo) {
+  async function onHandleSubmit(props: IStudentAccountEditableProps) {
     try {
       setIsLoading(true)
 
       if (!authState) return
 
-      const data: UserReadableAccountInfo = {
+      const data: IUserAccountProps = {
+        ...authState.user,
         ...props,
         _id: authState.user._id,
         role: authState.user.role,
@@ -110,13 +111,22 @@ function Account() {
           Account
         </Typography>
       </Box>
-      <AccountForm
-        isLoading={isLoading}
-        onHandleRemoveAccount={onHandleRemoveAccount}
-        onHandleSubmit={onHandleSubmit}
-        initialData={formState}
-        role={authState.user.role}
-      />
+      {authState.user.role === 'student' ? (
+        <AccountStudentForm
+          isLoading={isLoading}
+          onHandleRemoveAccount={onHandleRemoveAccount}
+          onHandleSubmit={onHandleSubmit}
+          initialData={formState}
+        />
+      ) : null}
+      {authState.user.role === 'teacher' ? (
+        <AccountStudentForm
+          isLoading={isLoading}
+          onHandleRemoveAccount={onHandleRemoveAccount}
+          onHandleSubmit={onHandleSubmit}
+          initialData={formState}
+        />
+      ) : null}
       <Notification
         open={showNotificaton}
         setClose={() => setShowNotificaton(false)}

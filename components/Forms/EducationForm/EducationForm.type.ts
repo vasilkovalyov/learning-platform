@@ -1,14 +1,6 @@
-export interface EducationFormProps {
-  onSubmit: (data: EducationProps) => void
-  initialData: EducationProps | null
-}
+import { ITeacherEducation } from 'interfaces/teacher.interface'
 
-export interface EducationProps {
-  university_name: string
-  faculty: string
-  specialization: string
-  start_month_education: string
-  start_year_education: string
-  end_month_education: string
-  end_year_education: string
+export interface IEducationFormProps {
+  onSubmit: (data: ITeacherEducation) => void
+  initialData: ITeacherEducation | null
 }

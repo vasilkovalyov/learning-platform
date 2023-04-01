@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios'
 import $api from 'common/ajax-config'
 import { RoleType } from 'types/common'
 import { parseCookies } from 'nookies'
-import { UserAccountProps } from 'interfaces/user.interface'
+import { IUserAccountProps } from 'interfaces/user.interface'
 
 interface RemovedUserResponse {
   message: string
@@ -13,7 +13,7 @@ class UserService {
     role: RoleType,
     userId: string,
     token: string,
-  ): Promise<AxiosResponse<UserAccountProps | undefined>> {
+  ): Promise<AxiosResponse<IUserAccountProps | undefined>> {
     const response = await $api(token).get(`/${role}/account/${userId}`)
     return response
   }

@@ -8,8 +8,8 @@ import Typography from '@mui/material/Typography'
 
 import PrivateLayoutPage from 'pages/privateLayoutPage'
 
-import StudentPrivateDataForm from 'components/Forms/StudentPrivateDataForm'
-import TeacherPrivateDataForm from 'components/Forms/TeacherPrivateDataForm'
+import StudentPrivateDataForm from 'components/Forms/PrivateData/Student'
+import TeacherPrivateDataForm from 'components/Forms/PrivateData/Teacher'
 
 function PrivateData() {
   const authState = useSelector(selectAuthState)

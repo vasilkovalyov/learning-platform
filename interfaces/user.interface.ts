@@ -1,22 +1,11 @@
 import { RoleType } from 'types/common'
 
-export interface LoginProps {
-  email: string
-  password: string
-}
-
-export interface UserAccountProps {
+export interface IUserAccountProps {
   _id: string
-  email: string
-  fullname: string
   login: string
+  fullname?: string
+  email: string
   phone: string
-  password: string
   role: RoleType
+  date: string
 }
-
-export type UserAccountFormInnerProps = Omit<UserAccountProps, '_id' | 'role' | 'password'>
-export type UserAccountFormOuterProps = Omit<UserAccountProps, '_id' | 'login' | 'password'>
-
-export type UserReadableAccountInfo = Omit<UserAccountProps, 'password' | 'login'>
-export type UserEdtableAccountInfo = Pick<UserAccountProps, 'fullname' | 'email' | 'phone'>
