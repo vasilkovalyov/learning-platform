@@ -1,8 +1,7 @@
 import { AxiosResponse } from 'axios'
 import { PUBLIC_REQUESTS } from 'constants/api-requests'
 import $api from 'common/ajax-config'
-import { RoleType } from 'types/common'
-import { RegistrationStudentFormData } from 'components/Forms/Registration/RegistrationStudent/RegistrationStudent.type'
+import { IRegistrationStudentProps } from 'components/Forms/Registration/RegistrationStudent/RegistrationStudent.type'
 import { RegistrationTeacherFullProps } from 'components/Forms/Registration/RegistrationTeacher/RegistrationTeacher.type'
 
 interface RegistrationUserResponse {
@@ -14,7 +13,7 @@ interface RegistrationUserResponse {
 }
 
 class RegistrationService {
-  async signUpStudent(data: RegistrationStudentFormData): Promise<AxiosResponse<RegistrationUserResponse>> {
+  async signUpStudent(data: IRegistrationStudentProps): Promise<AxiosResponse<RegistrationUserResponse>> {
     const response = await $api().post(`${PUBLIC_REQUESTS.SIGN_UP_STUDENT}`, {
       ...data,
     })

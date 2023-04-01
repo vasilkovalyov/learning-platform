@@ -11,15 +11,15 @@ import PublicLayout from 'layouts/BaseLayout'
 
 import ContainerWithShadow from 'components/Generic/ContainerWithShadow'
 
-import { LoginProps } from 'interfaces/user.interface'
 import FormLogin from 'components/Forms/Login'
 
 import { useSignIn } from 'hooks/useSignIn'
+import { IAuthLoginProps } from 'components/Forms/Login/Login.type'
 
 const Auth: NextPage = () => {
   const { isLoading, validationMessage, signIn } = useSignIn()
 
-  async function onSubmit({ email, password }: LoginProps) {
+  async function onSubmit({ email, password }: IAuthLoginProps) {
     signIn(email, password)
   }
 

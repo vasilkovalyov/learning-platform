@@ -3,7 +3,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { selectAuthState } from 'redux/slices/auth'
 
-import { useForm, useFieldArray, UseFormRegister } from 'react-hook-form'
+import { useForm, useFieldArray } from 'react-hook-form'
 
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -15,33 +15,54 @@ import Typography from '@mui/material/Typography'
 
 import ModalPopupBox from 'components/ModalPopupBox'
 
-import EducationForm, { defaultInitialDate as initialDateEducationForm } from '../EducationForm'
-import { EducationProps } from '../EducationForm/EducationForm.type'
-import WorkExperienceForm, { defaultInitialDate as initialDateWorkExperienceForm } from '../WorkExperienceForm'
-import { WorkExperienceProps } from '../WorkExperienceForm/WorkExperienceForm.type'
+import EducationForm, { defaultInitialDate as initialDateEducationForm } from '../../EducationForm'
+import WorkExperienceForm, { defaultInitialDate as initialDateWorkExperienceForm } from '../../WorkExperienceForm'
 
 import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
 
-import { TeacherPrivateFormProps } from './TeacherPrivateDataForm.type'
+import { ITeacherPrivateDataEditableProps } from './Teacher.type'
 import colors from 'constants/colors'
 
 import getFormatDurationTime from 'common/formatDurationTime'
 import studentAges from 'static-data/students-ages.json'
 
 import teacherService from 'services/teacher.service'
+import { ITeacherEducation, ITeacherWorkExperience } from 'interfaces/teacher.interface'
 
-const initialData: TeacherPrivateFormProps | any = {
+type FieldType = keyof Pick<ITeacherPrivateDataEditableProps, 'country' | 'state' | 'city' | 'address'>
+
+const locationFields: { label: string; field: FieldType }[] = [
+  {
+    label: 'Country',
+    field: 'country',
+  },
+  {
+    label: 'State',
+    field: 'state',
+  },
+  {
+    label: 'City',
+    field: 'city',
+  },
+  {
+    label: 'Address',
+    field: 'address',
+  },
+]
+
+const initialData: ITeacherPrivateDataEditableProps = {
+  about_info: '',
+  city: '',
+  country: '',
+  state: '',
+  address: '',
   lessons_prices: [
     {
       count: '',
       price: '',
     },
   ],
-  about_info: '',
-  city: '',
-  country: '',
-  state: '',
   lang_speaking: [
     {
       value: '',
@@ -57,7 +78,7 @@ const initialData: TeacherPrivateFormProps | any = {
       value: '',
     },
   ],
-  lesson_duration: '',
+  lesson_duration: 0,
   levels_studying: [
     {
       value: '',
@@ -70,6 +91,7 @@ const initialData: TeacherPrivateFormProps | any = {
   ],
   work_experience: [initialDateWorkExperienceForm],
   education: [initialDateEducationForm],
+  lessons: [],
 }
 
 function TeacherPrivateDataForm() {
@@ -77,11 +99,11 @@ function TeacherPrivateDataForm() {
 
   const [modalEducationOpen, setModalEducationOpen] = useState<boolean>(false)
   const [modalWorkExperienceOpen, setModalWorkExperienceOpen] = useState<boolean>(false)
-  const [selectedWorkExperience, setSelectedWorkExperience] = useState<WorkExperienceProps | null>(null)
-  const [selectedEducation, setSelectedEducation] = useState<EducationProps | null>(null)
+  const [selectedWorkExperience, setSelectedWorkExperience] = useState<ITeacherWorkExperience | null>(null)
+  const [selectedEducation, setSelectedEducation] = useState<ITeacherEducation | null>(null)
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
-  const { handleSubmit, control, register, setValue, reset } = useForm<TeacherPrivateFormProps>({
+  const { handleSubmit, control, register, setValue, reset } = useForm<ITeacherPrivateDataEditableProps>({
     mode: 'onSubmit',
     defaultValues: initialData,
   })
@@ -170,11 +192,11 @@ function TeacherPrivateDataForm() {
     setSelectedIndex(null)
   }
 
-  function onSuccess(data: TeacherPrivateFormProps) {
+  function onSuccess(data: ITeacherPrivateDataEditableProps) {
     console.log('data', data)
   }
 
-  function onSubmitEducationForm(data: EducationProps) {
+  function onSubmitEducationForm(data: ITeacherEducation) {
     if (selectedIndex !== null) {
       onUpdateEducationForm(data)
       return
@@ -185,7 +207,7 @@ function TeacherPrivateDataForm() {
     handleCloseModal('education')
   }
 
-  function onSubmitWorkExperienceForm(data: WorkExperienceProps) {
+  function onSubmitWorkExperienceForm(data: ITeacherWorkExperience) {
     if (selectedIndex !== null) {
       onUpdateWorkExperienceForm(data)
       return
@@ -196,7 +218,7 @@ function TeacherPrivateDataForm() {
     handleCloseModal('work_experience')
   }
 
-  function onUpdateEducationForm(data: EducationProps) {
+  function onUpdateEducationForm(data: ITeacherEducation) {
     if (selectedIndex !== null) {
       const updateArray = education.map((item, index) => {
         if (selectedIndex === index) return data
@@ -209,7 +231,7 @@ function TeacherPrivateDataForm() {
     handleCloseModal('education')
   }
 
-  function onUpdateWorkExperienceForm(data: WorkExperienceProps) {
+  function onUpdateWorkExperienceForm(data: ITeacherWorkExperience) {
     if (selectedIndex !== null) {
       const updateArray = workExperience.map((item, index) => {
         if (selectedIndex === index) return data
@@ -227,8 +249,28 @@ function TeacherPrivateDataForm() {
       const response = await teacherService.getUserPrivateData(authState.user._id)
       if (!response.data) return
       for (const [key, value] of Object.entries(response.data)) {
-        if (typeof value !== 'object') {
-          setValue(key as any, value)
+        if (Array.isArray(value) && key === 'education') {
+          value.forEach((item, index) => {
+            setValue(`education.${index}`, {
+              university_name: '',
+              faculty: '',
+              specialization: '',
+              ...item,
+            })
+          })
+        }
+        if (Array.isArray(value) && key === 'work_experience') {
+          value.forEach((item, index) => {
+            setValue(`work_experience.${index}`, {
+              company_name: '',
+              place_destination: '',
+              position: '',
+              ...item,
+            })
+          })
+        }
+        if (typeof value === 'string') {
+          setValue(key as keyof ITeacherPrivateDataEditableProps, value)
         }
       }
     } catch (e) {
@@ -245,45 +287,21 @@ function TeacherPrivateDataForm() {
       <form className="form-private-data form-private-data--teacher" onSubmit={handleSubmit(onSuccess)}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <Box marginBottom={2}>
-              <TextField
-                {...register('country')}
-                id="country"
-                name="country"
-                type="text"
-                label="country"
-                variant="standard"
-                className="form-field"
-                fullWidth
-                InputLabelProps={{ shrink: true }}
-              />
-            </Box>
-            <Box marginBottom={2}>
-              <TextField
-                {...register('state')}
-                id="state"
-                name="state"
-                type="text"
-                label="State"
-                variant="standard"
-                className="form-field"
-                fullWidth
-                InputLabelProps={{ shrink: true }}
-              />
-            </Box>
-            <Box marginBottom={2}>
-              <TextField
-                {...register('city')}
-                id="city"
-                name="city"
-                type="text"
-                label="City"
-                variant="standard"
-                className="form-field"
-                fullWidth
-                InputLabelProps={{ shrink: true }}
-              />
-            </Box>
+            {locationFields.map((field, index) => (
+              <Box key={index} marginBottom={2}>
+                <TextField
+                  {...register(field.field)}
+                  id={field.field}
+                  name={field.field}
+                  type="text"
+                  label={field.label}
+                  variant="standard"
+                  className="form-field"
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                />
+              </Box>
+            ))}
             <Box marginBottom={2}>
               {languagesSpeaking.map(({ id, value }, index) => (
                 <Fragment key={id}>

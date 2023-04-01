@@ -2,24 +2,24 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { AppState } from '../store'
 import { HYDRATE } from 'next-redux-wrapper'
-import { RoleType } from 'types/common'
 
-import { UserAccountProps } from 'interfaces/user.interface'
+import { IUserAccountProps } from 'interfaces/user.interface'
 
-export type IAuthAccountState = Omit<UserAccountProps, 'password'>
+export type IUserAccountStateProps = Omit<IUserAccountProps, 'password'>
 
 export interface IAuthState {
-  user: IAuthAccountState
+  user: IUserAccountStateProps
   isAuth: boolean
 }
 
-const defaultAuthState: IAuthAccountState = {
+const defaultAuthState: IUserAccountStateProps = {
   _id: '',
   email: '',
   fullname: '',
   login: '',
   phone: '',
   role: '',
+  date: '',
 }
 
 export const authSlice = createSlice({
@@ -29,15 +29,15 @@ export const authSlice = createSlice({
     isAuth: false,
   },
   reducers: {
-    setAuthState(state, action: PayloadAction<UserAccountProps>) {
+    setAuthState(state, action: PayloadAction<IUserAccountStateProps>) {
       state.user = action.payload
       state.isAuth = true
     },
-    setUpdateAccountUser(state, action: PayloadAction<Partial<UserAccountProps>>) {
+    setUpdateAccountUser(state, action: PayloadAction<Partial<IUserAccountStateProps>>) {
       state.user = {
         ...state.user,
         ...action.payload,
-      } as UserAccountProps
+      }
     },
     clearAuthState(state) {
       state.user = {

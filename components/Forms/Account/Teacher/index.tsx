@@ -11,20 +11,25 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
 
-import { UserEdtableAccountInfo, UserAccountFormInnerProps } from 'interfaces/user.interface'
+import { IUserAccountProps } from 'interfaces/user.interface'
+import { ITeacherProps } from 'interfaces/teacher.interface'
 
-import { AccountFormProps } from './AccountForm.type'
+import { ITeacherAccountFormProps, ITeacherAccountEditableProps } from './Teacher.type'
 
-function AccountForm({ onHandleRemoveAccount, onHandleSubmit, initialData, isLoading = false }: AccountFormProps) {
+function AccountForm({
+  onHandleRemoveAccount,
+  onHandleSubmit,
+  initialData,
+  isLoading = false,
+}: ITeacherAccountFormProps) {
   const [showPassword, setShowPassword] = useState<boolean>(false)
-  const [formData, setFormData] = useState<UserAccountFormInnerProps>(initialData)
+  const [formData, setFormData] = useState<Partial<IUserAccountProps>>(initialData)
 
   const {
     handleSubmit,
     register,
-    setValue,
     formState: { errors },
-  } = useForm<UserAccountFormInnerProps>({
+  } = useForm<ITeacherProps>({
     mode: 'onSubmit',
     defaultValues: initialData,
   })
@@ -40,16 +45,20 @@ function AccountForm({ onHandleRemoveAccount, onHandleSubmit, initialData, isLoa
   function onChange(field: string, value: string) {
     if (!formData) return
 
-    const formDataObject: UserAccountFormInnerProps = {
-      ...formData,
-      [field]: value,
-    }
-
-    setFormData(formDataObject)
+    setFormData((prevState) => {
+      return {
+        ...prevState,
+        [field]: value,
+      }
+    })
   }
 
-  function onSubmit(data: UserEdtableAccountInfo) {
-    onHandleSubmit(data)
+  function onSubmit(data: ITeacherAccountEditableProps) {
+    onHandleSubmit({
+      login: data.login,
+      fullname: data.fullname,
+      phone: data.phone,
+    })
   }
 
   return (
@@ -81,7 +90,6 @@ function AccountForm({ onHandleRemoveAccount, onHandleSubmit, initialData, isLoa
           className="form-field"
           fullWidth
           onChange={(e) => onChange('login', e.currentTarget.value)}
-          disabled
           InputLabelProps={{ shrink: true }}
           error={!!errors['login']?.message}
           helperText={errors['login']?.message}
@@ -100,6 +108,7 @@ function AccountForm({ onHandleRemoveAccount, onHandleSubmit, initialData, isLoa
           variant="standard"
           className="form-field"
           fullWidth
+          disabled
           onChange={(e) => onChange('email', e.currentTarget.value)}
           InputLabelProps={{ shrink: true }}
           error={!!errors['email']?.message}

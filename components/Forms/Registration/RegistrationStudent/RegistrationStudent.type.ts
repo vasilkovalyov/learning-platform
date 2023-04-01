@@ -1,4 +1,10 @@
-export interface RegistrationStudentFormData {
+export interface IFormRegistrationStudentFormProps {
+  onSuccess: (data: IRegistrationStudentProps) => void
+  isLoading: boolean
+  validationMessage?: string | null
+}
+
+export interface IRegistrationStudentProps {
   fullname: string
   login: string
   email: string
@@ -7,9 +13,3 @@ export interface RegistrationStudentFormData {
 }
 
 export type TextFieldType = 'fullname' | 'login' | 'email' | 'password' | 'confirm_password'
-
-export interface RegistrationStudentProps {
-  onSuccess: (data: RegistrationStudentFormData) => void
-  isLoading: boolean
-  validationMessage?: string | null
-}

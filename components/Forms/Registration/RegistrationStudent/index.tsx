@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -11,19 +11,19 @@ import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import LinearProgress from '@mui/material/LinearProgress'
 
-import { RegistrationStudentFormData, TextFieldType, RegistrationStudentProps } from './RegistrationStudent.type'
+import { IRegistrationStudentProps, TextFieldType, IFormRegistrationStudentFormProps } from './RegistrationStudent.type'
 
 import { RegistrationStudentFormSchema } from 'utils/schemas/registration/student'
 
 import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
 
-function RegistrationStudent({ onSuccess, isLoading, validationMessage }: RegistrationStudentProps) {
+function RegistrationStudent({ onSuccess, isLoading, validationMessage }: IFormRegistrationStudentFormProps) {
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<RegistrationStudentFormData>({
+  } = useForm<IRegistrationStudentProps>({
     mode: 'onSubmit',
     resolver: yupResolver(RegistrationStudentFormSchema),
     defaultValues: {
@@ -34,8 +34,8 @@ function RegistrationStudent({ onSuccess, isLoading, validationMessage }: Regist
       confirm_password: '',
     },
   })
-  const [showPassword, setShowPassword] = React.useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const fields: TextFieldType[] = ['fullname', 'login', 'email', 'password', 'confirm_password']
   return (
     <form onSubmit={handleSubmit(onSuccess)}>

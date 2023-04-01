@@ -11,28 +11,33 @@ import MenuItem from '@mui/material/MenuItem'
 
 import { WorkExperienceFormSchema } from 'utils/schemas/work_experience'
 
-import { WorkExperienceFormProps, WorkExperienceProps } from './WorkExperienceForm.type'
+import { IWorkExperienceFormProps } from './WorkExperienceForm.type'
+import { ITeacherWorkExperience } from 'interfaces/teacher.interface'
 
 import monthNames from 'static-data/month-names.json'
 import generateYears from 'common/generateYears'
 
-export const defaultInitialDate: WorkExperienceProps = {
+export const defaultInitialDate: ITeacherWorkExperience = {
   company_name: '',
   position: '',
   place_destination: '',
-  start_month_working: '',
-  start_year_working: '',
-  end_month_working: '',
-  end_year_working: '',
+  dateStart: {
+    month: '',
+    year: 0,
+  },
+  dateEnd: {
+    month: '',
+    year: 0,
+  },
 }
 
-function WorkExperienceForm({ onSubmit, initialData }: WorkExperienceFormProps) {
+function WorkExperienceForm({ onSubmit, initialData }: IWorkExperienceFormProps) {
   const years = generateYears()
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<WorkExperienceProps>({
+  } = useForm<ITeacherWorkExperience>({
     mode: 'onSubmit',
     resolver: yupResolver(WorkExperienceFormSchema),
     defaultValues: initialData ?? defaultInitialDate,
@@ -95,7 +100,7 @@ function WorkExperienceForm({ onSubmit, initialData }: WorkExperienceFormProps) 
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                {...register(`start_month_working`)}
+                {...register(`dateStart.month`)}
                 select
                 variant="standard"
                 label="Start date working"
@@ -103,10 +108,10 @@ function WorkExperienceForm({ onSubmit, initialData }: WorkExperienceFormProps) 
                 className="form-field"
                 fullWidth
                 placeholder="Month"
-                defaultValue={initialData?.start_month_working || ''}
+                defaultValue={initialData?.dateStart?.month || ''}
                 InputLabelProps={{ shrink: true }}
-                error={!!errors.start_month_working?.message}
-                helperText={errors.start_month_working?.message}
+                error={!!errors.dateStart?.message}
+                helperText={errors.dateStart?.message}
               >
                 {monthNames.map((option, index) => (
                   <MenuItem key={index} value={option}>
@@ -117,7 +122,7 @@ function WorkExperienceForm({ onSubmit, initialData }: WorkExperienceFormProps) 
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                {...register(`start_year_working`)}
+                {...register(`dateStart.year`)}
                 select
                 variant="standard"
                 label=" "
@@ -125,10 +130,10 @@ function WorkExperienceForm({ onSubmit, initialData }: WorkExperienceFormProps) 
                 className="form-field"
                 fullWidth
                 placeholder="year"
-                defaultValue={initialData?.start_year_working || ''}
+                defaultValue={initialData?.dateStart?.year || ''}
                 InputLabelProps={{ shrink: true }}
-                error={!!errors.start_year_working?.message}
-                helperText={errors.start_year_working?.message}
+                error={!!errors.dateStart?.year?.message}
+                helperText={errors.dateStart?.year?.message}
               >
                 {years.map((option, index) => (
                   <MenuItem key={index} value={option}>
@@ -139,7 +144,7 @@ function WorkExperienceForm({ onSubmit, initialData }: WorkExperienceFormProps) 
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                {...register(`end_month_working`)}
+                {...register(`dateEnd.month`)}
                 select
                 variant="standard"
                 label="End date working"
@@ -147,10 +152,10 @@ function WorkExperienceForm({ onSubmit, initialData }: WorkExperienceFormProps) 
                 className="form-field"
                 fullWidth
                 placeholder="Month"
-                defaultValue={initialData?.end_month_working || ''}
+                defaultValue={initialData?.dateEnd?.month || ''}
                 InputLabelProps={{ shrink: true }}
-                error={!!errors.end_month_working?.message}
-                helperText={errors.end_month_working?.message}
+                error={!!errors.dateEnd?.month?.message}
+                helperText={errors.dateEnd?.month?.message}
               >
                 {monthNames.map((option, index) => (
                   <MenuItem key={index} value={option}>
@@ -161,7 +166,7 @@ function WorkExperienceForm({ onSubmit, initialData }: WorkExperienceFormProps) 
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                {...register(`end_year_working`)}
+                {...register(`dateEnd.year`)}
                 select
                 variant="standard"
                 label=" "
@@ -169,10 +174,10 @@ function WorkExperienceForm({ onSubmit, initialData }: WorkExperienceFormProps) 
                 className="form-field"
                 fullWidth
                 placeholder="year"
-                defaultValue={initialData?.end_year_working || ''}
+                defaultValue={initialData?.dateEnd?.year || ''}
                 InputLabelProps={{ shrink: true }}
-                error={!!errors.end_year_working?.message}
-                helperText={errors.end_year_working?.message}
+                error={!!errors.dateEnd?.year?.message}
+                helperText={errors.dateEnd?.year?.message}
               >
                 {years.map((option, index) => (
                   <MenuItem key={index} value={option}>

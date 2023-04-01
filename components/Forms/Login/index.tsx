@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -10,19 +10,19 @@ import InputAdornment from '@mui/material/InputAdornment'
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 
-import { FormLoginProps } from './Login.type'
-import { LoginProps } from 'interfaces/user.interface'
+import { IAuthLoginProps, IFormLoginProps } from './Login.type'
 import { LoginFormSchema } from 'utils/schemas/authentication'
 
 import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
 
-function FormLogin({ onSubmit, isLoading, validationMessage }: FormLoginProps) {
+function FormLogin({ onSubmit, isLoading, validationMessage }: IFormLoginProps) {
+  const [showPassword, setShowPassword] = useState<boolean>(false)
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<LoginProps>({
+  } = useForm<IAuthLoginProps>({
     mode: 'onSubmit',
     resolver: yupResolver(LoginFormSchema),
     defaultValues: {
@@ -30,8 +30,6 @@ function FormLogin({ onSubmit, isLoading, validationMessage }: FormLoginProps) {
       password: '',
     },
   })
-  const [showPassword, setShowPassword] = React.useState(false)
-  const handleClickShowPassword = () => setShowPassword((show) => !show)
 
   return (
     <form name="form-login" onSubmit={handleSubmit(onSubmit)} className="form form-login">
@@ -63,7 +61,7 @@ function FormLogin({ onSubmit, isLoading, validationMessage }: FormLoginProps) {
           InputLabelProps={{ shrink: true }}
           InputProps={{
             endAdornment: (
-              <InputAdornment position="end" onClick={handleClickShowPassword}>
+              <InputAdornment position="end" onClick={() => setShowPassword((show) => !show)}>
                 <Icon size={20} icon={showPassword ? IconEnum.EYE_ACCESS : IconEnum.EYE_DENIED} />
               </InputAdornment>
             ),

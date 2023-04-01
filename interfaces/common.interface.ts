@@ -12,3 +12,8 @@ export interface LocationProps {
   city: string
   address: string
 }
+
+export type ISubjectLearningType = {
+  subject: string
+  level: string
+}

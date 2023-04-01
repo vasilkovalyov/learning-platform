@@ -14,7 +14,7 @@ import Grid from '@mui/material/Grid'
 import ModalPopupBox from 'components/ModalPopupBox'
 import PublicLayout from 'layouts/BaseLayout'
 import TeacherCard from 'components/TeacherCard'
-import { TeacherCardProps } from 'components/TeacherCard/TeacherCard.type'
+// import { TeacherCardProps } from 'components/TeacherCard/TeacherCard.type'
 
 import ShadowContainer from 'components/ShadowContainer'
 import FilterLessons from 'components/FilterLessons'
