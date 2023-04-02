@@ -21,14 +21,10 @@ export const defaultInitialDate: ITeacherEducation = {
   university_name: '',
   faculty: '',
   specialization: '',
-  dateStart: {
-    month: '',
-    year: 0,
-  },
-  dateEnd: {
-    month: '',
-    year: 0,
-  },
+  date_month_start: '',
+  date_year_start: 0,
+  date_month_end: '',
+  date_year_end: 0,
 }
 
 function EducationForm({ onSubmit, initialData }: IEducationFormProps) {
@@ -100,7 +96,7 @@ function EducationForm({ onSubmit, initialData }: IEducationFormProps) {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                {...register(`dateStart.month`)}
+                {...register(`date_month_start`)}
                 select
                 variant="standard"
                 label="Start date education"
@@ -108,10 +104,10 @@ function EducationForm({ onSubmit, initialData }: IEducationFormProps) {
                 className="form-field"
                 fullWidth
                 placeholder="Month"
-                defaultValue={initialData?.dateStart?.month || ''}
+                defaultValue={initialData?.date_month_start || ''}
                 InputLabelProps={{ shrink: true }}
-                error={!!errors.dateStart?.month?.message}
-                helperText={errors.dateStart?.month?.message}
+                error={!!errors.date_month_start?.message}
+                helperText={errors.date_month_start?.message}
               >
                 {monthNames.map((option, index) => (
                   <MenuItem key={index} value={option}>
@@ -122,7 +118,7 @@ function EducationForm({ onSubmit, initialData }: IEducationFormProps) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                {...register(`dateStart.year`)}
+                {...register(`date_year_start`)}
                 select
                 variant="standard"
                 label=" "
@@ -130,10 +126,10 @@ function EducationForm({ onSubmit, initialData }: IEducationFormProps) {
                 className="form-field"
                 fullWidth
                 placeholder="year"
-                defaultValue={initialData?.dateStart?.year || ''}
+                defaultValue={initialData?.date_year_start || ''}
                 InputLabelProps={{ shrink: true }}
-                error={!!errors.dateStart?.year?.message}
-                helperText={errors.dateStart?.year?.message}
+                error={!!errors.date_year_start?.message}
+                helperText={errors.date_year_start?.message}
               >
                 {years.map((option, index) => (
                   <MenuItem key={index} value={option}>
@@ -144,7 +140,7 @@ function EducationForm({ onSubmit, initialData }: IEducationFormProps) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                {...register(`dateEnd.month`)}
+                {...register(`date_month_end`)}
                 select
                 variant="standard"
                 label="End date education"
@@ -152,10 +148,10 @@ function EducationForm({ onSubmit, initialData }: IEducationFormProps) {
                 className="form-field"
                 fullWidth
                 placeholder="Month"
-                defaultValue={initialData?.dateEnd?.month || ''}
+                defaultValue={initialData?.date_month_end || ''}
                 InputLabelProps={{ shrink: true }}
-                error={!!errors.dateEnd?.month?.message}
-                helperText={errors.dateEnd?.month?.message}
+                error={!!errors.date_month_end?.message}
+                helperText={errors.date_month_end?.message}
               >
                 {monthNames.map((option, index) => (
                   <MenuItem key={index} value={option}>
@@ -166,7 +162,7 @@ function EducationForm({ onSubmit, initialData }: IEducationFormProps) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                {...register(`dateEnd.year`)}
+                {...register(`date_year_end`)}
                 select
                 variant="standard"
                 label=" "
@@ -174,10 +170,10 @@ function EducationForm({ onSubmit, initialData }: IEducationFormProps) {
                 className="form-field"
                 fullWidth
                 placeholder="year"
-                defaultValue={initialData?.dateEnd?.year || ''}
+                defaultValue={initialData?.date_year_end || ''}
                 InputLabelProps={{ shrink: true }}
-                error={!!errors.dateEnd?.year?.message}
-                helperText={errors.dateEnd?.year?.message}
+                error={!!errors.date_year_end?.message}
+                helperText={errors.date_year_end?.message}
               >
                 {years.map((option, index) => (
                   <MenuItem key={index} value={option}>

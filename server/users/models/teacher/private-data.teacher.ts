@@ -24,25 +24,19 @@ const model = new Schema({
     type: [
       {
         company_name: { type: String },
-        position: { required: false, type: String },
-        place_destination: { required: false, type: String },
-        dateStart: {
-          required: false,
-          month: {
-            type: String,
-          },
-          year: {
-            type: String,
-          },
+        position: { type: String },
+        place_destination: { type: String },
+        date_month_start: {
+          type: String,
         },
-        dateEnd: {
-          required: false,
-          month: {
-            type: String,
-          },
-          year: {
-            type: String,
-          },
+        date_year_start: {
+          type: Number,
+        },
+        date_month_end: {
+          type: String,
+        },
+        date_year_end: {
+          type: Number,
         },
       },
     ],
@@ -51,25 +45,19 @@ const model = new Schema({
     type: [
       {
         university_name: { type: String },
-        faculty: { required: false, type: String },
-        specialization: { required: false, type: String },
-        dateStart: {
-          required: false,
-          month: {
-            type: String,
-          },
-          year: {
-            type: String,
-          },
+        faculty: { type: String },
+        specialization: { type: String },
+        date_month_start: {
+          type: String,
         },
-        dateEnd: {
-          required: false,
-          month: {
-            type: String,
-          },
-          year: {
-            type: String,
-          },
+        date_year_start: {
+          type: Number,
+        },
+        date_month_end: {
+          type: String,
+        },
+        date_year_end: {
+          type: Number,
         },
       },
     ],

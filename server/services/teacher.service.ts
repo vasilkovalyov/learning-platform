@@ -146,10 +146,30 @@ class TeacherService {
     }
   }
 
-  async getUserPrivateDataById(id: string): Promise<ITeacherPrivateDataModel> {
-    const response: ITeacherPrivateDataModel | null = await TeacherPrivateDataModel.findOne({ user: id })
-    if (!response) throw ApiError.BadRequest(`Teacher private data with id - ${id} doesn't find !`)
-    return response
+  async getUserPrivateDataById(id: string): Promise<ITeacherPrivateDataModel & ITeacherServiceModel> {
+    const responsePrivateData: ITeacherPrivateDataModel | null = await TeacherPrivateDataModel.findOne({ user: id })
+    const responseService: ITeacherServiceModel | null = await TeacherServiceModel.findOne({ user: id })
+    if (!responsePrivateData || !responseService)
+      throw ApiError.BadRequest(`Teacher private data with id - ${id} doesn't find !`)
+    return {
+      _id: responsePrivateData._id,
+      city: responsePrivateData.city,
+      state: responsePrivateData.state,
+      country: responsePrivateData.country,
+      address: responsePrivateData.address,
+      about_info: responsePrivateData.about_info,
+      education: responsePrivateData.education,
+      work_experience: responsePrivateData.work_experience,
+      lang_speaking: responseService.lang_speaking,
+      lang_teaching: responseService.lang_teaching,
+      lesson_duration: responseService.lesson_duration,
+      lessons: responseService.lessons,
+      lessons_prices: responseService.lessons_prices,
+      levels_studying: responseService.levels_studying,
+      students_ages: responseService.students_ages,
+      subjects: responseService.subjects,
+      user: responseService.user,
+    }
   }
 
   async updateUserAccount({
@@ -181,18 +201,61 @@ class TeacherService {
     }
   }
 
-  async updateUserPrivateData(props: ITeacherPrivateDataModel): Promise<ITeacherPrivateDataModel> {
-    const response: ITeacherPrivateDataModel | null = await TeacherPrivateDataModel.findOneAndUpdate(
+  async updateUserPrivateData(
+    props: ITeacherPrivateDataModel & ITeacherServiceModel,
+  ): Promise<ITeacherPrivateDataModel & ITeacherServiceModel> {
+    const responsePrivateData: ITeacherPrivateDataModel | null = await TeacherPrivateDataModel.findOneAndUpdate(
       { user: props.user },
       {
-        ...props,
+        country: props.country,
+        state: props.state,
+        city: props.city,
+        address: props.address,
+        about_info: props.about_info,
+        work_experience: props.work_experience,
+        education: props.education,
       },
       { new: true },
     )
 
-    if (!response) throw ApiError.BadRequest('Teacher private data doesn`t update')
+    if (!responsePrivateData) throw ApiError.BadRequest('Teacher private data doesn`t update')
 
-    return response
+    const responseService: ITeacherServiceModel | null = await TeacherServiceModel.findOneAndUpdate(
+      { user: props.user },
+      {
+        lessons: props.lessons,
+        lesson_duration: props.lesson_duration,
+        lang_speaking: props.lang_speaking,
+        students_ages: props.students_ages,
+        lang_teaching: props.lang_teaching,
+        subjects: props.subjects,
+        levels_studying: props.levels_studying,
+        lessons_prices: props.lessons_prices,
+      },
+      { new: true },
+    )
+
+    if (!responseService) throw ApiError.BadRequest('Teacher private data doesn`t update')
+
+    return {
+      _id: responsePrivateData._id,
+      city: responsePrivateData.city,
+      state: responsePrivateData.state,
+      country: responsePrivateData.country,
+      address: responsePrivateData.address,
+      about_info: responsePrivateData.about_info,
+      education: responsePrivateData.education,
+      work_experience: responsePrivateData.work_experience,
+      lang_speaking: responseService.lang_speaking,
+      lang_teaching: responseService.lang_teaching,
+      lesson_duration: responseService.lesson_duration,
+      lessons: responseService.lessons,
+      lessons_prices: responseService.lessons_prices,
+      levels_studying: responseService.levels_studying,
+      students_ages: responseService.students_ages,
+      subjects: responseService.subjects,
+      user: responseService.user,
+    }
   }
 
   async deleteUserById(id: string): Promise<TeacherResponse> {

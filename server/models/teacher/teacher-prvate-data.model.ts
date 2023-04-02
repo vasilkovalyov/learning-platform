@@ -14,14 +14,10 @@ export interface ITeacherPrivateDataModel {
 }
 
 export interface ITeacherExperienceDate {
-  dateStart: {
-    month: string
-    year: number
-  }
-  dateEnd: {
-    month: string
-    year: number
-  }
+  date_month_start: string
+  date_year_start: number
+  date_month_end: string
+  date_year_end: number
 }
 
 export interface IWorkExperienceProps extends ITeacherExperienceDate {
@@ -62,23 +58,17 @@ const model = new Schema({
       company_name: { type: String },
       position: { required: false, type: String },
       place_destination: { required: false, type: String },
-      dateStart: {
-        required: false,
-        month: {
-          type: String,
-        },
-        year: {
-          type: String,
-        },
+      date_month_start: {
+        type: String,
       },
-      dateEnd: {
-        required: false,
-        month: {
-          type: String,
-        },
-        year: {
-          type: String,
-        },
+      date_year_start: {
+        type: Number,
+      },
+      date_month_end: {
+        type: String,
+      },
+      date_year_end: {
+        type: Number,
       },
     },
   ],
@@ -87,23 +77,17 @@ const model = new Schema({
       university_name: { type: String },
       faculty: { required: false, type: String },
       specialization: { required: false, type: String },
-      dateStart: {
-        required: false,
-        month: {
-          type: String,
-        },
-        year: {
-          type: String,
-        },
+      date_month_start: {
+        type: String,
       },
-      dateEnd: {
-        required: false,
-        month: {
-          type: String,
-        },
-        year: {
-          type: String,
-        },
+      date_year_start: {
+        type: Number,
+      },
+      date_month_end: {
+        type: String,
+      },
+      date_year_end: {
+        type: Number,
       },
     },
   ],
