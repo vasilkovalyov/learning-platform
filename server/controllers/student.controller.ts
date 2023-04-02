@@ -6,7 +6,7 @@ class StudentController {
     try {
       const response = await studentService.signUp(req.body)
       res.json(response).status(200)
-    } catch (e) {
+    } catch (e: any) {
       res.status(400).json({
         message: e.message,
       })
@@ -17,7 +17,7 @@ class StudentController {
     try {
       const response = await studentService.getUserAccountById(req.params.id)
       res.json(response).status(200)
-    } catch (e) {
+    } catch (e: any) {
       res.status(400).json({
         message: e.message,
       })
@@ -28,7 +28,7 @@ class StudentController {
     try {
       const response = await studentService.getUserPrivateDataById(req.params.id)
       res.json(response).status(200)
-    } catch (e) {
+    } catch (e: any) {
       res.status(400).json({
         message: e.message,
       })
@@ -39,7 +39,7 @@ class StudentController {
     try {
       const userData = await studentService.updateUserAccount(req.body)
       res.json(userData)
-    } catch (e) {
+    } catch (e: any) {
       res.status(400).json({
         message: e.message,
       })
@@ -50,7 +50,7 @@ class StudentController {
     try {
       const userData = await studentService.updateUserPrivateData(req.body)
       res.json(userData)
-    } catch (e) {
+    } catch (e: any) {
       console.error(e)
       res.status(e.status).json(e)
     }
@@ -61,7 +61,7 @@ class StudentController {
       const response = await studentService.deleteUserById(req.params.id)
       res.json(response).status(200)
       console.log('response', response)
-    } catch (e) {
+    } catch (e: any) {
       console.log('response error', e)
       res.status(400).json({
         message: e.message,

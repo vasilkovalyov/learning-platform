@@ -7,7 +7,7 @@ class AuthController {
     try {
       const userData = await authService.signIn(req.query)
       res.json(userData)
-    } catch (e) {
+    } catch (e: any) {
       res.status(400).json({
         message: e.message,
       })
