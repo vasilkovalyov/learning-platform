@@ -23,7 +23,7 @@ class TeacherService {
     const { token } = parseCookies()
     const response = await $api(token).post(`${PRIVATE_REQUESTS.TEACHER.PRIVATE_DATA_UPDATE}`, {
       ...props,
-      _id: id,
+      user: id,
     })
     return response
   }

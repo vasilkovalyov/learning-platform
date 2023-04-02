@@ -38,7 +38,6 @@ class TeacherController {
 
   async updateUserAccount(req: Request, res: Response) {
     try {
-      console.log(req)
       const userData = await studentService.updateUserAccount(req.body)
       res.json(userData)
     } catch (e) {

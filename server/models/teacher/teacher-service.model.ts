@@ -6,41 +6,15 @@ export interface ITeacherServiceModel {
   user: string
   lessons: ITeacherLessonInfo[] | []
   lesson_duration: number | null
-  lang_speaking:
-    | {
-        id: string
-        value: string
-        label: string
-      }[]
-    | []
-  students_ages:
-    | {
-        id: string
-        value: string
-        label: string
-      }[]
-    | []
-  lang_teaching:
-    | {
-        id: string
-        value: string
-        label: string
-      }[]
-    | []
-  subjects:
-    | {
-        id: string
-        value: string
-        label: string
-      }[]
-    | []
-  levels_studying:
-    | {
-        id: string
-        value: string
-        label: string
-      }[]
-    | []
+  lessons_prices: {
+    count: number
+    prive: string
+  }[]
+  lang_speaking: string[]
+  students_ages: string[]
+  lang_teaching: string[]
+  subjects: string[]
+  levels_studying: string[]
 }
 
 export interface ITeacherLessonInfo {
@@ -73,6 +47,16 @@ const model = new Schema({
   lesson_duration: {
     type: Number,
   },
+  lessons_prices: [
+    {
+      count: {
+        type: Number,
+      },
+      price: {
+        type: String,
+      },
+    },
+  ],
   lessons: [
     {
       subject: {

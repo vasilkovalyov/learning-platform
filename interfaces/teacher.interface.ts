@@ -12,27 +12,17 @@ export interface ITeacherPrivateDataProps extends LocationProps, ITeacherService
 }
 
 export interface ITeacherServices {
-  lang_speaking: {
-    value: string
-  }[]
-  lang_teaching: {
-    value: string
-  }[]
-  subjects: {
-    value: string
-  }[]
-  levels_studying: {
-    value: string
-  }[]
+  lang_speaking: string[]
+  lang_teaching: string[]
+  subjects: string[]
+  levels_studying: string[]
   lesson_duration: number
   lessons: ITeacherLesson[]
   lessons_prices: {
     count: string
     price: string
   }[]
-  students_ages: {
-    value: string
-  }[]
+  students_ages: string[]
 }
 
 export interface ITeacherLesson {

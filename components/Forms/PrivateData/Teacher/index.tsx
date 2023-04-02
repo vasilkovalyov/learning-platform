@@ -12,8 +12,10 @@ import TextField from '@mui/material/TextField'
 import MenuItem from '@mui/material/MenuItem'
 import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
+import CircularProgress from '@mui/material/CircularProgress'
 
 import ModalPopupBox from 'components/ModalPopupBox'
+import Notification from 'components/Notification'
 
 import EducationForm, { defaultInitialDate as initialDateEducationForm } from '../../EducationForm'
 import WorkExperienceForm, { defaultInitialDate as initialDateWorkExperienceForm } from '../../WorkExperienceForm'
@@ -21,7 +23,7 @@ import WorkExperienceForm, { defaultInitialDate as initialDateWorkExperienceForm
 import Icon from 'components/Generic/Icon'
 import { IconEnum } from 'components/Generic/Icon/Icon.type'
 
-import { ITeacherPrivateDataEditableProps } from './Teacher.type'
+import { ITeacherFormServices, ITeacherPrivateDataEditableProps, ITeacherSimpleEditableProps } from './Teacher.type'
 import colors from 'constants/colors'
 
 import getFormatDurationTime from 'common/formatDurationTime'
@@ -30,7 +32,15 @@ import studentAges from 'static-data/students-ages.json'
 import teacherService from 'services/teacher.service'
 import { ITeacherEducation, ITeacherWorkExperience } from 'interfaces/teacher.interface'
 
-type FieldType = keyof Pick<ITeacherPrivateDataEditableProps, 'country' | 'state' | 'city' | 'address'>
+function showButtonAddField<T>(fields: T[], index: number) {
+  return fields.length === 1 || index === fields.length - 1
+}
+
+function showButtonRemoveField<T>(fields: T[]) {
+  return fields.length > 1
+}
+
+type FieldType = keyof Pick<ITeacherFormServices, 'country' | 'state' | 'city' | 'address'>
 
 const locationFields: { label: string; field: FieldType }[] = [
   {
@@ -51,7 +61,7 @@ const locationFields: { label: string; field: FieldType }[] = [
   },
 ]
 
-const initialData: ITeacherPrivateDataEditableProps = {
+const initialData: ITeacherFormServices = {
   about_info: '',
   city: '',
   country: '',
@@ -103,7 +113,12 @@ function TeacherPrivateDataForm() {
   const [selectedEducation, setSelectedEducation] = useState<ITeacherEducation | null>(null)
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
-  const { handleSubmit, control, register, setValue, reset, getValues } = useForm<ITeacherPrivateDataEditableProps>({
+  const [selectedLessonDuration, setSelectedLessonDuration] = useState<string>('')
+
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [showNotificaton, setShowNotificaton] = useState<boolean>(false)
+
+  const { handleSubmit, control, register, setValue, reset } = useForm<ITeacherFormServices>({
     mode: 'onSubmit',
     defaultValues: initialData,
   })
@@ -172,7 +187,7 @@ function TeacherPrivateDataForm() {
   })
 
   const {
-    fields: levels_studying,
+    fields: levelsStudying,
     remove: removeLevelsStudying,
     append: appendLevelsStudying,
   } = useFieldArray({
@@ -192,8 +207,40 @@ function TeacherPrivateDataForm() {
     setSelectedIndex(null)
   }
 
-  function onSuccess(data: ITeacherPrivateDataEditableProps) {
-    console.log('data', data)
+  async function onSuccess(data: ITeacherFormServices) {
+    setIsLoading(true)
+
+    const baseInfo: ITeacherSimpleEditableProps = {
+      about_info: data.about_info,
+      address: data.address,
+      city: data.city,
+      country: data.country,
+      state: data.state,
+    }
+
+    const propsData: ITeacherPrivateDataEditableProps = {
+      ...baseInfo,
+      education: data.education.length ? data.education.filter((item) => item.university_name !== '') : [],
+      work_experience: data.work_experience.length
+        ? data.work_experience.filter((item) => item.company_name !== '')
+        : [],
+      lang_speaking: data.lang_speaking.length ? data.lang_speaking.map((item) => item.value) : [],
+      lang_teaching: data.lang_teaching.length ? data.lang_teaching.map((item) => item.value) : [],
+      subjects: data.subjects.map((item) => item.value),
+      levels_studying: data.levels_studying.length ? data.levels_studying.map((item) => item.value) : [],
+      lesson_duration: data.lesson_duration,
+      lessons: [],
+      lessons_prices: data.lessons_prices,
+      students_ages: data.students_ages.length ? data.students_ages.map((item) => item.value) : [],
+    }
+    try {
+      await teacherService.updateUserPrivateData(authState.user._id, propsData)
+      setIsLoading(false)
+      setShowNotificaton(true)
+    } catch (e) {
+      setIsLoading(false)
+    }
+    setIsLoading(false)
   }
 
   function onSubmitEducationForm(data: ITeacherEducation) {
@@ -203,7 +250,6 @@ function TeacherPrivateDataForm() {
     }
     setValue(`education.${education.length - 1}`, data)
     appendEducation(initialDateEducationForm)
-
     setSelectedEducation(null)
     handleCloseModal('education')
   }
@@ -248,8 +294,60 @@ function TeacherPrivateDataForm() {
   async function loadFormData() {
     try {
       const response = await teacherService.getUserPrivateData(authState.user._id)
+      setSelectedLessonDuration(response.data.lesson_duration.toString())
+
+      const baseInfo: ITeacherSimpleEditableProps = {
+        about_info: response.data.about_info,
+        address: response.data.address,
+        city: response.data.city,
+        country: response.data.country,
+        state: response.data.state,
+      }
+
       reset({
-        ...response.data,
+        ...baseInfo,
+        lang_speaking: response.data.lang_speaking.length
+          ? response.data.lang_speaking.map((item) => {
+              return {
+                value: item,
+              }
+            })
+          : initialData.lang_speaking,
+        lang_teaching: response.data.lang_teaching.length
+          ? response.data.lang_teaching.map((item) => {
+              return {
+                value: item,
+              }
+            })
+          : initialData.lang_teaching,
+        subjects: response.data.subjects.length
+          ? response.data.subjects.map((item) => {
+              return {
+                value: item,
+              }
+            })
+          : initialData.subjects,
+        students_ages: response.data.students_ages.length
+          ? response.data.students_ages.map((item) => {
+              return {
+                value: item,
+              }
+            })
+          : initialData.students_ages,
+        lessons: response.data.lessons.length
+          ? response.data.lessons.map((item) => {
+              return item
+            })
+          : initialData.lessons,
+        lessons_prices: response.data.lessons_prices,
+        lesson_duration: response.data.lesson_duration,
+        levels_studying: response.data.levels_studying.length
+          ? response.data.levels_studying.map((item) => {
+              return {
+                value: item,
+              }
+            })
+          : [],
         work_experience: [
           ...response.data.work_experience,
           {
@@ -300,7 +398,7 @@ function TeacherPrivateDataForm() {
                     defaultValue={value}
                     id={`languages_speaking-${index}`}
                     type="text"
-                    label="Languages speaking"
+                    label={index === 0 ? 'Languages speaking' : ' '}
                     variant="standard"
                     className="form-field"
                     fullWidth
@@ -308,9 +406,9 @@ function TeacherPrivateDataForm() {
                     InputProps={{
                       endAdornment: (
                         <>
-                          {languagesSpeaking[index]?.id === id ? (
+                          {showButtonAddField(languagesSpeaking, index) ? (
                             <Button
-                              className="form-button-field"
+                              className="form-button-field form-button-field--add"
                               type="button"
                               onClick={() =>
                                 appendLanguageSpeaking({
@@ -323,7 +421,7 @@ function TeacherPrivateDataForm() {
                               </span>
                             </Button>
                           ) : null}
-                          {index >= 1 ? (
+                          {showButtonRemoveField(languagesSpeaking) ? (
                             <>
                               <Button
                                 type="button"
@@ -351,7 +449,7 @@ function TeacherPrivateDataForm() {
                     defaultValue={value}
                     id={`lang_teaching-${index}`}
                     type="text"
-                    label="Languages teaching"
+                    label={index === 0 ? 'Languages teaching' : ' '}
                     variant="standard"
                     className="form-field"
                     fullWidth
@@ -359,7 +457,7 @@ function TeacherPrivateDataForm() {
                     InputProps={{
                       endAdornment: (
                         <>
-                          {languagesTeaching[index]?.id === id ? (
+                          {showButtonAddField(languagesTeaching, index) ? (
                             <Button
                               className="form-button-field"
                               type="button"
@@ -374,7 +472,7 @@ function TeacherPrivateDataForm() {
                               </span>
                             </Button>
                           ) : null}
-                          {index >= 1 ? (
+                          {showButtonRemoveField(languagesTeaching) ? (
                             <>
                               <Button
                                 type="button"
@@ -419,7 +517,7 @@ function TeacherPrivateDataForm() {
                     defaultValue={value}
                     id={`subjects-${index}`}
                     type="text"
-                    label="Subjects"
+                    label={index === 0 ? 'Subjects' : ' '}
                     variant="standard"
                     className="form-field"
                     fullWidth
@@ -427,20 +525,22 @@ function TeacherPrivateDataForm() {
                     InputProps={{
                       endAdornment: (
                         <>
-                          <Button
-                            className="form-button-field"
-                            type="button"
-                            onClick={() =>
-                              appendSubjects({
-                                value: '',
-                              })
-                            }
-                          >
-                            <span className="form-button-field__icon">
-                              <Icon icon={IconEnum.PLUS} color={colors.primary_color} size={10} />
-                            </span>
-                          </Button>
-                          {index !== 0 ? (
+                          {showButtonAddField(subjects, index) ? (
+                            <Button
+                              className="form-button-field"
+                              type="button"
+                              onClick={() =>
+                                appendSubjects({
+                                  value: '',
+                                })
+                              }
+                            >
+                              <span className="form-button-field__icon">
+                                <Icon icon={IconEnum.PLUS} color={colors.primary_color} size={10} />
+                              </span>
+                            </Button>
+                          ) : null}
+                          {showButtonRemoveField(subjects) ? (
                             <>
                               <Button
                                 type="button"
@@ -461,23 +561,23 @@ function TeacherPrivateDataForm() {
               ))}
             </Box>
             <Box marginBottom={2}>
-              {studentsAges.map(({ id }, index) => (
+              {studentsAges.map(({ id, value }, index) => (
                 <Fragment key={id}>
                   <TextField
                     {...register(`students_ages.${index}.value`)}
                     id={`students_ages-${index}`}
                     type="text"
                     select
-                    label="Students ages"
+                    label={index === 0 ? 'Students ages' : ' '}
                     variant="standard"
                     className="form-field"
                     fullWidth
-                    defaultValue=""
+                    defaultValue={value}
                     InputLabelProps={{ shrink: true }}
                     InputProps={{
                       endAdornment: (
                         <>
-                          {studentsAges[index]?.id === id ? (
+                          {showButtonAddField(studentsAges, index) ? (
                             <Button
                               className="form-button-field"
                               type="button"
@@ -492,7 +592,7 @@ function TeacherPrivateDataForm() {
                               </span>
                             </Button>
                           ) : null}
-                          {index >= 1 ? (
+                          {showButtonRemoveField(studentsAges) ? (
                             <>
                               <Button
                                 type="button"
@@ -527,14 +627,14 @@ function TeacherPrivateDataForm() {
             </Box>
           </Grid>
           <Grid item xs={12}>
-            {lessonsPrices.map(({ count, price }, index) => (
+            {lessonsPrices.map((_, index) => (
               <Grid container key={index}>
                 <Grid item sm={6}>
                   <TextField
                     {...register(`lessons_prices.${index}.count`)}
                     id={`lessons_prices-${index}.count`}
                     type="text"
-                    label="Lesson count"
+                    label={index === 0 ? 'Lesson count' : ' '}
                     variant="standard"
                     className="form-field"
                     fullWidth
@@ -542,21 +642,23 @@ function TeacherPrivateDataForm() {
                     InputProps={{
                       endAdornment: (
                         <>
-                          <Button
-                            className="form-button-field"
-                            type="button"
-                            onClick={() => {
-                              appendLessonsPrices({
-                                count: '',
-                                price: '',
-                              })
-                            }}
-                          >
-                            <span className="form-button-field__icon">
-                              <Icon icon={IconEnum.PLUS} color={colors.primary_color} size={10} />
-                            </span>
-                          </Button>
-                          {index !== 0 ? (
+                          {showButtonAddField(lessonsPrices, index) ? (
+                            <Button
+                              className="form-button-field"
+                              type="button"
+                              onClick={() => {
+                                appendLessonsPrices({
+                                  count: '',
+                                  price: '',
+                                })
+                              }}
+                            >
+                              <span className="form-button-field__icon">
+                                <Icon icon={IconEnum.PLUS} color={colors.primary_color} size={10} />
+                              </span>
+                            </Button>
+                          ) : null}
+                          {showButtonRemoveField(lessonsPrices) ? (
                             <>
                               <Button
                                 type="button"
@@ -579,7 +681,7 @@ function TeacherPrivateDataForm() {
                     {...register(`lessons_prices.${index}.price`)}
                     id={`lessons_prices-${index}.price`}
                     type="text"
-                    label="Lesson price"
+                    label={index === 0 ? 'Lesson price' : ' '}
                     variant="standard"
                     className="form-field"
                     fullWidth
@@ -592,15 +694,18 @@ function TeacherPrivateDataForm() {
           <Grid item xs={12} md={6}>
             <Box marginBottom={2}>
               <TextField
-                {...register(`lesson_duration`)}
+                {...register('lesson_duration')}
                 select
                 variant="standard"
                 label="Lesson duration"
                 type="text"
                 className="form-field"
                 fullWidth
-                defaultValue=""
+                value={selectedLessonDuration}
                 InputLabelProps={{ shrink: true }}
+                onChange={(e) => {
+                  setSelectedLessonDuration(e.target.value)
+                }}
               >
                 <MenuItem value="30">{getFormatDurationTime(30, 'long')}</MenuItem>
                 <MenuItem value="60">{getFormatDurationTime(60, 'long')}</MenuItem>
@@ -613,14 +718,14 @@ function TeacherPrivateDataForm() {
           </Grid>
           <Grid item xs={12} md={6}>
             <Box marginBottom={2}>
-              {levels_studying.map(({ id, value }, index) => (
+              {levelsStudying.map(({ id, value }, index) => (
                 <Fragment key={id}>
                   <TextField
                     {...register(`levels_studying.${index}.value`)}
                     defaultValue={value}
                     id={`levels_studying-${index}`}
                     type="text"
-                    label="levels_studying"
+                    label={index === 0 ? 'Levels studying' : ' '}
                     variant="standard"
                     className="form-field"
                     fullWidth
@@ -628,7 +733,7 @@ function TeacherPrivateDataForm() {
                     InputProps={{
                       endAdornment: (
                         <>
-                          {levels_studying[index]?.id === id ? (
+                          {showButtonAddField(levelsStudying, index) ? (
                             <Button
                               className="form-button-field"
                               type="button"
@@ -643,7 +748,7 @@ function TeacherPrivateDataForm() {
                               </span>
                             </Button>
                           ) : null}
-                          {index >= 1 ? (
+                          {showButtonRemoveField(levelsStudying) ? (
                             <>
                               <Button
                                 type="button"
@@ -670,7 +775,7 @@ function TeacherPrivateDataForm() {
                     {...register(`work_experience.${index}.company_name`)}
                     id={`work_experience-${index}`}
                     type="text"
-                    label="Work experience"
+                    label={index === 0 ? 'Work experience' : ' '}
                     variant="standard"
                     className="form-field"
                     fullWidth
@@ -679,8 +784,7 @@ function TeacherPrivateDataForm() {
                     InputProps={{
                       endAdornment: (
                         <>
-                          {(index === 0 && workExperience.length === 1) ||
-                          (index > 0 && index === workExperience.length - 1) ? (
+                          {showButtonAddField(workExperience, index) ? (
                             <Button
                               className="form-button-field form-button-field--add"
                               type="button"
@@ -706,7 +810,7 @@ function TeacherPrivateDataForm() {
                               </span>
                             </Button>
                           ) : null}
-                          {index !== 0 ? (
+                          {showButtonRemoveField(workExperience) ? (
                             <>
                               <Button
                                 type="button"
@@ -744,7 +848,7 @@ function TeacherPrivateDataForm() {
                     InputProps={{
                       endAdornment: (
                         <>
-                          {(index === 0 && education.length === 1) || (index > 0 && index === education.length - 1) ? (
+                          {showButtonAddField(education, index) ? (
                             <Button
                               className="form-button-field form-button-field--add"
                               type="button"
@@ -755,7 +859,7 @@ function TeacherPrivateDataForm() {
                               </span>
                             </Button>
                           ) : null}
-                          {education[index].university_name !== '' ? (
+                          {showButtonRemoveField(education) ? (
                             <Button
                               className="form-button-field form-button-field--edit"
                               type="button"
@@ -794,10 +898,18 @@ function TeacherPrivateDataForm() {
           <Grid item xs={12}>
             <Button type="submit" variant="contained" onClick={handleSubmit(onSuccess)}>
               Save
+              {isLoading ? <CircularProgress size={16} /> : null}
             </Button>
           </Grid>
         </Grid>
       </form>
+      <Notification
+        open={showNotificaton}
+        setClose={() => setShowNotificaton(false)}
+        direction={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        {authState.user.role} updated successfully
+      </Notification>
       <Modal open={modalEducationOpen} onClose={() => handleCloseModal('education')}>
         <>
           <ModalPopupBox type="default" onHandleClose={() => handleCloseModal('education')}>
