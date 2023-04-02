@@ -103,7 +103,7 @@ function TeacherPrivateDataForm() {
   const [selectedEducation, setSelectedEducation] = useState<ITeacherEducation | null>(null)
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
-  const { handleSubmit, control, register, setValue, reset } = useForm<ITeacherPrivateDataEditableProps>({
+  const { handleSubmit, control, register, setValue, reset, getValues } = useForm<ITeacherPrivateDataEditableProps>({
     mode: 'onSubmit',
     defaultValues: initialData,
   })
@@ -203,6 +203,7 @@ function TeacherPrivateDataForm() {
     }
     setValue(`education.${education.length - 1}`, data)
     appendEducation(initialDateEducationForm)
+
     setSelectedEducation(null)
     handleCloseModal('education')
   }
@@ -244,45 +245,28 @@ function TeacherPrivateDataForm() {
     handleCloseModal('work_experience')
   }
 
-  console.log('education', education)
-
   async function loadFormData() {
     try {
       const response = await teacherService.getUserPrivateData(authState.user._id)
-      if (!response.data) return
-      for (const [key, value] of Object.entries(response.data)) {
-        if (Array.isArray(value) && key === 'education') {
-          value.forEach((item, index) => {
-            setValue(`education.${index}`, {
-              ...initialDateEducationForm,
-              ...item,
-            })
-            appendEducation({
-              ...initialDateEducationForm,
-            })
-          })
-        }
-        if (Array.isArray(value) && key === 'work_experience') {
-          value.forEach((item, index) => {
-            setValue(`work_experience.${index}`, {
-              ...initialDateWorkExperienceForm,
-              ...item,
-            })
-            appendWorkExperience({
-              ...initialDateWorkExperienceForm,
-            })
-          })
-        }
-        if (typeof value === 'string') {
-          setValue(key as keyof ITeacherPrivateDataEditableProps, value)
-        }
-      }
+      reset({
+        ...response.data,
+        work_experience: [
+          ...response.data.work_experience,
+          {
+            company_name: '',
+          },
+        ],
+        education: [
+          ...response.data.education,
+          {
+            university_name: '',
+          },
+        ],
+      })
     } catch (e) {
       console.log(e)
     }
   }
-
-  console.log('education', education)
 
   useEffect(() => {
     loadFormData()
@@ -290,7 +274,7 @@ function TeacherPrivateDataForm() {
 
   return (
     <Box pb={10}>
-      <form className="form-private-data form-private-data--teacher" onSubmit={handleSubmit(onSuccess)}>
+      <form className="form-private-data form-private-data--teacher">
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             {locationFields.map((field, index) => (
@@ -695,10 +679,10 @@ function TeacherPrivateDataForm() {
                     InputProps={{
                       endAdornment: (
                         <>
-                          {workExperience[index + 1]?.company_name !== '' ||
-                          workExperience[index].company_name === '' ? (
+                          {(index === 0 && workExperience.length === 1) ||
+                          (index > 0 && index === workExperience.length - 1) ? (
                             <Button
-                              className="form-button-field"
+                              className="form-button-field form-button-field--add"
                               type="button"
                               onClick={() => setModalWorkExperienceOpen(true)}
                             >
@@ -709,7 +693,7 @@ function TeacherPrivateDataForm() {
                           ) : null}
                           {workExperience[index].company_name !== '' ? (
                             <Button
-                              className="form-button-field"
+                              className="form-button-field form-button-field--edit"
                               type="button"
                               onClick={() => {
                                 setModalWorkExperienceOpen(true)
@@ -751,7 +735,7 @@ function TeacherPrivateDataForm() {
                     {...register(`education.${index}.university_name`)}
                     id={`education-${index}`}
                     type="text"
-                    label="Education"
+                    label={index === 0 ? 'Education' : ' '}
                     variant="standard"
                     className="form-field"
                     fullWidth
@@ -760,9 +744,9 @@ function TeacherPrivateDataForm() {
                     InputProps={{
                       endAdornment: (
                         <>
-                          {education[index + 1]?.university_name !== '' || education[index].university_name === '' ? (
+                          {(index === 0 && education.length === 1) || (index > 0 && index === education.length - 1) ? (
                             <Button
-                              className="form-button-field"
+                              className="form-button-field form-button-field--add"
                               type="button"
                               onClick={() => setModalEducationOpen(true)}
                             >
@@ -773,7 +757,7 @@ function TeacherPrivateDataForm() {
                           ) : null}
                           {education[index].university_name !== '' ? (
                             <Button
-                              className="form-button-field"
+                              className="form-button-field form-button-field--edit"
                               type="button"
                               onClick={() => {
                                 setModalEducationOpen(true)
@@ -808,7 +792,7 @@ function TeacherPrivateDataForm() {
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Button type="submit" variant="contained">
+            <Button type="submit" variant="contained" onClick={handleSubmit(onSuccess)}>
               Save
             </Button>
           </Grid>

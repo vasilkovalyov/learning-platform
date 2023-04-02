@@ -55,12 +55,8 @@ export interface ITeacherWorkExperience extends Partial<ITeacherExperience> {
 }
 
 export interface ITeacherExperience {
-  dateStart: {
-    month: string
-    year: number
-  }
-  dateEnd: {
-    month: string
-    year: number
-  }
+  date_month_start: string
+  date_year_start: number
+  date_month_end: string
+  date_year_end: number
 }
