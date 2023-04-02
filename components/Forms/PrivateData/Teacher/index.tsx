@@ -244,6 +244,8 @@ function TeacherPrivateDataForm() {
     handleCloseModal('work_experience')
   }
 
+  console.log('education', education)
+
   async function loadFormData() {
     try {
       const response = await teacherService.getUserPrivateData(authState.user._id)
@@ -252,20 +254,22 @@ function TeacherPrivateDataForm() {
         if (Array.isArray(value) && key === 'education') {
           value.forEach((item, index) => {
             setValue(`education.${index}`, {
-              university_name: '',
-              faculty: '',
-              specialization: '',
+              ...initialDateEducationForm,
               ...item,
+            })
+            appendEducation({
+              ...initialDateEducationForm,
             })
           })
         }
         if (Array.isArray(value) && key === 'work_experience') {
           value.forEach((item, index) => {
             setValue(`work_experience.${index}`, {
-              company_name: '',
-              place_destination: '',
-              position: '',
+              ...initialDateWorkExperienceForm,
               ...item,
+            })
+            appendWorkExperience({
+              ...initialDateWorkExperienceForm,
             })
           })
         }
@@ -278,12 +282,14 @@ function TeacherPrivateDataForm() {
     }
   }
 
+  console.log('education', education)
+
   useEffect(() => {
     loadFormData()
   }, [])
 
   return (
-    <>
+    <Box pb={10}>
       <form className="form-private-data form-private-data--teacher" onSubmit={handleSubmit(onSuccess)}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
@@ -826,7 +832,7 @@ function TeacherPrivateDataForm() {
           </ModalPopupBox>
         </>
       </Modal>
-    </>
+    </Box>
   )
 }
 
