@@ -32,13 +32,7 @@ import studentAges from 'static-data/students-ages.json'
 import teacherService from 'services/teacher.service'
 import { ITeacherEducation, ITeacherWorkExperience } from 'interfaces/teacher.interface'
 
-function showButtonAddField<T>(fields: T[], index: number) {
-  return fields.length === 1 || index === fields.length - 1
-}
-
-function showButtonRemoveField<T>(fields: T[]) {
-  return fields.length > 1
-}
+import { showButtonAddField, showButtonRemoveField } from 'common/utilities'
 
 type FieldType = keyof Pick<ITeacherFormServices, 'country' | 'state' | 'city' | 'address'>
 
@@ -852,7 +846,9 @@ function TeacherPrivateDataForm() {
                             <Button
                               className="form-button-field form-button-field--add"
                               type="button"
-                              onClick={() => setModalEducationOpen(true)}
+                              onClick={() => {
+                                // setModalEducationOpen(true)
+                              }}
                             >
                               <span className="form-button-field__icon">
                                 <Icon icon={IconEnum.PLUS} color={colors.primary_color} size={10} />

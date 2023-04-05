@@ -18,3 +18,11 @@ const defaultProps: INotification = {
 //     placement,
 //   })
 // }
+
+export function showButtonAddField<T>(fields: T[], index: number) {
+  return fields.length === 1 || index === fields.length - 1
+}
+
+export function showButtonRemoveField<T>(fields: T[]) {
+  return fields.length > 1
+}

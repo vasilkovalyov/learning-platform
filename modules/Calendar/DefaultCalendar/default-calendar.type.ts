@@ -9,5 +9,5 @@ export interface ICalendar {
   date: Date
   events?: CalendarEventType[]
   locale?: string
-  view: CalendarModeView
+  view?: CalendarModeView
 }
