@@ -35,16 +35,16 @@ const defaultWorkSchema: IWorkScheduleFormProps = {
 
 function WorkSchedule({ onReset, onSave, initialData }: IWorkScheduleProps) {
   const { errors, scheduleFields, handleChange, handleSubmit, register, removeSchedule, reset, appendRowWorkSchedule } =
-    useWorkSchedule(initialData)
+    useWorkSchedule(initialData || defaultWorkSchema)
 
   function onSuccess(data: IWorkScheduleFormProps) {
     reset(data)
-    onSave()
+    onSave && onSave()
   }
 
   function handleReset() {
     reset(defaultWorkSchema)
-    onReset()
+    onReset && onReset()
   }
 
   return (

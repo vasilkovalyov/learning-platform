@@ -30,7 +30,6 @@ const RegistrationStudentPage: NextPage = () => {
     try {
       setIsLoading(true)
       const response = await RegistrationService.signUpStudent(data)
-      console.log(response, 'response')
       setIsLoading(false)
       addValidationMessage(response?.data.message || '')
       setIsSuccessForm(true)

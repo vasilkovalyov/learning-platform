@@ -12,11 +12,3 @@ const Home: NextPageWithLayout = () => {
 Home.getLayout = PublicLayoutPage
 
 export default Home
-
-// export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
-//   console.log('store', store)
-
-//   return {
-//     props: {},
-//   }
-// })

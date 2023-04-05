@@ -1,7 +1,7 @@
 export interface IWorkScheduleProps {
-  onSave: () => void
-  onReset: () => void
-  initialData: IWorkScheduleFormProps
+  onSave?: () => void
+  onReset?: () => void
+  initialData?: IWorkScheduleFormProps
 }
 
 export interface IWorkScheduleFormProps {
