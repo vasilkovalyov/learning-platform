@@ -3,6 +3,7 @@ import React from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
+import Stack from '@mui/material/Stack'
 
 import ShadowContainer from '../../ShadowContainer'
 
@@ -77,7 +78,10 @@ function PrivateLessonsList({ title, declineLessons, rescheduleLessons }: IGroup
           </Grid>
         ))}
       </Grid>
-      <Button variant="outlined">Show more</Button>
+      <Stack direction="row" spacing={2}>
+        <Button variant="contained">Add Group lesson</Button>
+        <Button variant="outlined">Show more</Button>
+      </Stack>
     </Box>
   )
 }
