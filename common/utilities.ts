@@ -26,3 +26,33 @@ export function showButtonAddField<T>(fields: T[], index: number) {
 export function showButtonRemoveField<T>(fields: T[]) {
   return fields.length > 1
 }
+
+export function getMonthsNames(locale = 'en-En'): { monthName: string; monthNumber: number }[] {
+  const monthesNames:
+    | {
+        monthName: string
+        monthNumber: number
+      }[]
+    | [] = []
+
+  Array.from({ length: 12 }).forEach((_, i) => {
+    const d = new Date()
+    const month = new Date(d.getFullYear(), i - 1, 1)
+    const monthIndex = month.getMonth()
+
+    monthesNames[monthIndex] = {
+      monthName: month.toLocaleDateString(locale, { month: 'long' }),
+      monthNumber: i + 1,
+    }
+  })
+
+  return monthesNames
+}
+
+export function getDaysByDate(
+  year: number = new Date().getFullYear(),
+  monthNumber: number = new Date().getMonth(),
+): number[] {
+  const countDaysInMonth = new Date(year, monthNumber + 1, 0)
+  return Array.from(Array(countDaysInMonth.getDate()).keys()).map((item) => item + 1)
+}
