@@ -14,7 +14,7 @@ import { WorkExperienceFormSchema } from 'utils/schemas/work_experience'
 import { IWorkExperienceFormProps } from './WorkExperienceForm.type'
 import { ITeacherWorkExperience } from 'interfaces/teacher.interface'
 
-import monthNames from 'static-data/month-names.json'
+import { getMonthsNames } from 'common/utilities'
 import generateYears from 'common/generateYears'
 
 export const defaultInitialDate: ITeacherWorkExperience = {
@@ -109,9 +109,9 @@ function WorkExperienceForm({ onSubmit, initialData }: IWorkExperienceFormProps)
                 error={!!errors.date_month_start?.message}
                 helperText={errors.date_month_start?.message}
               >
-                {monthNames.map((option, index) => (
-                  <MenuItem key={index} value={option}>
-                    {option}
+                {getMonthsNames().map((option) => (
+                  <MenuItem key={option.monthNumber} value={option.monthNumber}>
+                    {option.monthName}
                   </MenuItem>
                 ))}
               </TextField>
@@ -153,9 +153,9 @@ function WorkExperienceForm({ onSubmit, initialData }: IWorkExperienceFormProps)
                 error={!!errors.date_month_end?.message}
                 helperText={errors.date_month_end?.message}
               >
-                {monthNames.map((option, index) => (
-                  <MenuItem key={index} value={option}>
-                    {option}
+                {getMonthsNames().map((option) => (
+                  <MenuItem key={option.monthNumber} value={option.monthNumber}>
+                    {option.monthName}
                   </MenuItem>
                 ))}
               </TextField>
