@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
-import studentService from '../services/teacher.service'
+import teacherService from '../services/teacher.service'
 
 class TeacherController {
   async signUp(req: Request, res: Response) {
     try {
-      const response = await studentService.signUp(req.body)
+      const response = await teacherService.signUp(req.body)
       console.log('response', response)
       res.json(response).status(200)
     } catch (e: any) {
@@ -16,7 +16,7 @@ class TeacherController {
 
   async getUserAccountById(req: Request, res: Response) {
     try {
-      const response = await studentService.getUserAccountById(req.params.id)
+      const response = await teacherService.getUserAccountById(req.params.id)
       res.json(response).status(200)
     } catch (e: any) {
       res.status(400).json({
@@ -27,7 +27,7 @@ class TeacherController {
 
   async getUserPrivateDataById(req: Request, res: Response) {
     try {
-      const response = await studentService.getUserPrivateDataById(req.params.id)
+      const response = await teacherService.getUserPrivateDataById(req.params.id)
       res.json(response).status(200)
     } catch (e: any) {
       res.status(400).json({
@@ -38,7 +38,7 @@ class TeacherController {
 
   async updateUserAccount(req: Request, res: Response) {
     try {
-      const userData = await studentService.updateUserAccount(req.body)
+      const userData = await teacherService.updateUserAccount(req.body)
       res.json(userData)
     } catch (e: any) {
       res.status(400).json({
@@ -49,7 +49,7 @@ class TeacherController {
 
   async updateUserPrivateData(req, res) {
     try {
-      const userData = await studentService.updateUserPrivateData(req.body)
+      const userData = await teacherService.updateUserPrivateData(req.body)
       res.json(userData)
     } catch (e: any) {
       console.error(e)
@@ -59,10 +59,32 @@ class TeacherController {
 
   async deleteUserById(req: Request, res: Response) {
     try {
-      const response = await studentService.deleteUserById(req.params.id)
+      const response = await teacherService.deleteUserById(req.params.id)
       res.json(response).status(200)
     } catch (e: any) {
       console.log('response error', e)
+      res.status(400).json({
+        message: e.message,
+      })
+    }
+  }
+
+  async getUsers(req: Request, res: Response) {
+    try {
+      const response = await teacherService.getUsers()
+      res.json(response).status(200)
+    } catch (e: any) {
+      res.status(400).json({
+        message: e.message,
+      })
+    }
+  }
+
+  async getUserProfileInfo(req: Request, res: Response) {
+    try {
+      const response = await teacherService.getUserProfileInfo(req.params.id)
+      res.json(response).status(200)
+    } catch (e: any) {
       res.status(400).json({
         message: e.message,
       })

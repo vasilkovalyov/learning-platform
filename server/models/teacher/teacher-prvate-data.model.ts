@@ -49,8 +49,7 @@ const model = new Schema({
     type: String,
   },
   user: {
-    type: String,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Teacher',
   },
   work_experience: [

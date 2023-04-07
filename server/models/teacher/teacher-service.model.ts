@@ -25,8 +25,7 @@ export interface ITeacherLessonInfo {
 
 const model = new Schema({
   user: {
-    type: String,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Teacher',
   },
   lang_speaking: {

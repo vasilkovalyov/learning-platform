@@ -33,6 +33,11 @@ type TeacherSignUpPrivateDataType = Omit<
   '_id' | 'user' | 'about_info' | 'work_experience' | 'education'
 >
 
+interface ITeacherCardProps extends Pick<ITeacherModel, '_id' | 'fullname'> {
+  privateData: Pick<ITeacherPrivateDataModel, 'country' | 'about_info'>
+  services: Pick<ITeacherServiceModel, 'lang_speaking' | 'lang_teaching'>
+}
+
 export type ITeacherSignUpProps = TeacherSignUpBaseType &
   TeacherSignUpPrivateDataType & {
     work_experience: string[]
@@ -98,7 +103,7 @@ class TeacherService {
       work_experience: workExperienceArray,
     })
 
-    await teacherPrivateDataModel.save()
+    const savedUserPrivateData = await teacherPrivateDataModel.save()
 
     const teacherServiceModel = new TeacherServiceModel({
       user: savedUser._id,
@@ -111,10 +116,19 @@ class TeacherService {
       lessons: [],
     })
 
-    await teacherServiceModel.save()
-
-    const roleModel = new RoleModel({ _id: savedUser._id, role, email })
+    const savedUserService = await teacherServiceModel.save()
+    const roleModel = new RoleModel({ user: savedUser._id, role, email })
     await roleModel.save()
+
+    await TeacherModel.findOneAndUpdate(
+      {
+        _id: savedUser._id,
+      },
+      {
+        privateData: savedUserPrivateData._id,
+        services: savedUserService._id,
+      },
+    )
 
     return {
       message: `You have been registered`,
@@ -262,12 +276,37 @@ class TeacherService {
     const response = await TeacherModel.findOneAndDelete({ _id: id })
     if (!response) throw ApiError.BadRequest('Teacher account data doesn`t delete')
     await TeacherPrivateDataModel.findOneAndDelete({ user: id })
-    await RoleModel.findOneAndDelete({ _id: id })
+    await TeacherServiceModel.findOneAndDelete({ user: id })
+    await RoleModel.findOneAndDelete({ user: id })
 
     return {
       message: `You have been deleted`,
       user: null,
     }
+  }
+
+  async getUsers(): Promise<ITeacherCardProps[] | []> {
+    const response: ITeacherModel[] | [] = await TeacherModel.find({})
+    if (!response.length) return []
+
+    const data: ITeacherCardProps[] | [] = await TeacherModel.find()
+      .select('_id fullname')
+      .populate('privateData', '_id user country about_info')
+      .populate('services', '_id user lang_speaking lang_teaching')
+
+    return data
+  }
+
+  async getUserProfileInfo(id: string) {
+    const response = await TeacherModel.find({
+      _id: id,
+    })
+      .populate('privateData')
+      .populate('services')
+
+    if (!response.length) return {}
+
+    return response[0]
   }
 }
 

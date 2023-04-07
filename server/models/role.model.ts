@@ -5,15 +5,15 @@ export type IUserRoleType = 'student' | 'teacher'
 
 export interface IUserRoleModel {
   _id: string
+  user: string
   role: string
   email: string
   data: IUserRoleType
 }
 
 const model = new Schema({
-  _id: {
+  user: {
     type: String,
-    required: true,
   },
   role: {
     type: String,
