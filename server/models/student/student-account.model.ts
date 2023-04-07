@@ -12,15 +12,16 @@ export interface IStudentModel {
   role: IUserRoleType
   phone: string
   date: string
+  privateData: string
 }
 
-export interface IStudentSignUpProps extends Omit<IStudentModel, 'date' | 'phone' | 'role' | '_id'> {
+export interface IStudentSignUpProps extends Omit<IStudentModel, 'date' | 'phone' | 'role' | '_id' | 'privateData'> {
   confirm_password: string
 }
 
-export type IStudentAccountDataPropsResponse = Omit<IStudentModel, 'password'>
-export type IStudentAccountDataProps = Omit<IStudentModel, 'password' | '_id'>
-export type IStudentAccountUpdateProps = Omit<IStudentModel, 'password' | 'role' | 'email'>
+export type IStudentAccountDataPropsResponse = Omit<IStudentModel, 'password' | 'privateData'>
+export type IStudentAccountDataProps = Omit<IStudentModel, 'password' | '_id' | 'privateData'>
+export type IStudentAccountUpdateProps = Omit<IStudentModel, 'password' | 'role' | 'email' | 'privateData'>
 
 export const model = new Schema({
   fullname: {
@@ -42,11 +43,6 @@ export const model = new Schema({
     min: 6,
     max: 100,
   },
-  role: {
-    ref: 'Role',
-    type: String,
-    required: true,
-  },
   phone: {
     type: String,
     required: false,
@@ -54,6 +50,15 @@ export const model = new Schema({
   date: {
     type: Date,
     default: Date.now,
+  },
+  role: {
+    ref: 'Role',
+    type: String,
+    required: true,
+  },
+  privateData: {
+    ref: 'TeacherPrivateData',
+    type: mongoose.Schema.Types.ObjectId,
   },
 })
 

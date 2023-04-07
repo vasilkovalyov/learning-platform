@@ -51,7 +51,16 @@ class StudentService {
       country: '',
       state: '',
     })
-    await studentPrivateDataModel.save()
+    const savedUserPrivateData = await studentPrivateDataModel.save()
+
+    await StudentModel.findOneAndUpdate(
+      {
+        _id: savedUser._id,
+      },
+      {
+        privateData: savedUserPrivateData._id,
+      },
+    )
 
     return {
       message: `You have been registered`,
