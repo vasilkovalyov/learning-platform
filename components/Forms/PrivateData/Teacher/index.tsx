@@ -288,10 +288,10 @@ function TeacherPrivateDataForm() {
   async function loadFormData() {
     try {
       const response = await teacherService.getUserPrivateData(authState.user._id)
-      setSelectedLessonDuration(response.data.lesson_duration.toString())
+      setSelectedLessonDuration(response.data?.lesson_duration ? response.data?.lesson_duration.toString() : '')
 
       const baseInfo: ITeacherSimpleEditableProps = {
-        about_info: response.data.about_info,
+        about_info: response.data?.about_info || '',
         address: response.data.address,
         city: response.data.city,
         country: response.data.country,
@@ -333,7 +333,7 @@ function TeacherPrivateDataForm() {
               return item
             })
           : initialData.lessons,
-        lessons_prices: response.data.lessons_prices,
+        lessons_prices: response.data.lessons_prices.length ? response.data.lessons_prices : initialData.lessons_prices,
         lesson_duration: response.data.lesson_duration,
         levels_studying: response.data.levels_studying.length
           ? response.data.levels_studying.map((item) => {
@@ -355,8 +355,8 @@ function TeacherPrivateDataForm() {
           },
         ],
       })
-    } catch (e) {
-      console.log(e)
+    } catch (e: any) {
+      console.log(e.message)
     }
   }
 
