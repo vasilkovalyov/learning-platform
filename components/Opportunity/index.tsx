@@ -11,7 +11,7 @@ import { IOpportunityProps } from './Opportunity.type'
 function Opportunity({ heading, opportunities }: IOpportunityProps) {
   return (
     <Box className="opportunity">
-      <Typography marginBottom={3} variant="h4" className="MuiTypography about__heading font-bold">
+      <Typography marginBottom={3} variant="h4" className="MuiTypography font-bold">
         {heading}
       </Typography>
       <Box className="opportunity__body">
