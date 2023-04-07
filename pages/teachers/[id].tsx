@@ -25,6 +25,7 @@ import BookingPrivateLesson from 'components/BookTeacherLessons/BookingPrivateLe
 import BookingTestLesson from 'components/BookTeacherLessons/BookingTestLesson'
 import Opportunity from 'components/Opportunity'
 import Resume from 'components/Resume'
+import ScheduleCalendar from 'modules/Calendar/ScheduleCalendar'
 
 import getFormatDurationTime from 'common/formatDurationTime'
 
@@ -67,19 +68,16 @@ const TeacherProfile: NextPage = () => {
               {userProfile?.fullname}
             </Typography>
           </Breadcrumbs>
-          <Typography
-            component="h1"
-            variant="h2"
-            className="MuiTypography section-registration__heading"
-            marginBottom={3}
-          >
-            Teacher page profile
-          </Typography>
           <Box className="page-teacher-profile__body">
             <Box className="page-teacher-profile__content">
               <Box mb={3}>
                 <ShadowContainer>
                   <About heading="About me" text={userProfile?.privateData.about_info || ''} />
+                </ShadowContainer>
+              </Box>
+              <Box>
+                <ShadowContainer>
+                  <ScheduleCalendar date={new Date()} />
                 </ShadowContainer>
               </Box>
               {userProfile ? (
