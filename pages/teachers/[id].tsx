@@ -23,6 +23,7 @@ import userService from 'services/teacher.service'
 import { ITeacherProfileInfo } from 'interfaces/teacher.interface'
 import BookingPrivateLesson from 'components/BookTeacherLessons/BookingPrivateLesson'
 import BookingTestLesson from 'components/BookTeacherLessons/BookingTestLesson'
+import Opportunity from 'components/Opportunity'
 
 import getFormatDurationTime from 'common/formatDurationTime'
 
@@ -75,9 +76,38 @@ const TeacherProfile: NextPage = () => {
           </Typography>
           <Box className="page-teacher-profile__body">
             <Box className="page-teacher-profile__content">
-              <ShadowContainer>
-                <About heading={'About me'} text={userProfile?.privateData.about_info || ''} />
-              </ShadowContainer>
+              <Box mb={3}>
+                <ShadowContainer>
+                  <About heading="About me" text={userProfile?.privateData.about_info || ''} />
+                </ShadowContainer>
+              </Box>
+              {userProfile ? (
+                <Box mb={3}>
+                  <ShadowContainer>
+                    <Opportunity
+                      heading="Teacher opportunity"
+                      opportunities={[
+                        {
+                          heading: 'Lang speaking',
+                          items: userProfile?.services.lang_speaking,
+                        },
+                        {
+                          heading: 'Lang teaching',
+                          items: userProfile?.services.lang_teaching,
+                        },
+                        {
+                          heading: 'Subjects',
+                          items: userProfile?.services.subjects,
+                        },
+                        {
+                          heading: 'Students ages',
+                          items: userProfile?.services.students_ages,
+                        },
+                      ]}
+                    />
+                  </ShadowContainer>
+                </Box>
+              ) : null}
             </Box>
             <aside className="page-teacher-profile__aside">
               {userProfile?.services.lessons_prices.length ? (
