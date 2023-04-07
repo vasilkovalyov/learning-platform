@@ -24,6 +24,7 @@ import { ITeacherProfileInfo } from 'interfaces/teacher.interface'
 import BookingPrivateLesson from 'components/BookTeacherLessons/BookingPrivateLesson'
 import BookingTestLesson from 'components/BookTeacherLessons/BookingTestLesson'
 import Opportunity from 'components/Opportunity'
+import Resume from 'components/Resume'
 
 import getFormatDurationTime from 'common/formatDurationTime'
 
@@ -104,6 +105,17 @@ const TeacherProfile: NextPage = () => {
                           items: userProfile?.services.students_ages,
                         },
                       ]}
+                    />
+                  </ShadowContainer>
+                </Box>
+              ) : null}
+              {userProfile ? (
+                <Box mb={3}>
+                  <ShadowContainer>
+                    <Resume
+                      heading="Teacher Resume"
+                      educations={userProfile?.privateData.education}
+                      work_experiences={userProfile?.privateData.work_experience}
                     />
                   </ShadowContainer>
                 </Box>
