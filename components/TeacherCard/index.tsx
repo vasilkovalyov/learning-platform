@@ -14,6 +14,9 @@ import { IconEnum } from '../../components/Generic/Icon/Icon.type'
 // import { TeacherCardProps } from './TeacherCard.type'
 
 import colors from '../../constants/colors'
+import { ITeacherCardProps } from '../../interfaces/teacher.interface'
+
+import image from '../../public/images/avatar-default.jpg'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -75,16 +78,13 @@ function getRaiting(raiting: number) {
 }
 
 function TeacherCard({
-  id,
-  image,
-  raiting,
-  country,
+  _id,
+  about_info,
   fullname,
-  lang_speaking,
-  lang_teaching,
-  description,
+  privateData,
+  services,
   onClickTrialLesson,
-}: any & {
+}: ITeacherCardProps & {
   onClickTrialLesson?: (id: string) => void
 }) {
   const [activeTab, setActiveTab] = useState<number>(0)
@@ -94,13 +94,13 @@ function TeacherCard({
   }
 
   return (
-    <Box className="teacher-card">
+    <Box id={_id} className="teacher-card">
       <Box className="teacher-card__left">
         <Box className="teacher-card__image-wrapper">
           <Box className="teacher-card__image" marginBottom={1} marginLeft="auto" marginRight="auto">
-            <Image src={image.src} alt={image.alt} />
+            <Image src={image} alt={fullname} />
           </Box>
-          <Box paddingTop={1} paddingBottom={1} marginBottom={1}>
+          {/* <Box paddingTop={1} paddingBottom={1} marginBottom={1}>
             {getRaiting(raiting)}
           </Box>
           <Box paddingTop={1} paddingBottom={1} justifyContent="center" className="ta-c">
@@ -109,7 +109,7 @@ function TeacherCard({
                 Recommended
               </Button>
             ) : null}
-          </Box>
+          </Box> */}
         </Box>
         <Box className="teacher-card__info">
           <Typography variant="h4" className="MuiTypography">
@@ -117,20 +117,20 @@ function TeacherCard({
           </Typography>
           <Box className="teacher-card__info-item" marginBottom={2}>
             <Typography variant="body2" className="MuiTypography color-grey-3 font-semibold">
-              {country}
+              {privateData.country}
             </Typography>
           </Box>
           <Box className="teacher-card__info-item" marginBottom={2}>
             <Typography variant="body2" className="MuiTypography color-grey-3 font-semibold">
               Language teaching
             </Typography>
-            {getListItems(lang_teaching)}
+            {services.lang_teaching?.length ? getListItems(services.lang_teaching) : null}
           </Box>
           <Box className="teacher-card__info-item" marginBottom={2}>
             <Typography variant="body2" className="MuiTypography color-grey-3 font-semibold">
               Language speaking
             </Typography>
-            {getListItems(lang_speaking)}
+            {services.lang_speaking?.length ? getListItems(services.lang_speaking) : null}
           </Box>
         </Box>
       </Box>
@@ -145,7 +145,7 @@ function TeacherCard({
         </TabPanel>
         <TabPanel value={activeTab} index={1}>
           <Typography variant="body2" className="MuiTypography color-dark-blue-1">
-            {description}
+            {privateData.about_info}
           </Typography>
         </TabPanel>
         <TabPanel value={activeTab} index={2}>
@@ -155,11 +155,11 @@ function TeacherCard({
           <Button
             className="teacher-card__button"
             variant="contained"
-            onClick={() => onClickTrialLesson && onClickTrialLesson(id)}
+            onClick={() => onClickTrialLesson && onClickTrialLesson(_id)}
           >
             Trial lesson
           </Button>
-          <Button className="teacher-card__button" variant="outlined">
+          <Button href={`/teachers/${_id}`} className="teacher-card__button" variant="outlined">
             Teacher profile
           </Button>
         </Stack>

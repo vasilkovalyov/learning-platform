@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -14,7 +14,7 @@ import ListItemText from '@mui/material/ListItemText'
 import { IBookingPrivateLessonProps } from './BookingPrivateLesson.type'
 
 function BookingTestLesson({ id, heading, price, lessonDays, buttonText }: IBookingPrivateLessonProps) {
-  const [calculatePrice, setCalculatePrice] = useState<number>(price)
+  const [calculatePrice, setCalculatePrice] = useState<number>(0)
   const [radioValue, setRadioValue] = useState<number>(1)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,6 +22,11 @@ function BookingTestLesson({ id, heading, price, lessonDays, buttonText }: IBook
     setCalculatePrice(value * price)
     setRadioValue(value)
   }
+
+  useEffect(() => {
+    console.log('price', price)
+    setCalculatePrice(price)
+  }, [])
 
   return (
     <Box id={id} className="booking-private-lesson">

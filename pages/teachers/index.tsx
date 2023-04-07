@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -14,14 +14,26 @@ import Grid from '@mui/material/Grid'
 import ModalPopupBox from 'components/ModalPopupBox'
 import PublicLayout from 'layouts/BaseLayout'
 import TeacherCard from 'components/TeacherCard'
-// import { TeacherCardProps } from 'components/TeacherCard/TeacherCard.type'
 
 import ShadowContainer from 'components/ShadowContainer'
 import FilterLessons from 'components/FilterLessons'
 import { FilterLessonsProps } from 'components/FilterLessons/FilterLessons.type'
 
+import userService from 'services/teacher.service'
+import { ITeacherCardProps } from 'interfaces/teacher.interface'
+
 const Teachers: NextPage = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false)
+  const [teachers, setTeachers] = useState<ITeacherCardProps[] | []>([])
+
+  async function loadTeachers() {
+    const response = await userService.getUsers()
+    setTeachers(response.data)
+  }
+
+  useEffect(() => {
+    loadTeachers()
+  }, [])
 
   function onFilterSubmit(data: FilterLessonsProps) {
     console.log(data)
@@ -69,13 +81,13 @@ const Teachers: NextPage = () => {
             </aside>
             <div className="page-teacher__content">
               <div className="page-teacher__content-grid">
-                {/* {[].map((teacherItem: TeacherCardProps) => (
-                  <div key={teacherItem.id} className="page-teacher__content-grid-col">
+                {teachers.map((teacherItem) => (
+                  <div key={teacherItem._id} className="page-teacher__content-grid-col">
                     <ShadowContainer>
                       <TeacherCard {...teacherItem} onClickTrialLesson={onClickTrialLesson} />
                     </ShadowContainer>
                   </div>
-                ))} */}
+                ))}
               </div>
             </div>
           </Box>

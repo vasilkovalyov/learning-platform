@@ -6,9 +6,23 @@ export type ITeacherProps = Omit<IUserAccountProps, 'role'>
 export interface ITeacherPrivateDataProps extends LocationProps, ITeacherServices {
   _id: string
   user: string
-  about_info: string
+  about_info?: string | null
   education: ITeacherEducation[]
   work_experience: ITeacherWorkExperience[]
+}
+
+export interface ITeacherCardProps extends Pick<ITeacherPrivateDataProps, '_id' | 'about_info'> {
+  fullname: string
+  privateData: Pick<ITeacherPrivateDataProps, '_id' | 'about_info' | 'country' | 'user'>
+  services: Partial<Pick<ITeacherServices, 'lang_speaking' | 'lang_teaching'>> & {
+    _id: string
+    user: string
+  }
+}
+
+export interface ITeacherProfileInfo extends Omit<IUserAccountProps, 'password'> {
+  privateData: ITeacherPrivateDataProps
+  services: ITeacherServices
 }
 
 export interface ITeacherServices {

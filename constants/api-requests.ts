@@ -2,6 +2,8 @@ export const PUBLIC_REQUESTS = {
   SIGN_IN: 'auth/signin',
   SIGN_UP_TEACHER: 'auth/teacher/signup',
   SIGN_UP_STUDENT: 'auth/student/signup',
+  GET_TEACHERS: 'teachers',
+  GET_TEACHER_PROFILE_DATA: 'teacher-profile-data',
 }
 
 export const PRIVATE_REQUESTS = {

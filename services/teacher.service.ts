@@ -1,8 +1,8 @@
-import { ITeacherPrivateDataProps } from 'interfaces/teacher.interface'
+import { ITeacherCardProps, ITeacherPrivateDataProps } from 'interfaces/teacher.interface'
 import { IUserAccountProps } from 'interfaces/user.interface'
 import { IStudentAccountEditableProps } from 'components/Forms/Account/Student/Student.type'
 import $api from 'common/ajax-config'
-import { PRIVATE_REQUESTS } from 'constants/api-requests'
+import { PRIVATE_REQUESTS, PUBLIC_REQUESTS } from 'constants/api-requests'
 import { parseCookies } from 'nookies'
 import { AxiosResponse } from 'axios'
 import { ITeacherPrivateDataEditableProps } from 'components/Forms/PrivateData/Teacher/Teacher.type'
@@ -31,6 +31,16 @@ class TeacherService {
   async getUserPrivateData(id: string): Promise<AxiosResponse<ITeacherPrivateDataProps>> {
     const { token } = parseCookies()
     const response = await $api(token).get(`${PRIVATE_REQUESTS.TEACHER.PRIVATE_DATA}/${id}`)
+    return response
+  }
+
+  async getUsers(): Promise<AxiosResponse<ITeacherCardProps[] | []>> {
+    const response = await $api().get(PUBLIC_REQUESTS.GET_TEACHERS)
+    return response
+  }
+
+  async getUserProfileInfo(id: string): Promise<AxiosResponse<any>> {
+    const response = await $api().get(`${PUBLIC_REQUESTS.GET_TEACHER_PROFILE_DATA}/${id}`)
     return response
   }
 }
