@@ -21,7 +21,13 @@ export interface ITeacherCardProps extends Pick<ITeacherPrivateDataProps, '_id' 
 }
 
 export interface ITeacherProfileInfo extends Omit<IUserAccountProps, 'password'> {
-  privateData: ITeacherPrivateDataProps
+  privateData: LocationProps & {
+    _id: string
+    user: string
+    about_info?: string | null
+    education: ITeacherEducation[]
+    work_experience: ITeacherWorkExperience[]
+  }
   services: ITeacherServices
 }
 
