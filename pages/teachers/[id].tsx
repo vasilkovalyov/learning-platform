@@ -25,11 +25,14 @@ import BookingPrivateLesson from 'components/BookTeacherLessons/BookingPrivateLe
 import BookingTestLesson from 'components/BookTeacherLessons/BookingTestLesson'
 import Opportunity from 'blocks/Opportunity'
 import Resume from 'blocks/Resume'
+import TeacherProfile from 'blocks/TeacherProfile'
+
 import ScheduleCalendar from 'modules/Calendar/ScheduleCalendar'
 
 import getFormatDurationTime from 'common/formatDurationTime'
+import { getExperienceYearBasedOnWork, getCurrentTime } from 'common/utilities'
 
-const TeacherProfile: NextPage = () => {
+const TeacherProfilePage: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
   const [userProfile, setUserProfile] = useState<ITeacherProfileInfo | null>(null)
@@ -70,13 +73,33 @@ const TeacherProfile: NextPage = () => {
           </Breadcrumbs>
           <Box className="page-teacher-profile__body">
             <Box className="page-teacher-profile__content">
+              {userProfile ? (
+                <Box mb={3}>
+                  <ShadowContainer>
+                    <TeacherProfile
+                      fullname={userProfile.fullname || ''}
+                      time={getCurrentTime()}
+                      experience={getExperienceYearBasedOnWork(userProfile.privateData.work_experience)}
+                      country={userProfile.privateData.country}
+                      lang_speaking={userProfile.services.lang_speaking}
+                      lang_teaching={userProfile.services.lang_teaching}
+                      countOfLessons={0}
+                      countOfStudents={0}
+                      hasShadow={true}
+                    />
+                  </ShadowContainer>
+                </Box>
+              ) : null}
               <Box mb={3}>
                 <ShadowContainer>
                   <About heading="About me" text={userProfile?.privateData.about_info || ''} />
                 </ShadowContainer>
               </Box>
-              <Box>
+              <Box mb={3}>
                 <ShadowContainer>
+                  <Typography marginBottom={3} variant="h4" className="MuiTypography font-bold">
+                    Schedule
+                  </Typography>
                   <ScheduleCalendar date={new Date()} />
                 </ShadowContainer>
               </Box>
@@ -154,4 +177,4 @@ const TeacherProfile: NextPage = () => {
   )
 }
 
-export default TeacherProfile
+export default TeacherProfilePage
