@@ -5,8 +5,10 @@
 
   &__content {
     margin-right: 30px;
+    width: calc(100% - 400px);
   }
   &__aside {
-    flex: 1 0 400px;
+    max-width: 400px;
+    width: 100%;
   }
 }

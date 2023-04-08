@@ -1,5 +1,7 @@
 // import notification, { NotificationPlacement } from 'antd/lib/notification'
 
+import { ITeacherWorkExperience } from '../interfaces/teacher.interface'
+
 export interface INotification {
   message: string
   description?: string
@@ -55,4 +57,19 @@ export function getDaysByDate(
 ): number[] {
   const countDaysInMonth = new Date(year, monthNumber + 1, 0)
   return Array.from(Array(countDaysInMonth.getDate()).keys()).map((item) => item + 1)
+}
+
+export function getExperienceYearBasedOnWork(work_experience: ITeacherWorkExperience[]): number {
+  const startYear = work_experience[0].date_year_start
+  const endYear = work_experience[work_experience.length - 1].date_year_start
+  if (startYear && endYear) return endYear - startYear
+  return 0
+}
+
+export function getCurrentTime(): string {
+  const today = new Date()
+  const hours = today.getHours()
+  const timeCode = hours > 12 ? 'pm' : 'am'
+  const time = `${today.getHours()}:${today.getMinutes()} ${timeCode}`
+  return time
 }
