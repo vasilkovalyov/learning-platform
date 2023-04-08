@@ -9,7 +9,7 @@
   }
 }
 
-.listreset {
+@mixin listreset {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -20,19 +20,19 @@
   transition: all 0.3s ease-in-out;
 }
 
-.bgCover {
+@mixin bgCover {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.fillCover {
+@mixin fillCover {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.absoluteCover {
+@mixin absoluteCover {
   position: absolute;
   top: 0;
   left: 0;
@@ -40,28 +40,28 @@
   bottom: 0;
 }
 
-.centeredAbsolute {
+@mixin centeredAbsolute {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.alignVerticalAbsolute {
+@mixin alignVerticalAbsolute {
   position: absolute;
   top: 0;
   bottom: 0;
   margin: auto;
 }
 
-.alignHorizontalAbsolute {
+@mixin alignHorizontalAbsolute {
   position: absolute;
   left: 0;
   bottom: 0;
   margin: auto;
 }
 
-.fillBlockAbsolute {
+@mixin fillBlockAbsolute {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -69,7 +69,7 @@
   top: 0;
 }
 
-.fillBlockFixed {
+@mixin fillBlockFixed {
   position: fixed;
   top: 0;
   right: 0;
@@ -77,7 +77,7 @@
   left: 0;
 }
 
-.aspectRatioImage {
+@mixin aspectRatioImage {
   display: block;
   position: relative;
   padding-top: 75.18%;
@@ -86,7 +86,7 @@
   overflow: hidden;
 }
 
-.aspectRatioImageWide {
+@mixin aspectRatioImageWide {
   display: block;
   position: relative;
   padding-top: 50%;
@@ -95,7 +95,7 @@
   overflow: hidden;
 }
 
-.aspectRatioImageSquare {
+@mixin aspectRatioImageSquare {
   display: block;
   position: relative;
   padding-top: 100%;
@@ -104,7 +104,7 @@
   overflow: hidden;
 }
 
-.aspectRatioHightImage {
+@mixin aspectRatioHightImage {
   display: block;
   position: relative;
   padding-top: 125%;
@@ -113,7 +113,7 @@
   overflow: hidden;
 }
 
-.coverImage {
+@mixin coverImage {
   position: absolute;
   left: 0;
   top: 0;
@@ -123,7 +123,7 @@
   font-family: 'object-fit: cover;';
 }
 
-.containImage {
+@mixin containImage {
   position: absolute;
   left: 0;
   top: 0;

@@ -12,7 +12,7 @@ interface IUseCalendarScheduleWeekResponse {
 }
 
 export function useCalendarScheduleWeek(date: Date, locale: string): IUseCalendarScheduleWeekResponse {
-  const weekNames = new CalendarWeek({ locale }).getWeekNames()
+  const weekNames = new CalendarWeek({ locale }).getWeekNames('short')
 
   const [week, setWeek] = useState<IDay[]>(CalendarWeek.getWeekDayByDate(new Date()))
   const [year, setYear] = useState<number>(date.getFullYear())
