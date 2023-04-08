@@ -2,8 +2,6 @@ import React from 'react'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
 import Stack from '@mui/material/Stack'
 
 import { IOpportunityProps } from './Opportunity.type'

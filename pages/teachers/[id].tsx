@@ -15,7 +15,7 @@ import Grid from '@mui/material/Grid'
 
 import ModalPopupBox from 'components/ModalPopupBox'
 import PublicLayout from 'layouts/BaseLayout'
-import About from 'components/About'
+import About from 'blocks/About'
 
 import ShadowContainer from 'components/ShadowContainer'
 
@@ -23,8 +23,8 @@ import userService from 'services/teacher.service'
 import { ITeacherProfileInfo } from 'interfaces/teacher.interface'
 import BookingPrivateLesson from 'components/BookTeacherLessons/BookingPrivateLesson'
 import BookingTestLesson from 'components/BookTeacherLessons/BookingTestLesson'
-import Opportunity from 'components/Opportunity'
-import Resume from 'components/Resume'
+import Opportunity from 'blocks/Opportunity'
+import Resume from 'blocks/Resume'
 import ScheduleCalendar from 'modules/Calendar/ScheduleCalendar'
 
 import getFormatDurationTime from 'common/formatDurationTime'

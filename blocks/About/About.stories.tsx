@@ -3,10 +3,10 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 
 import About from './index'
 import { model } from './About.model'
-import ShadowContainer from '../ShadowContainer'
+import ShadowContainer from '../../components/ShadowContainer'
 
 export default {
-  title: 'Components/About',
+  title: 'Blocks/About',
   component: About,
   argTypes: {
     backgroundColor: { control: 'color' },

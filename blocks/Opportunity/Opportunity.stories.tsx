@@ -2,12 +2,12 @@ import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
 import Opportunity from './index'
-import ShadowContainer from '../ShadowContainer'
+import ShadowContainer from '../../components/ShadowContainer'
 
 import { model } from './Opportunity.model'
 
 export default {
-  title: 'Components/Opportunity',
+  title: 'Blocks/Opportunity',
   component: Opportunity,
 } as ComponentMeta<typeof Opportunity>
 

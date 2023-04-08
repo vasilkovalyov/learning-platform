@@ -2,12 +2,12 @@ import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
 import Resume from './index'
-import ShadowContainer from '../ShadowContainer'
+import ShadowContainer from '../../components/ShadowContainer'
 
 import { model } from './Resume.model'
 
 export default {
-  title: 'Components/Resume',
+  title: 'Blocks/Resume',
   component: Resume,
 } as ComponentMeta<typeof Resume>
 

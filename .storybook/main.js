@@ -8,6 +8,8 @@ module.exports = {
     '../components/**/*.stories.@(js|jsx|ts|tsx)',
     '../modules/**/*.stories.mdx',
     '../modules/**/*.stories.@(js|jsx|ts|tsx)',
+    '../blocks/**/*.stories.mdx',
+    '../blocks/**/*.stories.@(js|jsx|ts|tsx)',
   ],
   addons: [
     '@storybook/addon-links',
