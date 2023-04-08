@@ -12,5 +12,5 @@ const Template: ComponentStory<typeof BadgeExperience> = (args) => <BadgeExperie
 
 export const Default = Template.bind({})
 Default.args = {
-  years: '2',
+  years: 2,
 }

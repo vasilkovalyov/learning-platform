@@ -1,4 +1,4 @@
 export interface BadgeExperienceProps {
-  years: string
+  years: number
   className?: string
 }
