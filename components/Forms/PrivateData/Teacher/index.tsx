@@ -615,7 +615,7 @@ function TeacherPrivateDataForm() {
           </Grid>
           <Grid item xs={12} md={12}>
             <Box marginBottom={3}>
-              <Typography variant="h6" className="MuiTypography">
+              <Typography variant="subtitle2" className="MuiTypography">
                 Price lessons
               </Typography>
             </Box>

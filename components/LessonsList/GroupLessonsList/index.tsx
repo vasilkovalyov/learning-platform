@@ -79,7 +79,9 @@ function PrivateLessonsList({ title, declineLessons, rescheduleLessons }: IGroup
         ))}
       </Grid>
       <Stack direction="row" spacing={2}>
-        <Button variant="contained">Add Group lesson</Button>
+        <Button href="/admin/group-lesson/create" variant="contained">
+          Add Group lesson
+        </Button>
         <Button variant="outlined">Show more</Button>
       </Stack>
     </Box>
