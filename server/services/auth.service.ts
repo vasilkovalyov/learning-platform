@@ -1,12 +1,8 @@
 import { IAuthUserResponse } from '../interfaces/auth-user.interface'
 
 import RoleModel from '../models/role.model'
-import {
-  IStudentAccountDataProps,
-  IStudentModel,
-  IStudentAccountDataPropsResponse,
-} from '../models/student/student-account.model'
-import { ITeacherModel, ITeacherAccountDataPropsResponse } from '../models/teacher/teacher-account.model'
+import { IStudentModel, IStudentAccountPublicProps } from '../models/student/student-account.model'
+import { ITeacherModel, ITeacherAccountPublicProps } from '../models/teacher/teacher-account.model'
 import { signInValidation } from '../validation/auth.validation'
 import TokenService from './token.service'
 import ApiError from '../exeptions/api.exeptions'
@@ -26,7 +22,7 @@ class AuthService {
     if (!validPass) throw ApiError.BadRequest(`Wrong password!`)
   }
 
-  async signIn(params): Promise<IAuthUserResponse<IStudentAccountDataProps | null>> {
+  async signIn(params): Promise<IAuthUserResponse<IStudentAccountPublicProps | null>> {
     this.validateUserSignIn(params)
 
     const { email, password } = params
@@ -34,7 +30,7 @@ class AuthService {
     if (findedRole === null) throw ApiError.BadRequest(`User with email - ${email} not exist!`)
 
     let userResponse: IStudentModel | ITeacherModel | null | any = null
-    let userDto: IStudentAccountDataPropsResponse | ITeacherAccountDataPropsResponse | null = null
+    let userDto: IStudentAccountPublicProps | ITeacherAccountPublicProps | null = null
 
     if (findedRole.role === 'student') {
       userResponse = await studentService.getUserByEmail(email)

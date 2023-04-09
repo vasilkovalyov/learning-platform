@@ -4,17 +4,17 @@ const Schema = mongoose.Schema
 export interface ITeacherServiceModel {
   _id: string
   user: string
-  lessons: ITeacherLessonInfo[] | []
-  lesson_duration: number | null
-  lessons_prices: {
+  lessons?: ITeacherLessonInfo[] | []
+  lesson_duration?: number | null
+  lessons_prices?: {
     count: number
     prive: string
   }[]
-  lang_speaking: string[]
-  students_ages: string[]
-  lang_teaching: string[]
-  subjects: string[]
-  levels_studying: string[]
+  lang_speaking?: string[]
+  students_ages?: string[]
+  lang_teaching?: string[]
+  subjects?: string[]
+  levels_studying?: string[]
 }
 
 export interface ITeacherLessonInfo {

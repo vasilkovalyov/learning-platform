@@ -11,14 +11,17 @@ export interface ITeacherModel {
   password: string
   role: IUserRoleType
   phone: string
-  date: string
+  date: Date
   privateData: string
   services: string
+  groupLessons?: string[]
 }
 
-export type ITeacherAccountDataPropsResponse = Omit<ITeacherModel, 'password' | 'privateData' | 'services'>
-export type ITeacherAccountDataProps = Omit<ITeacherModel, 'password' | '_id' | 'privateData' | 'services'>
-export type ITeacherAccountUpdateProps = Omit<ITeacherModel, 'password' | 'role' | 'email' | 'privateData' | 'services'>
+export type ITeacherAccountPublicProps = Omit<ITeacherModel, 'password' | 'privateData' | 'services'>
+export type ITeacherAccountEditableProps = Omit<
+  ITeacherModel,
+  'password' | 'role' | 'email' | 'privateData' | 'services'
+>
 
 export const model = new Schema({
   fullname: {
@@ -60,6 +63,12 @@ export const model = new Schema({
     ref: 'TeacherService',
     type: mongoose.Schema.Types.ObjectId,
   },
+  groupLessons: [
+    {
+      ref: 'TeacherGroupLesson',
+      type: mongoose.Schema.Types.ObjectId,
+    },
+  ],
 })
 
 export default mongoose.model<ITeacherModel>('Teacher', model)
