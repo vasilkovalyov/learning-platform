@@ -18,7 +18,7 @@ function BadgeExperience({ years, className }: BadgeExperienceProps) {
       <Typography className="MuiTypography badge__text">
         Expirience:
         <span className="font-semibold">
-          {years} {parseFloat(years) > 1 ? 'years' : 'yeat'}
+          {years} {years > 1 ? 'years' : 'yeat'}
         </span>
       </Typography>
     </Box>
