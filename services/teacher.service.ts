@@ -6,6 +6,7 @@ import { PRIVATE_REQUESTS, PUBLIC_REQUESTS } from 'constants/api-requests'
 import { parseCookies } from 'nookies'
 import { AxiosResponse } from 'axios'
 import { ITeacherPrivateDataEditableProps } from 'components/Forms/PrivateData/Teacher/Teacher.type'
+import { IGroupLessonProps } from 'interfaces/group-lesson.interface'
 
 class TeacherService {
   async updateUserAccount(props: IStudentAccountEditableProps): Promise<AxiosResponse<IUserAccountProps> | undefined> {
@@ -39,8 +40,14 @@ class TeacherService {
     return response
   }
 
-  async getUserProfileInfo(id: string): Promise<AxiosResponse<any>> {
+  async getUserProfileInfo(id: string): Promise<AxiosResponse> {
     const response = await $api().get(`${PUBLIC_REQUESTS.GET_TEACHER_PROFILE_DATA}/${id}`)
+    return response
+  }
+
+  async getUserGroupLessons(id: string): Promise<AxiosResponse<IGroupLessonProps[] | []>> {
+    const { token } = parseCookies()
+    const response = await $api(token).get(`${PRIVATE_REQUESTS.TEACHER.GET_TEACHER_GROUP_LESSONS}/${id}`)
     return response
   }
 }
