@@ -90,6 +90,39 @@ class TeacherController {
       })
     }
   }
+
+  async createGroupLesson(req: Request, res: Response) {
+    try {
+      const response = await teacherService.createGroupLesson(req.body)
+      res.json(response).status(200)
+    } catch (e: any) {
+      res.status(400).json({
+        message: e.message,
+      })
+    }
+  }
+
+  async deleteGroupLesson(req: Request, res: Response) {
+    try {
+      const response = await teacherService.deleteGroupLesson(req.body.userId, req.body.lessonId)
+      res.json(response).status(200)
+    } catch (e: any) {
+      res.status(400).json({
+        message: e.message,
+      })
+    }
+  }
+
+  async updateGroupLesson(req: Request, res: Response) {
+    try {
+      const response = await teacherService.updateGroupLesson(req.body)
+      res.json(response).status(200)
+    } catch (e: any) {
+      res.status(400).json({
+        message: e.message,
+      })
+    }
+  }
 }
 
 export default new TeacherController()

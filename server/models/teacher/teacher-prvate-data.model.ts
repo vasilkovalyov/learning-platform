@@ -1,23 +1,14 @@
 import mongoose from 'mongoose'
+import { IPlaceLiving } from '../../interfaces/common'
+
 const Schema = mongoose.Schema
 
-export interface ITeacherPrivateDataModel {
+export interface ITeacherPrivateDataModel extends IPlaceLiving {
   _id: string
-  country: string
-  state: string
-  city: string
-  address: string
-  about_info: string
   user: string
-  work_experience: IWorkExperienceProps
-  education: IEducationProps
-}
-
-export interface ITeacherExperienceDate {
-  date_month_start: string
-  date_year_start: number
-  date_month_end: string
-  date_year_end: number
+  about_info?: string
+  work_experience: IWorkExperienceProps[]
+  education: IEducationProps[]
 }
 
 export interface IWorkExperienceProps extends ITeacherExperienceDate {
@@ -30,6 +21,13 @@ export interface IEducationProps extends ITeacherExperienceDate {
   university_name: string
   faculty?: string
   specialization?: string
+}
+
+export interface ITeacherExperienceDate {
+  date_month_start: number
+  date_year_start: number
+  date_month_end: number
+  date_year_end: number
 }
 
 const model = new Schema({
@@ -55,16 +53,16 @@ const model = new Schema({
   work_experience: [
     {
       company_name: { type: String },
-      position: { required: false, type: String },
-      place_destination: { required: false, type: String },
+      position: { type: String },
+      place_destination: { type: String },
       date_month_start: {
-        type: String,
+        type: Number,
       },
       date_year_start: {
         type: Number,
       },
       date_month_end: {
-        type: String,
+        type: Number,
       },
       date_year_end: {
         type: Number,
@@ -74,16 +72,16 @@ const model = new Schema({
   education: [
     {
       university_name: { type: String },
-      faculty: { required: false, type: String },
-      specialization: { required: false, type: String },
+      faculty: { type: String },
+      specialization: { type: String },
       date_month_start: {
-        type: String,
+        type: Number,
       },
       date_year_start: {
         type: Number,
       },
       date_month_end: {
-        type: String,
+        type: Number,
       },
       date_year_end: {
         type: Number,

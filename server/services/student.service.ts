@@ -7,9 +7,9 @@ import roleService from './role.service'
 import RoleModel, { IUserRoleType } from '../models/role.model'
 import StudentModel, {
   IStudentSignUpProps,
-  IStudentAccountDataPropsResponse,
+  IStudentAccountPublicProps,
   IStudentModel,
-  IStudentAccountUpdateProps,
+  IStudentAccountEditableProps,
 } from '../models/student/student-account.model'
 import StudentPrivateDataModel, { IStudentPrivateDataModel } from '../models/student/student-prvate-data.model'
 
@@ -77,7 +77,7 @@ class StudentService {
     return response
   }
 
-  async getUserAccountById(id: string): Promise<IStudentAccountDataPropsResponse> {
+  async getUserAccountById(id: string): Promise<IStudentAccountPublicProps> {
     const response = await StudentModel.findOne({ _id: id })
     if (!response) throw ApiError.BadRequest(`Student with id - ${id} doesn't find !`)
 
@@ -103,10 +103,10 @@ class StudentService {
     login,
     fullname,
     phone,
-  }: IStudentAccountUpdateProps): Promise<IStudentAccountUpdateProps> {
+  }: IStudentAccountEditableProps): Promise<IStudentAccountEditableProps> {
     if (!_id) throw ApiError.BadRequest(`_id is empty!`)
 
-    const response: IStudentAccountUpdateProps | null = await StudentModel.findOneAndUpdate(
+    const response: IStudentAccountEditableProps | null = await StudentModel.findOneAndUpdate(
       { _id: _id },
       {
         login: login,

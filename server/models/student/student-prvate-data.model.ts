@@ -1,23 +1,19 @@
 import mongoose from 'mongoose'
+import { IPlaceLiving } from '../../interfaces/common'
+
 const Schema = mongoose.Schema
 
-export interface IStudentPrivateDataModel {
+export interface IStudentPrivateDataModel extends IPlaceLiving {
   _id: string
-  country: string
-  state: string
-  city: string
-  address: string
-  subjects_learning:
+  subjects_learning?:
     | {
-        subject?: string
-        level?: string
+        subject: string
+        level: string
       }[]
     | []
-  about_info: string
+  about_info?: string
   user: string
 }
-
-// export type IStudentPrivateDataProps = Omit<IStudentPrivateDataModel, '_id'>
 
 const model = new Schema({
   country: {
@@ -36,11 +32,9 @@ const model = new Schema({
     {
       subject: {
         type: String,
-        required: false,
       },
       level: {
         type: String,
-        required: false,
       },
     },
   ],

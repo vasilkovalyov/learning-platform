@@ -11,17 +11,17 @@ export interface IStudentModel {
   password: string
   role: IUserRoleType
   phone: string
-  date: string
+  date: Date
   privateData: string
+  groupLessons?: string[]
 }
 
 export interface IStudentSignUpProps extends Omit<IStudentModel, 'date' | 'phone' | 'role' | '_id' | 'privateData'> {
   confirm_password: string
 }
 
-export type IStudentAccountDataPropsResponse = Omit<IStudentModel, 'password' | 'privateData'>
-export type IStudentAccountDataProps = Omit<IStudentModel, 'password' | '_id' | 'privateData'>
-export type IStudentAccountUpdateProps = Omit<IStudentModel, 'password' | 'role' | 'email' | 'privateData'>
+export type IStudentAccountPublicProps = Omit<IStudentModel, 'password' | 'privateData'>
+export type IStudentAccountEditableProps = Omit<IStudentModel, 'password' | 'role' | 'email' | 'privateData'>
 
 export const model = new Schema({
   fullname: {
@@ -60,6 +60,12 @@ export const model = new Schema({
     ref: 'TeacherPrivateData',
     type: mongoose.Schema.Types.ObjectId,
   },
+  groupLessons: [
+    {
+      ref: 'TeacherGroupLesson',
+      type: mongoose.Schema.Types.ObjectId,
+    },
+  ],
 })
 
 export default mongoose.model<IStudentModel>('Student', model)

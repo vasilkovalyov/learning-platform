@@ -2,13 +2,13 @@ import bcrypt from 'bcryptjs'
 
 import ApiError from '../exeptions/api.exeptions'
 import { signUpTeacherValidation } from '../validation/teacher/teacher-account.validaton'
-import roleService from './role.service'
+import { createTeacherGroupLessonValidation } from '../validation/teacher-group-lesson.validation'
 
 import RoleModel, { IUserRoleType } from '../models/role.model'
 import TeacherModel, {
-  ITeacherAccountDataPropsResponse,
+  ITeacherAccountPublicProps,
   ITeacherModel,
-  ITeacherAccountUpdateProps,
+  ITeacherAccountEditableProps,
 } from '../models/teacher/teacher-account.model'
 
 import TeacherPrivateDataModel, {
@@ -16,6 +16,11 @@ import TeacherPrivateDataModel, {
   IWorkExperienceProps,
   IEducationProps,
 } from '../models/teacher/teacher-prvate-data.model'
+
+import TeacherGroupLessonModel, {
+  ITeacherGroupLessonCreateProps,
+  ITeacherGroupLessonEditProps,
+} from '../models/teacher-group-lesson.model'
 
 import TeacherServiceModel, { ITeacherServiceModel } from '../models/teacher/teacher-service.model'
 
@@ -145,7 +150,7 @@ class TeacherService {
     return response
   }
 
-  async getUserAccountById(id: string): Promise<ITeacherAccountDataPropsResponse> {
+  async getUserAccountById(id: string): Promise<ITeacherAccountPublicProps> {
     const response = await TeacherModel.findOne({ _id: id })
     if (!response) throw ApiError.BadRequest(`Teacher with id - ${id} doesn't find !`)
 
@@ -191,10 +196,10 @@ class TeacherService {
     login,
     fullname,
     phone,
-  }: ITeacherAccountUpdateProps): Promise<ITeacherAccountUpdateProps> {
+  }: ITeacherAccountEditableProps): Promise<ITeacherAccountEditableProps> {
     if (!_id) throw ApiError.BadRequest(`_id is empty!`)
 
-    const response: ITeacherAccountUpdateProps | null = await TeacherModel.findOneAndUpdate(
+    const response: ITeacherAccountEditableProps | null = await TeacherModel.findOneAndUpdate(
       { _id: _id },
       {
         login: login,
@@ -307,6 +312,70 @@ class TeacherService {
     if (!response.length) return {}
 
     return response[0]
+  }
+
+  async createGroupLesson(params: ITeacherGroupLessonCreateProps) {
+    const { error } = createTeacherGroupLessonValidation(params)
+    if (error) throw ApiError.BadRequest(error.details[0].message)
+    const userId = params.teacher
+
+    const teacherGroupLessonModel = new TeacherGroupLessonModel(params)
+    teacherGroupLessonModel.save()
+
+    await TeacherModel.findOneAndUpdate(
+      {
+        _id: userId,
+      },
+      { $push: { groupLessons: teacherGroupLessonModel._id } },
+    )
+
+    return {
+      message: 'Group lesson create successfull',
+    }
+  }
+
+  async deleteGroupLesson(userId: string, lessonId: string) {
+    const response = await TeacherGroupLessonModel.findOneAndDelete({ _id: lessonId })
+    if (!response) throw ApiError.BadRequest('Teacher Group Lesson data doesn`t delete')
+
+    await TeacherModel.findOneAndUpdate(
+      {
+        _id: userId,
+      },
+      { $pull: { groupLessons: lessonId } },
+    )
+
+    return {
+      message: `You have been deleted group lesson`,
+    }
+  }
+
+  async updateGroupLesson(params: ITeacherGroupLessonEditProps) {
+    await TeacherGroupLessonModel.findOneAndUpdate(
+      {
+        _id: params._id,
+      },
+      {
+        name: params.name,
+        dateLesson: params.dateLesson,
+        recruitment_period_date_start: params.recruitment_period_date_start,
+        recruitment_period_date_end: params.recruitment_period_date_end,
+        timeStart: params.timeStart,
+        duration: params.duration,
+        price: params.price,
+        students_level: params.students_level,
+        students_age: params.students_age,
+        description: params.description,
+        min_count_of_students: params.min_count_of_students,
+        max_count_of_students: params.max_count_of_students,
+        students: params.students,
+      },
+      { new: true },
+    )
+
+    return {
+      message: `You have been updated group lesson`,
+    }
   }
 }
 
