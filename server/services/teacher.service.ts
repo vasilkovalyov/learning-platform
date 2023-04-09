@@ -384,6 +384,11 @@ class TeacherService {
     })
     return response
   }
+
+  async getGroupLessons() {
+    const response = await TeacherGroupLessonModel.find()
+    return response
+  }
 }
 
 export default new TeacherService()

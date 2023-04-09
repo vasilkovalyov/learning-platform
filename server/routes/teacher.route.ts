@@ -38,6 +38,9 @@ router.delete('/teacher/group-lesson/delete', authUserMiddleware, teacherService
 router.post('/teacher/group-lesson/update', authUserMiddleware, teacherService.updateGroupLesson)
 
 // get teacher all group lessons
-router.get('/teacher/group-lessons/me/:id', teacherService.getGroupLessonsMe)
+router.get('/teacher/group-lessons/me/:id', authUserMiddleware, teacherService.getGroupLessonsMe)
+
+// get all group lessons
+router.get('/teacher/group-lessons/', teacherService.getGroupLessons)
 
 export default router
