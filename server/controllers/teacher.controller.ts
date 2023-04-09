@@ -123,6 +123,17 @@ class TeacherController {
       })
     }
   }
+
+  async getGroupLessonsMe(req: Request, res: Response) {
+    try {
+      const response = await teacherService.getGroupLessonsMe(req.params.id)
+      res.json(response).status(200)
+    } catch (e: any) {
+      res.status(400).json({
+        message: e.message,
+      })
+    }
+  }
 }
 
 export default new TeacherController()

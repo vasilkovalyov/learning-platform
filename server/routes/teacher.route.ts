@@ -29,12 +29,15 @@ router.get('/teachers', teacherService.getUsers)
 router.get('/teacher-profile-data/:id', teacherService.getUserProfileInfo)
 
 // create teacher group lesson
-router.post('/teacher/group-lesson/create', teacherService.createGroupLesson)
+router.post('/teacher/group-lesson/create', authUserMiddleware, teacherService.createGroupLesson)
 
 // create teacher group lesson
-router.delete('/teacher/group-lesson/delete', teacherService.deleteGroupLesson)
+router.delete('/teacher/group-lesson/delete', authUserMiddleware, teacherService.deleteGroupLesson)
 
 // update teacher group lesson
-router.post('/teacher/group-lesson/update', teacherService.updateGroupLesson)
+router.post('/teacher/group-lesson/update', authUserMiddleware, teacherService.updateGroupLesson)
+
+// get teacher all group lessons
+router.get('/teacher/group-lessons/me/:id', teacherService.getGroupLessonsMe)
 
 export default router

@@ -377,6 +377,13 @@ class TeacherService {
       message: `You have been updated group lesson`,
     }
   }
+
+  async getGroupLessonsMe(userId: string) {
+    const response = await TeacherGroupLessonModel.find({
+      teacher: userId,
+    })
+    return response
+  }
 }
 
 export default new TeacherService()
