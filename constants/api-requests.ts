@@ -18,5 +18,9 @@ export const PRIVATE_REQUESTS = {
     PRIVATE_DATA_UPDATE: 'teacher/private-data/update',
     PRIVATE_DATA: 'teacher/private-data',
     CREATE_GROUP_LESSON: 'teacher/group-lesson/create',
+    DELETE_GROUP_LESSON: 'teacher/group-lesson/delete',
+    UPDATE_GROUP_LESSON: 'teacher/group-lesson/update',
+    GET_TEACHER_GROUP_LESSONS: 'teacher/group-lessons/me',
+    GET_GROUP_LESSONS: 'teacher/group-lessons',
   },
 }

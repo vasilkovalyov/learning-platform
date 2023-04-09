@@ -41,6 +41,8 @@ const GroupLessonCreate: NextPage = () => {
       const response = await groupLessonService.createGroupLesson(PRIVATE_REQUESTS.TEACHER.CREATE_GROUP_LESSON, {
         ...data,
         teacher: authState.user._id,
+        _id: authState.user._id,
+        students: [],
       })
       setResponseMessage(response.data.message)
       setResponseMessage(response.data.message)

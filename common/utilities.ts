@@ -73,3 +73,9 @@ export function getCurrentTime(): string {
   const time = `${today.getHours()}:${today.getMinutes()} ${timeCode}`
   return time
 }
+
+export function getEndTime(date: string, endTime: string, duraton: number): string {
+  const startTime = new Date(`${date}T${endTime}`)
+  const endTimeValue = new Date(startTime.getTime() + duraton * 60000)
+  return endTimeValue.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+}

@@ -6,15 +6,15 @@ export interface IGroupLessonFormProps {
 
 export interface IGroupLessonFormDataProps {
   name: string
-  dateLesson: Date | null
-  recruitment_period_date_start: Date | null
-  recruitment_period_date_end: Date | null
+  dateLesson: string
+  recruitment_period_date_start: string
+  recruitment_period_date_end: string
   timeStart: string
-  duration: number | null
-  price: number | null
+  duration: number
+  price: number
   students_level: string
   students_age: string
   description: string
-  min_count_of_students: number | null
-  max_count_of_students: number | null
+  min_count_of_students: number
+  max_count_of_students: number
 }

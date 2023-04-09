@@ -21,7 +21,7 @@ function LessonCard({ date, eventStart, eventEnd, heading, registeredCount, maxP
         {heading}
       </Typography>
       <Stack direction="row" justifyContent="space-between" spacing={2}>
-        {registeredCount ? (
+        {registeredCount !== undefined ? (
           <Box>
             <Typography variant="subtitle2" className="MuiTypography color-grey-3">
               Registered

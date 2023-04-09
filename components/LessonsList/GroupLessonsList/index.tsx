@@ -12,6 +12,7 @@ import LessonCard from '../../LessonCard'
 import { IGroupLessonsList, IFilterLesson } from './GroupLessonsList.type'
 
 import avatar from '../../../public/images/teacher-image.jpg'
+import { getEndTime } from '../../../common/utilities'
 
 import FilterToggler from '../FilterLessonsToggler'
 
@@ -38,7 +39,7 @@ const filterItems: IFilterLesson[] = [
   },
 ]
 
-function PrivateLessonsList({ title, declineLessons, rescheduleLessons }: IGroupLessonsList) {
+function PrivateLessonsList({ title, lessons, declineLessons, rescheduleLessons }: IGroupLessonsList) {
   function handleClickFilterLesson(days: number | string) {
     console.log(days)
   }
@@ -48,36 +49,41 @@ function PrivateLessonsList({ title, declineLessons, rescheduleLessons }: IGroup
       <FilterToggler
         title={title}
         filterItems={filterItems}
-        selectedValue={filterItems[0].days}
+        selectedValue={filterItems[filterItems.length - 1].days}
         onChange={handleClickFilterLesson}
       />
-      <Grid container spacing={2} mb={4}>
-        {Array.from(Array(6).keys()).map((item) => (
-          <Grid key={item} item md={6} className="group-lessons-list__item">
-            <LessonCard
-              id={item.toString()}
-              date="2023-04-13"
-              eventStart="13:00"
-              eventEnd="14:30"
-              heading={'Heading'}
-              maxPersons={10}
-              registeredCount={6}
-            />
-            <ShadowContainer className="group-lesson-tooltip-container">
-              <Box mb={2}>
-                <Button variant="outlined" onClick={() => rescheduleLessons && rescheduleLessons(item.toString())}>
-                  Reschedule Lesson
-                </Button>
-              </Box>
-              <Box>
-                <Button variant="outlined" onClick={() => declineLessons && declineLessons(item.toString())}>
-                  Decline Lesson
-                </Button>
-              </Box>
-            </ShadowContainer>
-          </Grid>
-        ))}
-      </Grid>
+      {lessons.length ? (
+        <Grid container spacing={2} mb={4}>
+          {lessons.map((item) => (
+            <Grid key={item._id} item md={6} className="group-lessons-list__item">
+              <LessonCard
+                id={item._id}
+                date={item.dateLesson.split('T')[0]}
+                eventStart={item.timeStart}
+                eventEnd={getEndTime(item.dateLesson.split('T')[0], item.timeStart, item.duration || 0)}
+                heading={item.name}
+                maxPersons={item.max_count_of_students}
+                registeredCount={item.students.length}
+              />
+              <ShadowContainer className="group-lesson-tooltip-container">
+                <Box mb={2}>
+                  <Button variant="outlined" onClick={() => rescheduleLessons && rescheduleLessons(item.toString())}>
+                    Reschedule Lesson
+                  </Button>
+                </Box>
+                <Box>
+                  <Button variant="outlined" onClick={() => declineLessons && declineLessons(item.toString())}>
+                    Decline Lesson
+                  </Button>
+                </Box>
+              </ShadowContainer>
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <Box>Lessons not found</Box>
+      )}
+
       <Stack direction="row" spacing={2}>
         <Button href="/admin/group-lesson/create" variant="contained">
           Add Group lesson
