@@ -17,5 +17,5 @@ export const Default = Template.bind({})
 Default.args = {
   view: CalendarModeView.WEEK,
   events: eventsData,
-  locale: 'ru-Ru',
+  locale: 'en-En',
 }

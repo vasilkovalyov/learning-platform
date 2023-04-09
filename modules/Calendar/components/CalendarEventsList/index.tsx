@@ -8,16 +8,18 @@ function CalendarEvents({ events }: CalendarEventsProps) {
   return (
     <>
       {events.map((event) => {
-        const dateStart = new Date(event.eventStart)
-        const dateEnd = new Date(event.eventEnd)
+        const timeStart = event.eventStart.split('T')[1]
+        const timeStartHours = timeStart.split(':')[0]
+        const timeStartMinutes = timeStart.split(':')[1]
 
-        const hourStartWithTimeZone = dateStart.getHours() + new Date().getTimezoneOffset() / hourMinutes
-        const hourEndWithTimeZone = dateEnd.getHours() + new Date().getTimezoneOffset() / hourMinutes
+        const timeEnd = event.eventEnd.split('T')[1]
+        const timeEndHours = timeEnd.split(':')[0]
+        const timeEndMinutes = timeEnd.split(':')[1]
+
         const topPosition =
-          calendarCellHeight * (hourStartWithTimeZone - calendarStartHourFrom + dateStart.getMinutes() / hourMinutes)
-
-        const startMin = hourStartWithTimeZone * hourMinutes + dateStart.getMinutes()
-        const endMin = hourEndWithTimeZone * hourMinutes + dateEnd.getMinutes()
+          calendarCellHeight * (+timeStartHours - calendarStartHourFrom + +timeStartMinutes / hourMinutes)
+        const startMin = +timeStart.split(':')[0] * hourMinutes + +timeStartMinutes
+        const endMin = +timeEndHours * hourMinutes + +timeEndMinutes
         const height = ((endMin - startMin) / hourMinutes) * calendarCellHeight
 
         return (
@@ -25,8 +27,8 @@ function CalendarEvents({ events }: CalendarEventsProps) {
             key={event.id}
             id={event.id}
             title={event.title}
-            eventStart={`${hourStartWithTimeZone}:${dateStart.getMinutes() === 0 ? '00' : dateStart.getMinutes()}`}
-            eventEnd={`${hourEndWithTimeZone}:${dateEnd.getMinutes() === 0 ? '00' : dateEnd.getMinutes()}`}
+            eventStart={`${timeStartHours}:${+timeStartMinutes === 0 ? '00' : timeStartMinutes}`}
+            eventEnd={`${timeEndHours}:${+timeEndMinutes === 0 ? '00' : timeEndMinutes}`}
             type={event.type}
             styles={{
               top: topPosition,

@@ -38,7 +38,6 @@ export default function CalendarWeek({
 
   function renderEvents(date: Date, events: CalendarEventType[] = []) {
     const filteredEvents = getFilteredEventByDate(date, events)
-
     if (!filteredEvents.length) return null
 
     return <CalendarEvents events={filteredEvents} />
