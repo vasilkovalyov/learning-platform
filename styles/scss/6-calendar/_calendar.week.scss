@@ -45,4 +45,8 @@
   &__body-right {
     flex: 1;
   }
+
+  .calendar-event {
+    overflow-y: auto;
+  }
 }

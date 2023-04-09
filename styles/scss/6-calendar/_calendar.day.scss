@@ -83,4 +83,8 @@
     border: 1px solid $primary-color;
     z-index: 1;
   }
+
+  .calendar-event {
+    overflow-y: auto;
+  }
 }
