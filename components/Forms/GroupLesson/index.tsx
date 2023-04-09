@@ -9,37 +9,34 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
+import CircularProgress from '@mui/material/CircularProgress'
 
 import ShadowContainer from 'components/ShadowContainer'
 
 import { GroupLessonFormSchema } from 'utils/schemas/group_lesson'
 
-import { IGroupLessonFormProps } from './GroupLesson.type'
+import { IGroupLessonFormDataProps, IGroupLessonFormProps } from './GroupLesson.type'
 import { IGroupLessonProps } from 'interfaces/group-lesson.interface'
 
 import getFormatDurationTime from 'common/formatDurationTime'
 import studentAges from 'static-data/students-ages.json'
 
-export const defaultInitialDate: IGroupLessonProps = {
+export const defaultInitialDate: IGroupLessonFormDataProps = {
   name: '',
-  date: '',
+  dateLesson: null,
   description: '',
-  duration: '',
-  min_count_of_students: '',
-  max_count_of_students: '',
-  price: '',
-  recruitment_period_date_start: '',
-  recruitment_period_date_end: '',
+  duration: null,
+  min_count_of_students: null,
+  max_count_of_students: null,
+  price: null,
+  recruitment_period_date_start: null,
+  recruitment_period_date_end: null,
   students_level: '',
   students_age: '',
   timeStart: '',
 }
 
-async function onSuccess(data: IGroupLessonProps) {
-  console.log('data', data)
-}
-
-function GroupLesson({ onSubmit, initialData }: IGroupLessonFormProps) {
+function GroupLesson({ onSubmit, initialData, isLoading }: IGroupLessonFormProps) {
   const {
     handleSubmit,
     register,
@@ -75,17 +72,17 @@ function GroupLesson({ onSubmit, initialData }: IGroupLessonFormProps) {
             <Grid item xs={12} md={6}>
               <Box mb={2}>
                 <TextField
-                  {...register('date')}
-                  id="date"
-                  name="date"
+                  {...register('dateLesson')}
+                  id="dateLesson"
+                  name="dateLesson"
                   type="date"
                   label="Lesson date"
                   variant="standard"
                   className="form-field"
                   fullWidth
                   InputLabelProps={{ shrink: true }}
-                  error={!!errors.date?.message}
-                  helperText={errors.date?.message}
+                  error={!!errors.dateLesson?.message}
+                  helperText={errors.dateLesson?.message}
                 />
               </Box>
               <Box mb={2} className="form-group-lesson__date-event">
@@ -266,16 +263,9 @@ function GroupLesson({ onSubmit, initialData }: IGroupLessonFormProps) {
         </ShadowContainer>
       </Box>
       <Box>
-        <Button
-          type="submit"
-          variant="contained"
-          className="form-group-lesson__button"
-          onClick={handleSubmit(onSuccess)}
-        >
+        <Button variant="contained" className="form-group-lesson__button" onClick={handleSubmit(onSubmit)}>
           Create group lesson
-        </Button>
-        <Button className="form-group-lesson__button" variant="outlined">
-          Decline
+          <Box ml={2}>{isLoading ? <CircularProgress size={16} /> : null}</Box>
         </Button>
       </Box>
     </form>

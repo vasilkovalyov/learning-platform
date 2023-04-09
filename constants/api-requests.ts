@@ -17,5 +17,6 @@ export const PRIVATE_REQUESTS = {
     ACCOUNT_UPDATE: 'teacher/account/update',
     PRIVATE_DATA_UPDATE: 'teacher/private-data/update',
     PRIVATE_DATA: 'teacher/private-data',
+    CREATE_GROUP_LESSON: 'teacher/group-lesson/create',
   },
 }
