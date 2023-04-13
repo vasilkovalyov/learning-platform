@@ -67,6 +67,11 @@ function PrivateLessonsList({ title, lessons, declineLessons, rescheduleLessons 
               />
               <ShadowContainer className="group-lesson-tooltip-container">
                 <Box mb={2}>
+                  <Button href={`/admin/group-lesson/edit/${item._id}`} variant="outlined">
+                    Edit Lesson
+                  </Button>
+                </Box>
+                <Box mb={2}>
                   <Button variant="outlined" onClick={() => rescheduleLessons && rescheduleLessons(item.toString())}>
                     Reschedule Lesson
                   </Button>
