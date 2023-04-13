@@ -18,3 +18,9 @@ export interface IGroupLessonFormDataProps {
   min_count_of_students: number
   max_count_of_students: number
 }
+
+export interface IGroupLessonFormDataUpdateProps extends IGroupLessonFormDataProps {
+  _id: string
+  teacher: string
+  students: string[] | []
+}

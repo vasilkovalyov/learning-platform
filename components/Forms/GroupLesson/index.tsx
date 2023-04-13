@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -37,15 +37,32 @@ export const defaultInitialDate: IGroupLessonFormDataProps = {
 }
 
 function GroupLesson({ onSubmit, initialData, isLoading }: IGroupLessonFormProps) {
+  const [studentAge, setStudentAge] = useState<string>('')
+  const [duration, setDuration] = useState<string>('')
+
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm<IGroupLessonProps>({
     mode: 'onSubmit',
     resolver: yupResolver(GroupLessonFormSchema),
     defaultValues: initialData ?? defaultInitialDate,
   })
+
+  useEffect(() => {
+    if (initialData) {
+      setStudentAge(initialData.students_age)
+      setDuration(initialData.duration.toString())
+      reset({
+        ...initialData,
+        dateLesson: initialData.dateLesson.split('T')[0],
+        recruitment_period_date_start: initialData.recruitment_period_date_start.split('T')[0],
+        recruitment_period_date_end: initialData.recruitment_period_date_end.split('T')[0],
+      })
+    }
+  }, [initialData])
 
   return (
     <form name="form-group-lesson" className="form form-group-lesson">
@@ -143,10 +160,11 @@ function GroupLesson({ onSubmit, initialData, isLoading }: IGroupLessonFormProps
                   type="text"
                   className="form-field"
                   fullWidth
-                  defaultValue={initialData?.duration || ''}
+                  value={duration || ''}
                   InputLabelProps={{ shrink: true }}
                   error={!!errors.duration?.message}
                   helperText={errors.duration?.message}
+                  onChange={(e) => setDuration(e.target.value)}
                 >
                   <MenuItem value="30">{getFormatDurationTime(30, 'long')}</MenuItem>
                   <MenuItem value="60">{getFormatDurationTime(60, 'long')}</MenuItem>
@@ -195,10 +213,11 @@ function GroupLesson({ onSubmit, initialData, isLoading }: IGroupLessonFormProps
                   type="text"
                   className="form-field"
                   fullWidth
-                  defaultValue={initialData?.students_age || ''}
+                  value={studentAge || ''}
                   InputLabelProps={{ shrink: true }}
                   error={!!errors.students_age?.message}
                   helperText={errors.students_age?.message}
+                  onChange={(e) => setStudentAge(e.target.value)}
                 >
                   {studentAges.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
