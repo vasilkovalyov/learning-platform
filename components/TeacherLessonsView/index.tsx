@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { useSelector } from 'react-redux'
-import { selectAuthState, setUpdateAccountUser } from 'redux/slices/auth'
+import { selectAuthState } from 'redux/slices/auth'
 
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
@@ -18,7 +18,7 @@ import teacherService from 'services/teacher.service'
 import { IGroupLessonProps } from 'interfaces/group-lesson.interface'
 import { CalendarEventType } from 'modules/Calendar/utilities/types'
 
-import { getEndTime } from 'common/utilities'
+import parseLessonEvents from 'common/parseGroupLessonEvents'
 
 type ModalType = 'private_lesson_decline' | 'group_lesson_decline' | 'group_lesson_reschedule' | null
 
@@ -47,20 +47,7 @@ function TeacherLessonsView() {
     const response = await teacherService.getUserGroupLessons(authState.user._id)
 
     if (response.data.length) {
-      const events = response.data.map<CalendarEventType>((event) => {
-        const eventStart = `${event.recruitment_period_date_start.split('T')[0]}T${event.timeStart}:00`
-        const timeEnd = getEndTime(event.dateLesson.split('T')[0], event.timeStart, event.duration || 0)
-        const eventEnd = `${event.recruitment_period_date_end.split('T')[0]}T${timeEnd}:00`
-        return {
-          id: event._id,
-          eventStart: eventStart,
-          eventEnd: eventEnd,
-          title: event.name,
-          subtitle: event.description,
-          type: 'group',
-        }
-      })
-      setEvents(events)
+      setEvents(parseLessonEvents(response.data, 'group'))
     }
     setGroupLessons(response.data)
   }

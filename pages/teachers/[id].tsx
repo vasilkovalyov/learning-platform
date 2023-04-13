@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 
+import { useSelector } from 'react-redux'
+import { selectAuthState } from 'redux/slices/auth'
+
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
 
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Typography from '@mui/material/Typography'
-import Modal from '@mui/material/Modal'
-import Grid from '@mui/material/Grid'
 
-import ModalPopupBox from 'components/ModalPopupBox'
 import PublicLayout from 'layouts/BaseLayout'
 import About from 'blocks/About'
 
 import ShadowContainer from 'components/ShadowContainer'
+import Notification from 'components/Notification'
 
-import userService from 'services/teacher.service'
+import teacherService from 'services/teacher.service'
+import studentService from 'services/student.service'
+
 import { ITeacherProfileInfo } from 'interfaces/teacher.interface'
 import BookingPrivateLesson from 'components/BookTeacherLessons/BookingPrivateLesson'
 import BookingTestLesson from 'components/BookTeacherLessons/BookingTestLesson'
@@ -28,22 +30,47 @@ import Resume from 'blocks/Resume'
 import TeacherProfile from 'blocks/TeacherProfile'
 
 import ScheduleCalendar from 'modules/Calendar/ScheduleCalendar'
+import { CalendarEventType } from 'modules/Calendar/utilities/types'
+import parseLessonEvents from 'common/parseGroupLessonEvents'
 
-import getFormatDurationTime from 'common/formatDurationTime'
 import { getExperienceYearBasedOnWork, getCurrentTime } from 'common/utilities'
 
 const TeacherProfilePage: NextPage = () => {
   const router = useRouter()
+  const authState = useSelector(selectAuthState)
   const { id } = router.query
   const [userProfile, setUserProfile] = useState<ITeacherProfileInfo | null>(null)
+  const [events, setEvents] = useState<CalendarEventType[] | []>([])
+
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [showNotificaton, setShowNotificaton] = useState<boolean>(false)
 
   async function loadUserProfile() {
     try {
-      const response = await userService.getUserProfileInfo(id as string)
-      console.log(response.data)
+      const response = await teacherService.getUserProfileInfo(id as string)
       setUserProfile(response.data)
+
+      if (response.data.groupLessons.length) {
+        setEvents(parseLessonEvents(response.data.groupLessons, 'group'))
+      }
     } catch (e) {
-      router.push('/teachers')
+      console.log('e', e)
+    }
+  }
+
+  async function onHandleAddLesson(lessonId: string) {
+    if (!authState.isAuth) router.push('/login')
+    setIsLoading(true)
+
+    try {
+      const response = await studentService.addToGroupLesson(authState.user._id, lessonId)
+      if (response.status === 200) {
+        setIsLoading(false)
+        setShowNotificaton(true)
+      }
+    } catch (e) {
+      console.log(e)
+      setIsLoading(false)
     }
   }
 
@@ -100,7 +127,12 @@ const TeacherProfilePage: NextPage = () => {
                   <Typography marginBottom={3} variant="h4" className="MuiTypography font-bold">
                     Schedule
                   </Typography>
-                  <ScheduleCalendar date={new Date()} />
+                  <ScheduleCalendar
+                    date={new Date()}
+                    events={events}
+                    onHandleAddLesson={onHandleAddLesson}
+                    isLoading={isLoading}
+                  />
                 </ShadowContainer>
               </Box>
               {userProfile ? (
@@ -172,6 +204,13 @@ const TeacherProfilePage: NextPage = () => {
             </aside>
           </Box>
         </Container>
+        <Notification
+          open={showNotificaton}
+          setClose={() => setShowNotificaton(false)}
+          direction={{ horizontal: 'right', vertical: 'bottom' }}
+        >
+          You added group lesson success
+        </Notification>
       </PublicLayout>
     </div>
   )
