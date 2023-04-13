@@ -12,13 +12,15 @@ import { localeDefault } from '../constants'
 
 import CalendarScheduleWeek from '../components/CalendarScheduleWeek'
 
-function ScheduleCalendar({ date = new Date(), events, locale = localeDefault }: ICalendarSchedule) {
+function ScheduleCalendar({
+  date = new Date(),
+  events,
+  locale = localeDefault,
+  isLoading,
+  onHandleAddLesson,
+}: ICalendarSchedule) {
   const [lessonScheduleCardPosition, setLessonScheduleCardPosition] = useState<Partial<DOMRect>>({ top: 0, left: 0 })
   const [selectedLessonSchedule, setSelectedLessonSchedule] = useState<LessonScheduleProps | null>(null)
-
-  function onClickSelectedLesson(id: string) {
-    console.log('lesson id = ', id)
-  }
 
   function selectedProps(props: object) {
     setSelectedLessonSchedule(props as LessonScheduleProps)
@@ -50,7 +52,11 @@ function ScheduleCalendar({ date = new Date(), events, locale = localeDefault }:
           }}
         >
           {selectedLessonSchedule ? (
-            <LessonScheduleCard {...selectedLessonSchedule} onClick={(id) => onClickSelectedLesson(id)} />
+            <LessonScheduleCard
+              {...selectedLessonSchedule}
+              isLoading={isLoading || false}
+              onClick={(id) => onHandleAddLesson && onHandleAddLesson(id)}
+            />
           ) : null}
         </Box>
       </CalendarScheduleWeek>

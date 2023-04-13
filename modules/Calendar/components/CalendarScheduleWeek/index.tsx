@@ -46,7 +46,6 @@ function ScheduleCalendar({
     const filteredEvents = getFilteredEventByDate(date, events)
 
     if (!filteredEvents.length) return null
-
     return filteredEvents
   }
 
@@ -128,14 +127,15 @@ function ScheduleCalendar({
                 {renderEvents(week[key].date, events)?.map((event) => {
                   const dateStart = new Date(event.eventStart)
                   const dateEnd = new Date(event.eventEnd)
-                  const hourStartWithTimeZone = dateStart.getHours() + new Date().getTimezoneOffset() / hourMinutes
-                  const hourEndWithTimeZone = dateEnd.getHours() + new Date().getTimezoneOffset() / hourMinutes
+                  const hourStart = dateStart.getHours()
+                  const hourEnd = dateEnd.getHours()
+
                   const topPosition =
                     scheduleCalendarCellHeight *
-                    (hourStartWithTimeZone - calendarStartHourFrom + dateStart.getMinutes() / hourMinutes)
+                    (hourStart - calendarStartHourFrom + dateStart.getMinutes() / hourMinutes)
 
-                  const startMin = hourStartWithTimeZone * hourMinutes + dateStart.getMinutes()
-                  const endMin = hourEndWithTimeZone * hourMinutes + dateEnd.getMinutes()
+                  const startMin = hourStart * hourMinutes + dateStart.getMinutes()
+                  const endMin = hourEnd * hourMinutes + dateEnd.getMinutes()
                   const height = ((endMin - startMin) / hourMinutes) * scheduleCalendarCellHeight
 
                   return (
