@@ -1,5 +1,6 @@
 export interface LessonScheduleCardProps extends LessonScheduleProps {
   onClick: (id: string) => void
+  isLoading: boolean
 }
 
 export interface LessonScheduleProps {

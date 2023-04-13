@@ -4,13 +4,14 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
+import CircularProgress from '@mui/material/CircularProgress'
 
 import { formatDate } from '../../modules/Calendar/utilities/date'
 import { getTimeFormatTimestamp } from '../../modules/Calendar/utilities/custom'
 
 import { LessonScheduleCardProps } from './LessonScheduleCard.type'
 
-function LessonScheduleCard({ id, eventStart, eventEnd, price, onClick }: LessonScheduleCardProps) {
+function LessonScheduleCard({ id, eventStart, eventEnd, price, isLoading, onClick }: LessonScheduleCardProps) {
   const timeStart = getTimeFormatTimestamp(eventStart)
   const timeEng = getTimeFormatTimestamp(eventEnd)
   return (
@@ -42,9 +43,14 @@ function LessonScheduleCard({ id, eventStart, eventEnd, price, onClick }: Lesson
             </Box>
           </Stack>
         </Box>
-        <Button variant="contained" fullWidth className="lesson-schedule-card__button" onClick={() => onClick(id)}>
-          Book a lesson
-        </Button>
+        <Box position="relative">
+          <Button variant="contained" fullWidth className="lesson-schedule-card__button" onClick={() => onClick(id)}>
+            Book a lesson isLoading
+          </Button>
+          <Box component="span" ml={2} position="absolute" top="20px" right="6px">
+            {isLoading ? <CircularProgress size={16} /> : null}
+          </Box>
+        </Box>
       </Box>
     </Box>
   )
