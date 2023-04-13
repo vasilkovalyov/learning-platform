@@ -22,4 +22,7 @@ router.post('/student/private-data/update', authUserMiddleware, studentService.u
 // remove account
 router.delete('/student/delete/:id', authUserMiddleware, studentService.deleteUserById)
 
+// add group lesson for user
+router.post('/student/group-lesson/add', authUserMiddleware, studentService.addGroupLesson)
+
 export default router

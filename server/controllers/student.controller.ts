@@ -68,6 +68,19 @@ class StudentController {
       })
     }
   }
+
+  async addGroupLesson(req: Request, res: Response) {
+    try {
+      const response = await studentService.addGroupLesson(req.body.userId, req.body.lessonId)
+      res.json(response).status(200)
+      console.log('response', response)
+    } catch (e: any) {
+      console.log('response error', e)
+      res.status(400).json({
+        message: e.message,
+      })
+    }
+  }
 }
 
 export default new StudentController()

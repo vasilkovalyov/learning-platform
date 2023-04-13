@@ -4,6 +4,8 @@ import ApiError from '../exeptions/api.exeptions'
 import { signUpStudentValidation } from '../validation/student/student-account.validaton'
 import roleService from './role.service'
 
+import TeacherGroupLessonModel from '../models/teacher-group-lesson.model'
+
 import RoleModel, { IUserRoleType } from '../models/role.model'
 import StudentModel, {
   IStudentSignUpProps,
@@ -150,6 +152,27 @@ class StudentService {
     return {
       message: `You have been deleted`,
       user: null,
+    }
+  }
+
+  async addGroupLesson(userId: string, lessonId: string) {
+    const response = await TeacherGroupLessonModel.findOneAndUpdate(
+      { _id: lessonId },
+      {
+        $push: { students: userId },
+      },
+    )
+    if (!response) throw ApiError.BadRequest('Group lesson doesn`t find')
+    const responseStrudent = await StudentModel.findOneAndUpdate(
+      { _id: userId },
+      {
+        $push: { groupLessons: response._id },
+      },
+    )
+    if (!responseStrudent) throw ApiError.BadRequest('Student doesn`t find')
+
+    return {
+      message: `You have been add group lesson successfull`,
     }
   }
 }
