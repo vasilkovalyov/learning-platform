@@ -40,6 +40,8 @@ router.post('/teacher/group-lesson/update', authUserMiddleware, teacherService.u
 // get teacher all group lessons
 router.get('/teacher/group-lessons/me/:id', authUserMiddleware, teacherService.getGroupLessonsMe)
 
+router.get('/teacher/group-lesson/:id', authUserMiddleware, teacherService.getGroupLessonById)
+
 // get all group lessons
 router.get('/teacher/group-lessons/', teacherService.getGroupLessons)
 

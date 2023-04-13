@@ -308,6 +308,7 @@ class TeacherService {
     })
       .populate('privateData')
       .populate('services')
+      .populate('groupLessons')
 
     if (!response.length) return {}
 
@@ -351,7 +352,8 @@ class TeacherService {
   }
 
   async updateGroupLesson(params: ITeacherGroupLessonEditProps) {
-    await TeacherGroupLessonModel.findOneAndUpdate(
+    console.log('params', params)
+    const response = await TeacherGroupLessonModel.findOneAndUpdate(
       {
         _id: params._id,
       },
@@ -369,12 +371,14 @@ class TeacherService {
         min_count_of_students: params.min_count_of_students,
         max_count_of_students: params.max_count_of_students,
         students: params.students,
+        teacher: params.teacher,
       },
       { new: true },
     )
 
     return {
       message: `You have been updated group lesson`,
+      data: response,
     }
   }
 
@@ -388,6 +392,13 @@ class TeacherService {
   async getGroupLessons() {
     const response = await TeacherGroupLessonModel.find()
     return response
+  }
+
+  async getGroupLessonById(id: string) {
+    const response = await TeacherGroupLessonModel.find({
+      _id: id,
+    })
+    return response[0]
   }
 }
 
