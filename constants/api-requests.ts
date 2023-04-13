@@ -12,6 +12,7 @@ export const PRIVATE_REQUESTS = {
     ACCOUNT_UPDATE: 'student/account/update',
     PRIVATE_DATA_UPDATE: 'student/private-data/update',
     PRIVATE_DATA: 'student/private-data',
+    ADD_TO_GROUP_LESSON: 'student/group-lesson/add',
   },
   TEACHER: {
     ACCOUNT_UPDATE: 'teacher/account/update',
@@ -21,6 +22,7 @@ export const PRIVATE_REQUESTS = {
     DELETE_GROUP_LESSON: 'teacher/group-lesson/delete',
     UPDATE_GROUP_LESSON: 'teacher/group-lesson/update',
     GET_TEACHER_GROUP_LESSONS: 'teacher/group-lessons/me',
+    GET_TEACHER_GROUP_LESSON_BY_ID: 'teacher/group-lesson',
     GET_GROUP_LESSONS: 'teacher/group-lessons',
   },
 }

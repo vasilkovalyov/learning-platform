@@ -37,6 +37,15 @@ class StudentService {
     const response = await $api(token).get(`${PRIVATE_REQUESTS.STUDENT.PRIVATE_DATA}/${id}`)
     return response
   }
+
+  async addToGroupLesson(studentId: string, lessonId: string) {
+    const { token } = parseCookies()
+    const response = await $api(token).post(PRIVATE_REQUESTS.STUDENT.ADD_TO_GROUP_LESSON, {
+      userId: studentId,
+      lessonId: lessonId,
+    })
+    return response
+  }
 }
 
 export default new StudentService()

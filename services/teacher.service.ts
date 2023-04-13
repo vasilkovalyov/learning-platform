@@ -40,7 +40,7 @@ class TeacherService {
     return response
   }
 
-  async getUserProfileInfo(id: string): Promise<AxiosResponse> {
+  async getUserProfileInfo(id: string): Promise<AxiosResponse<any>> {
     const response = await $api().get(`${PUBLIC_REQUESTS.GET_TEACHER_PROFILE_DATA}/${id}`)
     return response
   }
